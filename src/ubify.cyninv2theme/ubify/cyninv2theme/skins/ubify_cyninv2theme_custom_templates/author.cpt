@@ -1,0 +1,587 @@
+<tal:comment replace="nothing">
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see http://www.gnu.org/licenses/.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+</tal:comment>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="cynin">
+
+<head>
+    <metal:block fill-slot="top_slot"
+                 tal:define="dummy python:request.set('disable_border',1)" />
+    <metal:block fill-slot="column_one_slot" />
+    <metal:block fill-slot="column_two_slot" />
+</head>
+
+<body>
+
+<tal:comment replace="nothing">
+    Please note that this template fills the "content" slot instead of the
+    "main" slot, this is done so we can provide stuff like the content
+    tabs. This also means that we have to supply things that are normally
+    present from main_template.
+</tal:comment>
+<div metal:fill-slot="author_slot" tal:define="url_unquote_plus python:modules['Products.PythonScripts.standard'].url_unquote_plus;
+                                author python:(len(request.traverse_subpath) > 0 and url_unquote_plus(request.traverse_subpath[0])) or request.get('author', None) or (member and member.getId());
+                                isOwner python:member.getId()==author;">
+    <ul class="contentViews"
+        tal:condition="isOwner">
+      <li class="selected">
+        <a href=""
+            tal:define="url_quote_plus python:modules['Products.PythonScripts.standard'].url_quote_plus;
+                        memberurl python:url_quote_plus(member.getId())"
+           tal:attributes="href string: ${portal_url}/author/${memberurl}"
+           i18n:translate="label_view">View</a>
+      </li>
+      <li>
+        <a href=""
+           tal:attributes="href string:${portal_url}/personalize_form"
+           i18n:translate="label_edit">Edit</a>
+      </li>
+    </ul>
+</div>
+    <tal:titlebarslot metal:fill-slot="titlebar-row1">
+	    <tal:titlemacrooverride metal:define-macro="itemtitle">
+		<div id="typeindicator">
+		    <img tal:attributes="src string:${portal_url}/icon-user.png"/>
+		    <tal:translate  i18n:translate="">User Profile</tal:translate>
+		</div>
+		<div id="maintitleholder"
+		    tal:define="url_unquote_plus python:modules['Products.PythonScripts.standard'].url_unquote_plus;
+				author python:(len(request.traverse_subpath) > 0 and url_unquote_plus(request.traverse_subpath[0])) or request.get('author', None) or (member and member.getId());
+			    authorinfo python: mtool.getMemberInfo(author);">
+		    <h1 id="maintitle">
+			<tal:fullname tal:condition="authorinfo/fullname" tal:content="authorinfo/fullname" />
+			<tal:username tal:condition="not: authorinfo/fullname" tal:content="author" />
+		    </h1>
+		</div>
+	    </tal:titlemacrooverride>
+    </tal:titlebarslot>
+
+<metal:main fill-slot="content"
+    tal:define="errors options/state/getErrors;">
+    <tal:main-macro metal:define-macro="main"
+                    tal:define="url_unquote_plus python:modules['Products.PythonScripts.standard'].url_unquote_plus;
+                                author python:(len(request.traverse_subpath) > 0 and url_unquote_plus(request.traverse_subpath[0])) or request.get('author', None) or (member and member.getId());
+				authorEx python:modules['ubify.cyninv2theme'].getAuthorInfo(context, author);
+				contriCount python:modules['ubify.cyninv2theme.portlets.statistics'].getContributionCount(context,None,None, author);
+				commentCount python:modules['ubify.cyninv2theme.portlets.statistics'].getCommentCount(context,None,None, author);
+                                portrait python: mtool.getPersonalPortrait(author);
+                                portal_types portal/portal_types;
+                                authorinfo python: mtool.getMemberInfo(author);
+                                rooturl python:modules['ubify.cyninv2theme'].getRootURL();				
+				ploneview here/@@plone;">
+
+        <tal:noAuthor condition="not: authorinfo">
+        <dl class="portalMessage error">
+            <dt i18n:translate="">
+                Error
+            </dt>
+            <dd i18n:translate="text_no_user_by_name">
+                No user by that name.
+            </dd>
+        </dl>
+        </tal:noAuthor>
+
+
+
+        <tal:haveAuthor condition="authorinfo">
+
+    <div class="documentEditable"
+         tal:define="isOwner python:member.getId()==author"
+         tal:attributes="class python: test(isOwner, 'documentEditable', '')">
+
+        <div class="documentContent userprofile" id="content">
+
+            <a name="documentContent"></a>
+
+            <div metal:use-macro="here/global_statusmessage/macros/portal_message">
+                Portal status message
+            </div>
+
+
+                <div class="subcolumns">
+                    <div class="c62l">
+			<div class="infobox">
+			    <div class="listitemdetailleftblockholder">
+				<div class="infoboxavatar">
+				    <img src=""
+					alt=""
+					class="portraitPhoto"
+					tal:attributes="src portrait/absolute_url" />
+				</div>
+				<div class="infoboxrow" tal:condition="authorinfo/description">
+				    <label i18n:translate="">Bio:</label>
+				    <span tal:content="structure python:modules['ubify.cyninv2theme'].getWebIntelligentTextToHTML(authorinfo['description'])" />
+				</div>
+				<div class="infoboxrow" tal:define="designation python:authorEx.getProperty('designation');" tal:condition="designation">
+				    <label i18n:translate="">Designation:</label>
+				    <span tal:content="designation" />
+				</div>
+				<div class="infoboxrow">
+				    <label i18n:translate="">Username:</label>
+				    <span tal:content="author"/>
+				</div>
+				<div class="infoboxrow" tal:condition="authorinfo/location">
+				    <label i18n:translate="">Location:</label>
+				    <span tal:content="authorinfo/location" />
+				</div>
+				<div class="infoboxrow" tal:condition="authorinfo/language">
+				    <label i18n:translate="">Language:</label>
+				    <span tal:content="authorinfo/language" />
+				</div>
+				<div class="infoboxrow"  tal:condition="authorinfo/home_page">
+				    <label i18n:translate="">Personal Website:</label>
+				    <a tal:attributes="href authorinfo/home_page" target="_blank" tal:content="authorinfo/home_page"/>
+				</div>
+				<div class="infoboxrow" tal:define="twitterusername python:authorEx.getProperty('twitterusername');" tal:condition="twitterusername">
+				    <label i18n:translate="">Twitter Page:</label>
+				    <a target="_blank" tal:attributes="href string:http://twitter.com/${twitterusername}" tal:content="string:http://twitter.com/${twitterusername}" />
+				</div>
+				<div class="infoboxrow" tal:define="phone_mobile python:authorEx.getProperty('phone_mobile');" tal:condition="phone_mobile">
+				    <label i18n:translate="">Mobile:</label>
+				    <span tal:content="phone_mobile" />
+				</div>
+				<div class="infoboxrow" tal:define="phone_office python:authorEx.getProperty('phone_office');" tal:condition="phone_office">
+				    <label i18n:translate="">Phone - Office:</label>
+				    <span tal:content="phone_office" />
+				</div>
+				<div class="infoboxrow" tal:define="phone_home python:authorEx.getProperty('phone_home');" tal:condition="phone_home">
+				    <label i18n:translate="">Phone - Home:</label>
+				    <span tal:content="phone_home"/>
+				</div>
+				<div class="infoboxrow" tal:condition="contriCount">
+				    <label i18n:translate="">Total Contributions:</label>
+				    <span tal:content="contriCount" />
+				</div>
+				<div class="infoboxrow" tal:condition="commentCount">
+				    <label i18n:translate="">Total Comments:</label>
+				    <span tal:content="commentCount" />
+				</div>
+				<div class="infoboxrow mailform">
+				    <tal:feedbackForm
+					tal:condition="not:isAnon"
+					tal:define="email_from_address portal/email_from_address">
+
+				    <tal:noemailsetup tal:condition="not:email_from_address">
+					<p class="discreet"
+					   i18n:translate="text_no_email_setup">
+					    This site doesn't have a valid email setup, so you cannot use
+					    any contact forms.
+					</p>
+				    </tal:noemailsetup>
+
+				    <tal:emailsetup tal:condition="email_from_address">
+					<tal:owner tal:condition="not:isOwner">
+					    <a class="smallwhitebutton sendemailexpand" i18n:translate="">Send Email</a>
+					    <form name="feedback_form"
+						  action=""
+						  method="post"
+						  tal:attributes="action string:$here_url/$template_id" style="display:none"
+						  id="emailfeedbackform"
+						  >
+
+					    <fieldset>
+
+
+					    <div class="field"
+					      tal:define="error errors/subject|nothing"
+					      tal:attributes="class python:test(error, 'field error', 'field')">
+					      <label for="subject" i18n:translate="label_subject">
+						Subject
+					      </label>
+
+					      <span class="fieldRequired" title="Required"
+						      i18n:attributes="title title_required;"
+						      i18n:translate="label_required">(Required)</span>
+
+					      <br />
+					      <input type="text"
+						     id="subject"
+						     name="subject"
+						     size="25"
+						     value=""
+						     class="inputboxes"
+						     tal:attributes="value request/subject|nothing"
+						     />
+					    </div>
+					    <div class="field"
+					      tal:define="error errors/message|nothing"
+					      tal:attributes="class python:test(error, 'field error', 'field')">
+					      <label for="message" i18n:translate="label_message">
+						Message
+					      </label>
+
+					      <span class="fieldRequired" title="Required"
+						      i18n:attributes="title title_required;"
+						      i18n:translate="label_required">(Required)</span>
+
+					      <textarea name="message"
+							id="feedbackmessage"
+							rows="5"
+							cols="25"
+							tal:content="request/message|nothing"
+							></textarea>
+					    </div>
+
+					    <div class="formControls">
+
+						<input class="context"
+						       type="submit"
+						       name="form.button.Send"
+						       value="Send"
+						       i18n:attributes="value label_send;" />
+
+					    </div>
+
+					    </fieldset>
+
+					    <input type="hidden" name="author" value="" tal:attributes="value author" />
+					    <input type="hidden" name="referer" value=""
+					      tal:attributes="value python:request.get('referer', request.get('HTTP_REFERER', 'unknown url') )" />
+					    <input type="hidden" name="form.submitted" value="1" />
+
+					    </form>
+					</tal:owner>
+				    </tal:emailsetup>
+				    </tal:feedbackForm>
+				</div>
+			    </div>
+			</div>
+			<div class="listitemdetailleftblockholder profilebelow">
+			    <tal:recentcontributionforuser tal:condition="contriCount">
+                                <fieldset class="contentheaderlabel"><legend i18n:translate="">Recent Items</legend></fieldset>
+                                <div id="siteupdatesportlet">
+                                    <ul class="vertical-tabs">
+                                        <li class="verticaltab all"><a href="#siteupdatesportlet-fragment-1" i18n:translate="">All</a></li>
+					<li class="verticaltab audio"><a href="#siteupdatesportlet-fragment-10" i18n:translate="">Audio</a></li>
+					<li class="verticaltab blog"><a href="#siteupdatesportlet-fragment-4" i18n:translate="">Blog</a></li>
+                                        <li class="verticaltab links"><a href="#siteupdatesportlet-fragment-7" i18n:translate="">Bookmarks</a></li>
+					<li class="verticaltab discussion"><a href="#siteupdatesportlet-fragment-9" i18n:translate="">Discussions</a></li>
+					<li class="verticaltab events"><a href="#siteupdatesportlet-fragment-6" i18n:translate="">Events</a></li>
+					<li class="verticaltab files"><a href="#siteupdatesportlet-fragment-3" i18n:translate="">Files</a></li>                                        
+                                        <li class="verticaltab images"><a href="#siteupdatesportlet-fragment-5" i18n:translate="">Images</a></li>
+					<li class="verticaltab video"><a href="#siteupdatesportlet-fragment-8" i18n:translate="">Video</a></li>
+					<li class="verticaltab wiki"><a href="#siteupdatesportlet-fragment-2" i18n:translate="">Wiki</a></li>
+                                    </ul>
+                                    <div id="siteupdatesportlet-fragment-1" class="vertical-tabs-panel">
+                                        <tal:block tal:define="results python:modules['ubify.cyninv2theme.portlets.statistics'].getRecentContributionForUser(context,author);
+                                                               folderContents python:test(len(results) > 0,results[0],[]);
+                                                               morerecordscount python:test(len(results) > 1, results[1],0);
+                                                               more_url python:test(len(results) > 2, results[2] % ('/app_all'),'#');">
+                                            <div metal:use-macro="context/recentupdate_macro/macros/listing"/>
+                                            <div class="morelinkrow">
+                                                <a class="recentportletxmore smallwhitebutton smallwhitebutton" href="#" tal:condition="python:morerecordscount > 0"
+                                                    tal:attributes="href string:${more_url}">
+                                                    <span tal:content="morerecordscount"></span><tal:translate  i18n:translate=""> More &raquo;</tal:translate>
+                                                </a>
+                                            </div>
+                                        </tal:block>
+                                    </div>
+                                    <div id="siteupdatesportlet-fragment-2" class="vertical-tabs-panel" style="display:none;">
+                                        <tal:block tal:define="results python:modules['ubify.cyninv2theme.portlets.statistics'].getRecentContributionForUser(context,author,'Document');
+                                                               folderContents python:test(len(results) > 0,results[0],[]);
+                                                               morerecordscount python:test(len(results) > 1, results[1],0);
+                                                               more_url python:test(len(results) > 2, results[2] % ('/app_wiki'),'#');">
+                                            <div metal:use-macro="context/recentupdate_macro/macros/listing"/>
+                                            <div class="morelinkrow">
+                                                <a class="recentportletxmore smallwhitebutton" href="#" tal:condition="python:morerecordscount > 0"
+                                                    tal:attributes="href string:${more_url}">
+                                                    <span tal:content="morerecordscount"></span> <tal:translate i18n:translate="">More &raquo;</tal:translate>
+                                                </a>
+                                            </div>
+                                        </tal:block>
+                                    </div>
+                                    <div id="siteupdatesportlet-fragment-3" class="vertical-tabs-panel" style="display:none;">
+                                        <tal:block tal:define="results python:modules['ubify.cyninv2theme.portlets.statistics'].getRecentContributionForUser(context,author,'File');
+                                                               folderContents python:test(len(results) > 0,results[0],[]);
+                                                               morerecordscount python:test(len(results) > 1, results[1],0);
+                                                               more_url python:test(len(results) > 2, results[2] % ('/app_files'),'#');">
+                                            <div metal:use-macro="context/recentupdate_macro/macros/listing"/>
+                                            <div class="morelinkrow">
+                                                <a class="recentportletxmore smallwhitebutton" href="#" tal:condition="python:morerecordscount > 0"
+                                                    tal:attributes="href string:${more_url}">
+                                                    <span tal:content="morerecordscount"></span> <tal:translate i18n:translate="">More &raquo;</tal:translate>
+                                                </a>
+                                            </div>
+                                        </tal:block>
+                                    </div>
+                                    <div id="siteupdatesportlet-fragment-4" class="vertical-tabs-panel" style="display:none;">
+                                        <tal:block tal:define="results python:modules['ubify.cyninv2theme.portlets.statistics'].getRecentContributionForUser(context,author,'Blog Entry');
+                                                               folderContents python:test(len(results) > 0,results[0],[]);
+                                                               morerecordscount python:test(len(results) > 1, results[1],0);
+                                                               more_url python:test(len(results) > 2, results[2] % ('/app_blog'),'#');">
+                                            <div metal:use-macro="context/recentupdate_macro/macros/listing"/>
+                                            <div class="morelinkrow">
+                                                <a class="recentportletxmore smallwhitebutton" href="#" tal:condition="python:morerecordscount > 0"
+                                                    tal:attributes="href string:${more_url}">
+                                                    <span tal:content="morerecordscount"></span> <tal:translate i18n:translate="">More &raquo;</tal:translate>
+                                                </a>
+                                            </div>
+                                        </tal:block>
+                                    </div>
+                                    <div id="siteupdatesportlet-fragment-5" class="vertical-tabs-panel" style="display:none;">
+                                        <tal:block tal:define="results python:modules['ubify.cyninv2theme.portlets.statistics'].getRecentContributionForUser(context,author,'Image');
+                                                               folderContents python:test(len(results) > 0,results[0],[]);
+                                                               morerecordscount python:test(len(results) > 1, results[1],0);
+                                                               more_url python:test(len(results) > 2, results[2] % ('/app_images'),'#');">
+                                            <div metal:use-macro="context/recentupdate_macro/macros/listing"/>
+                                            <div class="morelinkrow">
+                                                <a class="recentportletxmore smallwhitebutton" href="#" tal:condition="python:morerecordscount > 0"
+                                                    tal:attributes="href string:${more_url}">
+                                                    <span tal:content="morerecordscount"></span> <tal:translate i18n:translate="">More &raquo;</tal:translate>
+                                                </a>
+                                            </div>
+                                        </tal:block>
+                                    </div>
+                                    <div id="siteupdatesportlet-fragment-6" class="vertical-tabs-panel" style="display:none;">
+                                        <tal:block tal:define="results python:modules['ubify.cyninv2theme.portlets.statistics'].getRecentContributionForUser(context,author,'Event');
+                                                               folderContents python:test(len(results) > 0,results[0],[]);
+                                                               morerecordscount python:test(len(results) > 1, results[1],0);
+                                                               more_url python:test(len(results) > 2, results[2] % ('/app_calendar'),'#');">
+                                            <div metal:use-macro="context/recentupdate_macro/macros/listing"/>
+                                            <div class="morelinkrow">
+                                                <a class="recentportletxmore smallwhitebutton" href="#" tal:condition="python:morerecordscount > 0"
+                                                    tal:attributes="href string:${more_url}">
+                                                    <span tal:content="morerecordscount"></span> <tal:translate i18n:translate="">More &raquo;</tal:translate>
+                                                </a>
+                                            </div>
+                                        </tal:block>
+                                    </div>
+                                    <div id="siteupdatesportlet-fragment-7" class="vertical-tabs-panel" style="display:none;">
+                                        <tal:block tal:define="results python:modules['ubify.cyninv2theme.portlets.statistics'].getRecentContributionForUser(context,author,'Link');
+                                                               folderContents python:test(len(results) > 0,results[0],[]);
+                                                               morerecordscount python:test(len(results) > 1, results[1],0);
+                                                               more_url python:test(len(results) > 2, results[2] % ('/app_links'),'#');">
+                                            <div metal:use-macro="context/recentupdate_macro/macros/listing"/>
+                                            <div class="morelinkrow">
+                                                <a class="recentportletxmore smallwhitebutton" href="#" tal:condition="python:morerecordscount > 0"
+                                                    tal:attributes="href string:${more_url}">
+                                                    <span tal:content="morerecordscount"></span> <tal:translate i18n:translate="">More &raquo;</tal:translate>
+                                                </a>
+                                            </div>
+                                        </tal:block>
+                                    </div>
+<!--
+                                    <div id="siteupdatesportlet-fragment-8" class="vertical-tabs-panel" style="display:none;">
+                                        <tal:block tal:define="results python:modules['ubify.cyninv2theme.portlets.statistics'].getRecentContributionForUser(context,author,'Video');
+                                                               folderContents python:test(len(results) > 0,results[0],[]);
+                                                               morerecordscount python:test(len(results) > 1, results[1],0);
+                                                               more_url python:test(len(results) > 2, results[2] % ('/app_videos'),'#');">
+                                            <div metal:use-macro="context/recentupdate_macro/macros/listing"/>
+                                            <div class="morelinkrow">
+                                                <a class="recentportletxmore smallwhitebutton" href="#" tal:condition="python:morerecordscount > 0"
+                                                    tal:attributes="href string:${more_url}">
+                                                    <span tal:content="morerecordscount"></span> <tal:translate i18n:translate="">More &raquo;</tal:translate>
+                                                </a>
+                                            </div>
+                                        </tal:block>
+                                    </div>
+-->
+                                    <div id="siteupdatesportlet-fragment-9" class="vertical-tabs-panel" style="display:none;">
+                                        <tal:block tal:define="results python:modules['ubify.cyninv2theme.portlets.statistics'].getRecentContributionForUser(context,author,'Discussion');
+                                                               folderContents python:test(len(results) > 0,results[0],[]);
+                                                               morerecordscount python:test(len(results) > 1, results[1],0);
+                                                               more_url python:test(len(results) > 2, results[2] % ('/app_discussions'),'#');">
+                                            <div metal:use-macro="context/recentupdate_macro/macros/listing"/>
+                                            <div class="morelinkrow">
+                                                <a class="recentportletxmore smallwhitebutton" href="#" tal:condition="python:morerecordscount > 0"
+                                                    tal:attributes="href string:${more_url}">
+                                                    <span tal:content="morerecordscount"></span> <tal:translate i18n:translate="">More &raquo;</tal:translate>
+                                                </a>
+                                            </div>
+                                        </tal:block>
+                                    </div>
+                                    <div id="siteupdatesportlet-fragment-10" class="vertical-tabs-panel" style="display:none;">
+                                        <tal:block tal:define="results python:modules['ubify.cyninv2theme.portlets.statistics'].getRecentContributionForUser(context,author,'Audio');
+                                                               folderContents python:test(len(results) > 0,results[0],[]);
+                                                               morerecordscount python:test(len(results) > 1, results[1],0);
+                                                               more_url python:test(len(results) > 2, results[2] % ('/app_audios'),'#');">
+                                            <div metal:use-macro="context/recentupdate_macro/macros/listing"/>
+                                            <div class="morelinkrow">
+                                                <a class="recentportletxmore smallwhitebutton" href="#" tal:condition="python:morerecordscount > 0"
+                                                    tal:attributes="href string:${more_url}">
+                                                    <span tal:content="morerecordscount"></span> <tal:translate i18n:translate="">More &raquo;</tal:translate>
+                                                </a>
+                                            </div>
+                                        </tal:block>
+                                    </div>
+                                </div>
+                            </tal:recentcontributionforuser>
+                            <tal:tagsforuser tal:define="URLsuffix python:modules['ubify.cyninv2theme'].getListingTemplateForContextParent(context);
+                                                         mostusedtagsforuser python:modules['ubify.cyninv2theme.portlets.statistics'].getMostUsedTagsForUser(context,author)[:20];
+                                                         dummy python:mostusedtagsforuser.sort(lambda x,y: cmp(x['tagname'].lower(),y['tagname'].lower()),reverse=False);"
+                                             tal:condition="mostusedtagsforuser">
+                                <div id="tagsportlet-tagcloud">
+                                    <fieldset class="contentheaderlabel"><legend i18n:translate="">Top User Tags</legend></fieldset>
+                                    <div class="filterpaneltagsholder">
+                                        <span tal:repeat="tag mostusedtagsforuser">
+                                        <a class="portlettag"
+                                           rel="tag"
+                                           tal:define="item_class python:'portlettag';"
+                                           tal:attributes="href string:${portal_url}${rooturl}/${URLsuffix}?Subject%3Alist=${tag/tagname}&modifiers%3Alist=${author};class item_class;"><tal:block
+                                            tal:replace="tag/tagname" /><span class="filterpaneltagcount" tal:content="tag/count" /></a>
+                                        </span>
+                                    </div>
+                                </div>
+                                <tal:block tal:replace="structure string:<script type='text/javascript'>" />
+                                <tal:block tal:replace="structure string:var tagsportlet_arrTagsForCloud = [" />
+                                <tal:block tal:repeat="tag mostusedtagsforuser">
+                                    <tal:block tal:define="tagname python:modules['ubify.cyninv2theme'].escapeSingleQuote(tag['tagname']);" tal:replace="structure string:{tag:'${tagname}',count:${tag/count}}"/>
+                                    <tal:separator condition="not: repeat/tag/end"><tal:block tal:replace="structure string:,"/></tal:separator>
+                                </tal:block>
+                                <tal:block tal:replace="structure string:]" />
+                                <tal:block tal:replace="structure string:</script>" />
+                            </tal:tagsforuser>
+                            <tal:topratedforuser tal:define="utool portal_url;
+                                                            mtool context/portal_membership;
+                                                            rtool here/portal_ratings;
+                                                            records python:10;
+                                                            results python:modules['ubify.cyninv2theme.portlets.statistics'].getTopRatedContentForUser(context,author);
+                                                            brains python:test(len(results) > 0,results[0],[]);
+                                                            alltopratedresults python: rtool.getTopRatingsAll(brains);
+                                                            topratedresults python:alltopratedresults[:records];
+                                                            showmorelink python:len(alltopratedresults) > records;
+                                                            more_url python:test(len(results) > 1, results[1] % ('/app_all'),'#');" tal:condition="topratedresults">
+                                <div id="topratedandmostvisitedportlet">
+                                    <fieldset class="contentheaderlabel"><legend i18n:translate="">Top Rated</legend></fieldset>
+                                    <div id="topratedandmostvisitedportlet-fragment-1">
+                                        <tal:topratingmacro metal:use-macro="here/portlet_top_ratings/macros/portlet" />
+                                    </div>
+                                </div>
+                            </tal:topratedforuser>                            
+                            <tal:recentcommentsforuser tal:define="results python:modules['ubify.cyninv2theme.portlets.statistics'].getRecentContributionForUser(context,author,'Discussion Item');
+                                                       commentsContent python:test(len(results) > 0,results[0],[]);
+                                                       morerecordscount python:test(len(results) > 1, results[1],0);
+                                                       more_url python:test(len(results) > 2, results[2],'#');" tal:condition="commentsContent">
+                                <fieldset class="contentheaderlabel"><legend i18n:translate="">Recent Comments</legend></fieldset>
+                                <div class="recentupdateitemsblock">
+                                <tal:items tal:define="plone_view context/@@plone;
+                                                       getIcon nocall:plone_view/getIcon;
+                                                       normalizeString nocall:plone_view/normalizeString;
+                                                       toLocalizedTime nocall:plone_view/toLocalizedTime;
+                                                       use_view_action here/portal_properties/site_properties/typesUseViewActionInListings|python:();"
+                                           tal:repeat="obj commentsContent">
+
+                                    <div class="recentupdateitem"
+                                        tal:define="oddrow repeat/obj/odd;
+                                                    item_icon python:getIcon(obj);
+                                                    item_wf_state obj/review_state;
+                                                    item_wf_state_class python:'state-' + normalizeString(item_wf_state);
+                                                    item_creator obj/Creator;
+                                                    mtool python:context.portal_membership;
+                                                    item_url obj/getURL;
+                                                    item_type obj/portal_type;
+                                                    item_url python:here.evalURL(item_type,use_view_action,item_url);
+                                                    full_item obj/getObject"
+                                        tal:attributes="class python:oddrow and 'recentupdateitem even' or 'recentupdateitem odd'">
+                                        <div class="recentupdateitemtitlerow">
+                                        <a href=""
+                                           tal:attributes="href string:${item_url};
+                                                           class string:${item_wf_state_class}">
+                                            <tal:title tal:content="structure python:ploneview.cropText(full_item.cooked_text,140)" />
+                                        </a>
+                                        </div>                                        
+                                        <div class="recentupdateitemauthorrow">
+                                            <span class="" tal:define="displaydate python:toLocalizedTime(obj.ModificationDate,True)" tal:attributes="title string:${displaydate};" tal:content="displaydate" />
+                                        </div>
+                                    </div>
+                                </tal:items>
+                                </div>
+                                <div class="morelinkrow">
+                                    <a class="smallwhitebutton recentportletxmore" tal:condition="python:morerecordscount > 0"
+                                        tal:attributes="href string:${more_url}">
+                                        <span tal:content="morerecordscount"></span> <tal:translate i18n:translate="">More &raquo;</tal:translate>
+                                    </a>
+                                </div>
+                            </tal:recentcommentsforuser>
+			</div>
+                    </div>
+                    <div class="c38r">
+			<div class="listitemdetailrightblockholder">
+                            <tal:recentmessagesforuser tal:define="results python:modules['ubify.cyninv2theme.portlets.statistics'].getRecentContributionForUser(context,author,'StatuslogItem',records=20);
+                                                           folderContents python:test(len(results) > 0,results[0],[]);
+                                                           morerecordscount python:test(len(results) > 1, results[1],0);
+                                                           more_url python:test(len(results) > 2, results[2] % ('/app_statuslog'),'#');
+                                                           showonlydate python:True;
+                                                           currentstatusmessageforuser python:modules['ubify.cyninv2theme'].getCurrentStatusMessageForUser(portal,author);
+                                                           statusmessageid python:currentstatusmessageforuser and currentstatusmessageforuser.UID or None;
+							   showitemicon python:False;"
+                                                        tal:condition="folderContents">
+                                <div class="profilestatuslog">
+                                    <fieldset class="contentheaderlabel profilestatuslog"><legend><img tal:attributes="src string:${portal_url}/status_online.png;"/><tal:translate i18n:translate="">Status Log</tal:translate></legend></fieldset>
+                                    <tal:block>
+					<label i18n:translate="">Current Status:</label>
+                                        <div metal:use-macro="context/recentupdate_macro/macros/listing"/>
+                                        <div class="morelinkrow">
+                                            <a class="recentportletxmore smallwhitebutton" href="#" tal:condition="python:morerecordscount > 0"
+                                                tal:attributes="href string:${more_url}">
+                                                <span tal:content="morerecordscount"></span> <tal:translate i18n:translate="">More &raquo;</tal:translate>
+                                            </a>
+                                        </div>
+                                    </tal:block>
+                                </div>
+                            </tal:recentmessagesforuser>
+			</div>
+		    </div>
+		</div>
+            <div class="formControls" tal:condition="isAnon">
+            <form
+              tal:define="pss modules/Products/PythonScripts/standard"
+              tal:attributes="action string:$portal_url/login_form">
+               <input class="standalone"
+                   type="submit"
+                   value="Log in to send feedback"
+                   i18n:attributes="value label_login_to_send_feedback;"
+                   />
+            </form>
+            </div>
+        </div>
+    </div> <!-- end simulated tabs -->
+
+    </tal:haveAuthor>
+
+    </tal:main-macro>
+
+</metal:main>
+
+</body>
+</html>

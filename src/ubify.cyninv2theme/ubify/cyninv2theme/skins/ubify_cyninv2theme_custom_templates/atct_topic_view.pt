@@ -1,0 +1,78 @@
+<tal:comment replace="nothing">
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see http://www.gnu.org/licenses/.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+</tal:comment>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="cynin">
+<head>
+    <metal:block metal:fill-slot="head_slot">
+        <tal:rssmacro metal:use-macro="here/rss_macro/macros/rss_list_macro" />
+    </metal:block>
+</head>
+<body>
+
+<div metal:fill-slot="contentwithnopadding">
+<metal:main_macro define-macro="main">
+    <metal:body define-macro="body_macro"
+                tal:define="kssClassesView context/@@kss_field_decorator_view;
+                            getKssClasses nocall:kssClassesView/getKssClassesInlineEditable;
+                            templateId template/getId">
+        <metal:listingmacro define-macro="listing">
+        <tal:topiccontents define="topicContents python:here.queryCatalog(batch=True);
+                                   batch topicContents;folderContents topicContents;">
+            <div metal:use-macro="context/all_listing/macros/listing"/>
+        </tal:topiccontents>
+        </metal:listingmacro>
+    </metal:body>
+
+    <metal:body define-macro="folderlisting_macro">
+        <tal:subtopics condition="here/hasSubtopics|nothing"
+                       define="folderContents here/getFolderContents;passed_id string:sublisting">
+            <fieldset class="contentheaderlabel"><legend i18n:translate="header_contained_smart_collections">
+                Contained Smart Collections:
+            </legend></fieldset>
+            <metal:list metal:use-macro="context/all_listing/macros/listing"/>
+        </tal:subtopics>
+    </metal:body>
+</metal:main_macro>
+
+</div>
+
+</body>
+</html>

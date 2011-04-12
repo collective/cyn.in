@@ -1,0 +1,48 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xml:lang="en" lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="cynin">
+<head>
+    <metal:block metal:fill-slot="head_slot">
+        <tal:rssmacro metal:use-macro="here/rss_macro/macros/rss_macro" />
+    </metal:block>
+</head>
+<body>
+
+<div metal:fill-slot="content">
+    <tal:main-macro metal:define-macro="main"
+          tal:define="kssClassesView context/@@kss_field_decorator_view;
+                      getKssClasses nocall:kssClassesView/getKssClassesInlineEditable;
+                      templateId template/getId;
+                      text python:here.CookedBody(stx_level=2);
+                      len_text python:len(text.strip())">
+
+        <div tal:replace="structure provider:plone.abovecontenttitle" />
+        <div tal:replace="structure provider:plone.abovecontentbody" />
+            <div id="blogcontentholder" class="maincontentholder">
+                <p tal:condition="python: not len_text and is_editable"
+                   i18n:translate="no_body_text"
+                   class="discreet">
+                    This item does not have any body text, click the edit tab to change it.
+                </p>
+                <div metal:define-macro="text-field-view"
+                     id="parent-fieldname-text" class="stx"
+                     tal:define="kss_class python:getKssClasses('text',
+                                 templateId=templateId, macro='text-field-view');
+                                 text text|here/getText|nothing"
+                     tal:condition="text"
+                     tal:attributes="class python:test(here.Format() in ('text/structured',
+                                                           'text/x-rst', ), 'stx' + kss_class, 'plain' + kss_class  + ' blogentry_body')">
+                    <div metal:define-slot="inside" tal:replace="structure text">
+                </div>
+            </div>
+        </div>
+        <tal:belowcontentmacro metal:use-macro="here/belowcontent_macro/macros/below_content" />
+    </tal:main-macro>
+</div>
+
+</body>
+</html>

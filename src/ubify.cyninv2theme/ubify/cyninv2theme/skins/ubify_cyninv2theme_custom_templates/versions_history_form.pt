@@ -1,0 +1,253 @@
+<tal:comment replace="nothing">
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see http://www.gnu.org/licenses/.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+</tal:comment>
+<html metal:use-macro="here/main_template/macros/master" i18n:domain="cynin">
+
+  <tal:block metal:fill-slot="head_slot">
+        <link rel="stylesheet" type="text/css" href="compare.css" />
+  </tal:block>
+
+  <div metal:fill-slot="contentwithnopadding"
+       tal:define="pr nocall:here/portal_repository;
+                   version_id python:request.get('version_id', None);
+                   history python:pr.getHistory(here, countPurged=False);"
+                   tal:condition="python: pr.isVersionable(context)">
+
+    <div class="documentFirstDescription">
+        <span i18n:translate="box_last_modified">
+          Last modified
+        </span>
+        <span tal:replace="python:here.toLocalizedTime(here.ModificationDate(),long_format=1)"
+              tal:on-error="string:-" >
+          August 16, 2001 at 23:35:59
+        </span>
+    </div>
+
+    <form action="."
+        method="post"
+        tal:condition="python: history"
+        tal:attributes="action string:$here_url/versions_history">
+
+        <table id="sortable"
+            class="listing versionhistory"
+            summary="Content history"
+            cellpadding="0" cellspacing="0"
+            tal:define="current python:context.checkUpToDate(history)"
+            >
+
+            <thead>
+                <tr>
+                  <th><tal:title i18n:translate="listingheader_key"
+                      >Revision</tal:title></th>
+                  <th><tal:title i18n:translate="listingheader_performed_by"
+                      >Performed by</tal:title></th>
+                  <th><tal:title i18n:translate="listingheader_date_and_time"
+                  >Date and Time</tal:title></th>
+                  <th><tal:title i18n:translate="listingheader_comment"
+                      >Comment</tal:title></th>
+                  <th class="nosort"><tal:title i18n:translate="listingheader_actions"
+                      >Actions</tal:title></th>
+                </tr>
+            </thead>
+
+            <tbody tal:define="isModified current/isModified;
+                               reverted_vid current/reverted_vid;
+                               isReverted current/isReverted">
+                <tr class="CurrentVersion odd"
+                    tal:condition="isModified">
+                  <td class="VersionId"
+                      tal:define="id current/version_id;">
+                    <span i18n:translate="">Working Copy</span>
+                  </td>
+                  <td class="VersionUser">
+                    <span tal:replace="here/Creator">user</span>
+                  </td>
+                  <td class="VersionDate">
+                    <span tal:replace="python:here.toLocalizedTime(here.ModificationDate(),long_format=1)">2004/10/21 03:15 PM</span>
+                  </td>
+                  <td class="VersionComment">
+                    <span i18n:translate="label_modifications_from_revision">
+                      modifications from revision
+                      <span tal:replace="reverted_vid" i18n:name="version_id" />
+                    </span>
+                    <span tal:condition="isReverted"
+                           i18n:translate="label_previously_reverted">
+                      (previously reverted)
+                    </span>
+                  </td>
+                  <td class="VersionActions">
+                    <ul>
+                        <li tal:condition="exists:here/portal_diff">
+                            <a href=""
+                               style="text-decoration: none"
+                               tal:attributes="href string:$here_url/version_diff?version_id1=current&amp;version_id2=${reverted_vid}">
+                              <span tal:condition="isReverted"
+                                    i18n:translate="label_compare_to_revision">
+                                Compare to revision
+                                <span tal:replace="reverted_vid"
+                                      i18n:name="version_id" />
+                              </span>
+                              <span tal:condition="not:isReverted"
+                                    i18n:translate="label_compare_to_previous_revision">
+                                Compare to previous revision
+                              </span>
+                            </a>
+                        </li>
+                    </ul>
+                  </td>
+                </tr>
+                <tal:block repeat="vdata history">
+                <tr tal:define="id string:${vdata/version_id};
+                                current_version python:not current['isModified'] and current['version_id']==vdata.version_id;
+                                even repeat/vdata/even;"
+                    tal:attributes="class python:(current_version and 'CurrentVersion' or '') + (even and ' even' or 'odd')">
+                  <td class="VersionId">
+                    <span tal:condition="current_version" i18n:translate="">Working Copy</span>
+                    <span tal:condition="not:current_version" tal:content="id">1</span>
+                    <a href="#"
+                       class="version-table-version"
+                       tal:attributes="href string:$here_url/versions_history_form?version_id=${id}"
+                       tal:condition="python:version_id!=id and not current_version"
+                       i18n:translate="label_preview_version_link">(preview)</a>
+                    <a href="#"
+                       class="version-table-version"
+                       tal:attributes="href string:$here_url/versions_history_form?version_id=${id}#version_preview"
+                       tal:condition="python:version_id==id"
+                       i18n:translate="label_preview_version_below">(jump down)</a>
+                  </td>
+                  <td class="VersionUser">
+                    <span tal:content="vdata/sys_metadata/principal"><tal:comment replace="nothing">francesco</tal:comment></span>
+                  </td>
+                  <td class="VersionDate">
+                    <span tal:content="python:here.toLocalizedTime(vdata.sys_metadata['timestamp'],long_format=1)"><tal:comment replace="nothing">2004/10/21 03:15 PM</tal:comment></span>
+                  </td>
+                  <td><span tal:content="vdata/comment"><tal:comment replace="nothing">Draft version ready for comments from the group.</tal:comment></span>
+                  </td>
+                  <td class="VersionActions">
+                    <ul>
+                        <tal:diffs condition="exists:here/portal_diff">
+                        <li tal:condition="not:current_version">
+                            <a href=""
+                               style="text-decoration: none"
+                               tal:attributes="href string:$here_url/version_diff?version_id1=current&amp;version_id2=${id}"
+                               i18n:translate="label_compare_current">
+                            Compare to current revision
+                            </a>
+                        </li>
+                        <li tal:condition="not:repeat/vdata/end">
+                            <a href=""
+                               style="text-decoration: none"
+                               tal:define="prev_ver python:str(int(id)-1)"
+                               tal:attributes="href string:$here_url/version_diff?version_id1=${id}&amp;version_id2=${prev_ver}"
+                               i18n:translate="label_compare_previous">
+                            Compare to previous revision
+                            </a>
+                        </li>
+                        </tal:diffs>
+                        <li tal:condition="not:current_version">
+                            <a href=""
+                               style="text-decoration: none"
+                               tal:attributes="href string:$here_url/revertversion?version_id=${id}"
+                               i18n:translate="label_revert">
+                        Revert to this revision
+                            </a>
+                        </li>
+                    </ul>
+                  </td>
+                </tr>
+                </tal:block>
+            </tbody>
+          </table>
+
+    </form>
+
+    <form action="#"
+        method="post"
+        tal:attributes="action string:$here_url/saveasnewversion"
+        tal:condition="not: python:pr.supportsPolicy(here,'at_edit_autoversion')">
+
+        <fieldset>
+
+            <div class="field">
+              <label for="description"
+                    i18n:translate="label_newversion">New version</label>
+
+              <div class="formHelp" i18n:translate="help_versioncomment">
+                At any moment you can save the content you just edited as a new revision. Enter below a comment to identify the version and hit the "Save as new revision" button.
+              </div>
+              <textarea cols="60"
+                        rows="3"
+                        id="versioncomment"
+                        name="versioncomment"
+                        ></textarea>
+            </div>
+
+            <input class="context"
+                        type="submit"
+                        name="saveversion"
+                        value="Save as new revision"
+                        i18n:attributes="value button_save_as_new_version"
+                        />
+
+        </fieldset>
+
+    </form>
+
+    <a name="version_preview">
+      <label for="description"
+             tal:condition="version_id"
+             i18n:translate="label_preview_version">
+        Preview of Revision <span i18n:name="version_id" tal:replace="version_id">0</span>
+      </label>
+    </a>
+    <div style="border:solid 1px gray"
+         tal:condition="version_id">
+      <tal:block define="vdata python:pr.retrieve(here,version_id);
+                         version_view_macro python: here.get_macros(vdata);
+                         here nocall:vdata/object;
+                         context nocall:here;
+                         portal_type python:here.getPortalTypeName().lower().replace(' ', '_');
+                         object_title here/Title;
+                         suppress_preview python:True;
+                         view_macro python:version_view_macro;">
+        <metal:use_body use-macro="view_macro" />
+      </tal:block>
+    </div>
+
+  </div>
+</html>

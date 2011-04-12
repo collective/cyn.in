@@ -1,0 +1,27 @@
+plone.app.form Installation
+=======================
+
+ * When you're reading this you have probably already run 
+   ``easy_install plone.app.form``. Find out how to install setuptools
+   (and EasyInstall) here:
+   http://peak.telecommunity.com/DevCenter/EasyInstall
+
+ * Create a file called ``plone.app.form-configure.zcml`` in the
+   ``/path/to/instance/etc/package-includes`` directory.  The file
+   should only contain this::
+
+       <include package="plone.app.form" />
+
+ * Also create a file called ``plone.app.form-overrides.zcml`` in the
+   ``/path/to/instance/etc/package-includes`` directory.  The file
+   should only contain this::
+
+       <include package="plone.app.form" file="overrides.zcml" />
+
+ * If your ``/path/to/instance/etc/site.zcml`` does not contain a
+   line like:
+       
+       <includeOverrides files="package-includes/*-overrides.zcml" />
+
+   Add it before the ``<five:loadProductsOverrides />`` directive
+

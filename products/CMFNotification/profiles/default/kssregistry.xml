@@ -1,0 +1,9 @@
+<object name="portal_kss" meta_type="KSS Registry"> 
+  <kineticstylesheet
+    id="++resource++cmfnotification.kss"
+    cacheable="True"
+    compression="safe"
+    cookable="True" 
+    enabled="1"
+    expression="portal/portal_notification/isExtraSubscriptionsEnabled"/>
+</object>

@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<object name="content_type_registry" meta_type="Content Type Registry">
+ <predicate name="ATImage_ext" content_type_name="Image"
+    predicate_type="extension">
+  <argument value="jpg,jpeg,png,gif,JPG,JPEG,PNG,GIF"/>
+ </predicate>
+ <predicate name="ATDocument_ext" content_type_name="File"
+    predicate_type="extension">
+  <argument value="txt,stx,rst,rest,py"/>
+ </predicate>
+ <predicate name="application_xhtml+xml" content_type_name="File"
+    predicate_type="major_minor">
+  <argument value="application"/>
+  <argument value="xhtml+xml"/>
+ </predicate>
+ <predicate name="message_rfc822" content_type_name="File"
+    predicate_type="major_minor">
+  <argument value="message"/>
+  <argument value="rfc822"/>
+ </predicate>
+ <predicate name="text" content_type_name="File"
+    predicate_type="major_minor">
+  <argument value="text"/>
+  <argument value=""/>
+ </predicate>
+ <predicate name="audio_ext" content_type_name="Audio"
+    predicate_type="extension">
+  <argument value="mp3,wav,MP3,WAV"/>  
+ </predicate>
+ <predicate name="video_ext" content_type_name="Video"
+    predicate_type="extension">
+  <argument value="flv,mp4,FLV,MP4"/>
+ </predicate>
+</object>

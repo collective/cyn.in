@@ -1,0 +1,62 @@
+<tal:comment replace="nothing">
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see http://www.gnu.org/licenses/.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+</tal:comment>
+<tal:translate i18n:domain="cynin">
+<tal:tagsportlet tal:define="portal_url context/@@plone_portal_state/portal_url;URLsuffix python:modules['ubify.cyninv2theme'].getListingTemplateForContextParent(context);">
+    <div id="tagsportlet-tagcloud">
+        <fieldset class="contentheaderlabel"><legend i18n:translate="header_top_tags">Top Tags</legend></fieldset>
+        <div class="filterpaneltagsholder" tal:condition="view/mostusedtags">
+            <span tal:repeat="tag view/mostusedtags">
+            <a class="portlettag"
+               rel="tag"
+               tal:define="item_class python:'portlettag';"
+               tal:attributes="href string:${context/absolute_url}/${URLsuffix}?Subject%3Alist=${tag/tagname};class item_class;"><tal:block
+                tal:replace="tag/tagname" /><span class="filterpaneltagcount" tal:content="tag/count" /></a>
+            </span>
+        </div>
+    </div>
+</tal:tagsportlet>
+<tal:block tal:replace="structure string:<script type='text/javascript'>" />
+<tal:block tal:replace="structure string:var tagsportlet_arrTagsForCloud = [" />
+<tal:block tal:repeat="tag view/mostusedtags">
+    <tal:block tal:define="tagname python:modules['ubify.cyninv2theme'].escapeSingleQuote(tag['tagname']);" tal:replace="structure string:{tag:'${tagname}',count:${tag/count}}"/>
+    <tal:separator condition="not: repeat/tag/end"><tal:block tal:replace="structure string:,"/></tal:separator>
+</tal:block>
+<tal:block tal:replace="structure string:]" />
+<tal:block tal:replace="structure string:</script>" />
+</tal:translate>

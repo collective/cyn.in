@@ -1,0 +1,102 @@
+<tal:comment replace="nothing">
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see http://www.gnu.org/licenses/.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+</tal:comment>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="cynin">
+
+      <head>
+          <script type="text/javascript" metal:fill-slot="javascript_head_slot">
+          </script>
+          <metal:block fill-slot="top_slot"
+                       tal:define="dummy python:request.set('disable_border',1)" />
+          <metal:block fill-slot="column_one_slot" />
+          <metal:block fill-slot="column_two_slot" />
+      </head>
+<body>
+
+  <div metal:fill-slot="auth_slot"
+       tal:define="auth nocall:here/acl_users/credentials_cookie_auth|here/cookie_authentication|nothing;
+                   came_from request/came_from|request/HTTP_REFERER|nothing;
+                   came_from python:test(utool.isURLInPortal(came_from), came_from, None);
+                   errors options/state/getErrors;
+                   ac_name auth/name_cookie|string:__ac_name;
+                   ac_password auth/pw_cookie|string:__ac_password;
+                   ac_persist auth/persist_cookie|nothing;
+                   login_name python:request.get('login_name', request.get(ac_name, ''));">
+<tal:reallyloggedout condition="isAnon">
+	    <metal:login use-macro="here/login_form/macros/login">
+                <tal:fillslot metal:fill-slot="loginerror">
+                    <div metal:use-macro="here/global_statusmessage/macros/portal_message" />
+                    <dl class="portalMessage info">
+                        <dt i18n:translate="">
+                            Info
+                        </dt>
+                        <dd i18n:translate="portal_status_logged_out">
+                            You are now logged out.
+                        </dd>
+                    </dl>
+                </tal:fillslot>
+            </metal:login>
+</tal:reallyloggedout>
+
+<tal:notloggedoutafterall tal:condition="not: isAnon">
+	    <metal:login use-macro="here/login_form/macros/login">
+                <tal:fillslot metal:fill-slot="loginerror">
+                    <div metal:use-macro="here/global_statusmessage/macros/portal_message" />
+                    <dl class="portalMessage error">
+                        <dt i18n:translate="">
+                            Error
+                        </dt>
+                        <dd i18n:translate="portal_cannot_log_out_http_basic_auth">
+                            Cannot log out when logged in with browser authentication. Restart your web-browser to end this session.
+                        </dd>
+                    </dl>
+                </tal:fillslot>
+                <tal:fillslot metal:fill-slot="loginboxmainforminner">
+                    <tal:definemacro metal:define-macro="loginboxmainforminner" />
+                </tal:fillslot>
+            </metal:login>
+</tal:notloggedoutafterall>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,149 @@
+<tal:block tal:define="dummy python:context.REQUEST.RESPONSE.setHeader('Content-Type', 'application/atom+xml')"/><?xml version="1.0" ?>
+<?xml-stylesheet href="atom.css" type="text/css"?>
+<tal:comment replace="nothing">
+  Perhaps "context" should be replaced with "view"? [Reinout]
+</tal:comment>
+<feed xmlns="http://www.w3.org/2005/Atom"
+      xmlns:atom="http://www.w3.org/2005/Atom"
+      xmlns:dc="http://purl.org/dc/elements/1.1/"
+      xml:base=""
+      xml:lang="en"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      tal:define="feed nocall:context;
+                  results feed/getSortedFeedEntries;"
+      tal:attributes="xml:base feed/getBaseURL"
+      i18n:domain="cynin">
+  <link rel="self"
+        href=""
+        tal:attributes="href request/ACTUAL_URL" />
+  <div xmlns="http://www.w3.org/1999/xhtml">
+    <a href=""
+       tal:attributes="href string:http://www.atomenabled.org/feedvalidator/check.cgi?url=${feed/absolute_url}/atom.xml">
+      <img title="Validate my Atom feed"
+           width="88"
+           height="31"
+           src="http://www.atomenabled.org/feedvalidator/images/valid-atom.png"
+           alt="[Valid Atom]"
+           border="0px"
+           i18n:attributes="alt;title"/>
+    </a>
+    <p>
+      <span i18n:translate="atom_description">
+        This is an Atom formatted XML site feed. It is intended to be viewed in
+        a Newsreader or syndicated to another site. Please visit
+      </span>
+      <a href="http://www.atomenabled.org/"
+         i18n:translate="atom_enabled">Atom Enabled</a>
+      <span i18n:translate="atom_more_info">
+        for more info.
+      </span>
+    </p>
+  </div>
+
+  <title type="html"
+         tal:content="feed/getTitle">
+    <tal:comment replace="nothing">Title of feed</tal:comment>
+  </title>
+  <subtitle tal:content="feed/getDescription"
+            tal:condition="feed/getDescription">
+    Longer subtitle about the greatness of this magnificent epos.
+  </subtitle>
+
+  <updated tal:content="python:feed.getModifiedDate().ISO8601()">
+    <tal:comment replace="nothing">2002-10-02T10:00:00-05:00</tal:comment>
+  </updated>
+
+  <link href=""
+        tal:attributes="href feed/getWebURL"
+        rel="alternate"
+        type="text/html" />
+
+  <tal:comment condition="nothing">
+    The atom:id is defined as follows:
+
+    The "atom:id" element's content conveys a permanent, globally unique
+    identifier for the feed. It MUST NOT change over time, even if the feed is
+    relocated. atom:feed elements MAY contain an atom:id element, but MUST NOT
+    contain more than one. The content of this element, when present, MUST be a
+    URI.
+  </tal:comment>
+
+  <id tal:content="string:urn:syndication:${feed/getUID}">
+    <tal:comment replace="nothing">Really unique id</tal:comment>
+  </id>
+
+  <generator uri="http://plone.org/products/fatsyndication/"
+             version="0.1">fatsyndication</generator>
+
+  <tal:repeat repeat="feedentry results">
+
+    <entry>
+
+      <title tal:content="feedentry/getTitle">
+        <tal:comment replace="nothing">The Netherlands wins the world cup</tal:comment>
+      </title>
+
+      <link rel="alternate"
+            type="text/html"
+            href=""
+            tal:attributes="href feedentry/getWebURL" />
+
+      <link
+          tal:define="enclosure feedentry/getEnclosure"
+          tal:condition="python:enclosure is not None"
+          rel="enclosure"
+          tal:attributes="href enclosure/getURL;
+                          length enclosure/getLength;
+                          type enclosure/getType;" />
+
+      <id tal:content="string:urn:syndication:${feedentry/getUID}">
+        <tal:comment replace="nothing">urn:syndication:12345678</tal:comment>
+      </id>
+      <tal:comment replace="nothing">
+        Display either summary or content, not both.  See:
+        http://www.atomenabled.org/developers/syndication/#recommendedEntryElements
+      </tal:comment>
+      <tal:entrycontent define="has_body python:len(feedentry.getBody()) > 0">
+      <summary tal:condition="python: (not has_body) and feedentry.getDescription()"
+               tal:content="feedentry/getDescription"/>
+
+      <tal:block
+          tal:condition="has_body"
+          tal:define="text feedentry/getXhtml|nothing">
+      <content type="xhtml" xml:base="" xml:lang="en-US" xml:space="preserve"
+               tal:attributes="xml:base feed/getBaseURL"
+               tal:condition="text">
+        <div xmlns="http://www.w3.org/1999/xhtml">
+          <tal:block tal:replace="structure text"/>
+        </div>
+      </content>
+      <content type="html" xml:base="" xml:lang="en-US" xml:space="preserve"
+               tal:attributes="xml:base feed/getBaseURL"
+               tal:condition="not:text">
+          <tal:block tal:replace="structure string:&lt;![CDATA["/>
+          <tal:block tal:replace="structure feedentry/getBody"/>
+          <tal:block tal:replace="structure string:]]&gt;"/>
+      </content>
+      </tal:block>
+      </tal:entrycontent>
+
+      <author>
+        <name tal:content="feedentry/getAuthor">
+          <tal:comment replace="nothing">Marco van Basten</tal:comment>
+        </name>
+      </author>
+
+      <published tal:content="python:feedentry.getEffectiveDate().ISO8601()"></published>
+
+      <updated tal:content="python:feedentry.getModifiedDate().ISO8601()"></updated>
+
+      <tal:block repeat="category feedentry/getTags">
+        <category tal:attributes="term category"/>
+      </tal:block>
+
+    </entry>
+
+  </tal:repeat>
+
+</feed>

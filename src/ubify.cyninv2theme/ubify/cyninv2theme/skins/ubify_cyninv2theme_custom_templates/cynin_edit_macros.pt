@@ -1,0 +1,269 @@
+<metal:block use-macro="here/global_defines/macros/defines" />
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      i18n:domain="cynin">
+    <tal:cache tal:define="charset site_properties/default_charset|string:utf-8">
+      <metal:cache use-macro="here/global_cache_settings/macros/cacheheaders">
+        Get the global cache headers located in global_cache_settings.
+      </metal:cache>
+    </tal:cache>
+<body>
+    <div metal:define-macro="header">
+        <metal:block define-slot="title">
+          <dl class="portalMessage info"
+              tal:condition="here/@@plone/isDefaultPageInFolder">
+              <dt i18n:translate="">
+                  Info
+              </dt>
+              <dd i18n:translate="label_edit_default_view_container">
+                  You are editing the default view of a container. If you wanted to edit the container itself,
+                 <a href=""
+                    i18n:name="go_here"
+                    i18n:translate="label_edit_default_view_container_go_here"
+                    tal:attributes="href string:${context/aq_inner/aq_parent/absolute_url}/edit">go here</a>.
+              </dd>
+          </dl>
+         </metal:block>
+        <metal:block define-slot="extra_info" />
+    </div>
+
+    <div metal:define-macro="typedescription">
+    </div>
+
+
+    <div metal:define-macro="body"
+         tal:condition="not:isLocked"
+         tal:define="portal_type portal_type|string:unknowntype;pr nocall:here/portal_repository"
+         class="editcontentholder"
+         >
+      <form name="edit_form"
+            method="post"
+            enctype="multipart/form-data"
+            class="enableUnloadProtection enableAutoFocus atBaseEditForm enableUnlockProtection"
+            tal:attributes="action python:here.absolute_url()+'/'+template.id;
+                            id string:${portal_type}-base-edit;">
+          <metal:block define-slot="extra_top" />
+
+          <metal:block define-slot="widgets">
+            <tal:tabbed tal:condition="allow_tabbing | nothing">
+            <tal:fieldset
+                tal:define="sole_fieldset python:len(fieldsets) == 1"
+                                        tal:repeat="fieldset fieldsets"
+                                    >
+            <div class="editformfieldsetholder">
+                <div tal:content="python:modules['ubify.cyninv2theme'].getSchemaSectionName(fieldset)" 
+                        tal:attributes="id string:fieldsetlegend-${fieldset};
+                                    class python:test(fieldset in ('default','content','categorization'), 'editformheaderlegend opened', 'editformheaderlegend');
+                                    "
+                        tal:omit-tag="sole_fieldset"
+                        />
+                <fieldset tal:attributes="id string:fieldset-${fieldset};
+                          class python:test(fieldset in ('default','content','categorization'), 'editformfieldset opened', 'editformfieldset closed');"
+                          tal:omit-tag="sole_fieldset"
+                          >
+                  <tal:fields repeat="field python:schematas[fieldset].editableFields(here, visible_only=True)">
+                    <metal:fieldMacro use-macro="python:here.widget(field.getName(), mode='edit')" />
+                  </tal:fields>
+                </fieldset>
+            </div>
+            </tal:fieldset>
+            </tal:tabbed>
+            <tal:nottabbed tal:condition="not: allow_tabbing | nothing">
+                <tal:fields repeat="field python:schematas[fieldset].editableFields(here, visible_only=True)">
+                  <metal:fieldMacro use-macro="python:here.widget(field.getName(), mode='edit')" />
+                </tal:fields>
+            </tal:nottabbed>
+          </metal:block>
+
+          <div tal:replace="structure provider:archetypes.edit.afterfieldsets" />
+          <script type="text/javascript"
+                  tal:condition="python:pr.isVersionable(here) and not pr.supportsPolicy(here,'at_edit_autoversion')">
+            <!--
+            function switchComment(ev) {
+                var save_version = document.getElementById('cmfeditions_save_new_version');
+                var comment = document.getElementById('cmfeditions_version_comment_block');
+                if (save_version && comment) {
+                  if (save_version.checked) {
+                    comment.style.display = 'block';
+                  } else {
+                    comment.style.display = 'none';
+                  }
+                }
+            }
+            function setupSaveNewVersion(ev) {
+                var save_version = document.getElementById('cmfeditions_save_new_version');
+                var comment = document.getElementById('cmfeditions_version_comment_block');
+
+                if (save_version && comment) {
+                  if (save_version.checked) {
+                    comment.style.display = 'block';
+                  } else {
+                    comment.style.display = 'none';
+                  }
+                }
+                registerEventListener(save_version, "click", switchComment);
+            }
+            registerPloneFunction(setupSaveNewVersion);
+            -->
+          </script>
+
+          <div i18n:domain="cynin"
+               class="field editionSaveVersion"
+               tal:define="pr nocall:here/portal_repository"
+               tal:condition="python: pr.isVersionable(here) and not pr.supportsPolicy(here,'at_edit_autoversion')">
+
+            <input type="checkbox"
+                   name="cmfeditions_save_new_version"
+                   id="cmfeditions_save_new_version" />
+            <label>
+              <span i18n:translate="label_save_new_version">
+              Save as new version
+              </span>
+            </label>
+            <div class="formHelp"
+                 id="cmfeditions_save_new_version_help"
+                 i18n:translate="help_save_new_version">
+              Select to make a version of the current content.
+            </div>
+          </div>
+
+          <metal:block define-slot="extra_bottom" />
+          <div class="formControls">
+	    <tal:fieldsets repeat="fieldset fieldsets">
+              <input type="hidden"
+                     name="fieldsets:list"
+                     value="default"
+                     tal:attributes="value fieldset"
+                   />
+	    </tal:fieldsets>
+
+	    <input type="hidden"
+		   name="fieldset"
+		   tal:attributes="value fieldset"
+		   tal:condition="python: fieldsets and not allow_tabbing"
+		   />
+
+
+            <input type="hidden"
+                   name="form.submitted"
+                   value="1"
+                   />
+            <input type="hidden"
+                   name="add_reference.field:record"
+                   value=""
+                   />
+            <input type="hidden"
+                   name="add_reference.type:record"
+                   value=""
+                   />
+            <input type="hidden"
+                   name="add_reference.destination:record"
+                   value=""
+                   />
+
+            <tal:env define="env request/controller_state/kwargs">
+              <tal:loop repeat="varname python:('reference_source_url', 'reference_source_field', 'reference_source_fieldset')">
+                <tal:reference define="items python:env.get(varname, request.get(varname))"
+                               condition="items">
+                  <input tal:repeat="item items"
+                         type="hidden"
+                         name="form_env.reference_source_url:list:record"
+                         value="value"
+                         tal:attributes="value item;
+                                         name string:form_env.${varname}:list:record"
+                         />
+                </tal:reference>
+              </tal:loop>
+            </tal:env>
+
+            <tal:comment replace="nothing">
+              Turn 'persistent_' variables from controller_state persistent
+            </tal:comment>
+            <tal:env repeat="env request/controller_state/kwargs/items">
+              <input type="hidden"
+                     name="key"
+                     value="value"
+                     tal:define="key python:env[0];
+                                 value python:env[1]"
+                     tal:condition="python:key.startswith('persistent_')"
+                     tal:attributes="name string:form_env.${key}:record;
+                                     value value"
+                     />
+            </tal:env>
+
+            <tal:comment replace="nothing">
+              Turn 'persistent_' variables from forms (GET/POST) persistent
+            </tal:comment>
+            <tal:env repeat="env request/form">
+              <input type="hidden"
+                     name="key"
+                     value="value"
+                     tal:define="key env;
+                                 value request/?env"
+                     tal:condition="python:key.startswith('persistent_')"
+                     tal:attributes="name string:form_env.${key}:record;
+                                     value value"
+                     />
+            </tal:env>
+
+            <tal:comment replace="nothing">
+              Store referrer to remember where to go back
+            </tal:comment>
+            <input type="hidden"
+                   name="last_referer"
+                   tal:define="last_referer python:here.session_restore_value('HTTP_REFERER', request.form.get('last_referer', request.get('HTTP_REFERER')))"
+                   tal:attributes="value python:(last_referer and '%s/%s' % (here.absolute_url(), template.id) not in last_referer) and last_referer or (here.getParentNode() and here.getParentNode().absolute_url())"
+                   />
+
+            <metal:block define-slot="buttons"
+                   tal:define="fieldset_index python:fieldsets.index(fieldset);
+                               n_fieldsets python:len(fieldsets);
+                               isaddnewscreen python:modules['ubify.cyninv2theme'].isAddNewScreen(context,request);">
+
+                <input tal:condition="python:fieldset_index &gt; 0"
+                       class="context"
+                       type="submit"
+                       name="form_previous"
+                       value="Previous"
+                       i18n:attributes="value label_previous;"
+                       tal:attributes="disabled python:test(isLocked, 'disabled', None);"
+                       />
+                <input tal:condition="python:not allow_tabbing and (fieldset_index &lt; n_fieldsets - 1)"
+                       class="context"
+                       type="submit"
+                       name="form_next"
+                       value="Next"
+                       i18n:attributes="value label_next;"
+                       tal:attributes="disabled python:test(isLocked, 'disabled', None);"
+                       />
+                <input class="context"
+                       type="submit"
+                       name="form_submit"
+                       value="Save"
+                       i18n:attributes="value label_save;"
+                       tal:attributes="disabled python:test(isLocked, 'disabled', None);
+                       id python:test(isaddnewscreen,'addnewsubmitbutton','editsubmitbutton');
+                       "
+                       />
+                <input class="standalone"
+                       type="submit"
+                       name="form.button.cancel"
+                       value="Cancel"
+                       i18n:attributes="value label_cancel;"
+                       />
+            </metal:block>
+
+            <metal:block define-slot="extra_buttons" />
+
+          </div>
+
+      </form>
+
+    </div>
+    <metal:footer_macro define-macro="footer">
+    </metal:footer_macro>
+</body>
+</html>

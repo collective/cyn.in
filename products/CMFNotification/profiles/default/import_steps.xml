@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<import-steps>
+
+  <import-step
+     id="import_cmfnotification"
+     version=""
+     handler="Products.CMFNotification.exportimport.importCMFNotification"
+     title="Import CMF Notification settings">
+    Import CMF Notification settings
+  </import-step>
+
+  <import-step
+     id=""
+     version=""
+     handler="Products.CMFNotification.exportimport.addPortlet"
+     title="Add subscription portlet">
+    Add subscription portlet.
+    <dependency step="portlets"/>
+  </import-step>
+
+</import-steps>

@@ -1,0 +1,114 @@
+<tal:comment replace="nothing">
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see http://www.gnu.org/licenses/.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+</tal:comment>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="cynin">
+
+<head>
+    <metal:block fill-slot="top_slot"
+             tal:define="dummy python:request.set('disable_border',1)" />
+
+    <div metal:fill-slot="javascript_head_slot" tal:omit-tag="">
+        <link type="text/css" rel="kinetic-stylesheet"
+            tal:attributes="href string:${context/absolute_url}/++resource++manage-portlets.kss"/>
+    </div>
+</head>
+
+<body>
+<div metal:fill-slot="author_slot">
+    <!-- simulating views on the groups/user pages until we have real objects. -->
+    <ul class="contentViews">
+      <li>
+        <a href=""
+           tal:attributes="href string:${context/absolute_url}/prefs_group_members?groupname=${request/key}"
+           i18n:translate="label_group_members">Group Members</a>
+      </li>
+      <li>
+        <a href=""
+           tal:attributes="href string:${context/absolute_url}/prefs_group_details?groupname=${request/key}"
+           i18n:translate="label_group_properties">Group Properties</a>
+      </li>
+      <li class="selected">
+        <a href=""
+           tal:attributes="href string:${portal_url}/@@manage-group-portlets?key=${request/key}"
+           i18n:translate="label_group_portlets">Group Portlets</a>
+      </li>
+    </ul>
+</div>
+<div metal:fill-slot="content">
+
+  <div class="documentEditable">
+
+    <div id="region-content" class="documentContent">
+      <a name="documentContent"></a>
+
+      <div metal:use-macro="here/global_statusmessage/macros/portal_message">
+        Portal status message
+      </div>
+
+      <div id="content">
+
+        <metal:block metal:define-macro="props" tal:omit-tag="">
+
+          <h1 class="documentFirstHeading"
+              i18n:translate="title_manage_group_portlets">
+              Manage Group Portlets for
+              <span i18n:name="group_name" tal:content="view/group">group</span>
+          </h1>
+
+          <p i18n:translate="description_manage_group_portlets">
+            The left and right portlet slots will now display only those portlets
+            assigned to this group. Use the up, down, delete and edit links
+            to manage user portlets. Use the drop-down list to add new portlets.
+          </p>
+
+          <p i18n:translate="description_group_portlets_below">
+            Note that group portlets are normally rendered below context portlets.
+          </p>
+
+        </metal:block>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

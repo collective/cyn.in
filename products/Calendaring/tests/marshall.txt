@@ -1,0 +1,170 @@
+Marshalling with Marshall
+=========================
+
+ATContentTypes has been changed to use the ControlledMarshaller
+implementation by default. On Calendaring, we configure the marshaller
+registry to add some rules for marshalling content in and out using
+our specialized marshallers.
+
+  >>> from Products.CMFPlone.tests.PloneTestCase import portal_owner
+  >>> from Products.CMFPlone.tests.PloneTestCase import default_password
+
+  >>> user_name = portal_owner
+  >>> user_password = default_password
+  >>> portal_name = 'plone'
+  >>> self.setRoles(['Manager'])
+
+Doing a PUT request with a 'text/calendar' Content-Type header should
+create a ATCT Folder and use the CalendarMarshaller to populate it
+with events.
+
+  >>> self.portal._getOb('some_calendar', None)
+
+  >>> print http(r"""
+  ... PUT /%s/some_calendar HTTP/1.1
+  ... Authorization: Basic %s:%s
+  ... Content-Type: text/calendar
+  ...
+  ... BEGIN:VCALENDAR
+  ... PRODID:-//Plone/NONSGML Calendaring//EN
+  ... VERSION:2.0
+  ... BEGIN:VEVENT
+  ... DESCRIPTION:
+  ... DTEND:20040924T040000Z
+  ... DTSTART:20040920T010000Z
+  ... LOCATION:Vienna
+  ... SUMMARY:Plone Conference 2004
+  ... UID:1445300814-1921707519-RID
+  ... END:VEVENT
+  ... END:VCALENDAR
+  ... """ % (portal_name, user_name, user_password))
+  HTTP/1.1 201 Created...
+
+  >>> cal = self.portal._getOb('some_calendar', None)
+  >>> cal
+  <ATFolder at /plone/some_calendar>
+
+  >>> cal.objectIds()
+  ['1445300814-1921707519-rid']
+
+No 'Content-Type' header, using '.ics' extension:
+
+  >>> print http(r"""
+  ... PUT /%s/some_calendar.ics HTTP/1.1
+  ... Authorization: Basic %s:%s
+  ...
+  ... BEGIN:VCALENDAR
+  ... PRODID:-//Plone/NONSGML Calendaring//EN
+  ... VERSION:2.0
+  ... BEGIN:VEVENT
+  ... DESCRIPTION:
+  ... DTEND:20040924T040000Z
+  ... DTSTART:20040920T010000Z
+  ... LOCATION:Vienna
+  ... SUMMARY:Plone Conference 2004
+  ... UID:1445300814-1921707520-RID
+  ... END:VEVENT
+  ... END:VCALENDAR
+  ... """ % (portal_name, user_name, user_password))
+  HTTP/1.1 201 Created...
+
+  >>> cal = self.portal._getOb('some_calendar.ics', None)
+  >>> cal
+  <ATFolder at /plone/some_calendar.ics>
+
+  >>> cal.objectIds()
+  ['1445300814-1921707520-rid']
+
+No 'Content-Type' header, using '.vcs' extension:
+
+  >>> print http(r"""
+  ... PUT /%s/some_calendar.vcs HTTP/1.1
+  ... Authorization: Basic %s:%s
+  ...
+  ... BEGIN:VCALENDAR
+  ... PRODID:-//Plone/NONSGML Calendaring//EN
+  ... VERSION:2.0
+  ... BEGIN:VEVENT
+  ... DESCRIPTION:
+  ... DTEND:20040924T040000Z
+  ... DTSTART:20040920T010000Z
+  ... LOCATION:Vienna
+  ... SUMMARY:Plone Conference 2004
+  ... UID:1445300814-1921707521-RID
+  ... END:VEVENT
+  ... END:VCALENDAR
+  ... """ % (portal_name, user_name, user_password))
+  HTTP/1.1 201 Created...
+
+  >>> cal = self.portal._getOb('some_calendar.vcs', None)
+  >>> cal
+  <ATFolder at /plone/some_calendar.vcs>
+
+  >>> cal.objectIds()
+  ['1445300814-1921707521-rid']
+
+Create a random folder:
+
+  >>> _ = self.portal.invokeFactory('Folder', 'random_folder')
+
+Upload with a Content-Type: text/calendar:
+
+  >>> print http(r"""
+  ... PUT /%s/random_folder HTTP/1.1
+  ... Authorization: Basic %s:%s
+  ... Content-Type: text/calendar
+  ...
+  ... BEGIN:VCALENDAR
+  ... PRODID:-//Plone/NONSGML Calendaring//EN
+  ... VERSION:2.0
+  ... BEGIN:VEVENT
+  ... DESCRIPTION:
+  ... DTEND:20040924T040000Z
+  ... DTSTART:20040920T010000Z
+  ... LOCATION:Vienna
+  ... SUMMARY:Plone Conference 2004
+  ... UID:1445300814-1921707522-RID
+  ... END:VEVENT
+  ... END:VCALENDAR
+  ... """ % (portal_name, user_name, user_password))
+  HTTP/1.1 204 No Content...
+
+  >>> cal = self.portal._getOb('random_folder', None)
+  >>> cal
+  <ATFolder at /plone/random_folder>
+
+  >>> cal.objectIds()
+  ['1445300814-1921707522-rid']
+
+We can't just yet create a 'Event' through the 'Content Type
+Registry' because the Content-Type and extension will be the same as
+for a calendar. However we can create a Event manually and upload and
+download an iCalendar file to it.
+
+  >>> _ = self.portal.invokeFactory('Event', 'some_event')
+
+Upload with a Content-Type: text/calendar:
+
+  >>> print http(r"""
+  ... PUT /%s/some_event HTTP/1.1
+  ... Authorization: Basic %s:%s
+  ... Content-Type: text/calendar
+  ...
+  ... BEGIN:VCALENDAR
+  ... PRODID:-//Plone/NONSGML Calendaring//EN
+  ... VERSION:2.0
+  ... BEGIN:VEVENT
+  ... DESCRIPTION:
+  ... DTEND:20040924T040000Z
+  ... DTSTART:20040920T010000Z
+  ... LOCATION:Vienna
+  ... SUMMARY:Plone Conference 2004
+  ... UID:1445300814-1921707523-RID
+  ... END:VEVENT
+  ... END:VCALENDAR
+  ... """ % (portal_name, user_name, user_password))
+  HTTP/1.1 204 No Content...
+
+  >>> ev = self.portal._getOb('some_event')
+  >>> ev.Title()
+  'Plone Conference 2004'

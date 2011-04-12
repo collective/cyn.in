@@ -1,0 +1,313 @@
+<?xml version="1.0"?>
+<!--
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see <http://www.gnu.org/licenses/>.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+-->
+<object name="portal_actions" meta_type="Plone Actions Tool"
+   xmlns:i18n="http://xml.zope.org/namespaces/i18n" i18n:domain="cynin">
+    <object name="document_actions" meta_type="CMF Action Category">
+        <property name="title"></property>
+        <object name="rss" meta_type="CMF Action">
+            <property name="title" i18n:translate="">RSS feed</property>
+            <property name="description" i18n:translate=""></property>
+            <property name="url_expr">string:$object_url/rss.xml</property>
+            <property name="icon_expr"></property>
+            <property name="available_expr">python:portal.portal_syndication.isSyndicationAllowed(object)</property>
+            <property name="permissions">
+                <element value="View"/>
+            </property>
+            <property name="visible">False</property>
+        </object>
+        <object name="atom" meta_type="CMF Action" insert-after="rss">
+            <property name="title" i18n:translate="">ATOM feed</property>
+            <property name="description" i18n:translate=""></property>
+            <property name="url_expr">string:$object_url/atom.xml</property>
+            <property name="icon_expr"></property>
+            <property name="available_expr">python:portal.portal_syndication.isSyndicationAllowed(object)</property>
+            <property name="permissions">
+                <element value="View"/>
+            </property>
+            <property name="visible">False</property>
+        </object>
+        <object name="sendto" meta_type="CMF Action">
+            <property name="title" i18n:translate="">Send this</property>
+            <property name="description" i18n:translate="">Send the URL of this page to a colleague or friend by email. Note that the recipient must have a login account on this site to be able to see the content.</property>
+            <property name="url_expr">string:$object_url/sendto_form</property>
+            <property name="icon_expr">string:$portal_url/icon-email_go.png</property>
+            <property name="available_expr"></property>
+            <property name="permissions">
+             <element value="Allow sendto"/>
+            </property>
+            <property name="visible">True</property>
+        </object>
+        <object name="print" meta_type="CMF Action">
+            <property name="title" i18n:translate="">Print this</property>
+            <property name="description" i18n:translate="">Print this page on a local or network printer that can be accessed from your computer. Click this button to select a printer and configure print settings - press OK to send the print job.</property>
+            <property name="url_expr">string:javascript:this.print();</property>
+            <property name="icon_expr">string:$portal_url/icon-printer.png</property>
+            <property name="available_expr"></property>
+            <property name="permissions">
+             <element value="View"/>
+            </property>
+            <property name="visible">True</property>
+        </object>
+        <object name="extedit" meta_type="CMF Action" i18n:domain="cynin">
+            <property name="title" i18n:translate="external_edit">External Edit</property>
+            <property name="description" i18n:translate="">Edit this item with a native application installed on your desktop computer. This requires the Zope External Editor client to be installed on your desktop. Click this link and select Open with Zope External Editor and not the normal Save that you may be used to, in the resulting dialog that is popped by your web browser.</property>
+            <property name="url_expr">string:$object_url/external_edit</property>
+            <property name="icon_expr">string:$portal_url/icon-arrow_turn_right.png</property>
+            <property name="available_expr">object/externalEditorEnabled</property>
+            <property name="permissions">
+                <element value="Modify portal content"/>
+            </property>
+            <property name="visible">True</property>
+        </object>
+    </object>
+    <object name="site_actions" meta_type="CMF Action Category">
+        <property name="title"></property>
+        <object name="anonymouscontact" meta_type="CMF Action">
+            <property name="title" i18n:translate="">Contact</property>
+            <property name="description" i18n:translate=""></property>
+            <property name="url_expr">string:${portal_url}/admin-contact-info</property>
+            <property name="icon_expr"></property>
+            <property name="available_expr"></property>
+            <property name="permissions">
+                <element value="View"/>
+            </property>
+            <property name="visible">True</property>
+        </object>
+    </object>
+    <object name="object" meta_type="CMF Action Category">
+        <property name="title"></property>
+        <object name="local_roles" meta_type="CMF Action">
+            <property name="title" i18n:translate="">Sharing</property>
+            <property name="description" i18n:translate=""></property>
+            <property name="url_expr">string:${object_url}/@@sharing</property>
+            <property name="icon_expr"></property>
+            <property name="available_expr">python:object.portal_type != 'StatuslogItem'</property>
+            <property name="permissions">
+                <element value="Sharing page: Delegate roles"/>
+            </property>
+            <property name="visible">True</property>
+        </object>
+        <object name="contentrules" meta_type="CMF Action" i18n:domain="cynin">
+            <property name="title" i18n:translate="">Rules</property>
+            <property name="description" i18n:translate=""></property>
+            <property
+                name="url_expr">string:${plone_context_state/canonical_object_url}/@@manage-content-rules</property>
+            <property name="icon_expr"></property>
+            <property
+               name="available_expr">python:plone_context_state.canonical_object().restrictedTraverse('@@plone_contentrules_info').show_rules_tab()</property>
+            <property name="permissions">
+             <element value="Content rules: Manage rules"/>
+            </property>
+            <property name="visible">True</property>
+        </object>
+        <object name="history" meta_type="CMF Action" i18n:domain="cynin">
+            <property name="title" i18n:translate="">History</property>
+            <property name="description" i18n:translate=""></property>
+            <property name="url_expr">string:${object_url}/versions_history_form</property>
+            <property name="icon_expr"></property>
+            <property name="available_expr">python:portal.portal_repository.isVersionable(object)</property>
+            <property name="permissions">
+                <element value="Modify portal content"/>
+            </property>
+            <property name="visible">True</property>
+        </object>
+        <object name="folder_constraintypes_form" meta_type="CMF Action" i18n:domain="cynin" insert-after="folderContents">
+            <property name="title" i18n:translate="">Customize</property>
+            <property name="description" i18n:translate=""></property>
+            <property name="url_expr">string:${object_url}/folder_constraintypes_form</property>
+            <property name="icon_expr"></property>
+            <property name="available_expr">python:object.portal_type in ('ContentRoot','ContentSpace','SmartviewFolder',)</property>
+            <property name="permissions">
+                <element value="Modify portal content"/>
+            </property>
+            <property name="visible">True</property>
+        </object>
+    </object>
+    <object name="object_buttons" meta_type="CMF Action Category">
+        <property name="title"></property>
+        <object name="paste" meta_type="CMF Action">
+         <property name="title" i18n:translate="">Paste</property>
+         <property name="description" i18n:translate=""></property>
+         <property
+            name="url_expr">string:${globals_view/getCurrentFolderUrl}/object_paste</property>
+         <property name="icon_expr"></property>
+         <property name="available_expr">python:object.isPrincipiaFolderish and folder.cb_dataValid or None</property>
+         <property name="permissions">
+          <element value="View"/>
+         </property>
+         <property name="visible">True</property>
+        </object>
+    </object>
+    <object name="application_views" meta_type="CMF Action Category">
+        <property name="title"></property>
+        <object name="audio" meta_type="CMF Action" i18n:domain="cynin">
+            <property name="title" i18n:translate="menu_audios">Audio Library</property>
+            <property name="description" i18n:translate=""></property>
+            <property name="url_expr">string:app_audios</property>
+            <property name="icon_expr">string:icon-sound.png</property>
+            <property name="available_expr"></property>
+            <property name="permissions">
+                <element value="View"/>
+            </property>
+            <property name="visible">True</property>
+       </object>
+       <object name="blog" meta_type="CMF Action" i18n:domain="cynin" insert-after="audio">
+            <property name="title" i18n:translate="menu_blog">Blog</property>
+            <property name="description" i18n:translate=""></property>
+            <property name="url_expr">string:app_blog</property>
+            <property name="icon_expr">string:blog.png</property>
+            <property name="available_expr"></property>
+            <property name="permissions">
+                <element value="View"/>
+            </property>
+            <property name="visible">True</property>
+       </object>
+       <object name="link" meta_type="CMF Action" i18n:domain="cynin" insert-after="blog">
+            <property name="title" i18n:translate="menu_links">Bookmark Directory</property>
+            <property name="description" i18n:translate=""></property>
+            <property name="url_expr">string:app_links</property>
+            <property name="icon_expr">string:link_icon.png</property>
+            <property name="available_expr"></property>
+            <property name="permissions">
+                <element value="View"/>
+            </property>
+            <property name="visible">True</property>
+       </object>
+       <object name="discussion" meta_type="CMF Action" i18n:domain="cynin" insert-after="link">
+            <property name="title" i18n:translate="menu_discussions">Discussions Board</property>
+            <property name="description" i18n:translate=""></property>
+            <property name="url_expr">string:app_discussions</property>
+            <property name="icon_expr">string:icon-comments.png</property>
+            <property name="available_expr"></property>
+            <property name="permissions">
+                <element value="View"/>
+            </property>
+            <property name="visible">True</property>
+       </object>
+       <object name="calendar" meta_type="CMF Action" i18n:domain="cynin" insert-after="discussion">
+           <property name="title" i18n:translate="menu_calendar">Event Calendar</property>
+           <property name="description" i18n:translate=""></property>
+           <property name="url_expr">string:app_calendar</property>
+           <property name="icon_expr">string:event_icon.png</property>
+           <property name="available_expr"></property>
+           <property name="permissions">
+               <element value="View"/>
+           </property>
+           <property name="visible">True</property>
+       </object>
+       <object name="file" meta_type="CMF Action" i18n:domain="cynin" insert-after="calendar">
+           <property name="title" i18n:translate="menu_files">File Repository</property>
+           <property name="description" i18n:translate=""></property>
+           <property name="url_expr">string:app_files</property>
+           <property name="icon_expr">string:file_icon.png</property>
+           <property name="available_expr"></property>
+           <property name="permissions">
+               <element value="View"/>
+           </property>
+           <property name="visible">True</property>
+       </object>
+       <object name="image" meta_type="CMF Action" i18n:domain="cynin" insert-after="file">
+           <property name="title" i18n:translate="menu_images">Image Gallery</property>
+           <property name="description" i18n:translate=""></property>
+           <property name="url_expr">string:app_images</property>
+           <property name="icon_expr">string:image_icon.png</property>           
+           <property name="available_expr"></property>
+           <property name="permissions">
+               <element value="View"/>
+           </property>
+           <property name="visible">True</property>
+       </object>
+       <object name="statusmessage" meta_type="CMF Action" i18n:domain="cynin" insert-after="image">
+           <property name="title" i18n:translate="menu_status_log">Status Log</property>
+           <property name="description" i18n:translate=""></property>
+           <property name="url_expr">string:app_statuslog</property>
+           <property name="icon_expr">string:status_online.png</property>           
+           <property name="available_expr">python:object.portal_type in ('ContentRoot','MemberSpace',)</property>
+           <property name="permissions">
+               <element value="View"/>
+           </property>
+           <property name="visible">True</property>
+       </object>
+       <object name="video" meta_type="CMF Action" i18n:domain="cynin" insert-after="statusmessage">
+           <property name="title" i18n:translate="menu_videos">Video Library</property>
+           <property name="description" i18n:translate=""></property>
+           <property name="url_expr">string:app_videos</property>
+           <property name="icon_expr">string:icon-film.png</property>           
+           <property name="available_expr"></property>
+           <property name="permissions">
+               <element value="View"/>
+           </property>
+           <property name="visible">True</property>
+       </object>
+       <object name="wiki" meta_type="CMF Action" i18n:domain="cynin" insert-after="video">
+           <property name="title" i18n:translate="menu_wiki">Wiki</property>
+           <property name="description" i18n:translate=""></property>
+           <property name="url_expr">string:app_wiki</property>
+           <property name="icon_expr">string:wiki.png</property>           
+           <property name="available_expr"></property>
+           <property name="permissions">
+               <element value="View"/>
+           </property>
+           <property name="visible">True</property>
+       </object>
+       <object name="dashboard" meta_type="CMF Action" i18n:domain="cynin">
+           <property name="title" i18n:translate="dashboard">Dashboard</property>
+           <property name="description" i18n:translate=""></property>
+           <property name="url_expr"></property>
+           <property name="icon_expr">string:icon-application_view_tile.png</property>           
+           <property name="available_expr"></property>
+           <property name="permissions">
+               <element value="View"/>
+           </property>
+           <property name="visible">False</property>
+       </object>
+       <object name="activitystream" meta_type="CMF Action" i18n:domain="cynin">
+           <property name="title" i18n:translate="activity_stream">Activity Stream</property>
+           <property name="description" i18n:translate=""></property>
+           <property name="url_expr">string:app_all</property>
+           <property name="icon_expr">string:icon-asterisk_yellow.png</property>           
+           <property name="available_expr"></property>
+           <property name="permissions">
+               <element value="View"/>
+           </property>
+           <property name="visible">False</property>
+       </object>
+    </object>
+</object>

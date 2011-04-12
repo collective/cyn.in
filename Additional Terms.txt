@@ -1,0 +1,30 @@
+
+1. Notices and Attribution:
+
+a. The interactive user interfaces in modified source and object code versions of this program must display Appropriate Legal Notices, as required under Section 5 of the GNU General Public License version 3. In accordance with Section 7(b) of the GNU General Public License version 3, these Appropriate Legal Notices must retain the display of the "Powered by cyn.in" AND "A Cynapse Invention" logos. 
+
+b. If the display of the logos are not reasonably feasible for technical reasons, the Appropriate Legal Notices must display the words "Powered by cyn.in" AND "a Cynapse invention" 
+
+c. The Logo/words "Powered by cyn.in"  must be a clickable link that leads directly to the Internet URL http://cyn.in. The Logo/word "Cynapse" must be a clickable link that leads directly to the Internet URL http://www.cynapse.com. 
+
+
+2. Use of the cyn.in or Cynapse Logo:
+
+Cynapseô and cyn.inô are registered trademarks of Cynapse India Pvt. Ltd. This license allows limited use of these trademarks under the following terms:
+
+a. All the trade marks of the licensor under consideration for the agreement including 'cyn.in' and 'Cynapse' shall be used exclusively for the purpose of this agreement and shall not be used for any other purpose/s unless a written consent is obtained from the licensors.
+
+b. The limited license to use the cyn.in and Cynapse trade marks, given herein does not include the right to use the 'cyn.in' Logo or any of the other Cynapse Logos as a trade mark to promote any products or services commercially. For example, no logo of cyn.in or Cynapse may be used on any product packaging or documentation, such as (but not limited to) on CD-ROM or diskette labels or packaging, websites, books or other publications. Any such use must be expressly authorized by Cynapse in a signed, written agreement.
+
+c. While using the cyn.in or Cynapse logos the users must never modify the design, vary the spelling of the words, add or delete any words, add or delete any symbol or sign or change any colors or proportions. The logo may be scaled proportionally. When using any cyn.in or Cynapse logo trade marks, the users shall use the TM symbol, which provides notice to third parties of Cynapseís rights in its trade marks. cyn.in or Cynapse trade marks must bear the trademark notice/symbol (TM) in the first and most prominent usage of a trade mark and again in the first appearance of a trade mark in the text or body of copy. Notice/symbols must always appear with all cyn.in or Cynapse trade marks. Wherever possible, trademark notice symbols should be superscripted immediately after all cyn.in and/or Cynapse trade marks.
+
+d. The use must not be detrimental, i.e. harmful or damaging, to the value of cyn.in brand or any of the other Cynapse Marks, or to Cynapse, its brand integrity, reputation or goodwill, as determined by Cynapse in its sole discretion.
+
+e. Any act of the users against the above mentioned conditions amounts to the violation of the IPRs of the licensor i.e. Cynapse, related to trade mark and punishable under the Trade Marks Act, 1999 and rules made thereunder, as well as the Copyrights Act, 1957 and rules made thereunder.
+
+f. Please report any possible infringement and/or misuse of any cyn.in and/or Cynapse trade marks and/or a violation of this Trademark Policy at legal@cynapse.com
+
+
+3. Dual Licensing:
+
+The licensors hereby reserve the right to diverge and/or modify and/or expand their product to have a closed source / proprietary  version of the product along with the open source version in future.

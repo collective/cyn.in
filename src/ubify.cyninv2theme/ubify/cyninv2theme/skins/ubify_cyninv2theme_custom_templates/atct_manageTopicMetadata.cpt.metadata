@@ -1,0 +1,2 @@
+[actions]
+action.success=traverse_to:string:atct_saveTopicSetup

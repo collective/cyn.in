@@ -1,0 +1,22 @@
+=============================
+CMFNotification documentation
+=============================
+
+General documentation
+=====================
+
+- installation and configuration of CMFNotification: ``install.txt``
+
+- rules reference: ``rules-reference.txt``
+
+- notes for developers: ``developers-notes.txt``
+
+
+How-to (brief, specific explanations)
+=====================================
+
+- how to set up CMFNotification in 2 minutes: ``how-to-setup-in-2-minutes.txt``
+
+- how to troubleshoot your configuration: ``how-to-troubleshoot.txt``
+
+- how to notify members of a group: ``how-to-notify-a-group.txt``

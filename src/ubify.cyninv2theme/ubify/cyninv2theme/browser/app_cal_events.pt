@@ -1,0 +1,114 @@
+<tal:comment replace="nothing">
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see http://www.gnu.org/licenses/.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+</tal:comment>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="cynin">
+
+<head>
+
+  <metal:block metal:fill-slot="head_slot" tal:define="qpt string:portal_type=Event">
+  <script type="text/javascript" src="calendar.js"
+          tal:attributes="src string:${context/++resource++p4acalendar/anchor-position.js}">
+  </script>
+  <script type="text/javascript" src="calendar.js"
+          tal:attributes="src string:${context/++resource++p4acalendar/popup-window.js}">
+  </script>
+  <script type="text/javascript" src="calendar.js"
+          tal:attributes="src string:${context/++resource++p4acalendar/calendar.js}">
+  </script>  
+  
+  <tal:rssmacro metal:use-macro="here/rss_macro/macros/rss_list_macro" />   
+  </metal:block>
+
+</head>
+
+<body>
+
+<div metal:fill-slot="contentwithnopadding">
+    <tal:block tal:define="tagslist view/getTags;templateId string:app_calendar" >
+      <div metal:use-macro="context/tags_listing/macros/listing"/>
+    </tal:block>
+    <tal:block replace="structure view/render_filter"/>
+    <div class="p4acalendar">
+        <div class="calendartoplinks">
+            <a class="viewnavigation-button" href="app_calendar"><span i18n:translate="cal_label_view">View:</span> <tal:translate i18n:translate="label_month">Month</tal:translate></a>
+            <tal:span tal:condition="options/show_past">
+              <a class="viewnavigation-button" href="app_calendar_events" i18n:translate="Event_list">Event list</a>
+              <span class="viewnavigation-current" i18n:translate="past_event_list">Past events list</span>
+            </tal:span>
+            <tal:span tal:condition="not:options/show_past">
+              <span class="viewnavigation-current" i18n:translate="Event_list">Event list</span>
+              <a class="viewnavigation-button" href="app_calendar_past_events"
+                 i18n:translate="past_event_list">
+                Past events list</a>
+            </tal:span>
+        </div>
+       <div class="eventlist">
+         <div class="eventlist_month" tal:repeat="month options/months">
+           <fieldset class="contentheaderlabel"><legend>
+             <tal:block content="month/month_name" i18n:translate=""/>
+             <tal:block content="month/year"/>
+           </legend></fieldset>
+           <div class="vevent event" tal:repeat="event month/events">
+             <div class="event_details">
+               <abbr class="dtstart" title="2002-12-04" tal:attributes="title event/start/isoformat | default">
+                     <tal:block content="month/month_name" i18n:translate="" />
+                     <tal:block content="event/start/day" i18n:translate="" />
+               </abbr>
+               <abbr class="dtend" title="2002-12-04" tal:attributes="title event/end/isoformat | default" i18n:translate="">End Date</abbr>
+             </div>
+             <div class="event_body">
+               <a class="summary event_title" tal:content="event/title"
+                  tal:attributes="href event/url" />
+               <div class="location" tal:content="event/location | default"><tal:comment replace="nothing">Location</tal:comment></div>
+               <div class="description" tal:condition="event/description" tal:content="event/description"/>
+             </div>
+           </div>
+           <div style="clear: both;"></div>
+         </div>
+       </div>
+   </div>
+    <tal:macro metal:use-macro="here/belowcontent_macro/macros/space_footer_actions" />
+</div> <!-- end main fill slot -->
+
+</body>
+</html>

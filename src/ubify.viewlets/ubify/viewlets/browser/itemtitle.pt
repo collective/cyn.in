@@ -1,0 +1,59 @@
+<tal:comment replace="nothing">
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see http://www.gnu.org/licenses/.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+</tal:comment>
+<tal:block tal:define="portal_url here/portal_url;typeiconname view/typeiconname;" i18n:domain="cynin">
+    <tal:block condition="python:context.portal_type == 'ContentRoot'">
+        <div id="maintitleholder">
+            <h1 id="maintitle" tal:define="portal python: context.portal_url.getPortalObject()" tal:content="portal/Title"/>
+        </div>
+    </tal:block>
+    <tal:block condition="python:context.portal_type <> 'ContentRoot'"
+                tal:define="itemtitle view/app_name;
+                            isaddform view/isaddscreen;
+                            typetitle view/typetitle;
+                            item_title python:isaddform and 'Add new %s' % (typetitle.lower(),) or itemtitle;
+                            portal python: context.portal_url.getPortalObject();
+                            site_properties python:portal.portal_properties.site_properties">
+        <div id="maintitleholder">
+            <h1 id="maintitle" tal:condition="python: context.portal_type not in('StatuslogItem','Discussion',) or (context.portal_type in ('Discussion',) and hasattr(site_properties,'allow_discussion_title') and getattr(site_properties,'allow_discussion_title') == True)">
+                <img tal:condition="view/isaddscreen" tal:attributes="src string:${portal_url}/${typeiconname};"/>
+                <tal:itemtitle tal:replace="item_title"/>
+            </h1>
+        </div>
+    </tal:block>
+</tal:block>

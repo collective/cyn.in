@@ -1,0 +1,25 @@
+<tal:block tal:define="paths request/paths|nothing ">
+
+<p tal:condition="python:not paths" i18n:translate="">
+  All files in the Space will be exported.
+</p>
+<tal:block tal:condition="python: paths">
+ <p i18n:translate="">The following files will be exported:</p>
+  <ul>
+  <tal:block tal:repeat="path paths">
+    <li tal:content="path" />
+  </tal:block>
+  </ul>
+  <input tal:repeat="path paths"
+	 type="hidden"
+	 name="form.obj_paths:list"
+	 value=""
+	 tal:attributes="value path"
+	 />
+</tal:block>
+
+
+
+
+
+</tal:block>

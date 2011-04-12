@@ -1,0 +1,38 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:setup="http://namespaces.zope.org/genericsetup"
+           xmlns:five="http://namespaces.zope.org/five"
+           xmlns:cmf="http://namespaces.zope.org/cmf"
+           i18n_domain="cmfnotification">
+
+    <!-- Browser-related configuration (portlets, etc.) -->
+    <include package=".browser"/>
+
+    <!-- Event configuration -->
+    <include file="events/events.zcml"/>
+
+    <!-- See related comment in '__init__.py' -->
+    <utility component=".cmfnotification_domain"
+             name="cmfnotification"/>
+
+    <!-- Skins directory -->
+    <cmf:registerDirectory
+       name="skins"
+       directory="skins"
+       recursive="True"
+       />
+
+    <!-- Generic Setup profile -->
+    <setup:registerProfile
+       name="default"
+       title="CMFNotification"
+       directory="profiles/default"
+       description="The default settings for CMFNotification"
+       provides="Products.GenericSetup.interfaces.EXTENSION"
+       />
+
+     <!-- Allow for GenericSetup import/export -->
+     <five:implements
+        class="Products.CMFNotification.NotificationTool.NotificationTool"
+        interface="Products.CMFPlone.interfaces.ISimpleItemWithProperties"/>
+
+</configure>

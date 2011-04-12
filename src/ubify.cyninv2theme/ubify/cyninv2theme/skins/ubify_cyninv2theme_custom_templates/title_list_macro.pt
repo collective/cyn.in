@@ -1,0 +1,92 @@
+<tal:comment replace="nothing">
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see http://www.gnu.org/licenses/.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+</tal:comment>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      i18n:domain="cynin">
+<body>
+    <tal:definemacro metal:define-macro="title_macro">
+        <tal:definitions tal:define="isInBlogView isInBlogView|python:False;">
+            <tal:default_tile tal:condition="python:item_type not in('StatuslogItem','Discussion',)">
+                <tal:blogviewblogitem tal:condition="python:item_type in('Blog Entry',) and isInBlogView">
+                    <a class="link_blogviewlistexpand"
+                       tal:attributes="href item_url;
+                                        rel item_index;
+                                        kssattr:uid item_uid;
+                                        kssattr:state string:closed;" i18n:translate="">Comments and more...</a>
+                </tal:blogviewblogitem>
+                <tal:defaultitem tal:condition="python:not isInBlogView">
+                    <h2 tal:attributes="id string:listitemtitle${item_index}" class="listitemtitleheader"><a href="#" tal:attributes="href python:here.evalURL(item_type,use_view_action,item_url);"
+                                       class="url"
+                       tal:content="item_title_or_id"><tal:comment replace="nothing">Item Title</tal:comment></a></h2>
+                    <div class="documentByLine" tal:attributes="id string:documentByLine${item_index}" tal:condition="item_description"
+                    tal:define="item_description python:modules['ubify.cyninv2theme'].getWebIntelligentTextToHTML(item_description) or None">
+                        <tal:byline condition="show_about">
+                            <span tal:content="structure item_description" />
+                        </tal:byline>
+                    </div>
+                </tal:defaultitem>
+            </tal:default_tile>
+            <tal:discussion_tile tal:condition="python:item_type in('StatuslogItem','Discussion',)"
+                tal:define="item_creator item/Creator;">
+                <div>
+                    <a tal:attributes="rel string:${portal_url}/userinfo?userid=${item_creator}" class="avatarlink liststatusavatar">
+                        <img tal:attributes="src python: here.portal_membership.getPersonalPortrait(item_creator).absolute_url()"/>
+                    </a>
+                    <h2 class="statuslogviewtitle listitemtitleheader" tal:attributes="id string:listitemtitle${item_index}">                        
+                        <a class="avatarlink statusviewcreator" tal:attributes="rel string:${portal_url}/userinfo?userid=${item_creator};
+                            href string:${portal_url}/Members/${item_creator}/app_all;"><tal:block
+                            tal:replace="item_creator" /></a>
+                        <a tal:attributes="href python:here.evalURL(item_type,use_view_action,item_url);">
+                            <tal:statusmessage tal:content="structure item_title_or_id" tal:condition="python:item_type == 'StatuslogItem'"/>
+                            <tal:discussiondesc tal:content="structure item_description" tal:condition="python:item_type == 'Discussion' and not allow_discussion_title" />
+                            <tal:discussiontitle tal:content="structure item_title_or_id" tal:condition="python:item_type == 'Discussion' and allow_discussion_title" />
+                        </a>                        
+                    </h2>
+                    <div class="documentByLine" tal:attributes="id string:documentByLine${item_index}" tal:condition="python:item_type == 'Discussion' and allow_discussion_title and item_description">
+                        <tal:byline condition="show_about"><span tal:content="structure item_description" /></tal:byline>
+                    </div>
+                </div>
+            </tal:discussion_tile>
+        </tal:definitions>
+    </tal:definemacro>
+</body>
+</html>

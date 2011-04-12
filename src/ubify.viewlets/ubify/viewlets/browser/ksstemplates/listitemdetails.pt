@@ -1,0 +1,79 @@
+<tal:definitions tal:define="item_type options/item_type;
+                            portal_url options/portal_url;
+                            item_type_title options/item_type_title;
+                            item options/item;
+                            pathlink options/pathlink;
+                            prettypathtitle options/pathtitle;
+                            full_item python:options['contobj'];
+                            hidetitlerowinfo python:False;
+                            item_icon full_item/getIcon;
+                            item_url item/getURL|item/absolute_url;
+                            use_view_action site_properties/typesUseViewActionInListings|python:();
+                            ">
+<tal:belowtitlemacro metal:use-macro="here/belowlisttitlecontent_macro/macros/below_listtitle_content" /> 
+<div class="listitemcommondetailrow">
+    <label i18n:translate="label_content_type">Content Type:</label>
+    <span class="listtypelabel">
+        <img tal:condition="python: item_type not in ('File','Video','Audio')" tal:attributes="src string:${portal_url}/${item_icon};"/>
+        <img tal:condition="python: item_type == 'File'" tal:attributes="src string:${portal_url}/file_icon.png"/>
+        <img tal:condition="python: item_type == 'Video'" tal:attributes="src string:${portal_url}/icon-film.png"/>
+        <img tal:condition="python: item_type == 'Audio'" tal:attributes="src string:${portal_url}/icon-sound.png"/>
+        <tal:typetitle tal:replace="item_type_title" />
+    </span>
+</div>
+<div tal:condition="python: nicedcreateddate and item_creator"
+     tal:define="item_creator full_item/Creator;
+                createddate full_item/CreationDate;
+                nicedcreateddate python: full_item.toLocalizedTime(createddate,True);"
+     class="listitemcommondetailrow">
+        <span i18n:translate="created_by_username"><label>Created by:</label><a class="avatarlink" tal:attributes="rel string:${portal_url}/userinfo?userid=${item_creator};
+                    href string:${portal_url}/Members/${item_creator}/app_all;" i18n:name="username"><tal:block
+                    tal:replace="item_creator" /></a><span class="discreet"> at <tal:block tal:replace="nicedcreateddate" i18n:name="createdate" /></span></span>
+</div>
+<tal:categoriesblock tal:define="categories python:full_item.Subject or None">
+    <div tal:condition="categories" class="listitemcommondetailrow">
+        <label i18n:translate="">Tags:</label>
+        <tal:categories tal:repeat="category categories"
+                   tal:define="parentURL python:context.absolute_url();
+                                URLsuffix python:modules['ubify.cyninv2theme'].getListingTemplateForContextParent(context);"
+                    tal:condition="categories">
+        <a class="listtag"
+            title="Click to add this tag as filter" i18n:attributes="title;"
+               tal:content="category"
+               tal:attributes="href string:${parentURL}/${URLsuffix}?Subject%3Alist=${category};rel category" /></tal:categories>
+    </div>
+</tal:categoriesblock>
+<div class="listitemcommondetailrow">
+        <label i18n:translate="label_location">Location:</label>
+        <a tal:attributes="href pathlink"><tal:block tal:replace="prettypathtitle" /></a>
+</div>
+<div tal:define="modifiers full_item/modifiers" tal:condition="modifiers" class="listitemcommondetailrow">
+    <label i18n:translate="">Contributors: </label>
+    <tal:modifiers tal:repeat="modifier modifiers">
+        <a class="avatarlink"
+           tal:attributes="rel string:${portal_url}/userinfo?userid=${modifier};
+                        href string:${portal_url}/Members/${modifier}/app_all;"><tal:block
+                        tal:replace="modifier" /></a><tal:separator
+            condition="not: repeat/modifier/end">,</tal:separator>
+    </tal:modifiers>
+</div>
+<div tal:define="size full_item/getObjSize" tal:condition="size" class="listitemcommondetailrow">
+    <label i18n:translate="">Size:</label><span><tal:block tal:replace="size"/></span>
+</div>
+<tal:listratingmacro metal:use-macro="here/rating_macros/macros/kss_listing_rating_form" /> 
+<div tal:condition="item_wf_state"
+     tal:define="item_wf_state full_item/review_state|python: context.portal_workflow.getInfoFor(full_item, 'review_state', '');
+                                                item_wf_state_title_desc python:modules['ubify.cyninv2theme'].getWorkflowStateTitle(full_item);
+                                                item_wf_state_title python:item_wf_state_title_desc[0];
+                                                item_wf_state_desc python:item_wf_state_title_desc[1];
+                                                item_wf_state_class python:'state-' + context.plone_utils.normalizeString(item_wf_state);"
+     class="listitemcommondetailrow">
+        <label i18n:translate="">State:</label>
+        <span tal:attributes="class string:workflowstatelabel ${item_wf_state_class}"><tal:block tal:replace="item_wf_state_title" i18n:translate=""/></span>
+</div>
+<div class="listitemnonajaxbuttons listitemcommondetailrow">
+    <div class="listitemnonajaxbuttonrow">
+        <a class="smallwhitebutton" tal:attributes="href python:here.evalURL(item_type,use_view_action,item_url)" i18n:translate="">View</a>
+        <a class="smallwhitebutton" tal:attributes="href string:${item_url}/edit" tal:condition="python:item.portal_type <> 'StatuslogItem' and modules['ubify.cyninv2theme'].checkEditPermission(full_item)" i18n:translate="">Edit</a>
+    </div>
+</tal:definitions>

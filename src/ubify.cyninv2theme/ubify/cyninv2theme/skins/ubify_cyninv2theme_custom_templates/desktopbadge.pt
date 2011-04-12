@@ -1,0 +1,80 @@
+<tal:comment replace="nothing">
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see http://www.gnu.org/licenses/.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+</tal:comment>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="cynin">
+
+<body>
+
+
+<div metal:fill-slot="auth_slot">
+    <script type="text/javascript">
+			var flashvars = {};
+			flashvars.appname = "cyn.in Desktop";
+			flashvars.appurl = "http://updates.cynapse.com/cyninairdesktop/stable/downloads/cyninairdesktop1.0.17.air";
+			flashvars.airversion = "1.5";
+			flashvars.image = portal_url + "/desktopbadge.jpg";
+			flashvars.appid = "com.cynapse.cyn.in.stacker";
+			flashvars.pubid = "9F33B28BAFDA22C754F37D63D7A51B121AB82A90.1";
+			flashvars.appversion = "1.0.17";
+			var params = {};
+                        params.quality = "best"
+                        params.wmode = "transparent"
+			var attributes = {};
+			swfobject.embedSWF(portal_url + "/AIRInstallBadge.swf", "badgediv", "220", "180", "9.0.115", portal_url + "/expressInstall.swf", flashvars, params, attributes);
+    </script>
+        <div class="paragraph" i18n:translate="label_caldav_url_client_desktop">
+            Click on the button label below to install the cyn.in desktop client to your desktop. If you've already installed the cyn.in desktop, clicking on the button below will launch it.
+        </div>
+	<div tal:define="desktoploginurl python:hasattr(site_properties,'desktop_login_url') and site_properties.desktop_login_url != '' and site_properties.desktop_login_url or portal_url"
+	    tal:condition="desktoploginurl" class="bookmarkletlinkcontainer">
+	    cyn.in site URL for desktop:<span class="simplebutton" tal:content="desktoploginurl" />
+	</div>
+        <div  class="bookmarkletlinkcontainer">
+            <div id="badgediv" width="215" height="180" i18n:domain="cynin" />
+        </div>
+        <div i18n:translate="description_cynin_desktop" class="paragraph">
+            To learn more about the cyn.in desktop, <a i18n:name="desktoplink" href="http://www.cynapse.com/products/cynin/cynin-desktop-client" target="_blank" i18n:translate="desktoplinktext">click here</a>
+        </div>
+</div>
+</body>
+</html>

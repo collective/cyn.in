@@ -1,0 +1,130 @@
+<tal:comment replace="nothing">
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see http://www.gnu.org/licenses/.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+</tal:comment>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      i18n:domain="cynin">
+<body>
+    <div metal:define-macro="portlet" id="relationscontainer"
+        tal:define="incominglinks python:context.computeReferencedItems(relationship='links',type='incoming');
+                    outgoinglinks python:context.computeReferencedItems(relationship='links',type='outgoing');
+                    incomingrelations python:context.computeReferencedItems(relationship='relateditems',type='incoming');
+                    outgoingrelations context/getRelatedItems|nothing;"
+        tal:condition="python:incominglinks or outgoinglinks or incomingrelations or outgoingrelations"
+    >
+        <div class="relationsblock">
+            <tal:outgoingrelations tal:define="items outgoingrelations" tal:condition="items">
+                <div class="relationsholder">
+                    <fieldset class="contentheaderlabel"><legend i18n:translate="header_related_content">Related Content</legend></fieldset>
+                    <ul class="linkblocklist">
+                        <li tal:repeat="item items"><a href=""
+                           tal:define="item_url item/getURL|item/absolute_url;
+                           use_view_action here/portal_properties/site_properties/typesUseViewActionInListings|python:();
+                           item_url python:here.evalURL(item.portal_type,use_view_action,item_url);"
+                           tal:attributes="href item_url;class string:relateditemlink"
+                           >
+                            <img tal:attributes="src item/icon" border="0"/>
+                            <span tal:content="item/title" />
+                          </a></li>
+                    </ul>
+                    <label tal:condition="python:not items" i18n:translate="description_no_relations_found">No relations found.</label>
+                </div>
+            </tal:outgoingrelations>
+        </div>
+        <div class="relationsblock">
+            <tal:incomingrelations tal:define="items incomingrelations"
+                tal:condition="items">
+                <div class="relationsholder">
+                    <fieldset class="contentheaderlabel"><legend i18n:translate="header_back_relations">Back relations</legend></fieldset>
+                    <ul class="linkblocklist">
+                        <li tal:repeat="item items"><a href=""
+                           tal:define="item_url item/getURL|item/absolute_url;
+                           use_view_action here/portal_properties/site_properties/typesUseViewActionInListings|python:();
+                           item_url python:here.evalURL(item.portal_type,use_view_action,item_url);"
+                           tal:attributes="href item_url;class string:relateditemlink"
+                           >
+                            <img tal:attributes="src item/icon" border="0"/>
+                            <span tal:content="item/title" />
+                          </a></li>
+                    </ul>
+                </div>
+            </tal:incomingrelations>
+        </div>
+        <div class="relationsblock">
+            <tal:outgoinglinks tal:define="items outgoinglinks"
+                tal:condition="items">
+                <div class="relationsholder">
+                    <fieldset class="contentheaderlabel"><legend i18n:translate="header_linked_content">Linked Content</legend></fieldset>
+                    <ul class="linkblocklist">
+                        <li tal:repeat="item items"><a href=""
+                           tal:define="item_url item/getURL|item/absolute_url;
+                           use_view_action here/portal_properties/site_properties/typesUseViewActionInListings|python:();
+                           item_url python:here.evalURL(item.portal_type,use_view_action,item_url);"
+                           tal:attributes="href item_url;class string:relateditemlink"
+                           >
+                            <img tal:attributes="src item/icon" border="0"/>
+                            <span tal:content="item/title" />
+                          </a></li>
+                    </ul>
+                </div>
+            </tal:outgoinglinks>
+        </div>
+        <div class="relationsblock">
+            <tal:incominglinks tal:define="items incominglinks" tal:condition="items">
+                <div class="relationsholder">
+                    <fieldset class="contentheaderlabel"><legend i18n:translate="header_backlinks">Backlinks</legend></fieldset>
+                    <ul class="linkblocklist">
+                        <li tal:repeat="item items"><a href=""
+                           tal:define="item_url item/getURL|item/absolute_url;
+                           use_view_action here/portal_properties/site_properties/typesUseViewActionInListings|python:();
+                           item_url python:here.evalURL(item.portal_type,use_view_action,item_url);"
+                           tal:attributes="href item_url;class string:relateditemlink"
+                           >
+                            <img tal:attributes="src item/icon" border="0"/>
+                            <span tal:content="item/title" />
+                          </a></li>
+                    </ul>
+                </div>
+            </tal:incominglinks>
+        </div>
+    </div>
+</body>
+</html>

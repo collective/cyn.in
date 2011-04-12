@@ -1,0 +1,349 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      i18n:domain="cynin">
+<body>
+    <tal:definemacro metal:define-macro="below_content">
+        <tal:definitions tal:define="
+            pmt here/portal_membership;
+            item_url context/getURL|context/absolute_url;
+            item_id context/getId|context/id;
+            item_title_or_id context/pretty_title_or_id;
+            item_description python:modules['ubify.cyninv2theme'].getWebIntelligentTextToHTML(context.Description()) or None;
+            item_type context/portal_type;
+            item_type_title context/Type;
+            lastchangedate context/lastchangedate|nothing;
+            nicedlastchangedate python: context.toLocalizedTime(lastchangedate,True);
+            lastchangeperformer context/lastchangeperformer|nothing;
+            lastchangeaction context/lastchangeaction|nothing;
+            lastchangeaction python:modules['ubify.coretypes'].get_action_mapped(lastchangeaction);
+            item_modified context/ModificationDate;
+            item_created context/CreationDate;
+            nicedcreateddate python: context.toLocalizedTime(item_created,True);
+            nicedmodifieddate python: context.toLocalizedTime(item_modified,True);
+            item_icon python:plone_view.getIcon(context);
+            item_type_class python:'contenttype-' + context.plone_utils.normalizeString(item_type);
+            item_wf_state context/review_state|python: context.portal_workflow.getInfoFor(context, 'review_state', '');
+            item_wf_state_class python:'state-' + context.plone_utils.normalizeString(item_wf_state);
+            item_creator context/Creator;
+            item_modifiedby python:modules['ubify.viewlets.utils'].getObjectModifiedBy(context);
+            item_wf_state_title_desc python:modules['ubify.cyninv2theme'].getWorkflowStateTitle(context);
+            item_wf_state_title python:item_wf_state_title_desc[0];
+            item_wf_state_desc python:item_wf_state_title_desc[1];
+            item_start context/EffectiveDate|nothing;
+            item_end context/ExpirationDate|nothing;
+            portal_url here/portal_url;
+            comment_count python:here.getcommentcount(context);
+            showdescription request/showdescriptionmacro|string: true;
+            showdescriptionstyle python:test(showdescription=='false','display:none','display:block');
+            togglelinkclass python:test(showdescription=='false','descriptiontoggle','descriptiontoggle opened');
+            item_uid context/UID | nothing;
+            isauthenticated python: modules['ubify.cyninv2theme'].checkHasPermission('Set own password', here);
+        ">
+        <div tal:attributes="class string:subcolumns clearboth ${item_type}">
+            <div class="c62l commentsblock">
+                <tal:description metal:use-macro="here/belowcontent_macro/macros/below_content_description" />
+                <div tal:replace="structure provider:plone.belowcontent"/>
+            </div>
+            <div class="c38r metadatablock">
+                <div class="lastchangeblockareaholder">
+                  <div class="metadatainfo"  tal:condition="isauthenticated">
+                    <tal:ratingmacro metal:use-macro="here/rating_macros/macros/kss_my_rating_form"/>
+                    <div tal:condition="item_wf_state" class="listitemcommondetailrow">
+                            <label i18n:translate="label_state">State:</label>
+                            <span tal:attributes="class string:workflowstatelabel ${item_wf_state_class} navtipVertical;
+                                                  title string:${item_wf_state_desc}" i18n:attributes="title"><tal:block tal:replace="item_wf_state_title" i18n:translate=""/></span>
+                    </div>
+                    <div class="avatarlistholder listitemcommondetailrow" tal:condition="item_creator">
+                        <label i18n:translate="label_creatorby">Created by: </label>
+                        <a class="avatarlink avatarlist" tal:attributes="rel string:${portal_url}/userinfo?userid=${item_creator};
+                                        href string:${portal_url}/Members/${item_creator}/app_all;">
+                            <tal:block tal:replace="item_creator" />
+                        </a>
+                        <span class="discreet" tal:attributes="title string:${nicedcreateddate}" tal:content="nicedcreateddate" />
+                    </div>
+                    <div class="avatarlistholder listitemcommondetailrow" tal:condition="lastchangeaction">
+                        <label i18n:translate="label_last_activity">Last Activity: </label>
+                        <span>
+                            <tal:block tal:replace="python: lastchangeaction" /> <tal:block i18n:translate="">by</tal:block>
+                            <a class="avatarlink"
+                               tal:attributes="rel string:${portal_url}/userinfo?userid=${lastchangeperformer};
+                                            href string:${portal_url}/Members/${lastchangeperformer}/app_all;">
+                                <tal:block tal:replace="lastchangeperformer" />
+                            </a> <span class="discreet" tal:attributes="title string:${nicedlastchangedate}" tal:content="nicedlastchangedate" />
+                        </span>
+                    </div>
+                    <tal:categoriesblock tal:define="categories context/Subject|nothing">
+                        <div tal:condition="categories" class="listitemcommondetailrow">
+                            <label i18n:translate="label_tags">Tags:</label>
+                            <tal:categories tal:repeat="category categories"
+                                       tal:define="parentURL python:context.getParentNode().absolute_url();
+                                                    URLsuffix python:modules['ubify.cyninv2theme'].getListingTemplateForContextParent(context);"
+                                        tal:condition="categories">
+                            <a class="detaildescriptiontag"
+                                title="Click to add this tag as filter"
+                                   tal:content="category"
+                                   tal:attributes="href string:${parentURL}/${URLsuffix}?Subject%3Alist=${category};rel category"
+                                    i18n:attributes="title tip_add_tag_to_filter">
+                                  <tal:comment replace="nothing">Category</tal:comment>
+                                  </a><tal:separator condition="not: repeat/category/end">,</tal:separator></tal:categories>
+                        </div>
+                    </tal:categoriesblock>
+                    <div tal:define="fullpath context/getPhysicalPath;
+                        fullpath python: '/'.join(fullpath);
+                        splitpath python:fullpath.split('/')[2:-1];
+                        prettypath python: '/' + '/'.join(splitpath);
+                        prettypathtitle python:test(len(splitpath) > 1,prettypath.startswith('/root/') and prettypath.replace('/root/','/home/') or prettypath,prettypath.replace('/root','/home'));
+                        URLsuffix python:modules['ubify.cyninv2theme'].getListingTemplateForContextParent(context);
+                        pathlink python: portal_url + prettypath + '/' + URLsuffix;
+                        pathtitle python:modules['ubify.cyninv2theme'].getAppTitleForContext(context);"
+                        tal:condition="python: context.portal_type not in ('Topic','SmartviewFolder','RecycleBin')"
+                        class="listitemcommondetailrow"
+                        >
+                            <label i18n:translate="label_location">Location</label>:
+                            <a tal:attributes="href pathlink"><tal:block tal:replace="prettypathtitle" /></a>
+                    </div>
+                    <div class="avatarlistholder listitemcommondetailrow" tal:define="modifiers context/modifiers|nothing" tal:condition="modifiers">
+                        <label i18n:translate="label_contributors">Contributors: </label>
+                        <tal:modifiers tal:repeat="modifier modifiers">
+                            <a class="avatarlink avatarlist"
+                               tal:attributes="rel string:${portal_url}/userinfo?userid=${modifier};
+                                            href string:${portal_url}/Members/${modifier}/app_all;"><tal:block tal:replace="modifier" /><tal:separator condition="not: repeat/modifier/end" tal:content="string:," /></a>
+                        </tal:modifiers>
+                    </div>
+                    <div tal:condition="nicedmodifieddate" class="listitemcommondetailrow">
+                            <label i18n:translate="label_modified">Modified:</label>
+                            <span class="" tal:attributes="title string:${nicedmodifieddate}" tal:content="nicedmodifieddate" />
+                    </div>
+                    <div tal:condition="python: len(item_start) > 5" class="listitemcommondetailrow">
+                            <label i18n:translate="label_publish">Publish:</label>
+                            <span tal:define="pubdate python:context.toLocalizedTime(item_start,True)" tal:content="pubdate" />
+                    </div>
+                    <div tal:condition="python: len(item_end) > 5" class="listitemcommondetailrow">
+                            <label i18n:translate="label_expires">Expires:</label>
+                            <span><tal:block tal:replace="python: context.toLocalizedTime(item_end,True)" /></span>
+                    </div>
+                    <div tal:define="size context/getObjSize" tal:condition="size" class="listitemcommondetailrow">
+                        <label i18n:translate="label_size">Size:</label>
+                        <span><tal:block tal:replace="size"/></span>
+                    </div>
+                    <div class="listitemcommondetailrow">
+                        <div class="navtipleft" title="Copy and paste this including the [[ ]] brackets inside a wiki page to link to this item"
+                         i18n:attributes="title cluetip_wiki_link">
+                            <label i18n:translate="label_wiki_link">Wiki link:</label>
+                            <tal:wikilink tal:content="string:[[${item_id}]]" />
+                        </div>
+                    </div>
+                    <div tal:condition="python:item_type in ('Audio',)" class="listitemcommondetailrow">
+                        <textarea tal:content="structure embedstring"
+                                tal:define="swf_url string:${here/portal_url}/player_mp3_maxi.swf;
+                                mp3 string:${here/absolute_url};
+                                embedstring string:<embed type='application/x-shockwave-flash' width='200' height='20' allowFullScreen='true'  src='${swf_url}' flashvars='mp3=${mp3}&amp;bgcolor1=ffffff&amp;bgcolor2=cccccc&amp;buttoncolor=999999&amp;buttonovercolor=0&amp;slidercolor1=cccccc&amp;slidercolor2=999999&amp;sliderovercolor=666666&amp;textcolor=0&amp;showvolume=1' wmode='transparent'/>"></textarea>
+                    </div>
+                    <div tal:condition="python:item_type in ('Video',)" class="listitemcommondetailrow">
+                        <textarea tal:content="structure embedstring"
+                                  tal:define="swf_url string:${here/portal_url}/toobplayer_dark.swf;
+                                            url here/absolute_url;
+                                            embedstring string:<embed type='application/x-shockwave-flash' width='640' height='510' allowFullScreen='true'  src='${swf_url}' flashvars='url=${url}&volume=70&showFullScreenButton=true' wmode='transparent' />"></textarea>
+                    </div>
+                  </div>
+                    <tal:linksmacro metal:use-macro="here/links_macro/macros/portlet" />
+                  <div class="footeractions item_footer_actions" class="listitemcommondetailrow" tal:condition="isauthenticated">
+                      <tal:macro metal:use-macro="here/belowcontent_macro/macros/item_footer_actions" />
+                  </div>
+                </div>
+            </div>
+        </div>
+        <tal:block tal:replace="structure provider:ubify.gototopmanager" />
+        </tal:definitions>
+    </tal:definemacro>
+</body>
+</html>
+<tal:belowcontentdescription metal:define-macro="below_content_description">
+    <tal:cond tal:condition="python: item_type not in ('StatuslogItem','Discussion',) and item_description">
+        <fieldset class="contentheaderlabel">
+            <legend i18n:translate="">Description</legend>
+        </fieldset>
+        <div class="singleitemdescription" tal:content="structure item_description" />
+    </tal:cond>
+</tal:belowcontentdescription>
+<tal:itemfooteractions metal:define-macro="space_footer_actions" i18n:domain="cynin" tal:condition="isauthenticated">
+    <div class="footeractions">
+        <tal:macro metal:use-macro="here/belowcontent_macro/macros/subscription_email" />
+        <tal:macro metal:use-macro="here/belowcontent_macro/macros/subscription_RSS_space" />
+        <tal:macro metal:use-macro="here/belowcontent_macro/macros/document_actions" />
+    </div>
+    <tal:block tal:replace="structure provider:ubify.gototopmanager" />
+</tal:itemfooteractions>
+
+<tal:itemfooteractions metal:define-macro="item_footer_actions" i18n:domain="cynin">
+    <div class="footeractions">
+        <tal:macro metal:use-macro="here/belowcontent_macro/macros/subscription_email" />
+        <tal:macro metal:use-macro="here/belowcontent_macro/macros/subscription_RSS_item" />
+        <tal:macro metal:use-macro="here/belowcontent_macro/macros/document_actions" />
+    </div>
+</tal:itemfooteractions>
+
+<tal:definemacro metal:define-macro="document_actions" i18n:domain="cynin">
+        <tal:block tal:replace="structure provider:ubify.documentactionsmanager" />
+</tal:definemacro>
+
+<tal:definemacro metal:define-macro="subscription_email" i18n:domain="cynin">
+    <tal:definitions tal:define="ntool context/portal_notification|nothing;
+                                context_url context/absolute_url;"
+        tal:condition="ntool">
+        <tal:subscriptions tal:define="is_subscribed python:ntool.isSubscribedTo(context);
+                                        is_subscribed_here python:ntool.isSubscribedTo(context,as_if_not_recursive=True);">
+            <tal:subscribed tal:condition="is_subscribed">
+              <tal:subscribed-here tal:condition="is_subscribed_here">
+                <form name="unsubscribe_form"
+                      method="post"
+                      tal:attributes="action string:${context_url}/unsubscribe">
+                      <a class="simplefloatedlink navtipVertical"
+                            onClick="javascript: jq(this).parents('form:first').submit()"
+                            title="You are already subscribed to this item. Click the 'Unsubscribe' button to stop receiving email notifications."
+                             i18n:attributes="title cluetip_already_subscribed_this;"
+                         name="unsubscribe"
+                         id="unsubscribe">
+                         <img tal:attributes="src string:${portal_url}/icon-email_delete.png" />
+                         <tal:buttontext i18n:translate="label_unsubscribe_email">Unsubscribe Email</tal:buttontext>
+                        </a>
+                </form>
+              </tal:subscribed-here>
+
+              <tal:not-subscribed-here tal:condition="not: is_subscribed_here">
+                <tal:unsubscribeFromAbove metal:define-macro="unsubscribeFromAbove">
+                  <form name="unsubscribe_above_form"
+                        method="post"
+                        tal:attributes="action string:${context_url}/unsubscribeFromAbove">
+                      <a class="simplefloatedlink navtipVertical"
+                            onClick="javascript: jq(this).parents('form:first').submit()"
+                           name="unsubscribeFromAbove"
+                           id="unsubscribeFromAbove"
+                           title="You are indirectly subscribed to this item, because you are subscribed to one of its parent spaces above. Unsubscribe from email notifications for the parent space by clicking below."
+                            i18n:attributes="title cluetip_already_subscribed_parent"
+                           >
+                         <img tal:attributes="src string:${portal_url}/icon-email_delete.png" />
+                         <tal:buttontext i18n:translate="label_unsubscribe_email">Unsubscribe Email</tal:buttontext>
+                        </a>
+                  </form>
+                </tal:unsubscribeFromAbove>
+              </tal:not-subscribed-here>
+            </tal:subscribed>
+
+            <tal:not-subscribed tal:condition="not: is_subscribed">
+              <form name="subscribe_form"
+                    method="post"
+                    tal:attributes="action string:${context_url}/subscribe">
+                    <a class="simplefloatedlink navtipVertical"
+                        title="Click 'Subscribe' to get email notifications for any activity here and below."
+                        onClick="javascript: jq(this).parents('form:first').submit()"
+                        name="subscribe"
+                        id="subscribe"
+                        i18n:attributes="title cluetip_subscribe_email">
+                        <img tal:attributes="src string:${portal_url}/icon-email_add.png" />
+                        <tal:buttontext i18n:translate="label_subscribe_email">Subscribe by Email</tal:buttontext>
+                 </a>
+              </form>
+            </tal:not-subscribed>
+        </tal:subscriptions>
+    </tal:definitions>
+</tal:definemacro>
+
+
+<tal:definemacro metal:define-macro="subscription_RSS_space" i18n:domain="cynin"
+                tal:define="rss_base_url python:hasattr(site_properties,'rss_url') and site_properties.rss_url != '' and site_properties.rss_url + '/'.join(('',) + context.getPhysicalPath()[2:]) or here_url;">
+        <a class="simplefloatedlink navtipVertical"
+           title="Subscribe to feed updates of the current filtered view in RSS format. You will need to use a RSS feed reader that supports 'HTTP BASIC Authentication'."
+           tal:define="qsparams request/QUERY_STRING|nothing;
+                          urlpart python:test(qsparams is not '','?' + qsparams,'');"
+              tal:attributes="href string:$rss_base_url/rss.xml${urlpart}"
+               i18n:attributes="title cluetip_subscribe_rss_space">
+                <img tal:attributes="src string:${portal_url}/icon-feed.png" />
+                <tal:linktext i18n:translate="link_rss">RSS</tal:linktext>
+            </a>
+        <a class="simplefloatedlink navtipVertical"
+           title="Subscribe to feed updates of the current filtered view in Atom format. You will need to use an Atom feed reader that supports 'HTTP BASIC Authentication'." type="application/atom+xml"
+              tal:define="qsparams request/QUERY_STRING|nothing;
+                          urlpart python:test(qsparams is not '','?' + qsparams,'');"
+              tal:attributes="href string:$rss_base_url/atom.xml${urlpart}"
+               i18n:attributes="title cluetip_subscribe_atom_space">
+                <img tal:attributes="src string:${portal_url}/icon-feed-atom.png" />
+                <tal:linktext i18n:translate="link_atom">Atom</tal:linktext>
+            </a>
+</tal:definemacro>
+
+
+<tal:definemacro metal:define-macro="subscription_RSS_all_feeds" i18n:domain="cynin">
+            <a class="nyroTitled"
+                tal:define="syndurl string:syndicationinfo;
+                            syndurl python:here.portal_type in ('Plone Site','RecycleBin','SmartView') and modules['ubify.cyninv2theme'].getRootAllFeedsURL() or syndurl;
+                            parttitle python:context.translate(modules['ubify.cyninv2theme'].getCyninMessageFactory()(u'Syndication feeds',u'Syndication feeds'));"
+                tal:attributes = "href syndurl;
+                                title string:${context/Title} ${parttitle}"
+               i18n:attributes="title">
+                <img tal:attributes="src string:${portal_url}/icon-feed_go.png" />
+                <tal:linktext i18n:translate="link_all_feeds">All feeds</tal:linktext>
+            </a>
+</tal:definemacro>
+
+<tal:definemacro metal:define-macro="subscription_RSS_item" i18n:domain="cynin"
+                 tal:define="rss_base_url python:hasattr(site_properties,'rss_url') and site_properties.rss_url != '' and site_properties.rss_url + '/'.join(('',) + context.getPhysicalPath()[2:]) or here_url;">
+        <a class="simplefloatedlink navtipVertical"
+           title="Subscribe to the Comments feed of the current item in RSS format. You will need to use a RSS feed reader that supports 'HTTP BASIC Authentication'."
+           tal:define="qsparams request/QUERY_STRING|nothing;
+                          urlpart python:test(qsparams is not '','?' + qsparams,'');"
+              tal:attributes="href string:$rss_base_url/rss.xml${urlpart}"
+               i18n:attributes="title cluetip_subscribe_rss_item">
+                <img tal:attributes="src string:${portal_url}/icon-feed.png" />
+                <tal:linktext i18n:translate="link_rss">RSS</tal:linktext>
+            </a>
+        <a class="simplefloatedlink navtipVertical"
+           title="Subscribe to the Comments feed of the current item in Atom format. You will need to use an Atom feed reader that supports 'HTTP BASIC Authentication'." type="application/atom+xml"
+              tal:define="qsparams request/QUERY_STRING|nothing;
+                          urlpart python:test(qsparams is not '','?' + qsparams,'');"
+              tal:attributes="href string:$rss_base_url/atom.xml${urlpart}"
+              i18n:attributes="title">
+                <img tal:attributes="src string:${portal_url}/icon-feed-atom.png" />
+                <tal:linktext i18n:translate="link_atom">Atom</tal:linktext>
+            </a>
+</tal:definemacro>
+
+
+<tal:definemacro metal:define-macro="subscription_calendar" i18n:domain="cynin">
+    <a class="nyroTitled"
+       tal:define="parttitle python:context.translate(modules['ubify.cyninv2theme'].getCyninMessageFactory()(u'Subscribe to %title Events Calendar',u'Subscribe to %title Events Calendar'));
+                   parttitle python:parttitle.replace('%title',context.Title());"
+        title="Subscribe to Events Calendar"
+             tal:attributes="title string:${parttitle}"          
+           href="calendarsubscription">
+        <img tal:attributes="src string:${portal_url}/icon-calendar.png" />
+        <tal:linktext i18n:translate="link_subscribe_calendar">Synchronize Calendar</tal:linktext>
+    </a>
+</tal:definemacro>
+
+
+<tal:definemacro metal:define-macro="tools_bookmarklet" i18n:domain="cynin">
+    <tal:addlinkperm tal:condition="python:checkPermission('ATContentTypes: Add Link',here)"
+        tal:define="parttitle python:context.translate(modules['ubify.cyninv2theme'].getCyninMessageFactory()(u'Links Bookmarklet',u'Links Bookmarklet'));" >
+        <a class="nyroTitled"                     
+           tal:attributes="title string:${context/Title} ${parttitle}"
+           href="bookmarklet">
+           <img tal:attributes="src string:${portal_url}/icon-tag_red.png" />
+           <tal:translate i18n:translate="link_bookmarklet">Bookmarklet</tal:translate>
+        </a>
+    </tal:addlinkperm>
+</tal:definemacro>
+
+<tal:definemacro metal:define-macro="webdav_support" i18n:domain="cynin">
+    <a class="nyroTitled"
+        title="WebDav Support"
+        tal:attributes="title string:WebDav Support"
+        i18n:attributes="title"
+        href="webdavsupport">
+        <img tal:attributes="src string:${portal_url}/icon-application_side_list.png" />
+        <tal:translate i18n:translate="">WebDav Support</tal:translate>
+    </a>
+</tal:definemacro>

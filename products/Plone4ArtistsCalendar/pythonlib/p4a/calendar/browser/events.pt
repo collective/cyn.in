@@ -1,0 +1,90 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="p4a.calendar">
+
+<head>
+
+  <metal:block metal:fill-slot="head_slot">
+  <style type="text/css"
+         media="all"
+         tal:content=
+          "string: @import url(${context/++resource++p4acalendar/calendar.css});">
+  </style>
+  <script type="text/javascript" src="calendar.js"
+          tal:attributes="src string:${context/++resource++p4acalendar/anchor-position.js}">
+  </script>
+  <script type="text/javascript" src="calendar.js"
+          tal:attributes="src string:${context/++resource++p4acalendar/popup-window.js}">
+  </script>
+  <script type="text/javascript" src="calendar.js"
+          tal:attributes="src string:${context/++resource++p4acalendar/calendar.js}">
+  </script>
+  </metal:block>
+
+</head>
+
+<body>
+
+<div metal:fill-slot="main"
+     class="p4acalendar">
+        <tal:comment replace="nothing">bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb</tal:comment>
+    <tal:block replace="structure view/render_filter"/>
+    <tal:block define="link view/event_creation_link" condition="python:link">
+       <a tal:attributes="href link" i18n:translate="create_event">Create event</a> |
+    </tal:block>
+    <span i18n:translate="view">View:</span> <a class="view_link" href="month.html" i18n:translate="month">Month</a> |
+    <tal:span tal:condition="options/show_past">
+      <a class="view_link" href="events.html" i18n:translate="Event_list">
+        Event list</a> | <span i18n:translate="">Past events list</span>
+    </tal:span>
+    <tal:span tal:condition="not:options/show_past">
+      <span i18n:translate="">Event list</span> |
+      <a class="view_link" href="past_events.html"
+         i18n:translate="past_event_list">
+        Past events list</a>
+    </tal:span>
+<span style="float:right"
+	tal:define="icalview nocall:context/@@icalendar.ics"
+	tal:condition="icalview/has_ical_support">
+    <a href="icalendar.ics">
+      <img tal:attributes="src string:${portal_url}/icon_export_ical.png" 
+           alt="Export" i18n:attributes="alt export" /><span i18n:translate="export"> Export </span>
+    </a>
+    <a tal:condition="view/event_creation_link" href="import.html">
+      <img src="++resource++p4aplonecalendar/icon_import_ical.png" 
+           alt="Import" i18n:attributes="alt import" /><span i18n:translate="import"> Import </span>
+    </a>
+  </span>
+   <h1 tal:content="context/title_or_id"><tal:comment replace="nothing">Title</tal:comment></h1>
+   <div class="eventlist">
+     <div class="eventlist_month" tal:repeat="month options/months">
+       <h2>
+         <tal:block content="month/month_name" i18n:translate=""/>
+         <tal:block content="month/year"/>
+       </h2>
+       <div class="vevent event" tal:repeat="event month/events">
+         <div class="event_details">
+           <abbr class="dtstart" title="2002-12-04" tal:attributes="title event/start/isoformat | default" i18n:translate="start_date">
+                 <tal:block content="month/month_name" i18n:name="start_month_name" />
+                 <tal:block content="event/start/day" i18n:name="start_day_name" />
+           </abbr>
+           <abbr class="dtend" title="2002-12-04" tal:attributes="title event/end/isoformat | default" i18n:translate="">End Date</abbr>
+         </div>
+         <div class="event_body">
+           <a class="summary event_title" tal:content="event/title"
+              tal:attributes="href event/url" />
+           <div class="location" tal:content="event/location | default"><tal:comment replace="nothing">Location</tal:comment></div>
+           <div class="description" tal:condition="event/description" tal:content="event/description"/>
+         </div>
+       </div>
+       <div style="clear: both;"></div>
+     </div>
+   </div>
+
+</div> <!-- end main fill slot -->
+
+</body>
+</html>

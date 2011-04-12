@@ -1,0 +1,133 @@
+<html xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="plone">
+<body>
+
+<!--
+Store collection of macros for media object, defining object presentation in entry.
+A 'macro id' should be case insensitive portal_type - so image or Image will go well :-).
+Some local valiables will pass from parent template
+
+entry_obj : Entry itself.
+obj : A object to be shown
+ -->
+
+<div metal:fill-slot="main">
+
+    <!-- macro for others - simply call object itself -->
+    <metal:commentform_macro define-macro="Othrers__">
+    <div class="contentsHanderItem"
+         tal:attributes="style python:'width: %d' % mediawidth">
+        <a href="#"
+           tal:attributes="href obj/absolute_url;
+                           target string:_blank;"
+           tal:content="obj/pretty_title_or_id">
+           <tal:comment replace="nothing">Link and object title</tal:comment>
+        </a>
+    </div>
+    </metal:commentform_macro>
+
+    <!-- macro for Image -->
+    <metal:commentform_macro define-macro="image"
+     tal:define="scale python:test(mediasizestr != 'no_resize',mediasizestr,None);">
+    <div class="contentsHanderItem">
+        <div class="contentsHanderImageWrapper">
+            <a href="#" title="" rel="lightbox"
+               tal:attributes="href string:${obj/absolute_url}/image_preview;
+			       title python:here.slimbox_title(image=obj);
+                               rel string:lightbox[${entry_obj/id}]">
+                <div tal:replace="structure python:obj.tag(scale= scale,css_class='contentsHanderImage')" />
+            </a>
+        </div>
+        <span class="contentsHanderImageCaption"
+              tal:content="obj/pretty_title_or_id" />
+    </div>
+    </metal:commentform_macro>
+
+    <!-- macro for QuickTime Movie(video/quicktime) -->
+    <metal:commentform_macro define-macro="file_video_quicktime">
+    <div class="contentsHanderItem">
+        <object classid="clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B"
+                codebase="http://www.apple.com/qtactivex/qtplugin.cab">
+        <param tal:attributes="value obj/absolute_url"
+               name="src" value="foo.mov" />
+        <param name="autoplay" value="false" />
+        <param name="controller" value="true" />
+        <embed tal:attributes="src obj/absolute_url"
+               src="foo.mov"
+               autoplay="false"
+               controller="true"
+               pluginspage="http://www.apple.com/quicktime/download/">
+        </embed>
+        </object>
+    </div>
+    </metal:commentform_macro>
+
+    <!-- macro for ATVideo by Ryosuke Tajima -->
+    <metal:commentform_macro define-macro="atvideo"
+     tal:define="scale python:test(mediasizestr != 'no_resize',mediasizestr,None);">
+    <div class="contentsHanderItem">
+        <div class="contentsHanderImageWrapper">
+            <a href="#"
+               tal:attributes="href string:${obj/absolute_url}/view;">
+                <div tal:replace="structure python:obj.tag(scale= scale,css_class='contentsHanderImage')" />
+            </a>
+        </div>
+        <span class="contentsHanderImageCaption"
+              tal:content="obj/pretty_title_or_id" />
+    </div>
+    </metal:commentform_macro>
+
+    <!-- macro for Amazon Item -->
+    <metal:commentform_macro define-macro="Amazon_Item"
+     tal:define="scale python:test(mediasizestr != 'no_resize',mediasizestr,None);">
+    <div class="contentsHanderItem">
+        <div class="contentsHanderImageWrapper">
+                <a href=""
+                     tal:attributes="href obj/getAmazonUrl;">
+                    <img class="contentsHanderImage" tal:attributes="src obj/getImageUrlMedium;" /><br />
+                    <span class="contentsHanderImageCaption" tal:content="obj/Title" > <tal:comment replace="nothing">Title</tal:comment> </span>
+                </a>
+        </div>
+        <ul>
+        <li tal:define="authors obj/getAuthors">
+          <span i18n:translate="">Author<span tal:condition="python:len(authors) != 1" tal:omit-tag="" i18n:name="len_authors" >s</span>: 
+          <span tal:content="python:', '.join(authors)" i18n:name="get_authors" ><tal:comment replace="nothing">Authors</tal:comment></span></span>
+        </li>
+        <li>
+          <span i18n:translate="">Publisher: 
+          <span tal:content="obj/getManufacturer" i18n:name="get_manufacturer" ><tal:comment replace="nothing">Publisher</tal:comment></span></span>
+        </li>
+        <li>
+          <span i18n:translate="">ISBN: 
+          <span tal:content="obj/getIsbn" i18n:name="get_isbn" >ISBN</span></span>
+        </li>
+        <li tal:define="listPrice obj/getListPrice;
+                       amazonPrice obj/getAmazonPrice;
+               thirdPartyPrice obj/getThirdPartyLowPrice;
+                       amazonSavings obj/getAmazonSavings;
+                       thirdPartySavings obj/getThirdPartySavings">
+          <tal:amazon tal:condition="amazonPrice">
+            <span i18n:translate="">Amazon Price: 
+            <strike tal:condition="amazonSavings" tal:content="listPrice">List price</strike> 
+            <em tal:content="amazonPrice" i18n:name="amazon_price" >Price</em>
+            <span tal:condition="amazonSavings">&nbsp;&nbsp;&nbsp;&nbsp;<em i18n:translate="">You save</em> 
+              <span tal:content="obj/getAmazonSavings" i18n:name="get_amazon_savings" /> 
+            </span>
+            </span>
+          </tal:amazon>
+          <br tal:condition="python:amazonPrice and thirdPartySavings" />
+          <tal:third_party tal:condition="thirdPartySavings">
+            <span i18n:translate="">Third Party Price:<em tal:content="thirdPartyPrice" i18n:name="third_party_price" >ThirdParty price</em>&nbsp;&nbsp;&nbsp;&nbsp;
+              <em i18n:translate="">You save</em>
+              <span tal:content="thirdPartySavings" i18n:name="third_party_savings" /></span>
+          </tal:third_party>
+        </li>
+        </ul>
+    </div>
+    </metal:commentform_macro>
+</div>
+
+</body>
+</html>

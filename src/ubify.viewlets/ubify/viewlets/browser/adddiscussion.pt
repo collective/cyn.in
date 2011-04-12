@@ -1,0 +1,79 @@
+<tal:comment replace="nothing">
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see http://www.gnu.org/licenses/.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+</tal:comment>
+<tal:adddiscussion tal:condition="python:not view.anonymous and view.canAddContent" i18n:domain="cynin">
+<div class="addnewbuttonholder">
+    <a tal:attributes="href string:${here/absolute_url}/addcontentselector" class="nyroModalnew">
+        <img tal:attributes="src string:${context/portal_url}/btn-plus.png" />
+        <div class="addnewbuttontext" i18n:translate="addnewbuttontext">New</div>
+    </a>
+</div>
+<div class="addnewor discreet">
+    <tal:translate i18n:translate="dashed_or">&ndash; or &ndash;</tal:translate>
+</div>
+<div id="discussioninputholder" tal:define="portal_prop python:context.portal_properties;
+                                            site_properties python:portal_prop.site_properties;
+                                            allow_discussion_title python:(hasattr(site_properties,'allow_discussion_title') and getattr(site_properties,'allow_discussion_title') == True) or False;">
+    <form action="" id="comcynapseadddiscussioninputform">
+            <input type="text" id="comcynapsediscussioninputtitle" name="com.cynapse.cynin.discussiontitle" tal:condition="allow_discussion_title" size="50" class="inputLabel" title="Discussion title..." i18n:attributes="title label_startdiscussion_title" />
+            <textarea class="inputLabel" title="Start a discussion..."
+                      id="discussiontextarea" i18n:attributes="title label_startdiscussion"
+                      name="com.cynapse.cynin.discussionmessageinput" rows="1" cols="25"
+                      tal:attributes="kssattr:currentcontextuid view/contextuid">
+            </textarea>
+        <div id="discussionmoreinputholder" style="display:none">
+            <div>
+                <input type="text" id="comcynapsediscussiontag" title="Add Tags" class="inputLabel" name="comcynapsediscussiontag" size="50" i18n:attributes="title label_add_tags" />
+            </div>
+            <div id="discussionbuttontable">
+                <input type="hidden" name="comcynapsediscussiontitle" id="comcynapsediscussiontitle" />
+                <input type="hidden" name="comcynapsetagstitle" id="comcynapsetagstitle" />
+                <input type="hidden" name="comcynapseadddiscussioncontextuid" id="comcynapseadddiscussioncontextuid" tal:attributes="value view/contextuid" />
+                <input class="discussionsubmitbutton allowMultiSubmit smallwhitebutton" type="submit" name="com.cynapse.cynin.discussionsubmit" value="Post"
+                 i18n:attributes="value button_post" />      
+                <input class="cancelbutton" type="button" id="comcynapsecynincanceldiscussionmessageinput" value="Cancel" i18n:attributes="value button_cancel"/>
+                <label class="" i18n:translate="">Add to Space:</label>
+                <select id="comcynapsespacelocation">
+                    <option tal:attributes="value view/contextuid;SELECTED string:SELECTED" tal:content="view/currentcontexttitle"></option>
+                </select>
+            </div>
+            <div><span id="comcynapsenotallowed" style="display:none;" i18n:translate="">Discussions are not allowed in this Space.</span></div>
+        </div>
+    </form>
+</div>
+</tal:adddiscussion>

@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<object name="portal_skins" meta_type="Plone ZipFileTransport Tool" allow_any="False"
+   cookie_persistence="False" default_skin="Plone Default"
+   request_varname="plone_skin">
+ <object name="ZipFileTransport" meta_type="Filesystem Directory View"
+    directory="ZipFileTransport/skins/ZipFileTransport"/>
+ <skin-path name="*">
+  <layer name="ZipFileTransport" insert-after="custom"/>
+ </skin-path>
+</object>

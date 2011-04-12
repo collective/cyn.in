@@ -1,0 +1,371 @@
+<!--
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see <http://www.gnu.org/licenses/>.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+-->
+<configure
+    xmlns:zope="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:five="http://namespaces.zope.org/five"
+    xmlns:gs="http://namespaces.zope.org/genericsetup"
+    i18n_domain="cynin">
+
+    <five:registerPackage package="." initialize=".initialize" />
+    <gs:registerProfile
+          name="default"
+          title="Ubify Core Types"
+          directory="profiles/default"
+          description="Provdes Core Content Types like Gallery, etc."
+          provides="Products.GenericSetup.interfaces.EXTENSION"
+          />
+
+    <zope:subscriber
+       for="Products.CMFCore.interfaces.IDiscussionResponse
+            zope.lifecycleevent.interfaces.IObjectCreatedEvent"
+       handler="Products.CMFNotification.events.handlers.onDiscussionItemAddedEvent"
+       />
+
+    <zope:subscriber
+       for="ubify.coretypes.interfaces.IStatuslogItem
+           zope.lifecycleevent.interfaces.IObjectCreatedEvent"
+       handler="Products.CMFNotification.events.handlers.onObjectInitializedEvent"
+       />
+       
+    <zope:subscriber
+       for="Products.CMFCore.interfaces.IDiscussionResponse
+            zope.lifecycleevent.interfaces.IObjectCreatedEvent"
+       handler="ubify.coretypes.onDiscussionItemAddedEvent"
+       />
+
+    <zope:subscriber
+        for="Products.ATContentTypes.interface.IATFolder
+            Products.Archetypes.interfaces.IObjectInitializedEvent"
+        handler="ubify.coretypes.setNextPreviousEnabledOnFolderishContentTypes"
+        />
+
+
+    <!-- Item creation event handler -->
+    <zope:subscriber
+       for="Products.ATContentTypes.interface.interfaces.IATContentType
+            Products.Archetypes.interfaces.IObjectInitializedEvent"
+       handler="ubify.coretypes.onObjectCreatedEvent"
+       />
+
+    <zope:subscriber
+      for="ubify.coretypes.interfaces.IStatuslogItem
+           zope.lifecycleevent.interfaces.IObjectCreatedEvent"
+      handler="ubify.coretypes.onObjectCreatedEvent"
+      />
+
+    <zope:subscriber
+       for="ubify.smartview.interfaces.ISmartView
+            zope.app.container.interfaces.IObjectAddedEvent"
+       handler="ubify.coretypes.onObjectCreatedEvent"
+       />
+
+    <!-- Item modification event handler -->
+    <zope:subscriber
+      for="Products.ATContentTypes.interface.interfaces.IATContentType
+           Products.Archetypes.interfaces.IObjectEditedEvent"
+      handler="ubify.coretypes.onObjectEditedEvent"
+      />
+
+    <zope:subscriber
+      for="ubify.coretypes.interfaces.IStatuslogItem
+           zope.lifecycleevent.interfaces.IObjectModifiedEvent"
+      handler="ubify.coretypes.onObjectEditedEvent"
+      />
+
+    <zope:subscriber
+       for="ubify.smartview.interfaces.ISmartView
+            zope.lifecycleevent.interfaces.IObjectModifiedEvent"
+       handler="ubify.coretypes.onObjectEditedEvent"
+       />
+
+    <!-- Workflow transition event handler -->
+    <zope:subscriber
+       for="Products.ATContentTypes.interface.interfaces.IATContentType
+            Products.CMFCore.interfaces.IActionSucceededEvent"
+       handler="ubify.coretypes.onActionSucceededEvent"
+       />
+
+    <!-- Flash uploaded Event handler
+    <zope:subscriber
+        for="Products.ATContentTypes.interface.interfaces.IATContentType
+            z3c.widget.flashupload.interfaces.FlashUploadedEvent"
+        handler="ubify.coretypes.onFlashUploadedEvent"
+        /> -->
+    <zope:adapter factory="Products.ZipFileTransport.browser.zipexport.ExportFormAdapter"
+	for="ubify.coretypes.interfaces.IImportExportCoretype"/>
+
+    <zope:adapter factory="Products.ZipFileTransport.browser.zipimport.ImportFormAdapter"
+	for="ubify.coretypes.interfaces.IImportExportCoretype"/>
+
+    <!-- Syndication entry -->
+    <zope:adapter
+      for="ubify.coretypes.interfaces.ISyndication"
+      provides="Products.basesyndication.interfaces.IFeed"
+      factory=".adapters.SiteFeed" />
+
+    <zope:adapter
+      for="ubify.coretypes.interfaces.ISyndication"
+      provides="Products.basesyndication.interfaces.IFeedSource"
+      factory=".adapters.ContentRootFeedSource" />
+
+    <!-- For content type Topic -->
+    <zope:adapter
+      for="Products.ATContentTypes.content.topic.ATTopic"
+      provides="Products.basesyndication.interfaces.IFeed"
+      factory=".adapters.TopicFeed" />
+
+    <zope:adapter
+      for="Products.ATContentTypes.content.topic.ATTopic"
+      provides="Products.basesyndication.interfaces.IFeedSource"
+      factory=".adapters.TopicFeedSource" />
+
+
+    <!-- For content type Document -->
+    <zope:adapter
+      for="Products.ATContentTypes.content.document.ATDocument"
+      provides="Products.basesyndication.interfaces.IFeed"
+      factory=".adapters.ATDocumentFeed" />
+
+    <zope:adapter
+      for="Products.ATContentTypes.content.document.ATDocument"
+      provides="Products.basesyndication.interfaces.IFeedSource"
+      factory=".adapters.ATDocumentFeedSource" />
+
+    <zope:adapter
+      for="Products.ATContentTypes.content.document.ATDocument"
+      factory=".adapters.ATDocumentFeedEntry"
+      provides="Products.basesyndication.interfaces.IFeedEntry"
+      />
+
+    <!-- For content type Blog entry -->
+    <zope:adapter
+      for="Products.ATContentTypes.content.newsitem.ATNewsItem"
+      provides="Products.basesyndication.interfaces.IFeed"
+      factory=".adapters.BlogEntryFeed" />
+
+    <zope:adapter
+      for="Products.ATContentTypes.content.newsitem.ATNewsItem"
+      provides="Products.basesyndication.interfaces.IFeedSource"
+      factory=".adapters.BlogEntryFeedSource" />
+
+    <zope:adapter
+      for="Products.ATContentTypes.content.newsitem.ATNewsItem"
+      factory=".adapters.BlogEntryFeedEntry"
+      provides="Products.basesyndication.interfaces.IFeedEntry"
+      />
+
+    <!-- For content type Image -->
+    <zope:adapter
+      for="Products.ATContentTypes.content.image.ATImage"
+      provides="Products.basesyndication.interfaces.IFeed"
+      factory=".adapters.ATImageFeed" />
+
+    <zope:adapter
+      for="Products.ATContentTypes.content.image.ATImage"
+      provides="Products.basesyndication.interfaces.IFeedSource"
+      factory=".adapters.ATImageFeedSource" />
+
+    <zope:adapter
+      for="Products.ATContentTypes.content.image.ATImage"
+      factory=".adapters.ATImageFeedEntry"
+      provides="Products.basesyndication.interfaces.IFeedEntry"
+      />
+
+    <zope:adapter
+      for="Products.ATContentTypes.content.image.ATImage"
+      factory=".adapters.ATImageFeedEntry"
+      provides="Products.basesyndication.interfaces.IEnclosure"
+      />
+
+    <!-- For content type Link -->
+    <zope:adapter
+      for="Products.ATContentTypes.content.link.ATLink"
+      provides="Products.basesyndication.interfaces.IFeed"
+      factory=".adapters.ATLinkFeed" />
+
+    <zope:adapter
+      for="Products.ATContentTypes.content.link.ATLink"
+      provides="Products.basesyndication.interfaces.IFeedSource"
+      factory=".adapters.ATLinkFeedSource" />
+
+    <zope:adapter
+      for="Products.ATContentTypes.content.link.ATLink"
+      factory=".adapters.ATLinkFeedEntry"
+      provides="Products.basesyndication.interfaces.IFeedEntry"
+      />
+
+    <!-- For content type File -->
+    <zope:adapter
+      for="Products.ATContentTypes.content.file.ATFile"
+      provides="Products.basesyndication.interfaces.IFeed"
+      factory=".adapters.ATFileFeed" />
+
+    <zope:adapter
+      for="Products.ATContentTypes.content.file.ATFile"
+      provides="Products.basesyndication.interfaces.IFeedSource"
+      factory=".adapters.ATFileFeedSource" />
+
+    <zope:adapter
+      for="Products.ATContentTypes.content.file.ATFile"
+      factory=".adapters.ATFileFeedEntry"
+      provides="Products.basesyndication.interfaces.IFeedEntry"
+      />
+
+    <zope:adapter
+      for="Products.ATContentTypes.content.file.ATFile"
+      factory=".adapters.ATFileFeedEntry"
+      provides="Products.basesyndication.interfaces.IEnclosure"
+      />
+
+    <!-- For content type Event -->
+    <zope:adapter
+      for="Products.ATContentTypes.content.event.ATEvent"
+      provides="Products.basesyndication.interfaces.IFeed"
+      factory=".adapters.ATEventFeed" />
+
+    <zope:adapter
+      for="Products.ATContentTypes.content.event.ATEvent"
+      provides="Products.basesyndication.interfaces.IFeedSource"
+      factory=".adapters.ATEventFeedSource" />
+
+    <zope:adapter
+      for="Products.ATContentTypes.content.event.ATEvent"
+      factory=".adapters.ATEventFeedEntry"
+      provides="Products.basesyndication.interfaces.IFeedEntry"
+      />
+
+    <!-- For content type Video -->
+    <zope:adapter
+      for="ubify.coretypes.interfaces.IVideo"
+      provides="Products.basesyndication.interfaces.IFeed"
+      factory=".adapters.VideoFeed" />
+
+    <zope:adapter
+      for="ubify.coretypes.interfaces.IVideo"
+      provides="Products.basesyndication.interfaces.IFeedSource"
+      factory=".adapters.VideoFeedSource" />
+
+    <zope:adapter
+      for="ubify.coretypes.interfaces.IVideo"
+      factory=".adapters.VideoFeedEntry"
+      provides="Products.basesyndication.interfaces.IFeedEntry"
+      />
+
+    <zope:adapter
+      for="ubify.coretypes.interfaces.IVideo"
+      factory=".adapters.VideoFeedEntry"
+      provides="Products.basesyndication.interfaces.IEnclosure"
+      />
+
+    <!-- For content type Status Message -->
+    <zope:adapter
+      for="ubify.coretypes.interfaces.IStatuslogItem"
+      provides="Products.basesyndication.interfaces.IFeed"
+      factory=".adapters.StatuslogItemFeed" />
+
+    <zope:adapter
+      for="ubify.coretypes.interfaces.IStatuslogItem"
+      provides="Products.basesyndication.interfaces.IFeedSource"
+      factory=".adapters.StatuslogItemFeedSource" />
+
+    <zope:adapter
+      for="ubify.coretypes.interfaces.IStatuslogItem"
+      factory=".adapters.StatuslogItemFeedEntry"
+      provides="Products.basesyndication.interfaces.IFeedEntry"
+      />
+      
+    <!-- For content type Discussion -->
+    <zope:adapter
+      for="ubify.coretypes.interfaces.IDiscussion"
+      provides="Products.basesyndication.interfaces.IFeed"
+      factory=".adapters.DiscussionFeed" />
+
+    <zope:adapter
+      for="ubify.coretypes.interfaces.IDiscussion"
+      provides="Products.basesyndication.interfaces.IFeedSource"
+      factory=".adapters.DiscussionFeedSource" />
+
+    <zope:adapter
+      for="ubify.coretypes.interfaces.IDiscussion"
+      factory=".adapters.DiscussionFeedEntry"
+      provides="Products.basesyndication.interfaces.IFeedEntry"
+      />
+      
+    <!-- For content type Audio -->
+    <zope:adapter
+      for="ubify.coretypes.interfaces.IAudio"
+      provides="Products.basesyndication.interfaces.IFeed"
+      factory=".adapters.AudioFeed" />
+
+    <zope:adapter
+      for="ubify.coretypes.interfaces.IAudio"
+      provides="Products.basesyndication.interfaces.IFeedSource"
+      factory=".adapters.AudioFeedSource" />
+
+    <zope:adapter
+      for="ubify.coretypes.interfaces.IAudio"
+      factory=".adapters.AudioFeedEntry"
+      provides="Products.basesyndication.interfaces.IFeedEntry"
+      />
+
+    <zope:adapter
+      for="ubify.coretypes.interfaces.IAudio"
+      factory=".adapters.AudioFeedEntry"
+      provides="Products.basesyndication.interfaces.IEnclosure"
+      />
+
+    <browser:pages
+      for="ubify.coretypes.interfaces.ISyndication"
+      class="Products.fatsyndication.browser.feed.GenericFeedView"
+      permission="cmf.SetOwnPassword">
+        <browser:page attribute="atom"  name="atom.xml" />
+        <browser:page attribute="itunes"   name="itunes.xml" />
+        <browser:page attribute="rss"   name="rss.xml" />
+    </browser:pages>
+
+    <browser:pages
+        for="Products.ATContentTypes.interface.interfaces.IATContentType"
+        class="Products.fatsyndication.browser.feed.GenericFeedView"
+        permission="zope2.View">
+      <browser:page attribute="atom"  name="atom.xml" />
+      <browser:page attribute="itunes"   name="itunes.xml" />
+      <browser:page attribute="rss"   name="rss.xml" />
+    </browser:pages>
+</configure>

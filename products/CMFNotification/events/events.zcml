@@ -1,0 +1,40 @@
+<configure xmlns:zope="http://namespaces.zope.org/zope">
+
+    <!-- See ``events.txt`` for further details. -->
+
+    <!-- Item creation event handler -->
+    <zope:subscriber
+       for="Products.ATContentTypes.interface.interfaces.IATContentType
+            Products.Archetypes.interfaces.IObjectInitializedEvent"
+       handler="Products.CMFNotification.events.handlers.onObjectInitializedEvent"
+       />
+
+    <!-- Item copy and paste event handler -->
+    <zope:subscriber
+       for="Products.ATContentTypes.interface.interfaces.IATContentType
+            OFS.interfaces.IObjectClonedEvent"
+       handler="Products.CMFNotification.events.handlers.onObjectClonedEvent"
+       />
+
+    <!-- Item modification event handler -->
+    <zope:subscriber
+       for="Products.ATContentTypes.interface.interfaces.IATContentType
+            Products.Archetypes.interfaces.IObjectEditedEvent"
+       handler="Products.CMFNotification.events.handlers.onObjectEditedEvent"
+       />
+
+    <!-- Workflow transition event handler -->
+    <zope:subscriber
+       for="Products.ATContentTypes.interface.interfaces.IATContentType
+            Products.CMFCore.interfaces.IActionSucceededEvent"
+       handler="Products.CMFNotification.events.handlers.onActionSucceededEvent"
+       />
+
+    <!-- Discussion item creation event handler -->
+    <zope:subscriber
+       for="Products.CMFCore.interfaces.IDiscussionResponse
+            zope.app.container.interfaces.IObjectAddedEvent"
+       handler="Products.CMFNotification.events.handlers.onDiscussionItemAddedEvent"
+       />
+
+</configure>

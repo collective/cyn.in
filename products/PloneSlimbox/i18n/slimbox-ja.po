@@ -1,0 +1,35 @@
+# Translation of Plone Slimbox
+# Suzuki, Takanori <takanori@takanory.net>, 2007
+msgid ""
+msgstr ""
+"Project-Id-Version: Plone Slimbox\n"
+"POT-Creation-Date: 2007-02-19 07:28+0900\n"
+"PO-Revision-Date: 2007-02-19 07:28+0900\n"
+"Last-Translator: Suzuki, Takanori <takanori@takanory.net>\n"
+"Language-Team: takanory.net [http://takanory.net]\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-Code: ja\n"
+"Language-Name: Japanese\n"
+"Preferred-Encodings: utf-8\n"
+"Domain: slimbox\n"
+"X-Is-Fallback-For: ja-jp\n"
+
+#. Default: "plone view"
+msgid "plone view"
+msgstr "画像ビュー"
+
+#. Default: "Click to plone image view..."
+msgid "Click to plone image view..."
+msgstr "Plone の画面で見るためにはここをクリック..."
+
+#. Default: "full-size"
+msgid "full-size"
+msgstr "フルサイズ"
+
+#. Default: "Click to view full-size image..."
+msgid "Click to view full-size image..."
+msgstr "フルサイズの画像を見るためにはここをクリック..."
+

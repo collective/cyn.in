@@ -1,0 +1,302 @@
+<html xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      i18n:domain="cynin">
+
+<body>
+
+<div metal:define-macro="portlet"
+     tal:define="viewTemplate context/@@plone/getViewTemplateId | python:None"
+     tal:condition="python:viewTemplate is None or template_id==viewTemplate">
+  <div metal:use-macro="here/rating_macros/macros/increase_hit_count"/>
+  <div metal:use-macro="here/rating_macros/macros/rating_result"/>
+  <div metal:use-macro="here/rating_macros/macros/rating_form"/>
+</div>
+
+<div metal:define-macro="kss_my_rating">
+  <div metal:use-macro="here/rating_macros/macros/display_hit_count"/>
+  <div metal:use-macro="here/rating_macros/macros/rating_result"/>
+  <div metal:use-macro="here/rating_macros/macros/kss_my_rating_form"/>
+</div>
+
+<span metal:define-macro="increase_hit_count"
+     tal:on-error="string:"
+     class="discreet"
+     tal:define="ratings_tool here/portal_ratings;
+                 uid here/UID | nothing;"
+     tal:condition="python:ratings_tool.isCountingAllowedFor(here)">
+     <tal:condition>
+         <tal:null tal:define="dull python:ratings_tool.addHit(uid)"/>
+     </tal:condition>
+</span>
+
+<span metal:define-macro="display_hit_count"
+     tal:on-error="string:"
+     tal:define="ratings_tool here/portal_ratings;
+                uid here/UID | nothing;"
+     tal:condition="python:ratings_tool.isCountingAllowedFor(here)">
+     <label i18n:translate="hits_count">Hits:</label>
+     <span tal:replace="python:ratings_tool.getHitCount(uid)"/>
+</span>
+
+<metal:macro metal:define-macro="rating_result"
+     tal:define="ratings_tool here/portal_ratings;"
+     tal:condition="python:ratings_tool.isRatingAllowedFor(here)">
+    <label i18n:translate="label_rating">Rating:</label>
+    <span tal:define="uid here/UID;
+                avg python:ratings_tool.getRatingMean(uid) != None and int(ratings_tool.getRatingMean(uid));
+                total_count python:ratings_tool.getRatingCount(uid) or 0;
+                star_icon string:${here/portal_url}/icon-rating-on.png;
+                blank_star_icon string:${here/portal_url}/icon-rating-off.png;"
+                class="rating_display"
+          >
+       <img class="displayratingimg1" tal:attributes="src python:test(avg &lt; 1, blank_star_icon, star_icon);"
+       /><img class="displayratingimg2" tal:attributes="src python:test(avg &lt; 2, blank_star_icon, star_icon);"
+       /><img class="displayratingimg3" tal:attributes="src python:test(avg &lt; 3, blank_star_icon, star_icon);"
+       /><img class="displayratingimg4" tal:attributes="src python:test(avg &lt; 4, blank_star_icon, star_icon);"
+       /><img class="displayratingimg5" tal:attributes="src python:test(avg &lt; 5, blank_star_icon, star_icon);"
+       />
+       <label tal:condition="avg" tal:content="python:modules['ubify.cyninv2theme'].getTitleForRating(avg)" />
+       <span class="discreet" i18n:translate="votes_count">
+           (<span class="displayratingcountlabel" i18n:name="total_count" tal:content="total_count"/> votes)
+       </span>
+    </span>
+
+</metal:macro>
+
+<tal:comment replace="nothing">REMOVED condition here to make it work!!</tal:comment>
+<metal:macro metal:define-macro="rating_result_items"
+     tal:define="ratings_tool item/portal_ratings;"
+     >
+    <label i18n:translate="label_rating">Rating:</label>
+    <span tal:define="uid item/UID;
+                avg python:ratings_tool.getRatingMean(uid) != None and int(ratings_tool.getRatingMean(uid));
+                total_count python:ratings_tool.getRatingCount(uid) or 0;
+                star_icon string:${here/portal_url}/icon-rating-on.png;
+                blank_star_icon string:${here/portal_url}/icon-rating-off.png;"
+            class="rating_display"
+          >
+       <img class="displayratingimg1" tal:attributes="src python:test(avg &lt; 1, blank_star_icon, star_icon);"/>
+       <img class="displayratingimg2" tal:attributes="src python:test(avg &lt; 2, blank_star_icon, star_icon);"/>
+       <img class="displayratingimg3" tal:attributes="src python:test(avg &lt; 3, blank_star_icon, star_icon);"/>
+       <img class="displayratingimg4" tal:attributes="src python:test(avg &lt; 4, blank_star_icon, star_icon);"/>
+       <img class="displayratingimg5" tal:attributes="src python:test(avg &lt; 5, blank_star_icon, star_icon);"/>
+       <label tal:condition="avg" tal:content="python:modules['ubify.cyninv2theme'].getTitleForRating(avg)" />
+       <span class="discreet" i18n:translate="votes_count">
+           (<span class="displayratingcountlabel" i18n:name="total_count" tal:content="total_count"/> votes)
+       </span>
+    </span>
+
+</metal:macro>
+
+<metal:macro metal:define-macro="voting_result"
+     tal:define="ratings_tool here/portal_ratings;itemuid here/UID;"
+     tal:condition="python:ratings_tool.isRatingAllowedFor(here)"
+     >    
+    <tal:ratingmacro metal:use-macro="here/rating_macros/macros/voting_result_items" />
+</metal:macro>
+
+<metal:macro metal:define-macro="voting_result_items"
+             tal:define="ratings_tool ratings_tool|python:item and item.portal_ratings;"
+    >
+    <tal:singleitem tal:define="uid itemuid|python:item and item.UID;
+                                cyninscore python:ratings_tool.getCyninRating(uid);
+                                score python:test(cyninscore == None,0,cyninscore);
+                                score python:test(score >0,'+' + str(score),score);
+                                total_count python:ratings_tool.getRatingCount(uid);
+                                count_list python:ratings_tool.getCyninRatingCount(uid);
+                                positive_count python:count_list['positive'];
+                                positive_score python:count_list['positivescore'];
+                                negative_count python:count_list['negative'];
+                                negative_score python:count_list['negativescore']">
+        <label i18n:translate="label_score">Rating:</label>
+        <tal:ratingmacro metal:use-macro="here/rating_macros/macros/voting_result_display" />
+    </tal:singleitem>
+</metal:macro>
+
+<metal:macro metal:define-macro="voting_result_mini" tal:define="ratings_tool ratings_tool|python:item and item.portal_ratings;">
+    <tal:singleitem tal:define="uid itemuid|python:item and item.UID;
+                                cyninscore python:ratings_tool.getCyninRating(uid);
+                                score python:test(cyninscore == None,0,cyninscore);
+                                total_count python:ratings_tool.getRatingCount(uid);
+                                count_list python:ratings_tool.getCyninRatingCount(uid);
+                                positive_count python:count_list['positive'];
+                                positive_score python:count_list['positivescore'];
+                                negative_count python:count_list['negative'];
+                                negative_score python:count_list['negativescore']">
+        <tal:ratingmacro metal:use-macro="here/rating_macros/macros/voting_result_display_mini" />
+    </tal:singleitem>
+</metal:macro>
+
+<metal:macro metal:define-macro="voting_result_display_mini" tal:define="score score|nothing;
+                                                            total_count total_count|nothing;
+                                                            positive_count positive_count|nothing;
+                                                            positive_score positive_score|nothing;
+                                                            negative_count negative_count|nothing;
+                                                            negative_score negative_score|nothing;
+                                                            no_displaystyle python:'display:none';
+                                                            pc_style python:test(positive_count == 0,no_displaystyle,'');
+                                                            ps_style python:test(positive_score == 0,no_displaystyle,'');
+                                                            nc_style python:test(negative_count == 0,no_displaystyle,'');
+                                                            ns_style python:test(negative_score == 0,no_displaystyle,'');">
+    <div class="ratinglabel" i18n:translate="score_label">Rating</div>
+    <span class="displaytotalscorelabel positive"
+          tal:attributes="id string:displaytotalscorelabel${uid}"
+          tal:content="string: +${score}"
+          tal:condition="python: score >0"
+    />
+    <span class="displaytotalscorelabel negativeorzero"
+          tal:attributes="id string:displaytotalscorelabel${uid}"
+          tal:content="score" tal:condition="python: score <=0"
+    />
+</metal:macro>
+
+<metal:macro metal:define-macro="voting_result_display" tal:define="score score|nothing;
+                                                            total_count total_count|nothing;
+                                                            positive_count positive_count|nothing;
+                                                            positive_score positive_score|nothing;
+                                                            negative_count negative_count|nothing;
+                                                            negative_score negative_score|nothing;
+                                                            no_displaystyle python:'display:none';
+                                                            pc_style python:test(positive_count == 0,no_displaystyle,'');
+                                                            ps_style python:test(positive_score == 0,no_displaystyle,'');
+                                                            nc_style python:test(negative_count == 0,no_displaystyle,'');
+                                                            ns_style python:test(negative_score == 0,no_displaystyle,'');">
+    <span class="displaytotalscorelabel" tal:attributes="id string:displaytotalscoredetail${uid}" tal:content="score" />
+    <span i18n:translate="votes_count" style="display:none">(<span class="displayratingcountlabel" i18n:name="total_count" tal:content="total_count"/> votes)</span>
+    <span class="outerpcount" tal:attributes="style pc_style" i18n:translate="positivecount">: Liked by <span class="displaypositivecountlabel" i18n:name="positive_count" tal:content="positive_count" /></span>
+    <span class="outerncount" tal:attributes="style nc_style" i18n:translate="negativecount">Disliked by <span class="displaynegativecountlabel" i18n:name="negative_count" tal:content="negative_count" /></span>
+</metal:macro>
+
+<metal:rating-macro metal:define-macro="rating_form"
+     tal:define="ratings_tool here/portal_ratings;"
+     tal:condition="python:ratings_tool.isRatingAllowedFor(here) and modules['ubify.cyninv2theme'].checkHasPermission('ATRatings: Add rating', here)">
+
+     <form method="POST"
+            action="rateContent"
+            name="rating_form"
+            tal:define="uid here/UID;
+                        value python:ratings_tool.getUserRating(uid);
+                        star_icon string:${here/portal_url}/star_icon.gif;
+                        blank_star_icon string:${here/portal_url}/blank_star_icon.gif;"
+            tal:attributes="action string:${here/absolute_url}/rateContent">
+            <input type="hidden" name="itemUID" tal:attributes="value here/UID" />
+           <span class="discreet" i18n:translate="click_to_vote">Click to rate:</span>
+           <input type="image" name="rating_1" value="1" style="border: 0"
+                  onmouseout="document.getElementById('label_rating1').style.visibility='hidden'"
+                  onmouseover="document.getElementById('label_rating1').style.visibility='visible'"
+                  tal:attributes="src python:test(value &lt; 1, blank_star_icon, star_icon);"
+           /><input type="image" name="rating_2" value="2" style="border: 0"
+                  onmouseout="document.getElementById('label_rating2').style.visibility='hidden'"
+                  onmouseover="document.getElementById('label_rating2').style.visibility='visible'"
+                  tal:attributes="src python:test(value &lt; 2, blank_star_icon, star_icon);"
+           /><input type="image" name="rating_3" value="3" style="border: 0"
+                  onmouseout="document.getElementById('label_rating3').style.visibility='hidden'"
+                  onmouseover="document.getElementById('label_rating3').style.visibility='visible'"
+                  tal:attributes="src python:test(value &lt; 3, blank_star_icon, star_icon);"
+           /><input type="image" name="rating_4" value="4" style="border: 0"
+                  onmouseout="document.getElementById('label_rating4').style.visibility='hidden'"
+                  onmouseover="document.getElementById('label_rating4').style.visibility='visible'"
+                  tal:attributes="src python:test(value &lt; 4, blank_star_icon, star_icon);"
+           /><input type="image" name="rating_5" value="5" style="border: 0"
+                  onmouseout="document.getElementById('label_rating5').style.visibility='hidden'"
+                  onmouseover="document.getElementById('label_rating5').style.visibility='visible'"
+                  tal:attributes="src python:test(value &lt; 5, blank_star_icon, star_icon);"/>
+
+          <span class="discreet" style="font-weight:bold">
+          &nbsp;
+          <span style="visibility: hidden; position:absolute"
+                id="label_rating1"
+                i18n:translate="rating_1">outdated</span>
+          <span style="visibility: hidden; position:absolute" id="label_rating2"
+                i18n:translate="rating_2">misleading or not useful</span>
+          <span style="visibility: hidden; position:absolute" id="label_rating3"
+                i18n:translate="rating_3">average</span>
+          <span style="visibility: hidden; position:absolute" id="label_rating4"
+                i18n:translate="rating_4">good</span>
+          <span style="visibility: hidden; position:absolute" id="label_rating5"
+                i18n:translate="rating_5">great</span>
+          </span>
+    </form>
+
+</metal:rating-macro>
+
+<metal:kss-rating-macro metal:define-macro="kss_my_rating_form"
+     tal:define="ratings_tool here/portal_ratings;"
+     tal:condition="python:ratings_tool.isRatingAllowedFor(here) and modules['ubify.cyninv2theme'].checkHasPermission('ATRatings: Add rating', here)">
+
+    <div class="ratingscontainer">
+        <div class="listitemcommondetailrow">
+        <form 
+               id="comcynapsecyninratingform"
+               action=""
+               name="rating_form"
+               tal:define="uid here/UID;
+                           value python:ratings_tool.getUserRating(uid) or 0;
+                           star_icon string:${here/portal_url}/star_icon.gif;
+                           blank_star_icon string:${here/portal_url}/blank_star_icon.gif;"
+               tal:attributes="action string:${here/absolute_url}/rateContent">
+            <div class="ratingstarsrow">
+                    <input title="Like it (+1)" type="button" name="rating_4" value="4"
+                        tal:attributes="class python:test(value == 4, 'comcynapseratingbutton comcynapsevotingbutton4 kssattr-ratingvalue-4 selected', 'comcynapseratingbutton comcynapsevotingbutton4 kssattr-ratingvalue-4');"
+                        i18n:attributes="title liked_it"/>
+                    <input title="Dislike it (-1)"
+                           type="submit" name="rating_2" value="2"
+                           tal:attributes="class python:test(value == 2, 'allowMultiSubmit comcynapseratingbutton comcynapsevotingbutton2 kssattr-ratingvalue-2 selected', 'allowMultiSubmit comcynapseratingbutton comcynapsevotingbutton2 kssattr-ratingvalue-2');"
+                           i18n:attributes="title didnt_like_it"
+                    />
+            </div>
+            <input type="hidden" name="itemUID" tal:attributes="value here/UID" />
+              <label class="ratingslabel" i18n:translate="my_rating">My rating:</label>
+            <span class="comcynapseratinginputlabel" tal:condition="python: value==0" title="No rating" i18n:attributes="title no_rating" i18n:translate="no_rating">No rating</span>
+            <span class="comcynapseratinginputlabel" tal:condition="python: value==1" title="Hate it (-2)" i18n:attributes="title hate_it" i18n:translate="hate_it">Hate it (-2)</span>
+            <span class="comcynapseratinginputlabel" tal:condition="python: value==2" title="Dislike it (-1)" i18n:attributes="title didnt_like_it" i18n:translate="didnt_like_it">Dislike it (-1)</span>            
+            <span class="comcynapseratinginputlabel" tal:condition="python: value==4" title="Like it (+1)" i18n:attributes="title liked_it" i18n:translate="liked_it">Like it (+1)</span>
+            <span class="comcynapseratinginputlabel" tal:condition="python: value==5" title="Love it (+2)" i18n:attributes="title loved_it" i18n:translate="loved_it">Love it (+2)</span>
+        </form>
+    </div>
+        <div class="listitemcommondetailrow">
+            <tal:ratingmacro metal:use-macro="here/rating_macros/macros/voting_result" />
+        </div>
+    </div>
+</metal:kss-rating-macro>
+<metal:kss-rating-macro metal:define-macro="kss_listing_rating_form"
+     tal:define="ratings_tool full_item/portal_ratings;"
+     tal:condition="python:ratings_tool.isRatingAllowedFor(full_item) and modules['ubify.cyninv2theme'].checkHasPermission('ATRatings: Add rating', full_item)">
+    <div class="ratingscontainer">
+        <div class="listitemcommondetailrow">
+            <form method="POST"
+                   id="comcynapsecyninratingform"
+                   action="rateContent"
+                   name="rating_form"
+                   tal:define="uid full_item/UID;
+                               value python:ratings_tool.getUserRating(uid) or 0;
+                               star_icon string:${here/portal_url}/star_icon.gif;
+                               blank_star_icon string:${here/portal_url}/blank_star_icon.gif;"
+                   tal:attributes="action string:${full_item/absolute_url}/rateContent">
+                <div class="ratingstarsrow">
+                    <input title="Like it (+1)" type="submit" name="rating_4" value="4"
+                        tal:attributes="class python:test(value == 4, 'comcynapseratingbutton comcynapsevotingbutton4 kssattr-ratingvalue-4 selected', 'comcynapseratingbutton comcynapsevotingbutton4 kssattr-ratingvalue-4');"
+                        i18n:attributes="title liked_it"/>
+                    <input title="Dislike it (-1)"
+                           type="submit" name="rating_2" value="2"
+                           tal:attributes="class python:test(value == 2, 'comcynapseratingbutton comcynapsevotingbutton2 kssattr-ratingvalue-2 selected', 'comcynapseratingbutton comcynapsevotingbutton2 kssattr-ratingvalue-2');"
+                           i18n:attributes="title didnt_like_it"
+                    />
+                </div>
+                <input type="hidden" name="itemUID" tal:attributes="value full_item/UID" />
+                <label class="ratingslabel" i18n:translate="my_rating">My rating:</label>
+                <span class="comcynapseratinginputlabel" tal:condition="python: value==0" title="No rating" i18n:attributes="title no_rating" i18n:translate="no_rating">No rating</span>
+                <span class="comcynapseratinginputlabel" tal:condition="python: value==1" title="Hated it (-2)" i18n:attributes="title hated_it" i18n:translate="hated_it">Hated it (-2)</span>
+                <span class="comcynapseratinginputlabel" tal:condition="python: value==2" title="Dislike it (-1)" i18n:attributes="title didnt_like_it" i18n:translate="didnt_like_it">Dislike it (-1)</span>            
+                <span class="comcynapseratinginputlabel" tal:condition="python: value==4" title="Like it (+1)" i18n:attributes="title liked_it" i18n:translate="liked_it">Like it (+1)</span>
+                <span class="comcynapseratinginputlabel" tal:condition="python: value==5" title="Love it (+2)" i18n:attributes="title loved_it" i18n:translate="loved_it">Love it (+2)</span>
+            </form>
+        </div>
+        <div class="listitemcommondetailrow">
+            <tal:ratingmacro metal:use-macro="here/rating_macros/macros/voting_result_items" />
+        </div>
+    </div>
+</metal:kss-rating-macro>
+
+</body>
+</html>

@@ -1,0 +1,14 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    i18n_domain="cynin">
+
+  <genericsetup:registerProfile
+      name="default"
+      title="Ubify XmlRPC product"
+      directory="profiles/default"
+      description='Extension profile for the "Ubify XmlRPC product" Plone theme.'
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
+</configure>

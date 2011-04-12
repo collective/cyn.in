@@ -1,0 +1,285 @@
+.p4acalendar .filter {
+}
+
+.p4acalendar .month H1 {
+    font-size: 1em;
+    margin-bottom: 1em;
+}
+
+.p4acalendar A {
+    text-decoration: none;
+    border: 0;
+}
+
+.p4acalendar .month H1 A {
+    text-decoration: none;
+}
+
+.p4acalendar .week .day DL {
+    color: #777;
+    margin: 0;
+    padding: 0.2em;
+}
+
+.p4acalendar .week .day DT A {
+    display: block;
+    color: #666;
+}
+
+.p4acalendar .week .day.outside-month DL,
+.p4acalendar .week .day.outside-month DL A {
+    color: #ccc;
+}
+
+/* for some reason IE doesn't like the separaters here */
+.p4acalendar .standard-week-days .visualClear,
+.p4acalendar .week .visualClear {
+    display: none;
+}
+
+.p4acalendar .day-event-popup {
+  background-color: #f4f6bf;
+  position: absolute;
+  border: 1px black solid;
+  z-index: 40;
+}
+
+.p4acalendar .day-event-popup UL {
+    list-style: none;
+    margin: 0;
+    padding: 0.3em;
+}
+
+.p4acalendar .day-event-popup LI {
+    border: 1px #f4f6bf solid;
+    margin: 0;
+    padding: 0;
+}
+
+.p4acalendar .day-event-popup LI DL,
+.p4acalendar .day-event-popup LI DT,
+.p4acalendar .day-event-popup LI DD {
+    margin: 0;
+    padding: 0;
+}
+
+.p4acalendar .day-event-popup LI DD {
+    padding-left: 10px;
+}
+
+.p4acalendar .standard-week-days .day {
+    text-align: center;
+}
+
+.p4acalendar .week .day DL DT,
+.p4acalendar .week .day DL DD {
+    padding: 0;
+    margin: 0;
+}
+
+.p4acalendar .week .day DL DD {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+.p4acalendar .week .day DD {
+    color: #777;
+    font-size: 0.9em;
+}
+
+.p4acalendar .day {
+    float: left;
+    width: 13%;
+    overflow: hidden;
+}
+
+.p4acalendar .day DD.extra-events {
+    border-top: 0.5em solid white;
+}
+
+.p4acalendar .day DD.extra-events A {
+    display: block;
+    border: 0;
+}
+
+.p4acalendar .day.today {
+    background-color: #f4f6bf;
+}
+
+.p4acalendar .standard-week-days .day {
+    font-size: 0.8em;
+}
+
+.p4acalendar .week .day {
+    height: 6em;
+}
+
+.p4acalendar .event-item {
+    height: 1.4em;
+}
+
+.p4acalendar .event-title {
+    font-size: 1em;
+}
+
+/*
+    These are IE6 fixes.  The underscore hack is read by ONLY Windows IE6
+    and invalidates the CSS.
+*/
+
+.day dl dd {
+    _margin-bottom: 20px;
+}
+
+/* grid start */
+/*
+The purpose here of a fancy grid is to make sure days that are not
+in the active month have their grid lines lighter than the rest to
+make it obvious.
+*/
+
+.p4acalendar .week .day {
+    border-left: 1px #777 solid;
+    border-top: 1px #777 solid;
+}
+
+.p4acalendar .last-week .day {
+    border-bottom: 1px #777 solid;
+    border-left: 0;
+    border-right: 1px #777 solid;
+}
+
+.p4acalendar .last-week .day.first-week-day {
+    border-left: 1px #777 solid;
+}
+
+.p4acalendar .week .day.last-week-day {
+    border-right: 1px #777 solid;
+}
+
+.p4acalendar .first-week .day.outside-month {
+    border-left: 1px #ccc solid;
+    border-top: 1px #ccc solid;
+}
+
+.p4acalendar .last-week .day.outside-month,
+.p4acalendar .last-week .day.outside-month.last-week-day {
+    border-bottom: 1px #ccc solid;
+    border-right: 1px #ccc solid;
+}
+
+/* Event types */
+
+.p4acalendar .appointment {
+    background: #cde2a7;
+}
+
+.p4acalendar .convention {
+    background: #f4f4be;
+}
+
+.p4acalendar .meeting {
+    background: #ffaaaa;
+}
+
+.p4acalendar .socialevent {
+    background: #dee7ec;
+}
+
+.p4acalendar .work {
+    background: #CCC;
+}
+
+.p4acalendar .meetingcall {
+    background: #aaffaa;
+}
+
+.p4acalendar .pressevent {
+    background: #aaaaff;
+}
+
+.p4acalendar .legactivity {
+    background: #f0bbff;
+}
+
+.p4acalendar .fieldevent {
+    background: #ffce7b;
+}
+
+.p4acalendar .deadline {
+    background: #F77;
+}
+
+
+/* end grid */
+
+/* eventlist */
+.p4acalendar .eventlist .eventlist_month {
+    padding: 5px 0 5px 0;
+}
+
+.p4acalendar .eventlist H1 {
+}
+
+.p4acalendar .eventlist H2 {
+	font-size: 1.25em;
+}
+
+.p4acalendar .eventlist .event {
+	float: left;
+	width: 100%;
+	padding-bottom: 5px;
+}
+
+.p4acalendar .eventlist .event .event_details {
+    float: left;
+    clear: right;
+    text-align: right;
+	font-weight: bold;
+    width: 15%;
+}
+
+.p4acalendar .eventlist .event .event_details ABBR {
+	border: none;
+}
+
+.p4acalendar .eventlist .event .event_details ABBR.dtend {
+	display: none;
+}
+
+.p4acalendar .event .location, .p4acalendar .day-event-popup .event .description {
+	font-size: 0.8em;
+}
+
+.p4acalendar .event .location {
+	color: #999;
+}
+
+.p4acalendar .eventlist .event .location {
+	border-top: 1px dashed #ccc;
+	padding-top: 3px;
+}
+
+.p4acalendar .eventlist .event .event_body {
+    float: right;
+    width: 83%;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #ccc;
+}
+
+.p4acalendar .eventlist .event .event_title {
+	display: block;
+}
+
+.p4acalendar .eventlist .event .description {
+	padding-top: 3px;
+}
+
+.p4acalendar .eventlist A {
+    font-weight: bold;
+}
+
+/* end eventlist */

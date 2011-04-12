@@ -1,0 +1,112 @@
+<tal:comment replace="nothing">
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see http://www.gnu.org/licenses/.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+</tal:comment>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="cynin">
+<body>
+<metal:portlet define-macro="portlet"
+   tal:define="controlPanel python:modules['Products.CMFCore.utils'].getToolByName(here, 'portal_controlpanel');
+               groups python:controlPanel.getGroups('site');
+               getIconFor nocall:putils/getIconFor;
+               issiteAdmin python:context.portal_membership.checkPermission('Manage portal',context)">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="5" height="5" align="left" valign="top"><img tal:attributes="src string:${here/portal_url}/box-greytrans-t-l.png" width="5" height="5" /></td>
+    <td class="bg55"></td>
+    <td width="5" height="5" align="right" valign="top"><img tal:attributes="src string:${here/portal_url}/box-greytrans-t-r.png" width="5" height="5" /></td>
+  </tr>
+  <tr>
+    <td class="bg55">&nbsp;</td>
+    <td class="bg55">
+        <dl class="portlet"
+            id="portlet-prefs">
+            <dt class="portletHeader">
+                <span class="portletTopLeft"></span>
+                <a href="" tal:condition="issiteAdmin"
+                   tal:attributes="href string:${portal_url}/plone_control_panel">Site Setup</a>
+                <span class="portletTopRight"></span>
+            </dt>
+
+            <dd class="portletItem"
+                tal:repeat="group groups">
+
+                <tal:block tal:define="configlets python:controlPanel.enumConfiglets(group=group['id']);
+                                    grpTitle group/title"
+                           tal:condition="configlets">
+                    <strong id="cyninconfiguration" tal:content="python:grpTitle.replace('Plone','cyn.in')"
+                            i18n:translate="">Plone Configlet Group Title</strong>
+                    <ul class="configlets sideconfiglets">
+                        <li tal:repeat="configlet configlets">
+                            <a href=""
+                               tal:attributes="href configlet/url"
+                               tal:condition="configlet/visible">
+                                <img src="" alt="" tal:attributes="src python:'%s/%s' % (portal_url, getIconFor('controlpanel',configlet['id']));
+                                                     alt configlet/description"
+                                     i18n:attributes="alt"
+                                     tal:on-error="string:" />
+                            <tal:configletname tal:content="configlet/title"
+                                               i18n:translate=""></tal:configletname>
+                            </a>
+                        </li>
+                    </ul>
+                </tal:block>
+                <span class="portletBottomLeft"></span>
+                <span class="portletBottomRight"></span>
+            </dd>
+
+        </dl>
+    </td>
+    <td class="bg55">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="5" height="5" align="left" valign="bottom"><img tal:attributes="src string:${here/portal_url}/box-greytrans-b-l.png" width="5" height="5" /></td>
+    <td class="bg55"></td>
+    <td width="5" height="5" align="right" valign="bottom"><img tal:attributes="src string:${here/portal_url}/box-greytrans-b-r.png" width="5" height="5" /></td>
+  </tr>
+  <tr><td colspan="3">&nbsp;</td></tr>
+</table>
+
+
+
+
+</metal:portlet>
+</body>
+</html>

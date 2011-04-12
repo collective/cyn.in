@@ -1,0 +1,204 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: ATRatings 0.2\n"
+"POT-Creation-Date: 2005-10-20 21:24+0000\n"
+"PO-Revision-Date: 2005-01-05 12:33:09 -0200\n"
+"Last-Translator: Junyong Pan <panjy@zopechina.com>\n"
+"Language-Team: zopechina.com <info@zopechina.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=gbk\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-Code: en\n"
+"Language-Name: English\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: at_ratings\n"
+
+#. Default: "best ratings"
+#: ../skins/at_ratings/viewlet_ratings.pt
+msgid "best_ratings"
+msgstr ""
+
+#. Default: "Top hit countings"
+#: ../skins/at_ratings/viewlet_ratings.pt
+msgid "box_top_countings"
+msgstr ""
+
+#. Default: "Complete Record"
+#: ../skins/at_ratings/portlet_top_countings.pt
+msgid "box_top_countings_list_link"
+msgstr ""
+
+#. Default: "Complete Record"
+#: ../skins/at_ratings/portlet_top_ratings.pt
+msgid "box_top_ragings_list_link"
+msgstr ""
+
+#. Default: "Top Rated"
+#: ../skins/at_ratings/portlet_top_ratings.pt
+msgid "box_top_rated"
+msgstr ""
+
+#. Default: "Top ratings"
+#: ../skins/at_ratings/viewlet_ratings.pt
+msgid "box_top_ratings"
+msgstr ""
+
+#. Default: "Top Viewed"
+#: ../skins/at_ratings/portlet_top_countings.pt
+msgid "box_top_viewed"
+msgstr ""
+
+#. Default: "click to vote: <strong>outdated</strong>"
+#: ../skins/at_ratings/rating_macros.pt
+msgid "click_to_vote_1"
+msgstr ""
+
+#. Default: "click to vote: <strong>misleading or not useful</strong>"
+#: ../skins/at_ratings/rating_macros.pt
+msgid "click_to_vote_2"
+msgstr ""
+
+#. Default: "click to vote: <strong>average</strong>"
+#: ../skins/at_ratings/rating_macros.pt
+msgid "click_to_vote_3"
+msgstr ""
+
+#. Default: "click to vote: <strong>good</strong>"
+#: ../skins/at_ratings/rating_macros.pt
+msgid "click_to_vote_4"
+msgstr ""
+
+#. Default: "click to vote: <strong>great</strong>"
+#: ../skins/at_ratings/rating_macros.pt
+msgid "click_to_vote_5"
+msgstr ""
+
+#. Default: "This portal has no visible items with any counting value."
+#: ../skins/at_ratings/top_countings_list.pt
+msgid "description_no_counting_items"
+msgstr ""
+
+#. Default: "This portal has no visible items with any rating value."
+#: ../skins/at_ratings/top_ratings_list.pt
+msgid "description_no_rating_items"
+msgstr ""
+
+#. Default: "Top Hits Listing"
+#: ../skins/at_ratings/top_countings_list.pt
+msgid "heading_top_hits"
+msgstr ""
+
+#. Default: "Top Rated Listing"
+#: ../skins/at_ratings/top_ratings_list.pt
+msgid "heading_top_rating"
+msgstr ""
+
+#. Default: "hits"
+#: ../skins/at_ratings/rating_macros.pt
+msgid "hits_count"
+msgstr ""
+
+#. Default: "Author"
+#: ../skins/at_ratings/top_ratings_list.pt
+msgid "listingheader_author"
+msgstr ""
+
+#. Default: "Hits"
+#: ../skins/at_ratings/top_countings_list.pt
+msgid "listingheader_hits"
+msgstr ""
+
+#. Default: "Modified"
+#: ../skins/at_ratings/top_ratings_list.pt
+msgid "listingheader_modified"
+msgstr ""
+
+#. Default: "Rating"
+#: ../skins/at_ratings/top_ratings_list.pt
+msgid "listingheader_rating"
+msgstr ""
+
+#. Default: "Title"
+#: ../skins/at_ratings/top_ratings_list.pt
+msgid "listingheader_title"
+msgstr ""
+
+#. Default: "lower countings"
+#: ../skins/at_ratings/viewlet_ratings.pt
+msgid "lower_countings"
+msgstr ""
+
+#. Default: "<strong>outdated</strong>"
+#: ../skins/at_ratings/rating_macros.pt
+msgid "rating_1"
+msgstr ""
+
+#. Default: "<strong>misleading or not useful</strong>"
+#: ../skins/at_ratings/rating_macros.pt
+msgid "rating_2"
+msgstr ""
+
+#. Default: "<strong>average</strong>"
+#: ../skins/at_ratings/rating_macros.pt
+msgid "rating_3"
+msgstr ""
+
+#. Default: "<strong>good</strong>"
+#: ../skins/at_ratings/rating_macros.pt
+msgid "rating_4"
+msgstr ""
+
+#. Default: "<strong>great</strong>"
+#: ../skins/at_ratings/rating_macros.pt
+msgid "rating_5"
+msgstr ""
+
+#. Default: "rating:"
+#: ../skins/at_ratings/top_ratings_list.pt
+msgid "rating_value"
+msgstr ""
+
+#. Default: "sort mode"
+#: ../skins/at_ratings/viewlet_ratings.pt
+msgid "sort_mode"
+msgstr ""
+
+#. Default: "expired"
+#: ../skins/at_ratings/top_ratings_list.pt
+msgid "time_expired"
+msgstr ""
+
+#. Default: "top countings"
+#: ../skins/at_ratings/viewlet_ratings.pt
+msgid "top_countings"
+msgstr ""
+
+#. Default: "please try after log in"
+#: ../skins/at_ratings/rating_macros.pt
+msgid "try_to_vote_after_login"
+msgstr ""
+
+#. Default: "votes: ${total_count}"
+#: ../skins/at_ratings/rating_macros.pt
+#: ../skins/at_ratings/top_ratings_list.pt
+msgid "votes_count"
+msgstr ""
+
+#. Default: "worst ratings"
+#: ../skins/at_ratings/viewlet_ratings.pt
+msgid "worst_ratings"
+msgstr ""
+
+#. Default: "You can't vote"
+#: ../skins/at_ratings/rating_macros.pt
+msgid "you_can_not_vote"
+msgstr ""
+
+#. Default: "${count}x"
+msgid "count_number"
+msgstr ""
+
+#. Default: "Click to vote:"
+msgid "click_to_vote"
+msgstr ""

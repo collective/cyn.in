@@ -1,0 +1,244 @@
+<tal:comment replace="nothing">
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see http://www.gnu.org/licenses/.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+</tal:comment>
+
+<tal:block tal:condition="view/results" i18n:domain="cynin">
+
+    <div class="documentFirstHeading" tal:content="view/title" />
+
+    <tal:foldercontents define="contentFilter contentFilter|request/contentFilter|nothing;
+                            limit_display limit_display|request/limit_display|view/limit_display|nothing;
+                            more_url more_url|request/more_url|string:folder_contents;
+                            is_a_topic python:here.portal_type=='Topic';
+                            is_a_smartview python:here.portal_type=='SmartView';
+                            folderContents view/results;
+                            use_view_action here/portal_properties/site_properties/typesUseViewActionInListings|python:();
+                            over_limit python: limit_display and len(folderContents) > limit_display;
+                            folderContents python: (over_limit and folderContents[:limit_display]) or folderContents;
+                            show_about python:True;">
+
+        <tal:listing condition="folderContents">
+
+                <tal:entry tal:repeat="item folderContents">
+                <tal:block tal:define="item_url item/getURL|item/absolute_url;
+                                       item_id item/getId|item/id;
+                                       item_title_or_id item/pretty_title_or_id;
+                                       item_description item/Description;
+                                       item_type item/portal_type;
+                                       item_type_title item/Type;
+                                       item_modified item/ModificationDate;
+                                       item_created item/CreationDate;
+                                       plone_view view/plone_view;
+                                       item_icon python:plone_view.getIcon(item);
+                                       item_type_class python:'contenttype-' + context.plone_utils.normalizeString(item_type);
+                                       item_wf_state item/review_state|python: context.portal_workflow.getInfoFor(item, 'review_state', '');
+                                       item_wf_state_class python:'state-' + context.plone_utils.normalizeString(item_wf_state);
+                                       item_creator item/Creator;
+                                       item_modifiedby python:modules['ubify.viewlets.utils'].getObjectModifiedBy(item);
+                                       item_start item/start/ISO|item/StartDate|nothing;
+                                       item_end item/end/ISO|item/EndDate|nothing;
+                                       portal_url here/portal_url">
+
+        <table class="recentitem" cellpadding="8" cellspacing="0" width="100%">
+            <tr>
+                <td valign="top">
+                    <table cellpadding="0" cellspacing="0" class="dateandavatarcont">
+                     <tr valign="middle">
+                       <td>
+                        <table cellpadding="0" cellspacing="0">
+                         <tr valign="middle">
+                          <td class="itemonlydatecontainer">
+                            <table cellpadding="0" cellspacing="0">
+                             <tr valign="middle" class="itemdate_daterow">
+                              <td tal:define="iday item/modified/day;itemdaydisp 
+                                              python:here.formatday(iday)" 
+                                  tal:content="itemdaydisp" class="itemday">
+                                <tal:comment replace="nothing">Day</tal:comment>
+                              </td>
+                              <td>
+                                <table cellpadding="0" cellspacing="0" class="itemdatemonthyearcontainer">
+                                 <tr>
+                                  <td tal:content="python:item.modified.Month()[0:3]" class="itemmonth">
+                                   <tal:comment replace="nothing">Mo</tal:comment>
+                                  </td>
+                                 </tr>
+                                 <tr>
+                                  <td tal:content="item/modified/year" class="itemyear">
+                                   <tal:comment replace="nothing">Yr</tal:comment>
+                                  </td>
+                                 </tr>
+                                </table>
+                              </td>
+                             </tr>
+                            </table>
+                          </td>
+                         </tr>
+                         <tr>
+                          <td width="100%" align="center" class="itemdatetime" 
+                              tal:content="item/modified/AMPMMinutes">
+                           <tal:comment replace="nothing">Time</tal:comment>
+                          </td>
+                         </tr>
+                        </table>
+                        </td>
+                        <td class="recentitemavatarcontainer" 
+                            tal:condition="python:item_type == 'Discussion Item'" valign="top">
+                         <img class="border55 avatarlink" 
+                              tal:attributes="src python: item.portal_membership.getPersonalPortrait(item_creator).absolute_url();rel string:${portal_url}/userinfo?userid=${item_creator}" />
+                        </td>
+                        <td class="recentitemavatarcontainer" 
+                            tal:condition="python:item_type != 'Discussion Item'" valign="top">
+                         <img class="border55 avatarlink" 
+                              tal:attributes="src python: item.portal_membership.getPersonalPortrait(item_modifiedby).absolute_url();rel string:${portal_url}/userinfo?userid=${item_modifiedby}" />
+                        </td>
+                       </tr>
+                      </table>
+                     </td>
+                     <td width="100%" valign="top">
+
+                      <dt metal:define-macro="listitem">
+
+                        <span class="summary"
+                              tal:attributes="class string:$item_type_class summary"
+                              tal:condition="python:item_type != 'Link'">
+
+                            <img tal:replace="structure item_icon/html_tag" alt="" />
+
+                            <a href="#"
+                               tal:attributes="href python:here.evalURL(item_type,use_view_action,item_url);
+                                               class string:${item_wf_state_class} url"
+                               tal:content="item_title_or_id">
+                                <tal:comment replace="nothing">Item Title</tal:comment>
+                            </a>
+
+                        </span>
+
+                        <span class=""
+                              tal:attributes="class string:$item_type_class"
+                              tal:condition="python:item_type == 'Link'">
+
+                            <img tal:replace="structure item_icon/html_tag" />
+
+                            <a href="#"
+                               class="link-plain"
+                               tal:content="item_title_or_id"
+                               tal:attributes="href item_url;
+                                               class string:${item_wf_state_class} link-plain">
+
+                                <tal:comment replace="nothing">External Link</tal:comment>
+                            </a>
+
+                        </span>
+
+                        <span class="documentByLine">
+
+                            <span tal:condition="python: item_type == 'Event'">
+
+                                <div class="recentupdateseventbyline">(<span tal:content="string:${item/location}," class="location">
+
+                                       <tal:comment replace="nothing">Oslo</tal:comment></span> <span i18n:translate="">from</span>
+                                  <span class="dtstart"
+                                       tal:attributes="title python:item_start"
+                                       tal:content="python:context.plone_utils.toLocalizedTime(item_start,long_format=1)">
+                                       <tal:comment replace="nothing">from date</tal:comment></span> <span i18n:translate="">to</span>
+                                 <span class="dtend"
+                                       tal:attributes="title python:item_end"
+                                       tal:content="python:context.plone_utils.toLocalizedTime(item_end,long_format=1)">
+                                       <tal:comment replace="nothing">to date</tal:comment></span>)</div>
+                            </span>
+
+                            <tal:byline condition="show_about">
+                                <div class="recentupdatesauthorbyline">&mdash;
+
+                                <tal:name tal:condition="python:item_type == 'Discussion Item' and item_creator"
+                                    tal:define="author python:context.portal_membership.getMemberInfo(item_creator)">
+
+                                  <span>
+
+                                    <span i18n:translate="">created by</span>
+                                  <a tal:attributes="rel string:${portal_url}/userinfo?userid=${item_creator}"
+                                     tal:content="python:author and author['fullname'] or item_creator"
+                                     tal:omit-tag="not:author"
+                                     class="itemauthor avatarlink">
+                                     
+                                    <tal:comment replace="nothing">Bob Dobalina</tal:comment>
+                                  </a>
+                                  </span>
+
+                                </tal:name>
+                                &nbsp;&nbsp;
+                                <tal:name tal:condition="python:item_type != 'Discussion Item'"
+                                    tal:define="author python:context.portal_membership.getMemberInfo(item_modifiedby)">
+                                  <span>
+                                    <span i18n:translate="">modified by</span>
+                                  <a
+                                     tal:attributes="rel string:${portal_url}/userinfo?userid=${item_modifiedby}"
+                                     tal:content="python:author and author['fullname'] or item_modifiedby"
+                                     tal:omit-tag="not:author"
+                                     class="itemauthor avatarlink">
+                                    <tal:comment replace="nothing">Bob Dobalina</tal:comment>
+                                  </a>
+                                  </span>
+
+                                </tal:name>
+                                </div>
+                                <metal:description define-slot="description_slot">
+                                    <tal:comment replace="nothing">
+                                        Place custom listing info for custom types here
+                                    </tal:comment>
+                                </metal:description>
+                            </tal:byline>
+                        </span>
+
+                    </dt>
+
+                    <dd>
+                        <span tal:omit-tag="" tal:condition="not:item_description">
+                            &nbsp;
+                        </span>
+                        <span class="description" tal:content="item_description">
+                            <tal:comment replace="nothing">description</tal:comment>
+                        </span>
+                    </dd></td>
+                        </tr>
+                    </table>
+                </tal:block>
+                </tal:entry>
+        </tal:listing>
+    </tal:foldercontents>
+</tal:block>

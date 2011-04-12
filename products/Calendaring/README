@@ -1,0 +1,119 @@
+A simple calendar implementation for CMF/Plone.  Which does
+all sorts of really cool stuff.  It is made to be modular and
+give a great out-of-the-box experience.
+
+FEATURES:
+
+  - Import/Export of iCal events
+
+  - Hooks PUT_Factory so you can put events with DAV/FTP.
+
+    o NOTE: This works very well with Publishing feature
+      with OSX's iCal application.
+
+    o calendar_export is subscribable from iCal
+
+  - Reliably exports events for KOrganizer, iCal and Outlook
+
+  - Provide a extensive framework to create your own
+    Calendar Views.  Ships with a Month, Week and Day view.
+
+  - There is a proper Calendar object which can store Events.
+
+  - Over 60 unit tests that cover almost all of the functionality
+    REQUIRES: ZopeTestCase from http://sf.net/projects/collective
+
+Roberts add ons:
+
+  - allows to define what states are used to mark days in the calendar
+    portlet and to be found when clicking on a marked day.
+
+    Install Calendaring by help of the QuickInstaller
+
+    change
+        here/portlet_calendar/macros/portlet
+    to
+        here/portlet_calendaring/macros/portlet
+
+    go to portal_calendar->properties
+
+    add the states you want to be handled like:
+
+        - published
+
+        - private
+
+    Create calendar objects containing events. Change the events to any of the
+    appropriate states. You should now get them presented according
+    to their state and visibility to you (and not only the published ones).
+
+Nate Aune's review:
+http://plone4artists.org/development/teams/calendar/icalsupport
+
+COPYRIGHT:
+
+  - All but the iCal parser is copyrighted by Enfold Systems, LLC.
+    You can find more information at http://www.enfoldsystems.com/
+
+LICENSE:
+
+  - GPL, a LICENSE file should have accompanied
+    this module.  If not please contact the package
+    maintainer.
+
+MAINTAINER:
+
+  - Enfold Systems
+
+ACKNOWLEDGMENTS:
+
+  - We used to have a modified copy of the iCal parser from the wonderful
+    SchoolTool project - http://www.schooltool.org/ a
+    big thanks goes out to Steve Alexander architect of
+    SchoolTool and Marius Gedminas and all the highly
+    evolved programmers at www.pov.lt.
+
+  - We now use the icalendar parser from Max M.
+    http://codespeak.net/icalendar/
+
+  - We use the excellent dateutil module from Gustavo Niemeyer for
+    calculating dates in the view classes.
+    http://labix.org/python-dateutil
+
+  - The workers: Sidnei da Silva, Josh LaPlace
+
+    o Sidnei da Silva - Designer, Test Champion and Master of Laziness
+
+    o Josh LaPlace - Doing the View and Model legwork.
+
+    o Alan Runyan - Cheerleading.
+
+  - Oliver Merkel for the original HTML, CSS and Javascript
+    that was found in the PloneCalendar project.  Calendaring
+    is the replacement for PloneCalendar.
+
+  - Zope Corporation for providing such a wonderful application server.
+
+  - Python Developers for making things so damn easy.
+
+REQUIREMENTS:
+
+  - *nix
+
+  - Python 2.3.5 or greater
+
+  - Zope 2.7.8 or greater
+
+  - CMF 1.5.5 or greater
+
+  - Archetypes 1.3.5 or greater
+
+  - Plone 2.1.1 or greater
+
+  - ATContentTypes 1.0 (optional, should work with CMFCalendar Event too).
+
+  - DateUtil 1.0 or better
+    http://labix.org/python-dateutil
+
+  - iCalendar 0.11 or better. Does *not* work with 0.10.
+    http://codespeak.net/icalendar/

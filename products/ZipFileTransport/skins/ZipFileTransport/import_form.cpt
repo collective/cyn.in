@@ -1,0 +1,162 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="plone">
+
+  <body>
+
+    <div metal:fill-slot="main"
+         tal:define="errors options/state/getErrors">
+
+      <h1 i18n:domain="ZipFileTransport" i18n:translate="heading_ImportContent">
+        Import Content
+      </h1>
+      <br />
+      <p i18n:domain="ZipFileTransport"
+         i18n:translate="description_import_file">
+        This form will import content from files contained in a .zip file, and will either create new objects,
+        or overwrite objects that contain the same original filename and path. You must have editing rights
+	for objects in order for them to be updated.
+      </p>
+
+
+      <p i18n:domain="ZipFileTransport"
+         i18n:translate="description_import_file1">
+        Add the relevant details of the file to be added in the form below,
+        select the file with the 'Browse' button, and press 'Import'.
+      </p>
+
+      <form name="edit_form"
+            action="."
+            method="post"
+            enctype="multipart/form-data"
+            tal:attributes="action python:'import_form'" >
+
+        <fieldset>
+
+          <legend i18n:translate="legend_file_details">File Details</legend>
+
+          <div class="field"
+               tal:define="description request/description | nothing">
+
+            <label for="description" i18n:translate="label_description">Description</label>
+
+            <div class="formHelp"
+                 i18n:domain="ZipFileTransport"
+                 i18n:translate="help__import_description">
+              A description which will be given to each file in the ZIP Archive.
+            </div>
+
+            <textarea cols="80"
+                      rows="5"
+                      id="description"
+                      name="description"
+                      tal:content="description"
+                      tal:attributes="tabindex tabindex/next;"></textarea>
+          </div>
+
+          <div class="field">
+            <label for="contributors"
+                   i18n:translate="label_contributors">
+              Contributors
+            </label>
+
+            <div class="formHelp" i18n:translate="help_contributors">
+              The names of people that have contributed to this item.
+              Each contributor should be on a separate line.
+            </div>
+
+            <textarea name="contributors:lines"
+                      id="contributors"
+                      rows="5"
+                      cols="25"
+                      tal:attributes="tabindex tabindex/next;"
+                      tal:define="contributors request/contributors | here/Contributors;"
+                      tal:content="python:'\n'.join(contributors)">
+                      <tal:comment replace="nothing">contributors</tal:comment></textarea>
+          </div>
+
+	  <div class="field">
+            <label for="overwrite"
+                   i18n:domain="ZipFileTransport"
+                   i18n:translate="label_overwrite">
+              Overwrite
+            </label>
+
+            <div class="formHelp"
+                 i18n:domain="ZipFileTransport"
+                 i18n:translate="help_overwrite">
+              Check this box to overwrite existing files with the same name.
+            </div>
+
+	    <input type="checkbox"
+		      name="overwrite"
+                      tal:attributes="tabindex tabindex/next;"
+                                            />
+
+	  </div>
+
+          <div class="field"
+               tal:define="error errors/file|nothing;
+                           file request/file|here/file|nothing;"
+               tal:attributes="class python:test(error, 'field error', 'field')">
+
+            <label for="file"
+                   i18n:domain="ZipFileTransport"
+                   i18n:translate="label__zip_file">Zip File</label>
+
+            <span class="fieldRequired" title="Required"
+                  i18n:attributes="title"
+                  i18n:translate="label_required">(Required)</span>
+
+                  <div class="formHelp"
+                       i18n:domain="ZipFileTransport"
+                       i18n:translate="help__zip_file">
+                    Select the ZIP archive file to be uploaded by clicking the 'Browse' button.
+                  </div>
+
+                  <div tal:content="error"><tal:comment replace="nothing">Validation error output</tal:comment></div>
+
+
+                  <input type="file"
+                         id="file"
+                         name="file"
+                         size="20"
+                         tal:attributes="tabindex tabindex/next"
+                         />
+
+                  <br />
+
+                  <span i18n:translate="no_file_uploaded"
+                        tal:define="file_size python:here.getObjSize(here)"
+                        tal:condition="not: file_size">
+                    (No file has been uploaded yet)
+                  </span>
+          </div>
+
+
+          <div class="formControls"
+               tal:define="process_creation request/process_creation|nothing;">
+
+            <input class="context"
+                   type="submit"
+                   name="form.button.Import"
+		           value="Import"
+ 		           i18n:domain="ZipFileTransport"
+                   i18n:attributes="value"
+                   tal:attributes="tabindex tabindex/next"
+                   />
+
+          </div>
+
+
+
+          <input type="hidden" name="form.submitted" value="1" />
+
+        </fieldset>
+
+      </form>
+
+    </div>
+
+  </body>
+</html>

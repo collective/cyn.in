@@ -1,0 +1,13 @@
+BEGIN:VCALENDAR
+PRODID:-//Anonymized//NONSGML iCalcreator 0.9.9//
+VERSION:2.0
+BEGIN:VEVENT
+DESCRIPTION:This event has no dtend. This is allowed in the specification. 
+ Calendaring handles this by cretaing an even with the same start and end.
+DTSTAMP:20070117T170617Z
+DTSTART;VALUE=DATE:20061117
+LOCATION:328 Anonymous West\, Anontown\, Lalaland
+SUMMARY:Event without dtend.
+UID:20070117T120617EST-uvOwjLcStm@Anon
+END:VEVENT
+END:VCALENDAR

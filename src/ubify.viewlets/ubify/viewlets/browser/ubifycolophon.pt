@@ -1,0 +1,73 @@
+<tal:comment replace="nothing">
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see http://www.gnu.org/licenses/.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+</tal:comment>
+<div id="portal-footer" metal:define-macro="portal_footer" i18n:domain="cynin" tal:define="portal_url here/portal_url">
+    <div id="colophoncyninlogo">
+	<a href="http://www.cynapse.com/cynin" target="_blank" class="cyninlogo">
+	    <img tal:attributes="src string:${portal_url}/cyn-in-${view/ubifyEditioncode}-powered.png" />
+	</a>
+    </div>
+    <div id="cynincolophoninfo">
+        <div tal:condition="view/newversionavailable" class="newversionavailable">
+            <span id="newversionavailable" i18n:translate="text_new_version_available">New Version available! v<span
+            tal:content="view/newversionstring" i18n:name="versionstring" /> &mdash; <a
+            tal:attributes="href view/changelogurl" i18n:translate="link_change_log" i18n:name="versionchangelog">Change Log</a> | <a href="#" tal:attributes="href view/downloadurl" i18n:translate="link_download_now" i18n:name="versiondownloadlink">Download Now!</a><br />
+            </span>
+        </div>
+        <div i18n:translate="text_supported_web_browsers">
+            Supported web browsers - <a class="nyroModalWide browsersupport" tal:attributes="href string:${portal_url}/browser-support" i18n:name="url"><tal:translate i18n:translate="">View list and download</tal:translate></a>
+        </div>
+        <div i18n:translate="text_powered_by">
+        Powered by <a href="http://www.cynapse.com/cynin" target="_blank" i18n:name="powered_by_url">cyn.in</a>&trade; v<span
+	tal:content="view/ubifyVersion " i18n:name="version" /> <span i18n:name="edition" tal:content="view/ubifyEdition" />
+        </div>
+        <div i18n:translate="license_info">
+        Distributed
+	under the <a href="http://www.cynapse.com/resources/cynin-gpl-v3-open-source-license" target="_blank" i18n:name="license_url">GNU GPL 3</a> license.
+	&copy; 2010 <a href="http://www.cynapse.com" target="_blank" i18n:name="cynapse_url">Cynapse</a>&trade;<br />
+        </div>
+        <div class="footersmall" i18n:translate="copy_info">
+        Cynapse&trade;, cyn.in&trade;, the Cynapse logo and the cyn.in logo are
+	registered trademarks of Cynapse</div>
+        <div class="cynapseinventionholder">
+            <a href="http://www.cynapse.com/" target="_blank" class="cynapselogo">
+                <img tal:attributes="src string:${portal_url}/a-cynapse-invention.png" />
+            </a>
+        </div>
+    </div>
+</div>

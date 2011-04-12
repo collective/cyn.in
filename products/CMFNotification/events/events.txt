@@ -1,0 +1,35 @@
+======================
+CMFNotification events
+======================
+
+Since version 2.0, CMFNotification subscribes to events that are fired
+by the different components of Plone.
+
+
+Item creation
+=============
+
+When an item is created through the web, a (long) list of events is
+fired. Unfortunately, we cannot easily disambiguate this case from a
+simple call to ``invokeFactory()``.
+
+Moreover, ``invokeFactory()`` creates an "empty" item and does not set
+any attribute. It does not even set default value. We usually do not
+want to notify users that such an item has been created. When we use
+``invokeFactory()``, we usually edit it a few lines later. And, when
+we are done, we should fire an appropriate event:
+``ObjectInitializedEvent`` is a quite good candidate, since it is the
+event tha is fired after a normal creation through a browser.
+
+This is why third-party products that uses ``invokeFactory()`` **may
+not work** with CMFNotification if they do not fire any event. If they
+fire something else than the expected event
+``ObjectInitializedEvent``, then a few ZCML lines will do the trick
+(see ``events.zcml``, this is quite readable).
+
+
+Other actions
+=============
+
+Other actions use appropriate, unambiguous events. There is nothing
+much to say about them.

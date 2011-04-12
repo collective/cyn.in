@@ -1,0 +1,138 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      lang="en"
+      metal:use-macro="here/prefs_main_template/macros/master"
+      i18n:domain="cynin">
+
+    <metal:block fill-slot="top_slot" />
+<tal:titlebarslot metal:fill-slot="titlebar-row1">
+    <div id="maintitleholder">
+        <h1 id="maintitle" i18n:translate="heading_workflow_global_type_mapping">
+            Global content type to workflow mapping
+        </h1>
+    </div>
+</tal:titlebarslot>
+
+        <div metal:fill-slot="author_slot">
+            <ul class="contentViews">
+                <li id="contentview-workflow-advanced" class="selected forcelink">
+                    <a href="prefs_workflow_advanced"
+                       i18n:translate="label_workflow_global_type_mapping">
+                        Global Content Type to Workflow Mapping
+                    </a>
+                </li>
+                <li id="contentview-workflow-localpolicies" class="plain forcelink">
+                    <a href="prefs_workflow_localpolicies_form"
+                       i18n:translate="label_workflow_local_type_mapping">
+                        Local Content Type to Workflow Mapping
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+
+
+    <div metal:fill-slot="prefs_configlet_content"
+         tal:define="workflow_list wtool/listWorkflows;"
+         class="configlet">
+
+        <div id="content" class="documentEditable"
+             tal:condition="python:checkPermission('Manage portal', here)">
+
+            <div class="documentContent" id="region-content">
+
+                <a name="documentContent"></a>
+
+                <metal:block tal:condition="python:test(request.get('type_name', 'Select')!='Select', 1, 0)">
+                    <tal:block tal:define="pps python:modules['Products.PythonScripts.standard'];
+                                           type_name python:pps.url_quote(request.get('type_name'));" />
+                </metal:block>
+
+                <p i18n:translate="description_select_workflow_for_type">
+                    Select the workflow you want for each content type.
+                </p>
+
+                <form name="change_workflow"
+                      action="prefs_workflow_advanced_edit"
+                      method="post">
+
+                    <fieldset class="contentheaderlabel" tal:define="allowedContentTypes allowedSortedContentTypes|here/allowedContentTypes">
+
+                        <legend i18n:translate="legend_content_types">
+                            Content types
+                        </legend>
+
+                        <div class="field" summary="Default workflow"
+                             tal:define="default_wf python:wtool.getChainForPortalType('Plone Site')"
+                             i18n:attributes="summary summary_default_workflow;">
+                            <label i18n:translate="summary_default_workflow">Default workflow</label>
+                            <select id="select_workflow" name="wf.default_workflow:record" alt="">
+                                <metal:block tal:repeat="wf workflow_list">
+                                    <option value="wf"
+                                            tal:attributes="value wf;
+                                                            selected python: wf == default_wf and 'selected' or None;"
+                                            tal:content="wf"
+                                            i18n:translate="">
+                                        Simple workflow
+                                    </option>
+                                </metal:block>
+                            </select>
+                        </div>
+
+                        <div>
+                        <table class="field" summary="Workflow to content type mapping."
+                               tal:define="full_workflow_list python:workflow_list + ['(Default)'];"
+                               i18n:attributes="summary summary_workflow_type_mapping;">
+                            <metal:ctype tal:repeat="ctype allowedContentTypes">
+                            <tr tal:define="Title ctype/Title;
+                                            Id ctype/getId;
+                                            current_wf_list python:wtool.getChainForPortalType(Id);">
+
+                                <td valign="top">
+                                    <img src="" alt="" width="16" height="16"
+                                         tal:attributes="src string:$portal_url/${ctype/getIcon};" />
+
+                                    <label tal:content="python:here.translate(Title)"><tal:comment replace="nothing">Title</tal:comment></label>
+                                </td>
+
+                                <td valign="top">
+                                    <div tal:repeat="current_wf current_wf_list">
+
+                                        <select id="select_workflow" name="workflow_id" alt=""
+                                                tal:attributes="name python:'wf.' + ctype.getId() + ':record'" >
+
+                                            <metal:block tal:repeat="wf full_workflow_list">
+                                                <option value="wf"
+                                                        tal:attributes="value wf;
+                                                                        selected python: wf == current_wf and 'selected' or None;"
+                                                        tal:content="wf"
+                                                        i18n:translate="">
+                                                    Simple workflow
+                                                </option>
+                                            </metal:block>
+
+                                        </select>
+                                    </div>
+                                </td>
+                            </tr>
+                            </metal:ctype>
+                        </table>
+                        </div>
+
+                        <div class="formControls">
+                            <input class="context" type="submit" name="Change" value="Save"
+                                   i18n:domain="cynin"
+                                   i18n:attributes="value label_save;" />
+                        </div>
+
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+
+        <div id="content" class="documentEditable"
+             tal:condition="python:not checkPermission('Manage portal', here)">
+            <tal:block replace="here/raiseUnauthorized" />
+        </div>
+
+    </div>
+</html>

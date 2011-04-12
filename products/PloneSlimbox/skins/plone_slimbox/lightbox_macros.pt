@@ -1,0 +1,39 @@
+<html xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      i18n:domain="plone">
+<body>
+
+<metal:lightbox_macro define-macro="photo">
+  <div class="albumphotocontainer">
+  <a class="lightboxphotoentry" href="#" rel="lightbox"
+     tal:attributes="href string:${image/absolute_url}/image_preview;
+                     title python:here.slimbox_title(image=image);
+                     rel string:lightbox[${here/id}]">
+    <span class="photoAlbumEntryWrapper">
+      <img src="" alt="" tal:replace="structure python:image.tag(scale='thumb', 
+                                      title=image.Description())" />
+    </span>
+  </a>
+    <span class="photoAlbumEntryTitle" tal:content="image/pretty_title_or_id">
+      <tal:comment replace="nothing">Title</tal:comment>
+    </span>
+  </div>
+  <div class="imagesizelinkscontainer">
+   <span>
+    <a href="#" rel="lightbox"
+       tal:attributes="href string:${image/absolute_url}/image_preview;
+                       title python:here.slimbox_title(image=image);
+                       rel string:lightbox[${here/id}]" i18n:translate="">Zoom</a>
+   </span>
+   <span class="imagesizelinkseparator">|</span>
+   <span><a href="#" 
+            tal:attributes="href string:${image/absolute_url}/view;" i18n:translate="">View</a></span>
+   <span class="imagesizelinkseparator">|</span>
+   <span><a href="#" 
+            tal:attributes="href string:${image/absolute_url}/image_view_fullscreen;" i18n:translate="">Full-size</a></span>
+  </div>
+
+</metal:lightbox_macro>
+
+</body>
+</html>

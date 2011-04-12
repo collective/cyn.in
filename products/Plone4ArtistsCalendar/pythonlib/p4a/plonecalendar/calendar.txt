@@ -1,0 +1,53 @@
+Calendar
+========
+
+This file describes the nature of the integration of calendar functionality
+as exposed by p4a.calendar on the Plone platform.
+
+We start out by building up a folder with some events.
+
+  >>> from DateTime import DateTime
+  >>> from datetime import datetime
+
+  >>> id = folder.invokeFactory('Folder', id='calendar-folder')
+  >>> calendarfolder = folder['calendar-folder']
+  >>> id = calendarfolder.invokeFactory('Event', id='event1')
+  >>> calendarfolder['event1'].update(title='First Event',
+  ...                                 startDate=DateTime('2006-09-28 08:30am CEST'),
+  ...                                 endDate=DateTime('2006-09-28 09:30am CEST'))
+
+Now we go ahead and activate calendaring capabilities on this new
+folder.
+
+  >>> from p4a.calendar.interfaces import ICalendarConfig
+  >>> config = ICalendarConfig(calendarfolder)
+  >>> config.calendar_activated
+  False
+  >>> config.calendar_activated = True
+  >>> config.calendar_activated
+  True
+
+Lets check out the default view and make sure we can get some activity.
+
+  >>> view = calendarfolder.unrestrictedTraverse('@@month.html')
+
+We do a query for the weeks and make sure the results have the event
+we created earlier.
+
+  >>> view.default_day = daydate=datetime(2006, 9, 1)
+  >>> view.firstweekday = 6
+  >>> weeks = view.weeks()
+  >>> day = weeks[4]['days'][4]
+  >>> day.day
+  28
+  >>> len(day.events)
+  1
+  >>> event = day.events[0]
+  >>> event['title']
+  u'First Event'
+  
+XXX I suspect this test depends on your local timezone. I need to test that:
+
+  >>> event['timespan']
+  u'08:30 to 09:30 GMT+2'
+

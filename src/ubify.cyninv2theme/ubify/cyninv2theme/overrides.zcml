@@ -1,0 +1,168 @@
+<!--
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see <http://www.gnu.org/licenses/>.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+-->
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:plone="http://namespaces.plone.org/plone"
+    i18n_domain="cynin"
+    >
+    <adapter
+      factory=".browser.portletmanager.ColumnPortletManagerRenderer"
+      provides="plone.portlets.interfaces.IPortletManagerRenderer"
+      />
+    <adapter
+        factory=".browser.navigation.QueryBuilder"
+        provides="plone.app.portlets.portlets.navigation.INavigationQueryBuilder"
+        />
+    <adapter
+        factory=".browser.navigation.NavtreeStrategy"
+        provides="plone.app.layout.navigation.interfaces.INavtreeStrategy"
+        />
+
+    <adapter
+        factory=".browser.portletmanager.ContextualEditPortletManagerRenderer"
+        provides="plone.portlets.interfaces.IPortletManagerRenderer"
+        />
+    <adapter
+        factory=".browser.cynincalendar.ATEventProvider"
+        provides="p4a.calendar.interfaces.IEventProvider"
+        />
+    <adapter
+        factory=".browser.portletmanager.HomeFolderLocator"
+        provides="plone.app.iterate.interfaces.IWCContainerLocator"
+        />
+
+    <adapter
+        factory=".browser.portletmanager.HomeFolderLocator"
+        name="plone.app.iterate.home"
+        />
+
+    <adapter
+        factory=".browser.portletmanager.CheckinCheckoutReferenceAdapter"
+        provides="plone.app.iterate.interfaces.ICheckinCheckoutReference"
+        />
+
+    <adapter
+        for="* *"
+        name="plone.contentmenu.display"
+        factory=".browser.portletmanager.DisplaySubMenuItem"
+        provides="plone.app.contentmenu.interfaces.IContentMenuItem"
+        />
+
+    <adapter
+      for="Products.CMFDefault.interfaces.IDocument"
+      provides="Products.basesyndication.interfaces.IFeedEntry"
+      factory="ubify.coretypes.adapters.DocumentFeedEntry" />
+
+    <adapter
+        for="* *"
+        name="plone.contentmenu.factories"
+        factory=".browser.portletmanager.FactoriesSubMenuItem"
+        provides="plone.app.contentmenu.interfaces.IContentMenuItem"
+        />
+
+    <adapter
+        for="* *"
+        name="plone.contentmenu.workflow"
+        factory=".browser.portletmanager.WorkflowSubMenuItem"
+        provides="plone.app.contentmenu.interfaces.IContentMenuItem"
+        />
+
+    <adapter
+        for="*
+             zope.publisher.interfaces.browser.IDefaultBrowserLayer
+             *"
+        factory=".browser.portletmanager.ContentMenuProvider"
+        name="plone.contentmenu"
+        provides="zope.contentprovider.interfaces.IContentProvider"
+        />
+    <browser:page
+        name="export_form"
+        for="*"
+        class=".browser.portletmanager.ExportForm"
+        permission="zope2.View"
+        />
+
+    <browser:page
+        name="rss.xml"
+        for="Products.basesyndication.interfaces.IFeed"
+        class="ubify.coretypes.adapters.CyninFeedView"
+        permission="zope2.View"
+        attribute="rss"
+        />
+
+    <browser:page
+        name="itunes.xml"
+        for="Products.basesyndication.interfaces.IFeed"
+        class="ubify.coretypes.adapters.CyninFeedView"
+        permission="zope2.View"
+        attribute="itunes"
+        />
+
+    <browser:page
+        name="atom.xml"
+        for="Products.basesyndication.interfaces.IFeed"
+        class="ubify.coretypes.adapters.CyninFeedView"
+        permission="zope2.View"
+        attribute="atom"
+        />
+        
+    <!--<browser:page
+      for="z3c.widget.flashupload.interfaces.IUploadFileView"
+      name="ticket"
+      class="Products.PloneFlashUpload.ticket.TicketView"
+      permission="cmf.AddPortalContent"
+      /> -->
+    <!-- Folder contents -->
+
+    <browser:page
+        for="*"
+        class=".browser.foldercontents.CyninFolderContentsView"
+        name="folder_contents"
+        template="browser/foldercontents.pt"
+        permission="cmf.ListFolderContents" />
+
+    <browser:page
+         for="*"
+         class=".browser.foldercontents.CyninFolderContentsKSSView"
+         attribute="update_table"
+         name="foldercontents_update_table"
+         permission="cmf.ListFolderContents" />
+
+</configure>

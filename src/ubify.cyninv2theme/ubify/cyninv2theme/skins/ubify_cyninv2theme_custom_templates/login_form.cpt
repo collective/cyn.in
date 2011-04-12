@@ -1,0 +1,233 @@
+<tal:comment replace="nothing">
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see http://www.gnu.org/licenses/.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+</tal:comment>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="cynin">
+
+<head>
+    <metal:js fill-slot="javascript_head_slot">
+        <script type="text/javascript"
+              src=""
+              tal:attributes="src string:${portal_url}/login.js">
+      </script>
+    </metal:js>
+    <metal:block fill-slot="top_slot"
+                 tal:define="dummy python:request.set('disable_border',1)" />
+</head>
+
+<body>
+
+
+<div metal:fill-slot="auth_slot"
+     tal:define="auth nocall:here/acl_users/credentials_cookie_auth|here/cookie_authentication|nothing;"
+    >
+<dl class="portalMessage error"
+    id="enable_cookies_message"
+    style="display:none">
+    <dt i18n:translate="">
+        Error
+    </dt>
+    <dd i18n:translate="enable_cookies_message_before_login">
+        Cookies are not enabled. You must enable cookies before you can log in.
+    </dd>
+</dl>
+
+<div tal:condition="python: not auth" i18n:translate="login_form_disabled">
+    While cookie authentication is disabled, cookie-based login is not available.
+</div>
+
+<metal:login define-macro="login">
+<form tal:attributes="action python:context.absolute_url()+'/'+template.id"
+      class="enableAutoFocus"
+      method="post"
+      id="login_form"
+      tal:condition="python:auth">
+        <div class="mainloginformsizer"  metal:define-macro="loginboxcontainer">
+            <div class="loginbox">
+                <tal:macroslot  metal:define-macro="loginmainarea">
+                <fieldset id="login-form" tal:define="came_from request/came_from|request/HTTP_REFERER|nothing;
+                 came_from python:test(utool.isURLInPortal(came_from), came_from, None);
+                 errors options/state/getErrors | nothing;
+                 ac_name auth/name_cookie|string:__ac_name;
+                 ac_password auth/pw_cookie|string:__ac_password;
+                 ac_persist auth/persist_cookie|nothing;
+                 login_name python:request.get('login_name', request.get(ac_name, ''));">
+                <tal:slot metal:define-slot="loginbannerarea">
+                    <div class="loginbannerarea" metal:define-macro="loginbannerarea">
+                        <div class="loginboxlogo">
+                            <a tal:attributes="href portal_url">
+                                <img tal:attributes="src string:${portal_url}/logo.jpg"/>
+                            </a>
+                        </div>
+                        <div class="loginboxsitetitle">
+                            <h1>
+                            <a tal:attributes="href portal_url"><tal:sitetitle tal:content="context/Title" /></a>
+                            </h1>
+                        </div>
+                        <div class="loginboxsitedescription">
+                            <tal:sitedescription tal:content="context/Description" />
+                        </div>
+                    </div>
+                </tal:slot>
+                <tal:slot metal:define-slot="loginerror" />
+                <tal:slot metal:define-slot="loginmainarea">
+                    <tal:macro metal:define-slot="loginboxmainforminner">
+                        <div class="loginboxmainforminner">
+                            <div>
+                                <input type="hidden"
+                                    name="came_from"
+                                    value=""
+                                tal:attributes="value came_from" />
+                                <input type="hidden" name="form.submitted" value="1" />
+                                <input type="hidden" name="js_enabled" id="js_enabled" value="0" />
+                                <input type="hidden" name="cookies_enabled" id="cookies_enabled" value="" />
+                                <input type="hidden" name="login_name" id="login_name" value="" />
+                                <input type="hidden" name="pwd_empty" id="pwd_empty" value="0" />
+                                <div class="cfloatleft loginfieldcontainer">
+                                    <div class="field"
+                                         tal:define="error python:errors.get(ac_name, None);"
+                                         tal:attributes="class python:test(error, 'field error', 'field')">
+                                        <div tal:content="error" class="fielderror"><tal:comment replace="nothing">Validation error output</tal:comment></div>
+                                        <div class="loginlabelholder">
+                                        <label i18n:translate="label_login_name"
+                                               tal:attributes="for ac_name"
+                                               class="loginlabel">Username:</label>
+                                        </div>
+                                        <input type="text"
+                                               class="logininputtext textfieldtipBottom"
+                                               title="<strong>Please enter your username</strong><br />cyn.in usernames are case sensitive"
+                                               i18n:attributes="title cluetip_login_textbox"
+                                               tal:attributes="name ac_name;
+                                                               id ac_name;
+                                                               value login_name;"
+                                               />
+                                    </div>
+                                </div>
+                                <div class="cfloatleft loginfieldcontainer">
+                                    <div class="field"
+                                             tal:define="error python:errors.get(ac_password, None);"
+                                             tal:attributes="class python:test(error, 'field error', 'field')">
+                                            <div tal:content="error" class="fielderror">Validation error output</div>
+                                            <div class="loginlabelholder"><label i18n:translate="password"
+                                                   tal:attributes="for ac_password"
+                                                   class="loginlabel">Password:</label></div>
+                                            <input type="password"
+                                               class="passwordinputtext textfieldtipBottom"
+                                               i18n:attributes="title cluetip_password_textbox;"
+                                               title="<strong>Please enter your password</strong><br /> and hit 'Enter' or click on cyn.in"
+                                                   tal:attributes="name ac_password;
+                                                                   id ac_password;"
+                                                   />
+                                    </div>
+                                </div>
+                                <div class="field" tal:condition="ac_persist">
+                                    <input type="checkbox"
+                                           class="noborder formRememberName"
+                                           value="1"
+                                           checked="checked"
+                                           id="cb_remember"
+                                           tal:attributes="name ac_persist;
+                                                           checked python:request.get(ac_name, '') and 'checked' or None;"
+                                           />
+                                    <label for="cb_remember" i18n:translate="label_remember_my_name">Remember my name.</label>
+                                    <div i18n:translate="help_remember_my_name"
+                                         class="formHelp">
+                                        Check this to have your user name filled in automatically when you log in later.
+                                    </div>
+                                </div>
+                                <input type="submit" class="hiddenloginsubmit">
+                                <a class="whitebutton loginbutton cursorpointer"
+                                       name="submit"
+                                       onclick="javascript:jq('form').submit()"
+                                       >
+                                    cyn in <img tal:attributes="src string:${portal_url}/cynin_fav2.png" />
+                                </a>
+                            </div>
+                        </div>
+                    </tal:macro>
+                    <div class="loginbottompart">
+                        <tal:slot metal:define-slot="loginbottomlinks">
+                            <tal:macro metal:define-macro="loginbottomlinks">
+                                <div class="loginbottomlinks">
+                                    <tal:forgotpassword tal:condition="python:checkPermission('Mail forgotten password', here)">
+                                        <a class="loginbottomlink"
+                                           tal:attributes="href python:'mail_password_form?'+ztu.make_query(userid=login_name)"
+                                           i18n:translate="forgot_password">Forgot password?</a> |
+                                    </tal:forgotpassword>
+                                    <tal:signuplink
+                                       tal:define="join string:${portal_url}/signup_form"
+                                       tal:condition="python: join and checkPermission('Add portal member', here)">
+                                        <a class="loginbottomlink"
+                                           tal:define="join python:join+test(join.find('?')==-1, '?', '&amp;')+ztu.make_query(came_from=came_from);"
+                                           tal:attributes="href join"
+                                           i18n:translate="sign_up">
+                                            Sign up</a> |
+                                    </tal:signuplink>
+                                    <a class="loginbottomlink"
+                                       i18n:translate="label_site_admin"
+                                       tal:attributes="href string:${portal_url}/admin-contact-info">Contact Staff</a>
+                                </div>
+                                <tal:smallcolophon metal:define-macro="cynin_small_colophon">
+                                    <div class="cyninsmallcolophon biggerlink"
+                                        tal:define="
+                                        version python:modules['ubify.cyninv2theme'].CyninVersion(context);
+                                        edition python:modules['ubify.cyninv2theme'].CyninEdition(context);
+                                        ">
+                                        <a href="http://www.cynapse.com/cynin"
+                                           target="_blank"
+                                            class="smallcolophonmainlink"><tal:translate i18n:translate="">Powered by cyn.in v</tal:translate><tal:version tal:content="version" /> - <tal:edition tal:content="python: len(edition) > 0 and edition[0] or ''" /></a>
+                                    </div>
+                                </tal:smallcolophon>
+                            </tal:macro>
+                        </tal:slot>
+                    </div>
+                    </tal:slot>
+                    </fieldset>
+                </tal:macroslot>
+                </div>
+            </div>
+</form>
+</metal:login>
+
+</div>
+</body>
+</html>

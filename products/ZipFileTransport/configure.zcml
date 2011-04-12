@@ -1,0 +1,29 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:five="http://namespaces.zope.org/five"
+           xmlns:i18n="http://namespaces.zope.org/i18n"
+	   xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+           i18n_domain="ZipFileTransport">
+
+  <include package=".browser" />
+  <include package=".utilities" />
+
+
+  <five:implements
+      class="Products.CMFCore.PortalObject.PortalObjectBase"
+      interface="Products.ZipFileTransport.interfaces.IPortalObject"
+      />
+
+  <five:traversable class="OFS.Application.Application" /> 
+  
+  <five:traversable class="Products.CMFCore.PortalObject.PortalObjectBase" />
+
+  <genericsetup:registerProfile
+    name="default"
+    title="Zip File Transport"
+    directory="profiles/default"
+    description="Extension profile for Zip File Transport"
+    provides="Products.GenericSetup.interfaces.EXTENSION"
+    for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+  />
+
+</configure>

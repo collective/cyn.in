@@ -1,0 +1,44 @@
+<tal:definemacro metal:define-macro="integration_block" i18n:domain="cynin">
+    <div class="helpblockcontainer portletWrapper">
+        <div class="helpblockrow integrationbutton biggerlink navtip"
+           title = "The cyn.in 'bookmarklet' will let you quickly add a site or particular URL that you are currently at, in your browser, with a single click."
+           tal:condition="python:checkPermission('ATContentTypes: Add Link',here) and here.portal_type in ('ContentSpace','ContentRoot')"
+            i18n:attributes="title cluetip_link_bookmarklet_popup"
+        >
+            <tal:macro metal:use-macro="here/belowcontent_macro/macros/tools_bookmarklet" />
+        </div>
+        <div class="helpblockrow integrationbutton biggerlink navtip"
+                title="See a list of all the different types of RSS/Atom feeds that cyn.in supports."
+                rel="Secure Feeds from Space"
+            i18n:attributes="title cluetip_link_all_feeds_popup;rel title_secure_feeds_from_space">
+            <tal:macro metal:use-macro="here/belowcontent_macro/macros/subscription_RSS_all_feeds" />
+        </div>
+        <div class="helpblockrow integrationbutton biggerlink navtip"
+                   title="Synchronize your local desktop's calendar system with the cyn.in Calendar using iCal calendar integration format."
+                    i18n:attributes="title cluetip_link_calendar_popup"
+                    tal:condition="python:False"
+            >
+            <tal:macro metal:use-macro="here/belowcontent_macro/macros/subscription_calendar" />
+        </div>
+        <div tal:define="webdavport python:modules['ubify.cyninv2theme'].getWebdavServerPort();"
+                tal:condition="python: webdavport and modules['ubify.cyninv2theme'].checkHasPermission('Set own password', here)"
+                class="helpblockrow integrationbutton biggerlink navtip"
+                title="Configure WebDAV for direct file upload/download"                
+            i18n:attributes="title cluetip_link_webdav_popup">
+            <tal:macro metal:use-macro="here/belowcontent_macro/macros/webdav_support" />
+        </div>
+<!--
+        <div class="helpblockrow cynindesktopbuttoncontainer integrationbutton biggerlink navtip"
+               title="Click to see the cyn.in desktop Express Installation button and then Click 'Install Now' to step through the installation wizard. If you have <i>already</i> installed the cyn.in desktop on your computer, you will see a link to 'Launch' the cyn.in desktop instead."
+                i18n:attributes="title cluetip_link_desktop_popup"
+                tal:condition="python: modules['ubify.cyninv2theme'].checkHasPermission('Set own password', here)"
+        >
+            <a class="nyroTitled cynindesktopbutton"
+               href="desktopbadge" title="Install or launch the cyn.in desktop client"
+               i18n:attributes="title nyrotitle_install_cynin_desktop">
+                <img tal:attributes="src string:${portal_url}/get-cynin-desktop.png" />
+            </a>
+        </div>
+-->
+    </div>
+</tal:definemacro>

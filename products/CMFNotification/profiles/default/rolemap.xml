@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<rolemap>
+  <!-- Warning: this value is also defined in ``permissions``.-->
+  <permissions>
+    <permission name="CMFNotification: Subscribe/unsubscribe"
+                acquire="True">
+      <role name="Manager"/>
+      <role name="Member"/>
+    </permission>
+  </permissions>
+</rolemap>

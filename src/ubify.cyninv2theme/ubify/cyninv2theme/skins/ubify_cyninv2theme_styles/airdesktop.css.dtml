@@ -1,0 +1,496 @@
+/*
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see <http://www.gnu.org/licenses/>.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+*/
+
+/* <dtml-with base_properties> (do not remove this :) */
+/* <dtml-call "REQUEST.set('portal_url', portal_url())"> (not this either :) */
+
+/* yaml imported begin*/
+.airdesktopholder {
+      font-size: 75.00%;
+      font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Tahoma, "DejaVu Sans", "Bitstream Vera Sans", Arial, Verdana, "Verdana Ref", sans-serif;
+      color: &dtml-cigray9;;
+      line-height:1.6667em;
+      text-align:left;
+}
+
+.kupu.documentContent a.link-wiki-add
+,.maincontentholder a.link-wiki-add
+{
+    color:red !important;
+}
+.kupu.documentContent pre
+,.kupu.documentContent tt
+,.kupu.documentContent code
+,.maincontentholder pre
+,.maincontentholder tt
+,.maincontentholder code
+{
+        font-family:"Courier New", Courier, monospace;
+        font-family: monospace;
+        font-size: 1.1em;
+        overflow:auto;
+        padding: 1.6667em 0 1.6667em 1em;
+        margin: 1.4286em 0;
+        border-left: 1em solid &dtml-cigray4;;
+        background-color:&dtml-cigray1;;
+}
+.kupu.documentContent textarea
+,.maincontentholder textarea
+{
+  color: &dtml-cigray12;;
+}
+.kupu.documentContent h1
+,.kupu.documentContent h2
+,.kupu.documentContent h3
+,.kupu.documentContent h4
+,.kupu.documentContent h5
+,.kupu.documentContent h6
+,.maincontentholder h1
+,.maincontentholder h2
+,.maincontentholder h3
+,.maincontentholder h4
+,.maincontentholder h5
+,.maincontentholder h6
+{
+      font-weight:bold;
+      color: &dtml-cigray8;;
+}
+
+.kupu.documentContent h1
+,.maincontentholder h1
+{
+      font-size: 2em; /* 24px */
+      line-height: 1.6667em; /* 40px */
+      margin-top: 0.8333em;
+      margin-bottom: 0em;
+}
+.kupu.documentContent h2
+,.maincontentholder h2
+{
+      font-size: 1.8333em; /* 22px */
+      line-height: 1.8182em; /* 40px */
+      margin-top: 0.9091em;
+      margin-bottom: 0em;
+	  border-bottom: 1px solid &dtml-cigray3;;
+}
+.kupu.documentContent h3
+,.maincontentholder h3
+{
+      font-size: 1.5em; /* 18px */
+      line-height: 1.1111em; /* 20px */
+      margin-top: 1.1111em;
+      margin-bottom: 0em;
+	  border-bottom: 1px dotted &dtml-cigray3;;
+}
+.kupu.documentContent h4
+,.maincontentholder h4
+{
+      font-size: 1.3333em; /* 16px */
+      line-height: 1.25em; /* 20px */
+      margin-top: 1.25em;
+      margin-bottom: 0em;
+}
+.kupu.documentContent h5
+,.maincontentholder h5
+{
+      font-size: 1.1667em; /* 14px */
+      line-height: 1.4286em; /* 20px */
+      margin-top: 1.4286em;
+      margin-bottom: 0em;
+      font-weight:bold;
+      font-style:italic;
+}
+.kupu.documentContent h6
+,.maincontentholder h6
+{
+      font-size: 1em; /* 12px */
+      line-height: 1.6667em; /* 20px */
+      margin-top: 1.6667em;
+      margin-bottom: 0em;
+      color: &dtml-cigray10;;
+}
+.kupu.documentContent p
+,.maincontentholder p
+{
+      font-size: 1em; /* 12px */
+      line-height: 1.6667em; /* 20px */
+      margin: 0 0 1.6667em 0;
+}
+
+/* ### Lists #### */
+
+.kupu.documentContent ul
+,.kupu.documentContent ol
+,.kupu.documentContent dl
+,.maincontentholder ul
+,.maincontentholder ol
+,.maincontentholder dl
+{
+      line-height: 1.6667em;
+      margin: 0 0 1.6667em 1em;
+      list-style-position:inside;
+}
+.kupu.documentContent li
+,.maincontentholder li
+{
+      margin-left: 1.5em;
+      line-height: 1.6667em
+}
+.kupu.documentContent dt
+,.maincontentholder dt
+{
+      font-weight: bold
+}
+.kupu.documentContent dd
+,.maincontentholder dd
+{
+      margin: 0 0 1.6667em 2em
+}
+
+/* ### text formatting ### */
+
+.kupu.documentContent cite
+,.kupu.documentContent blockquote
+,.maincontentholder cite
+,.maincontentholder blockquote
+{
+        font-style:italic;
+        padding: 0 0 0 1em;
+        margin: 1.4286em 0;
+        border-left: 1em solid &dtml-cigray4;;
+        font-size: 1.1667em; /* 14px */
+        line-height: 1.4286em; /* 20px */
+}
+.kupu.documentContent strong
+,.kupu.documentContent b
+,.maincontentholder strong
+,.maincontentholder b
+{
+      font-weight: bold
+}
+.kupu.documentContent em
+,.kupu.documentContent i
+,.maincontentholder em
+,.maincontentholder i
+{
+      font-style:italic
+}
+.kupu.documentContent acronym
+,.kupu.documentContent abbr
+,.maincontentholder acronym
+,.maincontentholder  abbr
+{
+  letter-spacing: .07em;
+  border-bottom: .1em dashed #c00;
+  cursor: help;
+}
+
+.kupu.documentContent .callout
+,.maincontentholder .callout
+{
+	color: &dtml-cigray11;;
+	font-style: italic;
+	font-weight: bold;
+	font-size: 1.1667em; /* 14px */
+	line-height: 1.4286em; /* 20px */
+}
+
+.kupu.documentContent .pullquote
+,.maincontentholder .pullquote
+{
+	color: &dtml-cigray8;;
+	border-left: 0.5em solid &dtml-cigray8;;
+	font-style: italic;
+	font-weight: bold;
+	font-size: 1.1667em; /* 14px */
+	line-height: 1.4286em; /* 20px */
+	float:right;
+	margin: 1.4286em 0 1.4286em 1.4286em;
+	width: 37%;
+	padding: 0 1.4286em;
+	background-color: &dtml-ciwhite;;
+}
+.kupu.documentContent a
+,.maincontentholder a
+{
+	color: &dtml-ci1co3;;
+	text-decoration:none;
+	outline-style:none;
+}
+.kupu.documentContent input
+,.maincontentholder input
+{
+	outline-style:none
+}
+.kupu.documentContent table
+,.maincontentholder table
+{
+	border-collapse:collapse;
+	margin-bottom: 0.5em;
+}
+.kupu.documentContent table.full
+,.maincontentholder table.full
+{
+	width: 100%;
+}
+.kupu.documentContent table.fixed
+,.maincontentholder table.fixed
+{
+	table-layout:fixed
+}
+.kupu.documentContent th
+,.kupu.documentContent td
+,.maincontentholder th
+,.maincontentholder td
+{
+	padding: 0.5em;
+}
+.kupu.documentContent thead th
+,.maincontentholder thead th
+{
+	background: #444; color: #fff
+}
+.kupu.documentContent table.fancy tbody th
+,.maincontentholder table.fancy tbody th
+{
+        font-size: 1.1667em; /* 14px */
+        line-height: 1.4286em; /* 20px */
+	background: &dtml-cigray8;;
+        color:&dtml-cigray1;;
+        border:1px solid &dtml-cigray9;;
+}
+.kupu.documentContent table.fancy td
+,.maincontentholder table.fancy td
+{
+	vertical-align:top;
+        border:1px solid &dtml-cigray5;;
+        background:&dtml-cigray1;;
+}
+.kupu.documentContent table.fancy td ul
+,.maincontentholder table.fancy td ul
+,.kupu.documentContent table.fancy td ul li
+,.maincontentholder table.fancy td ul li
+{
+	margin:0;
+}
+.kupu.documentContent table.fancy tr.odd td
+,.maincontentholder table.fancy tr.odd td
+{
+        background:&dtml-cigray3;;
+}
+
+.kupu.documentContent table.invisible th
+,.kupu.documentContent table.invisible td
+,.maincontentholder table.invisible th
+,.maincontentholder table.invisible td
+{
+	background: none;
+        color: #333;
+        border:none;
+        padding:0;
+}
+.kupu.documentContent table.fancy tbody th.sub
+,.maincontentholder table.fancy tbody th.sub
+{
+        background: #ddd;
+        color: #333;
+}
+
+.kupu.documentContent hr
+,.maincontentholder hr
+{
+  color: #fff;
+  background:transparent;
+  margin: 0 0 0.5em 0;
+  padding: 0 0 0.5em 0;
+  border:0;
+  border-bottom: 1px #eee solid;
+}
+
+/* Notice boxes begin */
+
+.kupu.documentContent div.attention
+,.kupu.documentContent div.yes
+,.kupu.documentContent div.no
+,.kupu.documentContent div.information
+,.kupu.documentContent div.thumbsup
+,.kupu.documentContent div.idea
+,.kupu.documentContent div.rosette
+,.kupu.documentContent div.note
+,.kupu.documentContent div.smiley
+,.kupu.documentContent div.warning
+,.maincontentholder div.attention
+,.maincontentholder div.yes
+,.maincontentholder div.no
+,.maincontentholder div.information
+,.maincontentholder div.thumbsup
+,.maincontentholder div.idea
+,.maincontentholder div.rosette
+,.maincontentholder div.note
+,.maincontentholder div.smiley
+,.maincontentholder div.warning
+{
+	display: block;
+	padding: 1.6667em 1em 1.6667em 2.3333em;
+	margin: 1.6667em 0;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+}
+
+.kupu.documentContent div.attention
+,.maincontentholder div.attention
+{
+	color: &dtml-ci4co2;;
+	background: &dtml-ci4co1; url(&dtml-portal_url;/icon-lightning.png) 0.5em 50% no-repeat;
+}
+.kupu.documentContent div.yes
+,.maincontentholder div.yes
+{
+	color: &dtml-ci2co6;;
+	background: &dtml-ci2co7; url(&dtml-portal_url;/icon-tick.png) 0.5em 50% no-repeat;
+}
+.kupu.documentContent div.no
+,.maincontentholder div.no
+{
+	color: &dtml-ci3co1;;
+	background: &dtml-ci3co2; url(&dtml-portal_url;/icon-cross.png) 0.5em 50% no-repeat;
+}
+.kupu.documentContent div.information
+,.maincontentholder div.information
+{
+	color: &dtml-ci1co3;;
+	background: &dtml-ci1co1; url(&dtml-portal_url;/icon-information.png) 0.5em 50% no-repeat;
+}
+.kupu.documentContent div.thumbsup
+,.maincontentholder div.thumbsup
+{
+	color: &dtml-ci2co6;;
+	background: &dtml-ci2co7; url(&dtml-portal_url;/icon-thumb_up.png) 0.5em 50% no-repeat;
+}
+.kupu.documentContent div.rosette
+,.maincontentholder div.rosette
+{
+	color: &dtml-cigray8;;
+	background: &dtml-cigray1; url(&dtml-portal_url;/icon-rosette.png) 0.5em 50% no-repeat;
+}
+.kupu.documentContent div.idea
+,.maincontentholder div.idea
+{
+	color: &dtml-ci4co2;;
+	background: &dtml-ci4co1; url(&dtml-portal_url;/icon-lightbulb.png) 0.5em 50% no-repeat;
+}
+.kupu.documentContent div.smiley
+,.maincontentholder div.smiley
+{
+	color: &dtml-ci4co2;;
+	background: &dtml-ci4co1; url(&dtml-portal_url;/icon-emoticon_smile.png) 0.5em 50% no-repeat;
+}
+.kupu.documentContent div.note
+,.maincontentholder div.note
+{
+	color: &dtml-cigray8;;
+	background: &dtml-cigray1; url(&dtml-portal_url;/icon-note.png) 0.5em 50% no-repeat;
+}
+.kupu.documentContent div.warning
+,.maincontentholder div.warning
+{
+	color: &dtml-ci3co1;;
+	background: &dtml-ci3co2; url(&dtml-portal_url;/icon-exclamation.png) 0.5em 50% no-repeat;
+}
+.kupu.documentContent div.visualHighlight
+,.maincontentholder .visualHighlight
+{
+    background-color: &dtml-ci4co1;;
+}
+.kupu.documentContent .image-right
+,.maincontentholder .image-right
+{
+    float:right;
+    margin-left:1em;
+}
+.kupu.documentContent .image-left
+,.maincontentholder .image-left
+{
+    float:left;
+    margin-right:1em;
+}
+.kupu.documentContent .image-inline
+,.maincontentholder .image-inline
+{
+}
+/* Notice boxes end */
+/* Lists begin*/
+.kupu.documentContent ul.checklist
+,.kupu.documentContent ul.starlist
+,.kupu.documentContent ul.arrowlist
+,.maincontentholder ul.checklist
+,.maincontentholder ul.starlist
+,.maincontentholder ul.arrowlist
+,.infotipeventlist
+,.loginfailed ul
+{
+        list-style-position:inside;
+        list-style-type:none;
+}
+.kupu.documentContent ul.checklist
+,.maincontentholder ul.checklist
+,.infotipeventlist
+{
+        list-style-image:url(&dtml-portal_url;/bullet-checklist.gif);
+}
+.kupu.documentContent ul.starlist
+,.maincontentholder ul.starlist
+,.infotipeventlist
+{
+        list-style-image:url(&dtml-portal_url;/bullet-star.gif);
+}
+.infotipeventlist
+{
+        list-style-position:outside;
+}
+.kupu.documentContent ul.arrowlist
+,.maincontentholder ul.arrowlist
+,.loginfailed ul
+{
+        list-style-image:url(&dtml-portal_url;/bullet-arrow.gif);
+}
+/* Lists end*/
+
+
+/* </dtml-with> */

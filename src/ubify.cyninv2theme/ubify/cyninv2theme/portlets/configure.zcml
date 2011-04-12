@@ -1,0 +1,239 @@
+<!--
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see <http://www.gnu.org/licenses/>.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+-->
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:five="http://namespaces.zope.org/five"
+    xmlns:cmf="http://namespaces.zope.org/cmf"
+    xmlns:plone="http://namespaces.plone.org/plone"
+    i18n_domain="cynin">
+
+    <utility
+        component=".vocabularies.listroles"
+        provides="zope.app.schema.vocabulary.IVocabularyFactory"
+        name="ubify.cyninv2theme.portlets.ListRoles"
+        />
+
+    <plone:portlet
+        name="portlets.SpaceMembersPortlet"
+        interface=".spacemembersportlet.ISpaceMembersPortlet"
+        assignment=".spacemembersportlet.Assignment"
+        renderer=".spacemembersportlet.Renderer"
+        addview=".spacemembersportlet.AddForm"
+        editview=".spacemembersportlet.EditForm"
+        />
+
+    <plone:portlet
+        name="portlets.Wikiportlet"
+        interface=".wikiportlet.IWikiPortlet"
+        assignment=".wikiportlet.Assignment"
+        renderer=".wikiportlet.Renderer"
+        addview=".wikiportlet.AddForm"
+        editview=".wikiportlet.EditForm"
+        />
+
+    <plone:portlet
+        name="portlets.Blogportlet"
+        interface=".blogportlet.IBlogPortlet"
+        assignment=".blogportlet.Assignment"
+        renderer=".blogportlet.Renderer"
+        addview=".blogportlet.AddForm"
+        editview=".blogportlet.EditForm"
+        />
+
+    <plone:portlet
+        name="portlets.Eventsportlet"
+        interface=".eventsportlet.IEventsPortlet"
+        assignment=".eventsportlet.Assignment"
+        renderer=".eventsportlet.Renderer"
+        addview=".eventsportlet.AddForm"
+        editview=".eventsportlet.EditForm"
+        />
+
+    <plone:portlet
+        name="portlets.Filesportlet"
+        interface=".filesportlet.IFilesPortlet"
+        assignment=".filesportlet.Assignment"
+        renderer=".filesportlet.Renderer"
+        addview=".filesportlet.AddForm"
+        editview=".filesportlet.EditForm"
+        />
+
+    <plone:portlet
+        name="portlets.Linksportlet"
+        interface=".linksportlet.ILinksPortlet"
+        assignment=".linksportlet.Assignment"
+        renderer=".linksportlet.Renderer"
+        addview=".linksportlet.AddForm"
+        editview=".linksportlet.EditForm"
+        />
+
+    <plone:portlet
+        name="portlets.Imagesportlet"
+        interface=".imagesportlet.IImagesPortlet"
+        assignment=".imagesportlet.Assignment"
+        renderer=".imagesportlet.Renderer"
+        addview=".imagesportlet.AddForm"
+        editview=".imagesportlet.EditForm"
+        />
+
+    <plone:portlet
+        name="portlets.Commentsportlet"
+        interface=".commentsportlet.ICommentsPortlet"
+        assignment=".commentsportlet.Assignment"
+        renderer=".commentsportlet.Renderer"
+        addview=".commentsportlet.AddForm"
+        editview=".commentsportlet.EditForm"
+        />
+
+    <plone:portlet
+        name="portlets.SiteMindmapPortlet"
+        interface=".sitemindmapportlet.ISiteMindmapPortlet"
+        assignment=".sitemindmapportlet.Assignment"
+        renderer=".sitemindmapportlet.Renderer"
+        addview=".sitemindmapportlet.AddForm"
+        />
+
+    <plone:portlet
+        name="portlets.SpaceMindmapPortlet"
+        interface=".spacemindmapportlet.ISpaceMindmapPortlet"
+        assignment=".spacemindmapportlet.Assignment"
+        renderer=".spacemindmapportlet.Renderer"
+        addview=".spacemindmapportlet.AddForm"
+        />
+
+    <plone:portlet
+        name="portlets.RecentUpdatesPortlet"
+        interface=".recentupdatesportlet.IRecentUpdatesPortlet"
+        assignment=".recentupdatesportlet.Assignment"
+        renderer=".recentupdatesportlet.Renderer"
+        addview=".recentupdatesportlet.AddForm"
+        editview=".recentupdatesportlet.EditForm"
+        />
+
+    <plone:portlet
+        name="portlets.MyItemsPortlet"
+        interface=".myitemsportlet.IMyItemsPortlet"
+        assignment=".myitemsportlet.Assignment"
+        renderer=".myitemsportlet.Renderer"
+        addview=".myitemsportlet.AddForm"
+        editview=".myitemsportlet.EditForm"
+        />
+
+    <plone:portlet
+        name="portlets.ApplicationPortlet"
+        interface=".applicationportlet.IApplicationPortlet"
+        assignment=".applicationportlet.Assignment"
+        renderer=".applicationportlet.Renderer"
+        addview=".applicationportlet.AddForm"
+        />
+
+    <plone:portlet
+        name="portlets.ActivityPortlet"
+        interface=".activityportlet.IActivityPortlet"
+        assignment=".activityportlet.Assignment"
+        renderer=".activityportlet.Renderer"
+        addview=".activityportlet.AddForm"
+        editview=".activityportlet.EditForm"
+        />
+
+    <plone:portlet
+        name="portlets.StatisticsPortlet"
+        interface=".statisticsportlet.IStatisticsPortlet"
+        assignment=".statisticsportlet.Assignment"
+        renderer=".statisticsportlet.Renderer"
+        addview=".statisticsportlet.AddForm"
+        editview=".statisticsportlet.EditForm"
+        />
+
+    <plone:portlet
+        name="portlets.TopRatedPortlet"
+        interface=".topratedportlet.ITopRatedPortlet"
+        assignment=".topratedportlet.Assignment"
+        renderer=".topratedportlet.Renderer"
+        addview=".topratedportlet.AddForm"
+        editview=".topratedportlet.EditForm"
+        />
+
+    <plone:portlet
+        name="portlets.TagsPortlet"
+        interface=".tagsportlet.ITagsPortlet"
+        assignment=".tagsportlet.Assignment"
+        renderer=".tagsportlet.Renderer"
+        addview=".tagsportlet.AddForm"
+        editview=".tagsportlet.EditForm"
+        />
+
+    <plone:portlet
+        name="portlets.SiteDescriptionPortlet"
+        interface=".sitedescriptionportlet.ISiteDescriptionPortlet"
+        assignment=".sitedescriptionportlet.Assignment"
+        renderer=".sitedescriptionportlet.Renderer"
+        addview=".sitedescriptionportlet.AddForm"
+        />
+
+    <plone:portlet
+        name="portlets.DocumentActionsPortlet"
+        interface=".documentactionsportlet.IDocumentActionsPortlet"
+        assignment=".documentactionsportlet.Assignment"
+        renderer=".documentactionsportlet.Renderer"
+        addview=".documentactionsportlet.AddForm"
+        />
+
+    <plone:portlet
+        name="portlets.RecentSiteUpdatesPortlet"
+        interface=".recentsiteupdatesportlet.IRecentSiteUpdatesPortlet"
+        assignment=".recentsiteupdatesportlet.Assignment"
+        renderer=".recentsiteupdatesportlet.Renderer"
+        addview=".recentsiteupdatesportlet.AddForm"
+        editview=".recentsiteupdatesportlet.EditForm"
+        />
+
+    <include package="plone.portlet.static" />
+    <plone:portlet
+         name="plone.portlet.static.Static"
+         interface="plone.portlet.static.static.IStaticPortlet"
+         assignment="plone.portlet.static.static.Assignment"
+         view_permission="zope2.View"
+         edit_permission="plone.app.portlets.ManagePortlets"
+         renderer="plone.portlet.static.static.Renderer"
+         addview="plone.portlet.static.static.AddForm"
+         editview="plone.portlet.static.static.EditForm"
+         />
+
+</configure>

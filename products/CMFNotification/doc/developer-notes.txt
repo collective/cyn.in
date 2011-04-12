@@ -1,0 +1,59 @@
+====================
+Notes for developers
+====================
+
+
+Events, patches and so-called architecture
+==========================================
+
+The product defines a set of event subscribers
+(cf. ``events/events.txt``) that calls appropriate handlers in
+CMFNotification tool.
+
+The product still patches a some components of CMF, in order to call
+handlers when specific events occur. Cf. ``patches.py`` module for
+more information. These patches will soon be replaced by appropriate
+events.
+
+These handlers are implemented by ``NotificationTool`` (cf. methods
+which begin with ``on*``). They are very similar, and therefore call
+an unique helper method (``_handlerHelper()``) to do the work. The
+rest is in the code...
+
+
+Implementation of the extra subscriptions list
+----------------------------------------------
+
+I wanted the subscriptions to be recursive, i.e. that an user
+subscribed to ``folder/`` is also recursively subscribed to
+``folder/document`` and ``folder/subfolder``.
+
+The naive answer for that is to keep a mapping whose keys are path of
+object, and values are email addresses, like this::
+
+    {'/': ('boss1@exemple.com', 'boss2@exemple.com'),
+     '/marketing/': ('marketing@exemple.com', ) }
+
+But keeping paths is good until the paths change. In the example
+above, if ``marketing/`` is renamed as ``advertising/``, the tool
+cannot know the previous path of the object. Then, our mapping become
+quite useless.
+
+The best way to deal with path changes is to store the UID of the
+objects instead of their path. But then, how can we easily get the
+entries in the mapping which corresponds to (i.e. which is a parent of
+the current object)? We would need to loop through all the UIDs and
+get the corresponding object. This would be expensive.
+
+Therefore, I decided to have two mappings:
+
+- ``_uid_to_path``: key is the object UID, value is the object path;
+
+- ``_subscriptions``: key is the object path, value are the
+  subscribers list;
+
+Since we know when an object is modified, we can keep both mappings
+updated.
+
+I am open to comments on that point (as I am on the rest of the
+product, too).

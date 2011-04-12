@@ -1,0 +1,397 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: ATRatings 0.2\n"
+"POT-Creation-Date: 2005-10-20 21:24+0000\n"
+"PO-Revision-Date: 2005-01-05 12:33:09 -0200\n"
+"Last-Translator: Danny Bloemendaal\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: \n"
+"Language-code: nl\n"
+"Language-name: Dutch\n"
+"Preferred-encodings: utf-8\n"
+"Domain: at_ratings\n"
+
+#: ../skins/at_ratings/viewlet_ratings.pt
+#. <label for="best_ratings" i18n:translate="best_ratings">
+#.  best ratings
+#. </label>
+# Original: "best ratings"
+msgid "best_ratings"
+msgstr "Hoogste scores"
+
+
+#: ../skins/at_ratings/viewlet_ratings.pt
+#. <span i18n:translate="box_top_countings">
+#.  Top hit countings
+#. </span>
+# Original: "Top hit countings"
+msgid "box_top_countings"
+msgstr "Top treffers"
+
+
+#: ../skins/at_ratings/portlet_top_countings.pt
+#. <a href="" i18n:translate="box_top_countings_list_link" tal:attributes="href string:${utool}/top_countings_list">
+#. 	    Complete Record
+#. </a>
+# Original: "Complete Record"
+msgid "box_top_countings_list_link"
+msgstr "Compleet overzicht"
+
+
+#: ../skins/at_ratings/portlet_top_ratings.pt
+#. <a href="" i18n:translate="box_top_ragings_list_link" tal:attributes="href string:${utool}/top_ratings_list">
+#. 	    Complete Record
+#. </a>
+# Original: "Complete Record"
+msgid "box_top_ragings_list_link"
+msgstr "Compleet overzicht"
+
+
+#: ../skins/at_ratings/portlet_top_ratings.pt
+#. <a href="#" i18n:translate="box_top_rated" tal:attributes="href string:${utool}/top_ratings_list">
+#.  Top Rated
+#. </a>
+# Original: "Top Rated"
+msgid "box_top_rated"
+msgstr "Hoogste score"
+
+
+#: ../skins/at_ratings/viewlet_ratings.pt
+#. <span i18n:translate="box_top_ratings">
+#.  Top ratings
+#. </span>
+# Original: "Top ratings"
+msgid "box_top_ratings"
+msgstr "Hoogste scores"
+
+
+#: ../skins/at_ratings/portlet_top_countings.pt
+#. <a href="#" i18n:translate="box_top_viewed" tal:attributes="href string:${utool}/top_countings_list">
+#.  Top Viewed
+#. </a>
+# Original: "Top Viewed"
+msgid "box_top_viewed"
+msgstr "Meest bekeken"
+
+
+#: ../skins/at_ratings/rating_macros.pt
+#. <span i18n:translate="click_to_vote_1" metal:define-macro="click_to_vote_1">
+#.  click to vote:
+#.  <strong>
+#.   outdated
+#.  </strong>
+#. </span>
+# Original: "click to vote: <strong>outdated</strong>"
+msgid "click_to_vote_1"
+msgstr " "
+
+
+#: ../skins/at_ratings/rating_macros.pt
+#. <span i18n:translate="click_to_vote_2" metal:define-macro="click_to_vote_2">
+#.  click to vote:
+#.  <strong>
+#.   misleading or not useful
+#.  </strong>
+#. </span>
+# Original: "click to vote: <strong>misleading or not useful</strong>"
+msgid "click_to_vote_2"
+msgstr " "
+
+
+#: ../skins/at_ratings/rating_macros.pt
+#. <span i18n:translate="click_to_vote_3" metal:define-macro="click_to_vote_3">
+#.  click to vote:
+#.  <strong>
+#.   average
+#.  </strong>
+#. </span>
+# Original: "click to vote: <strong>average</strong>"
+msgid "click_to_vote_3"
+msgstr " "
+
+
+#: ../skins/at_ratings/rating_macros.pt
+#. <span i18n:translate="click_to_vote_4" metal:define-macro="click_to_vote_4">
+#.  click to vote:
+#.  <strong>
+#.   good
+#.  </strong>
+#. </span>
+# Original: "click to vote: <strong>good</strong>"
+msgid "click_to_vote_4"
+msgstr " "
+
+
+#: ../skins/at_ratings/rating_macros.pt
+#. <span i18n:translate="click_to_vote_5" metal:define-macro="click_to_vote_5">
+#.  click to vote:
+#.  <strong>
+#.   great
+#.  </strong>
+#. </span>
+# Original: "click to vote: <strong>great</strong>"
+msgid "click_to_vote_5"
+msgstr " "
+
+
+#: ../skins/at_ratings/top_countings_list.pt
+#. <p class="discreet" i18n:translate="description_no_counting_items" tal:condition="not: batch">
+#. 	    This portal has no visible items with any counting value.
+#. </p>
+# Original: "This portal has no visible items with any counting value."
+msgid "description_no_counting_items"
+msgstr "De site heeft geen zichtbare onderdelen met trefferinformatie."
+
+
+#: ../skins/at_ratings/top_ratings_list.pt
+#. <p class="discreet" i18n:translate="description_no_rating_items" tal:condition="not: batch">
+#. 	    This portal has no visible items with any rating value.
+#. </p>
+# Original: "This portal has no visible items with any rating value."
+msgid "description_no_rating_items"
+msgstr "De site heeft geen zichtbare onderdelen met scoreinformatie."
+
+
+#: ../skins/at_ratings/top_countings_list.pt
+#. <h1 class="documentFirstHeading" i18n:translate="heading_top_hits">
+#. 	    Top Hits Listing
+#. </h1>
+# Original: "Top Hits Listing"
+msgid "heading_top_hits"
+msgstr "Hoogste treffers"
+
+
+#: ../skins/at_ratings/top_ratings_list.pt
+#. <h1 class="documentFirstHeading" i18n:translate="heading_top_rating">
+#. 	    Top Rated Listing
+#. </h1>
+# Original: "Top Rated Listing"
+msgid "heading_top_rating"
+msgstr "Hoogste scores"
+
+
+#: ../skins/at_ratings/rating_macros.pt
+#. <span i18n:translate="hits_count">
+#.  hits
+#. </span>
+# Original: "hits"
+msgid "hits_count"
+msgstr "treffers"
+
+
+#: ../skins/at_ratings/top_ratings_list.pt
+#. <tal:author i18n:translate="listingheader_author">
+#.  Author
+#. </tal:author>
+# Original: "Author"
+msgid "listingheader_author"
+msgstr "Auteur"
+
+
+#: ../skins/at_ratings/top_countings_list.pt
+#. <tal:hits i18n:translate="listingheader_hits">
+#.  Hits
+#. </tal:hits>
+# Original: "Hits"
+msgid "listingheader_hits"
+msgstr "Treffers"
+
+
+#: ../skins/at_ratings/top_ratings_list.pt
+#. <tal:modified i18n:translate="listingheader_modified">
+#.  Modified
+#. </tal:modified>
+# Original: "Modified"
+msgid "listingheader_modified"
+msgstr "Gewijzigd"
+
+
+#: ../skins/at_ratings/top_ratings_list.pt
+#. <tal:rating i18n:translate="listingheader_rating">
+#.  Rating
+#. </tal:rating>
+# Original: "Rating"
+msgid "listingheader_rating"
+msgstr "Score"
+
+
+#: ../skins/at_ratings/top_ratings_list.pt
+#. <tal:title i18n:translate="listingheader_title">
+#.  Title
+#. </tal:title>
+# Original: "Title"
+msgid "listingheader_title"
+msgstr "Titel"
+
+
+#: ../skins/at_ratings/viewlet_ratings.pt
+#. <label for="worst_countings" i18n:translate="lower_countings">
+#.  lower countings
+#. </label>
+# Original: "lower countings"
+msgid "lower_countings"
+msgstr "Laagste treffers"
+
+
+#: ../skins/at_ratings/rating_macros.pt
+#. <span i18n:translate="rating_1" metal:define-macro="rating_1">
+#.  <strong>
+#.   outdated
+#.  </strong>
+#. </span>
+# Original: "<strong>outdated</strong>"
+msgid "rating_1"
+msgstr " "
+
+
+#: ../skins/at_ratings/rating_macros.pt
+#. <span i18n:translate="rating_2" metal:define-macro="rating_2">
+#.  <strong>
+#.   misleading or not useful
+#.  </strong>
+#. </span>
+# Original: "<strong>misleading or not useful</strong>"
+msgid "rating_2"
+msgstr " "
+
+
+#: ../skins/at_ratings/rating_macros.pt
+#. <span i18n:translate="rating_3" metal:define-macro="rating_3">
+#.  <strong>
+#.   average
+#.  </strong>
+#. </span>
+# Original: "<strong>average</strong>"
+msgid "rating_3"
+msgstr " "
+
+
+#: ../skins/at_ratings/rating_macros.pt
+#. <span i18n:translate="rating_4" metal:define-macro="rating_4">
+#.  <strong>
+#.   good
+#.  </strong>
+#. </span>
+# Original: "<strong>good</strong>"
+msgid "rating_4"
+msgstr " "
+
+
+#: ../skins/at_ratings/rating_macros.pt
+#. <span i18n:translate="rating_5" metal:define-macro="rating_5">
+#.  <strong>
+#.   great
+#.  </strong>
+#. </span>
+# Original: "<strong>great</strong>"
+msgid "rating_5"
+msgstr " "
+
+
+#: ../skins/at_ratings/top_ratings_list.pt
+#. <span i18n:translate="rating_value" tal:condition="total_count">
+#. 			    rating:
+#. </span>
+# Original: "rating:"
+msgid "rating_value"
+msgstr "score:"
+
+
+#: ../skins/at_ratings/viewlet_ratings.pt
+#. <label i18n:translate="sort_mode">
+#.  sort mode
+#. </label>
+# Original: "sort mode"
+msgid "sort_mode"
+msgstr "sorteerwijze"
+
+
+#: ../skins/at_ratings/top_ratings_list.pt
+#. <span class="state-expired" i18n:translate="time_expired" tal:condition="python:portal.isExpired(item)">
+#. 			expired
+#. </span>
+# Original: "expired"
+msgid "time_expired"
+msgstr "verlopen"
+
+
+#: ../skins/at_ratings/viewlet_ratings.pt
+#. <label for="best_countings" i18n:translate="top_countings">
+#.  top countings
+#. </label>
+# Original: "top countings"
+msgid "top_countings"
+msgstr "hoogste treffers"
+
+
+#: ../skins/at_ratings/rating_macros.pt
+#. <span i18n:translate="try_to_vote_after_login" tal:condition="isAnon">
+#.  please try after log in
+#. </span>
+# Original: "please try after log in"
+msgid "try_to_vote_after_login"
+msgstr "Login om te kunnen stemmen"
+
+
+#: ../skins/at_ratings/top_ratings_list.pt
+#. <span i18n:translate="votes_count" tal:condition="total_count">
+#. 			    votes:
+#.  ${total_count}
+#. </span>
+#: ../skins/at_ratings/rating_macros.pt
+#. <span i18n:translate="votes_count" tal:condition="total_count">
+#.  (
+#.  ${total_count}
+#.   votes)
+#. </span>
+# Original: "votes: ${total_count}"
+msgid "votes_count"
+msgstr "stemmen"
+
+
+#: ../skins/at_ratings/viewlet_ratings.pt
+#. <label for="worst_ratings" i18n:translate="worst_ratings">
+#.  worst ratings
+#. </label>
+# Original: "worst ratings"
+msgid "worst_ratings"
+msgstr "laagste scores"
+
+
+#: ../skins/at_ratings/rating_macros.pt
+#. <span i18n:translate="you_can_not_vote" tal:condition="not: allowRating">
+#.  You can't vote
+#. </span>
+# Original: "You can't vote"
+msgid "you_can_not_vote"
+msgstr "U kunt niet stemmen"
+
+# Original: "${count}x"
+msgid "count_number"
+msgstr ""
+
+# Original: "Click to vote:"
+msgid "click_to_vote"
+msgstr "Klik om te stemmen:"
+
+
+#- Removed msgids:
+# 
+
+#- Added msgids:
+#  heading_top_rating description_no_rating_items listingheader_title
+# listingheader_modified listingheader_author listingheader_rating
+# time_expired votes_count rating_value box_top_rated
+# box_top_ragings_list_link box_top_viewed box_top_countings_list_link
+# sort_mode best_ratings worst_ratings box_top_ratings top_countings
+# lower_countings box_top_countings hits_count you_can_not_vote
+# try_to_vote_after_login click_to_vote_1 click_to_vote_2
+# click_to_vote_3 click_to_vote_4 click_to_vote_5 rating_1 rating_2
+# rating_3 rating_4 rating_5 heading_top_hits
+# description_no_counting_items listingheader_hits
+
+#- Added msgids by merging file manual.pot:
+# 

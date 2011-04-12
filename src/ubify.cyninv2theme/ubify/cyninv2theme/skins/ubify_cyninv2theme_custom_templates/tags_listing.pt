@@ -1,0 +1,274 @@
+<tal:comment replace="nothing">
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see http://www.gnu.org/licenses/.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+</tal:comment>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="cynin">
+<body>
+    <div metal:fill-slot="contentwithnopadding">
+    <metal:main-macro define-macro="main"
+			tal:define="kssClassesView context/@@kss_field_decorator_view;
+						getKssClasses nocall:kssClassesView/getKssClassesInlineEditable;
+						templateId template/getId;">
+
+        <metal:listingmacro define-macro="listing">
+            <tal:tags tal:define="results tagslist|nothing;
+				tags tagslist|nothing;
+				modifiers python:[str(k) for k in portal.portal_catalog.uniqueValuesFor('modifiers')];
+				modifiersparam request/modifiers|python:'';
+				startdateparam request/startdate|nothing;
+                                enddateparam request/enddate|nothing;
+                                sdateformatted python:test(startdateparam is not None,DateTime(startdateparam).strftime('%b %d, %y'),'');
+                                edateformatted python:test(enddateparam is not None,DateTime(enddateparam).strftime('%b %d, %y'),'');
+                                iscalendar python:test(templateId == 'app_calendar',1,0);
+                                parentURL python:context.absolute_url();
+                                URLsuffix python:here.REQUEST.physicalPathFromURL(here.REQUEST.getURL())[-1];
+                                URLsuffix2 python:here.REQUEST.physicalPathFromURL(here.REQUEST.getURL())[-2];
+                                URLsuffix python:test(URLsuffix in ('upcomingEvents','pastEvents'),URLsuffix2,URLsuffix);
+                                selectedtags request/Subject|nothing;
+                                dummyobject python:selectedtags != None and [tags.add(k,0) for k in selectedtags if k not in tags];                                
+                                  "
+				   tal:condition="python: modules['ubify.cyninv2theme'].checkHasPermission('Set own password', here)">
+            <div tal:define="selectedtags request/Subject|nothing;
+                            categories tags|nothing;
+                            hastags python:request.has_key('Subject') or False;
+                            hasctypes python:request.has_key('portal_type') or False;
+                            hasdates python:request.has_key('startdate') or request.has_key('enddate') or False;
+                            hasmodifiers python:request.has_key('modifiers') or False;
+                            hassearchterm python:request.has_key('SearchableText');
+                            hassorting python:request.has_key('sort_on') or request.has_key('sort_order') or request.has_key('limit_display') or False;
+                            isfilteredresult python:hastags or hasctypes or hasdates or hasmodifiers or hassearchterm or hassorting or False;">                
+                <div id="filterpaneltopstrip">
+                    <label i18n:translate="">Filter by:</label>
+                    <a id="comcynapsefilterbytag" tal:define="t_count python:selectedtags != None and len(selectedtags) or 0" tal:attributes="class python:test(hastags,'filterpaneltopheader applied','filterpaneltopheader')" rel="comcynapsetagspanel">
+                        <span tal:condition="hastags" tal:content="t_count" />
+                        <tal:translate i18n:translate="">Tags</tal:translate>
+                    </a>
+                    <a id="comcynapsefilterbytype" tal:define="ct_count python:hasctypes and len(request['portal_type']) or 0" tal:attributes="class python:test(hasctypes,'filterpaneltopheader applied','filterpaneltopheader')"  rel="comcynapsetypespanel" tal:condition="python:test(templateId == 'app_all',True,False)">
+                        <span tal:condition="hasctypes" tal:content="ct_count" />
+                        <tal:translate i18n:translate="">Content types</tal:translate>
+                    </a>
+                    <a id="comcynapsefilterbydate" tal:attributes="class python:test(hasdates,'filterpaneltopheader applied','filterpaneltopheader')"   rel="comcynapsedaterangepanel" tal:condition="python:iscalendar==False">
+                        <span tal:condition="hasdates" i18n:translate="">A</span>
+                        <tal:translate i18n:translate="">Date range</tal:translate>
+                    </a>
+                    <a id="comcynapsefilterbyuser" tal:define="m_count python:hasmodifiers and len(request['modifiers']) or 0" tal:attributes="class python:test(hasmodifiers,'filterpaneltopheader applied','filterpaneltopheader')" rel="comcynapsemodifierspanel">
+                        <span tal:condition="hasmodifiers" tal:content="m_count" />
+                        <tal:translate i18n:translate="">Contributors</tal:translate>
+                    </a>
+                    <a id="comcynapsefilterbytext" tal:attributes="class python:test(hassearchterm,'filterpaneltopheader applied','filterpaneltopheader')" rel="comcynapsesearchtextpanel" tal:condition="python:iscalendar==False">
+                        <span tal:condition="hassearchterm" i18n:translate="">A</span>
+                        <tal:translate i18n:translate="">Search Phrase</tal:translate>
+                    </a>
+                    <a id="comcynapsefilterbysort" tal:attributes="class string:filterpaneltopheader" rel="comcynapsesortpanel" i18n:translate="" tal:condition="python:iscalendar==False">Sort</a>
+                </div>
+                <div id="filterpanelholder">
+                    <div id="fullfilterpanel">                    
+                        <div id="comcynapsetagsarea">
+                            <div id="filterscontainer">
+                                <div id="comcynapsetagspanel" style="display:none;" class="filterpanelboxinner">
+                                    <div class="filterpaneltagsholder">
+                                        <span>
+                                            <a href='#' rel='dummytag' tal:define="item_class python:test(selectedtags is None,'filterpaneltag filterpaneltagselected','filterpaneltag')"
+                                                tal:attributes="class item_class" i18n:translate="">all tags</a>
+                                        </span>
+                                        <span tal:repeat="category categories">
+                                        <a class="filterpaneltag"
+                                           rel="tag"
+                                           tal:define="isinselectedtags python:selectedtags and len(selectedtags) > 0 and category in selectedtags or False;
+                                                        item_class python:isinselectedtags and 'filterpaneltag filterpaneltagselected' or 'filterpaneltag';"
+                                           tal:attributes="href string:${parentURL}/${URLsuffix}?Subject%3Alist=${category};class item_class;"><tal:block tal:replace="category" /><span class="filterpaneltagcount" tal:define="count python:str(tags.getValue(category));" tal:content="count" /></a>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="filterpanelboxinner" id="comcynapsetypespanel" style="display:none;">
+                                        <div tal:define="portal_types portal/portal_types;isvisible python:test(templateId == 'app_all',True,False);
+                                                        default_portal_types python:['Document','File','Blog Entry','Image','Event','Link','StatuslogItem','Video','Discussion','Audio'];
+                                                        selectedportaltypes request/portal_type|default_portal_types|nothing;" tal:condition="isvisible">
+                                            <div id="typeselectionblock">
+                                                <tal:block tal:define="allTypes python:putils.getUserFriendlyTypes(default_portal_types);
+                                                                        typeLists python:here.createMultiColumnList(allTypes, numCols=8,sort_on='self');"
+                                                         tal:repeat="sublist typeLists">
+                                                        <tal:separator condition="repeat/sublist/start">
+                                                            <div class="filterpaneltypeselector">
+                                                                <input type="checkbox"
+                                                                    name="pt_toggle"
+                                                                    value="#"
+                                                                    id="pt_toggle"
+                                                                    class="noborder"
+                                                                    tal:attributes="checked python:test(len(selectedportaltypes) == len(default_portal_types),'checked','')"/>
+                                                                <label for="pt_toggle" i18n:translate="">All Types</label>
+                                                            </div>
+                                                        </tal:separator>
+                                                        <tal:items repeat="type sublist">
+                                                            <div class="filterpaneltypeselector">
+                                                                <input type="checkbox"
+                                                                           name="portal_type:list"
+                                                                           value="#"
+                                                                           class="noborder typeselectcheckbox"
+                                                                           tal:define="isinselectedtypes python:selectedportaltypes and len(selectedportaltypes) > 0 and type in selectedportaltypes or False;"
+                                                                           tal:attributes="value type;
+                                                                                           id string:portal_type_${repeat/sublist/number}_${repeat/type/number};
+                                                                                           checked python:test(isinselectedtypes and len(selectedportaltypes) <> len(default_portal_types),'checked','')"/>
+                                                                <label tal:define="tinfo python: portal_types.getTypeInfo(type)"
+                                                                           tal:attributes="for string:portal_type_${repeat/sublist/number}_${repeat/type/number}"
+                                                                    >
+                                                                    <img tal:attributes="src tinfo/getIcon" />
+                                                                    <tal:block tal:replace="tinfo/Title" />
+                                                                </label>
+                                                            </div>
+                                                        </tal:items>
+                                                </tal:block>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="filterpanelbox filterpanelfloated">
+                                        <div class="filterpanelboxinner" id="comcynapsedaterangepanel" style="display:none;">
+                                            <div tal:condition="python:iscalendar==False">
+                                                    <input type="hidden" size="10" value="" id="startDate" tal:attributes="value startdateparam"/>
+                                                    <input type="hidden" size="10" value="" id="endDate" tal:attributes="value enddateparam"/>
+                                                    <input type="text" class="inputLabel" id="rangeDate" title="Type a date range separated with a ' - '" i18n:attributes="title rangedatehelp"/>
+						    <a i18n:translate="daterange_today" class="smallwhitebutton filterpanel_daterangelink"
+						    onclick="jq('#rangeDate').val('Today').removeClass('inputLabelActive');">Today</a>
+						    <a i18n:translate="daterange_thisweek" class="smallwhitebutton filterpanel_daterangelink"
+						    onclick="jq('#rangeDate').val('1 week ago - Tomorrow').removeClass('inputLabelActive');">This Week</a>
+						    <a i18n:translate="daterange_2weeks" class="smallwhitebutton filterpanel_daterangelink"
+						    onclick="jq('#rangeDate').val('2 weeks ago - Tomorrow').removeClass('inputLabelActive');">2 Weeks</a>
+						    <a i18n:translate="daterange_month" class="smallwhitebutton filterpanel_daterangelink"
+						    onclick="jq('#rangeDate').val('1 month ago - Tomorrow').removeClass('inputLabelActive');">Month</a>
+						    <a i18n:translate="daterange_year" class="smallwhitebutton filterpanel_daterangelink"
+						    onclick="jq('#rangeDate').val('1 year ago - Tomorrow').removeClass('inputLabelActive');">Year</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <tal:modifiers>
+                                        <div class="filterpanelbox filterpanelfloated">
+                                            <div class="filterpanelboxinner" id="comcynapsemodifierspanel" style="display:none;">
+                                                <div class="filtercontent">
+                                                    <input type="text" id="filterpanelModifiers" name="filterpanelModifiers" size="50" class="inputLabel" title="Enter username" i18n:attributes="title"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </tal:modifiers>
+                                    <div class="filterpanelacross">
+                                        <div class="filterpanelboxinner" id="comcynapsesearchtextpanel" style="display:none;">
+                                            <div tal:condition="python:iscalendar==False" class="filtercontent">
+                                                <input type="text" id="filterpanelSearchTerm" title="Enter Search term" class="inputLabel" name="filterpanelSearchTerm" tal:attributes="value request/SearchableText|python:'';" size="50" i18n:attributes="title"/>
+                                            </div>
+                                        </div>
+                                    </div>                                    
+                                    <div id="comcynapsesortpanel" style="display:none;" tal:condition="python:iscalendar==False">
+                                        <div class="filterpanelboxinner">                                            
+                                            <div  class="filtercontent">
+                                                <label for="filterpanelsortby" accesskey="s" i18n:translate=""><u>S</u>ort on:</label>
+                                                <select id="filterpanelsortby" tal:define="sortby request/sort_on|sorton|nothing;">
+                                                    <option value="sortable_title" tal:attributes="SELECTED python:test('sortable_title'==sortby,'SELECTED','');" i18n:translate="">Title</option>
+                                                    <option value="created" tal:attributes="SELECTED python:test('created'==sortby,'SELECTED','');" i18n:translate="">Created Date</option>
+                                                    <option value="lastchangedate" tal:attributes="SELECTED python:test('lastchangedate'==sortby,'SELECTED','');" i18n:translate="">Modified Date</option>
+                                                    <option value="rating" tal:attributes="SELECTED python:test('rating'==sortby,'SELECTED','');" i18n:translate="">Rating</option>
+                                                </select>
+                                                <label for="filterpanelsortorder" accesskey="o" i18n:translate=""><u>O</u>rder:</label>
+                                                <span>
+                                                    <select id="filterpanelsortorder" tal:define="sorder request/sort_order|sortorder|nothing;">
+                                                        <option value="asc" tal:attributes="SELECTED python:test('asc'==sorder,'SELECTED','');" i18n:translate="">Ascending</option>
+                                                        <option value="reverse" tal:attributes="SELECTED python:test('reverse'==sorder,'SELECTED','');" i18n:translate="">Descending</option>
+                                                    </select>
+                                                </span>
+                                            </div>                                            
+                                            <div class="filtercontent">
+                                                <label for="filterpanelpagesize" accesskey="p" i18n:translate=""><u>P</u>age Size:</label>
+                                                <span>
+                                                    <select id="filterpanelpagesize" tal:define="limit_display request/limit_display|limit_display|nothing;">
+                                                        <option value="5" tal:attributes="SELECTED python:test(5==limit_display,'SELECTED','');" i18n:translate="">5</option>
+                                                        <option value="10" tal:attributes="SELECTED python:test(10==limit_display,'SELECTED','');" i18n:translate="">10</option>
+                                                        <option value="20" tal:attributes="SELECTED python:test(20==limit_display,'SELECTED','');" i18n:translate="">20</option>
+                                                        <option value="50" tal:attributes="SELECTED python:test(50==limit_display,'SELECTED','');" i18n:translate="">50</option>
+                                                        <option value="100" tal:attributes="SELECTED python:test(100==limit_display,'SELECTED','');" i18n:translate="">100</option>
+                                                    </select>
+                                                </span>
+                                            </div>
+                                        </div>                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="filterpanellabel">
+                        <div id="filterpaneltoggleholder">                        
+                            <a class="cancelbutton" id="filtertagpanelcancelbutton" tal:condition="request/QUERY_STRING|nothing" tal:attributes="href string:${parentURL}/${URLsuffix}" i18n:translate="">Reset</a>
+                            <a class="smallwhitebutton" id="filtertagpanelapplybutton" name="filtertagpanelapplybutton" style="display:none;" href="#" i18n:translate="">Apply</a>
+			    <span class="filterpanelstatustext" tal:define="totalCount totalResults | nothing">
+				<span tal:condition="not: totalCount" i18n:translate="">No content found</span>
+				<span tal:condition="totalCount" i18n:translate="">Showing</span>
+				<span tal:condition="totalCount" i18n:translate=""><tal:block tal:replace="totalCount" i18n:name="count"/> items</span>                            
+			    </span>
+                        </div>
+                    </div>
+                        <tal:block tal:replace="structure string:<script type='text/javascript'>" />
+                        <tal:block tal:condition="python:not selectedtags" tal:replace="structure string:var currentselectedtags=new Array();" />
+                        <tal:block tal:condition="python:selectedtags" tal:replace="structure string:var currentselectedtags=jq.makeArray(${selectedtags});" />
+                        <tal:block tal:replace="structure string:var selectedmodifiers=jq.makeArray(${modifiersparam});" />
+                        <tal:block tal:replace="structure string:var iscalendarview = ${iscalendar};" />
+                        <tal:block tal:replace="structure string:var calendarimage = '${portal_url}/calendar.png';" />
+                        <tal:block tal:replace="structure string:var currentBaseURL = '${parentURL}/${URLsuffix}';" />
+                        <tal:block tal:replace="structure string:currentpageURL = '${context/@@plone_context_state/current_page_url}';" />
+                        <tal:block tal:replace="structure string:var currentpageURL = currentpageURL.urldecode();" />
+                        <tal:block tal:replace="structure string:var arrTagNameAndClasses = new Array();" />
+                        <tal:block tal:replace="structure string:var arrTagsForCloud = [" />
+                        <tal:block tal:repeat="tag tags">
+                            <tal:block tal:define="tagname python:modules['ubify.cyninv2theme'].escapeSingleQuote(tag);tagcount python:tags.getValue(tag);" tal:replace="structure string:{tag:'${tagname}',count:${tagcount}}"/>
+                            <tal:separator condition="not: repeat/tag/end"><tal:block tal:replace="structure string:,"/></tal:separator>
+                        </tal:block>
+                        <tal:block tal:replace="structure string:]" />
+                        <tal:block tal:replace="structure string:</script>" />
+                </div>
+            </div>
+            </tal:tags>
+	    <tal:noauth tal:condition="python: not modules['ubify.cyninv2theme'].checkHasPermission('Set own password', here)">
+	     <div>&nbsp;</div>
+	    </tal:noauth>
+        </metal:listingmacro>
+    </metal:main-macro>
+    </div>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<html xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="at_ratings">
+<body>
+<div metal:define-macro="portlet"
+     tal:define="rtool here/portal_ratings;
+		 ctypes rtool/allowed_counting_types;
+		 brains python: here.portal_catalog.searchResults(portal_type=ctypes);
+		 records records|python:3;
+                 results python: rtool.getTopCountings(brains, records);
+		 use_view_action here/portal_properties/site_properties/typesUseViewActionInListings|python:();
+                 plone_view here/@@plone;"
+     tal:condition="python: results">
+    <dl class="portlet" id="portlet-top-countings">
+        <tal:counteditems tal:repeat="record results">
+        <dd tal:define="count python: record[0];
+                        obj python: record[1];
+                        item_type obj/portal_type;
+                        item_icon python:plone_view.getIcon(obj);
+                        oddrow repeat/record/odd;
+                        item_creator obj/Creator;
+                        item_wf_state obj/review_state;
+                        item_wf_state_class python:'state-' + here.plone_utils.normalizeString(item_wf_state);
+                        item_type_class python: 'contenttype-' + here.plone_utils.normalizeString(obj.portal_type);"
+            tal:attributes="class python:test(oddrow, 'portletItem even', 'portletItem odd')">
+            <div tal:attributes="class item_type_class">
+              <img tal:condition="python: item_type != 'File'" tal:attributes="src item_icon/url;"/>
+              <img src="" tal:condition="python: item_type == 'File'" tal:attributes="src string:${portal_url}/file_icon.png"/>
+              <a href=""
+                 tal:attributes="href python:here.evalURL(obj.portal_type,use_view_action ,obj.getURL());
+                                 title obj/Description;
+                                 class string:$item_wf_state_class visualIconPadding">
+               
+                  <span tal:replace="obj/pretty_title_or_id">
+                  </span>
+              </a>
+              <span class="listitemlastchangeperformer">
+                   <a style="display:inline" class="itemauthor avatarlink"                      
+                      tal:define="mi python:mtool.getMemberInfo(item_creator)"
+                      tal:content="python:mi and mi['fullname'] or item_creator"
+                      tal:omit-tag="not:mi"
+                      tal:attributes="rel string:${portal_url}/userinfo?userid=${item_creator}">
+                        <tal:comment replace="nothing">author</tal:comment>
+                   </a>
+
+                   <span tal:omit-tag=""
+                         i18n:translate="count_number">
+                       <span i18n:name="count"
+                             tal:omit-tag=""
+                             tal:content="count" />
+                   </span>
+              </span>
+          </div>
+        </dd>
+        </tal:counteditems>
+	<div align="right">
+	  <a href=""
+	     tal:attributes="href string:${here/absolute_url}/app_all?sort_on=hits&sort_order=reverse"
+	     i18n:translate="box_top_countings_list_link">
+	    More&hellip;
+	  </a>
+	</div>
+    </dl>
+</div>
+</body>
+</html>

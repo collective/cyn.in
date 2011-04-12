@@ -1,0 +1,230 @@
+<tal:comment replace="nothing">
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see http://www.gnu.org/licenses/.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+</tal:comment>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="cynin">
+
+<body>
+
+
+<div metal:fill-slot="auth_slot">
+    <table width="100%" class="syndicationfeedsmaincontainer"
+           tal:define="rss_base_url python:hasattr(site_properties,'rss_url') and site_properties.rss_url != '' and site_properties.rss_url + '/'.join(('',) + context.getPhysicalPath()[2:]) or here_url;">
+        <tr>
+            <td class="syndicationtitleholder">
+                <div><label i18n:translate="Audios">Audios</label></div>
+                <div i18n:translate="syndication_audios" class="formHelp">Live feed for Audios across this cyn.in site.</div>
+            </td>
+            <td>
+                <tal:definition tal:define="feedlink string:$rss_base_url/rss.xml?portal_type=Audio" >
+                    <tal:macro metal:use-macro="here/syndicationinfo/macros/rsslink" />
+                </tal:definition>
+            </td>
+            <td>
+                <tal:definition tal:define="feedlink string:$rss_base_url/atom.xml?portal_type=Audio">
+                    <tal:macro metal:use-macro="here/syndicationinfo/macros/atomlink" />
+                </tal:definition>
+            </td>
+        </tr>
+        <tr>
+            <td class="syndicationtitleholder">
+                <div><label i18n:translate="blog">Blog</label></div>
+                <div i18n:translate="syndication_blog_posts" class="formHelp">Live feed for Blog posts across this cyn.in site.</div>
+            </td>
+            <td>
+                <tal:definition tal:define="feedlink string:$rss_base_url/rss.xml?portal_type=Blog Entry" >
+                    <tal:defmacro metal:define-macro="rsslink">
+                        <tal:definitions tal:define="thelink feedlink|nothing">
+                            <a tal:attributes="href thelink" class="feedlink rss">
+                                <img tal:attributes="src string:${portal_url}/icon-feed.png" />
+                                <tal:translate i18n:translate="rss">RSS</tal:translate>
+                            </a>
+                        </tal:definitions>
+                    </tal:defmacro>
+                </tal:definition>
+            </td>
+            <td>
+                <tal:definition tal:define="feedlink string:$rss_base_url/atom.xml?portal_type=Blog Entry">
+                    <tal:defmacro metal:define-macro="atomlink">
+                        <tal:definitions tal:define="thelink feedlink|nothing">
+                            <a tal:attributes="href thelink" class="feedlink atom">
+                                <img tal:attributes="src string:${portal_url}/icon-feed-atom.png" />
+                                <tal:translate i18n:translate="atom">Atom</tal:translate>
+                            </a>
+                        </tal:definitions>
+                    </tal:defmacro>
+                </tal:definition>
+            </td>
+        </tr>
+        <tr>
+            <td class="syndicationtitleholder">
+                <div><label i18n:translate="Discussions">Discussions</label></div>
+                <div i18n:translate="syndication_discussions" class="formHelp">Live feed for Discussions across this cyn.in site.</div>
+            </td>
+            <td>
+                <tal:definition tal:define="feedlink string:$rss_base_url/rss.xml?portal_type=Discussion" >
+                    <tal:macro metal:use-macro="here/syndicationinfo/macros/rsslink" />
+                </tal:definition>
+            </td>
+            <td>
+                <tal:definition tal:define="feedlink string:$rss_base_url/atom.xml?portal_type=Discussion">
+                    <tal:macro metal:use-macro="here/syndicationinfo/macros/atomlink" />
+                </tal:definition>
+            </td>
+        </tr>
+        <tr>
+            <td class="syndicationtitleholder">
+                <div><label i18n:translate="events">Events</label></div>
+                <div i18n:translate="syndication_events" class="formHelp">Live feed for Events across this cyn.in site.</div>
+            </td>
+            <td>
+                <tal:definition tal:define="feedlink string:$rss_base_url/rss.xml?portal_type=Event" >
+                    <tal:macro metal:use-macro="here/syndicationinfo/macros/rsslink" />
+                </tal:definition>
+            </td>
+            <td>
+                <tal:definition tal:define="feedlink string:$rss_base_url/atom.xml?portal_type=Event">
+                    <tal:macro metal:use-macro="here/syndicationinfo/macros/atomlink" />
+                </tal:definition>
+            </td>
+        </tr>
+        <tr>
+                <td class="syndicationtitleholder">
+                    <div><label i18n:translate="files">Files</label></div>
+                    <div i18n:translate="syndication_files" class="formHelp">Live feed for files across this cyn.in site. Files are included as enclosures in this feed, for use in podcast clients.</div>
+                </td>
+                <td>
+                    <tal:definition tal:define="feedlink string:$rss_base_url/rss.xml?portal_type=File" >
+                        <tal:macro metal:use-macro="here/syndicationinfo/macros/rsslink" />
+                    </tal:definition>
+                </td>
+                <td>
+                    <tal:definition tal:define="feedlink string:$rss_base_url/atom.xml?portal_type=File">
+                        <tal:macro metal:use-macro="here/syndicationinfo/macros/atomlink" />
+                    </tal:definition>
+                </td>
+        </tr>
+        <tr>
+                <td class="syndicationtitleholder">
+                    <div><label i18n:translate="images">Images</label></div>
+                    <div i18n:translate="syndication_images" class="formHelp">Live feed for images across this cyn.in site. Images are included as enclosures in this feed, for use in podcast clients.</div>
+                </td>
+                <td>
+                    <tal:definition tal:define="feedlink string:$rss_base_url/rss.xml?portal_type=Image" >
+                        <tal:macro metal:use-macro="here/syndicationinfo/macros/rsslink" />
+                    </tal:definition>
+                </td>
+                <td>
+                    <tal:definition tal:define="feedlink string:$rss_base_url/atom.xml?portal_type=Image">
+                        <tal:macro metal:use-macro="here/syndicationinfo/macros/atomlink" />
+                    </tal:definition>
+                </td>
+        </tr>
+        <tr>
+                <td class="syndicationtitleholder">
+                    <div><label i18n:translate="videos">Videos</label></div>
+                    <div i18n:translate="syndication_videos" class="formHelp">Live feed for videos across this cyn.in site. Videos are included as enclosures in this feed, for use in podcast clients.</div>
+                </td>
+                <td>
+                    <tal:definition tal:define="feedlink string:$rss_base_url/rss.xml?portal_type=Video" >
+                        <tal:macro metal:use-macro="here/syndicationinfo/macros/rsslink" />
+                    </tal:definition>
+                </td>
+                <td>
+                    <tal:definition tal:define="feedlink string:$rss_base_url/atom.xml?portal_type=Video">
+                        <tal:macro metal:use-macro="here/syndicationinfo/macros/atomlink" />
+                    </tal:definition>
+                </td>
+        </tr>
+        <tr>
+                <td class="syndicationtitleholder">
+                    <div><label i18n:translate="weblinks">Web Links</label></div>
+                    <div i18n:translate="syndication_weblinks" class="formHelp">Live feed for Web Links across this cyn.in site.</div>
+                </td>
+                <td>
+                    <tal:definition tal:define="feedlink string:$rss_base_url/rss.xml?portal_type=Link" >
+                        <tal:macro metal:use-macro="here/syndicationinfo/macros/rsslink" />
+                    </tal:definition>
+                </td>
+                <td>
+                    <tal:definition tal:define="feedlink string:$rss_base_url/atom.xml?portal_type=Link">
+                        <tal:macro metal:use-macro="here/syndicationinfo/macros/atomlink" />
+                    </tal:definition>
+                </td>
+        </tr>
+        <tr>
+                <td class="syndicationtitleholder">
+                    <div><label i18n:translate="wiki">Wiki</label></div>
+                    <div i18n:translate="syndication_wiki" class="formHelp">Live feed for Wiki Pages across this cyn.in site.</div>
+                </td>
+                <td>
+                    <tal:definition tal:define="feedlink string:$rss_base_url/rss.xml?portal_type=Document" >
+                        <tal:macro metal:use-macro="here/syndicationinfo/macros/rsslink" />
+                    </tal:definition>
+                </td>
+                <td>
+                    <tal:definition tal:define="feedlink string:$rss_base_url/atom.xml?portal_type=Document">
+                        <tal:macro metal:use-macro="here/syndicationinfo/macros/atomlink" />
+                    </tal:definition>
+                </td>
+        </tr>
+        <tr tal:condition="python:context.portal_type in ('ContentRoot')">
+                <td class="syndicationtitleholder">
+                    <div><label i18n:translate="statuslog">Status Log</label></div>
+                    <div i18n:translate="syndication_statuslog" class="formHelp">Live feed for Status Logs across this cyn.in site.</div>
+                </td>
+                <td>
+                    <tal:definition tal:define="feedlink string:$rss_base_url/rss.xml?portal_type=StatuslogItem" >
+                        <tal:macro metal:use-macro="here/syndicationinfo/macros/rsslink" />
+                    </tal:definition>
+                </td>
+                <td>
+                    <tal:definition tal:define="feedlink string:$rss_base_url/atom.xml?portal_type=StatuslogItem">
+                        <tal:macro metal:use-macro="here/syndicationinfo/macros/atomlink" />
+                    </tal:definition>
+                </td>
+        </tr>
+    </table>
+    <div class="formHelp"><label class="important" i18n:translate="note">Note: </label><tal:translate i18n:translate="help_syndication">Use of cyn.in secure feeds requires an 'HTTP BASIC authentication' capable feed client. An example of this type of client is <a href="http://www.curiostudio.com" target="_blank" i18n:name="synd_url1">Great News</a>. Alternatively, you could use URL based authentication, by changing the RSS URLs above to include your username and password, in this format &mdash; <strong i18n:name="feedurl">http://yourusername:yourpassword@feedurl</strong>. Note that using URL based authentication is not recommended, as your passwords are stored openly within your feed reader.</tal:translate></div>
+</div>
+</body>
+</html>

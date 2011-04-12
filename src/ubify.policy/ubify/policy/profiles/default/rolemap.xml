@@ -1,0 +1,261 @@
+<?xml version="1.0"?>
+<!--
+cyn.in is an open source Collaborative Knowledge Management Appliance that 
+enables teams to seamlessly work together on files, documents and content in 
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license 
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software 
+Foundation, either version 3 of the License, or any later version and observe 
+the Additional Terms applicable to this program and must display appropriate 
+legal notices. In accordance with Section 7(b) of the GNU General Public 
+License version 3, these Appropriate Legal Notices must retain the display of 
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have 
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program.  If not, see <http://www.gnu.org/licenses/>.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in. 
+For any queries regarding the licensing, please send your mails to 
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+-->
+<rolemap>
+  <roles>
+    <role name="Anonymous"/>
+    <role name="Authenticated"/>
+    <role name="Manager"/>
+    <role name="Member"/>
+    <role name="Owner"/>
+    <role name="Reviewer"/>
+    <role name="Reader" />
+    <role name="Editor" />
+    <role name="Contributor" />
+  </roles>
+  <permissions>
+    <permission name="Access inactive portal content"
+                acquire="True">
+      <role name="Owner"/>
+    </permission>
+    <permission name="Add portal content" acquire="True">
+      <role name="Manager"/>
+      <role name="Owner"/>
+      <role name="Contributor"/>
+      <role name="Editor" />
+    </permission>
+    <permission name="Add portal folders" acquire="True">
+      <role name="Manager"/>
+      <role name="Owner"/>
+      <role name="Contributor"/>
+      <role name="Editor" />
+    </permission>
+    <permission name="ATContentTypes: Add Document" acquire="True">
+      <role name="Manager"/>
+      <role name="Owner"/>
+      <role name="Contributor"/>
+      <role name="Editor" />
+    </permission>
+    <permission name="ATContentTypes: Add Event" acquire="True">
+      <role name="Manager"/>
+      <role name="Owner"/>
+      <role name="Contributor"/>
+      <role name="Editor" />
+    </permission>
+    <permission name="ATContentTypes: Add Favorite" acquire="True">
+      <role name="Manager"/>
+      <role name="Owner"/>
+      <role name="Contributor"/>
+      <role name="Editor" />
+    </permission>
+    <permission name="ATContentTypes: Add File" acquire="True">
+      <role name="Manager"/>
+      <role name="Owner"/>
+      <role name="Contributor"/>
+      <role name="Editor" />
+    </permission>
+    <permission name="ATContentTypes: Add Folder" acquire="True">
+      <role name="Manager"/>
+      <role name="Owner"/>
+      <role name="Contributor"/>
+      <role name="Editor" />
+    </permission>
+    <permission name="ATContentTypes: Add Image" acquire="True">
+      <role name="Manager"/>
+      <role name="Owner"/>
+      <role name="Contributor"/>
+      <role name="Editor" />
+    </permission>
+    <permission name="ATContentTypes: Add Large Plone Folder" acquire="True">
+      <role name="Manager"/>
+      <role name="Owner"/>
+      <role name="Contributor"/>
+      <role name="Editor" />
+    </permission>
+    <permission name="ATContentTypes: Add Link" acquire="True">
+      <role name="Manager"/>
+      <role name="Owner"/>
+      <role name="Contributor"/>
+      <role name="Editor" />
+    </permission>
+    <permission name="ATContentTypes: Add News Item" acquire="True">
+      <role name="Manager"/>
+      <role name="Owner"/>
+      <role name="Contributor"/>
+      <role name="Editor" />
+    </permission>
+    <permission name="Allow sendto" acquire="True">
+      <role name="Anonymous"/>
+      <role name="Manager"/>
+      <role name="Member"/>
+    </permission>
+    <permission name="Delete objects" acquire="True">
+      <role name="Manager"/>
+      <role name="Owner"/>
+      <role name="Editor"/>
+    </permission>
+    <permission name="FTP access" acquire="True">
+      <role name="Manager"/>
+      <role name="Owner"/>
+    </permission>
+    <permission name="List folder contents" acquire="True">
+      <role name="Manager"/>
+      <role name="Owner"/>
+      <role name="Editor" />      
+    </permission>
+    <permission name="List portal members" acquire="True">
+      <role name="Manager"/>
+      <role name="Member"/>
+    </permission>
+    <permission name="List undoable changes" acquire="True">
+      <role name="Manager"/>
+      <role name="Member"/>
+    </permission>
+    <permission name="Manage properties" acquire="True">
+      <role name="Manager"/>
+      <role name="Owner"/>
+      <role name="Editor"/>
+    </permission>
+    <permission name="Modify view template" acquire="True">
+      <role name="Manager"/>
+      <role name="Owner"/>
+      <role name="Editor"/>
+    </permission>
+    <permission name="Request review" acquire="True">
+      <role name="Manager"/>
+      <role name="Owner"/>
+      <role name="Editor"/>
+    </permission>
+    <permission name="Reply to item" acquire="True">
+      <role name="Manager"/>
+      <role name="Member"/>
+    </permission>
+    <permission name="Review portal content" acquire="True">
+      <role name="Manager"/>
+      <role name="Reviewer"/>
+    </permission>
+    <permission name="Set own password" acquire="False">
+      <role name="Authenticated"/>
+      <role name="Manager"/>
+    </permission>
+    <permission name="Set own properties" acquire="False">
+      <role name="Authenticated"/>
+      <role name="Manager"/>
+    </permission>
+    <permission name="Undo changes" acquire="True">
+      <role name="Manager"/>
+      <role name="Owner"/>
+    </permission>
+    <permission name="Use external editor" acquire="False">
+      <role name="Authenticated"/>
+      <role name="Manager"/>
+    </permission>
+    <permission name="View Groups" acquire="True">
+      <role name="Manager"/>
+      <role name="Member"/>
+      <role name="Owner"/>
+    </permission>
+    <permission name="View management screens"
+                acquire="True">
+      <role name="Manager"/>
+      <role name="Owner"/>
+    </permission>
+    <permission name="Portlets: Manage portlets"
+                acquire="True">
+      <role name="Manager"/>
+    </permission>
+    <permission name="Portlets: Manage own portlets"
+                acquire="True">
+      <role name="Manager"/>
+      <role name="Member"/>
+    </permission>
+    <permission name="Content rules: Manage rules"
+                acquire="False">
+      <role name="Manager"/>
+    </permission>
+    <permission name="iterate : Check in content"
+                acquire="True">
+      <role name="Owner"/>
+      <role name="Manager"/>
+      <role name="Editor"/>
+    </permission>
+    <permission name="iterate : Check out content"
+                acquire="True">
+      <role name="Owner"/>
+      <role name="Manager"/>
+      <role name="Editor"/>
+    </permission>
+    <permission name="View"
+                acquire="True">
+        <role name="Reader" />
+        <role name="Editor" />
+        <role name="Contributor" />
+    </permission>
+    <permission name="Access contents information"
+                acquire="True">
+        <role name="Reader" />
+        <role name="Editor" />
+        <role name="Contributor" />
+    </permission>
+    <permission name="Modify portal content"
+                acquire="True">
+        <role name="Editor" />
+        <role name="Owner" />
+    </permission>    
+    <permission name="Add portal topics" acquire="True">
+        <role name="Editor" />
+        <role name="Contributor" />
+    </permission>
+    <permission name="SmartView Add Smart view" acquire="True">
+        <role name="Manager" />
+    </permission>
+    <permission name="Modify constrain types" acquire="False">
+      <role name="Manager"/>
+      <role name="Editor"/>
+      <role name="Owner"/>
+    </permission>
+    <permission name="CMFEditions: Revert to previous versions" acquire="True">
+      <role name="Manager"/>
+      <role name="Owner"/>
+      <role name="Editor"/>
+      <role name="Reviewer"/>
+      <role name="Contributor" />
+    </permission>
+  </permissions>
+</rolemap>

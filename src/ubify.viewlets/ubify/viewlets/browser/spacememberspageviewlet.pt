@@ -1,0 +1,85 @@
+<tal:comment replace="nothing">
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see http://www.gnu.org/licenses/.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+</tal:comment>
+<table border="0" cellpadding="0" cellspacing="0" width="100%" i18n:domain="cynin">
+<tr>
+<td>
+    <div tal:define="limit_display limit_display|request/limit_display|nothing;
+                                        results python:view.batch_results(b_size=limit_display or 20);
+                                        over_limit python: limit_display and len(results) > limit_display;
+                                        results python: (over_limit and results[:limit_display]) or results;
+                                        batch results;
+                                        template_id python:'@@spacemembers';
+                                        ab limit_display">
+    <div class="documentFirstHeading spacemembersicon" tal:condition="results" tal:content="view/title"/>
+    <div id="spacemembers">
+        <div class="spacemembersavatars" >
+            <tal:items tal:repeat="result results">
+                    <div class="card avatarlink" tal:define="obj python:result.get('useritem');
+                                                  roles python:result.get('roles');
+                                                  rolenames python:view.concatroles(roles);
+                                                  item_creator obj;
+                                                  mtool python:context.portal_membership;
+                                                  userid item_creator | nothing;
+                                                  userurl string:${here/portal_url}/author/${item_creator};
+                                                  objUser python:mtool.getMemberInfo(item_creator);
+                                                  fullname objUser/fullname | nothing;
+                                                  home python:container.portal_membership.getHomeUrl(userid, verifyPermission=1);
+                                                  portrait python: here.portal_membership.getPersonalPortrait(userid);
+                                                  portal_url here/portal_url
+                                                  "
+                                    tal:attributes="rel string:${portal_url}/userinfo?userid=${userid}&rolelist=${rolenames}">
+                                    <div class="cardavatar">
+                            <img class="border29" src="defaultUser.gif"
+                                 alt=""
+                                 border="0"
+                                 tal:attributes="src portrait/absolute_url" />
+                                 </div>
+                            <div class="userinfousernamecont"><span class="userinfousername" tal:content="userid"><tal:comment replace="nothing">user id</tal:comment></span></div>
+                    </div>
+            </tal:items>
+        </div>
+    </div>
+    <tal:block>
+        <div metal:use-macro="here/batch_macros/macros/navigation" />
+    </tal:block>
+
+    </div>
+</td>
+</tr>
+</table>

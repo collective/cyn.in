@@ -1,0 +1,164 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2007-10-14 15:57+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: en\n"
+"Language-Name: English\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: p4a.calendar\n"
+
+#. Default: "View:"
+#: ../browser/month.py
+msgid "April"
+msgstr "Απρίλιος"
+
+#. Default: "View:"
+#: ../browser/month.py
+msgid "August"
+msgstr "Αύγουστος"
+
+#. Default: "View:"
+#: ../browser/month.py
+msgid "December"
+msgstr "Δεκέμβριος"
+
+#. Default: "Event list"
+#: ../browser/month.pt
+msgid "Event_list"
+msgstr ""
+
+#. Default: "View:"
+#: ../browser/month.py
+msgid "February"
+msgstr "Φεβρουάριος"
+
+#. Default: "View:"
+#: ../browser/month.py
+msgid "Friday"
+msgstr "Παρασκευή"
+
+#. Default: "View:"
+#: ../browser/month.py
+msgid "January"
+msgstr "Ιανουάριος"
+
+#. Default: "View:"
+#: ../browser/month.py
+msgid "July"
+msgstr "Ιούλιος"
+
+#. Default: "View:"
+#: ../browser/month.py
+msgid "June"
+msgstr "Ιούνιος"
+
+#. Default: "View:"
+#: ../browser/month.py
+msgid "March"
+msgstr "Μάρτιος"
+
+#. Default: "View:"
+#: ../browser/month.py
+msgid "May"
+msgstr "Μάιος"
+
+#. Default: "View:"
+#: ../browser/month.py
+msgid "Monday"
+msgstr "Δευτέρα"
+
+#. Default: "View:"
+#: ../browser/month.py
+msgid "N/A"
+msgstr ""
+
+#. Default: "View:"
+#: ../browser/month.py
+msgid "November"
+msgstr "Νοέμβριος"
+
+#. Default: "View:"
+#: ../browser/month.py
+msgid "October"
+msgstr "Οκτώβριος"
+
+#. Default: "View:"
+#: ../browser/month.py
+msgid "Saturday"
+msgstr "Σάββατο"
+
+#. Default: "View:"
+#: ../browser/month.py
+msgid "September"
+msgstr "Σεπτέμβριος"
+
+#. Default: "View:"
+#: ../browser/month.py
+msgid "Sunday"
+msgstr "Κυριακή"
+
+#. Default: "View:"
+#: ../browser/month.py
+msgid "Thursday"
+msgstr "Πέμπτη"
+
+#. Default: "View:"
+#: ../browser/month.py
+msgid "Tuesday"
+msgstr "Τρίτη"
+
+#. Default: "View:"
+#: ../browser/month.py
+msgid "Wednesday"
+msgstr "Τετάρτη"
+
+#. Default: "Create event"
+#: ../browser/events.pt
+#: ../browser/month.pt
+msgid "create_event"
+msgstr "Νέα εκδήλωση"
+
+#. Default: "Event list"
+#: ../browser/month.pt
+msgid "event_list"
+msgstr "Λίστα εκδηλώσεων"
+
+#. Default: "Export"
+#: ../browser/month.pt
+msgid "export"
+msgstr "εξαγωγή"
+
+#. Default: "Import"
+#: ../browser/month.pt
+msgid "import"
+msgstr "εισαγωγή"
+
+#. Default: "Month"
+#: ../browser/events.pt
+msgid "month"
+msgstr ""
+
+#. Default: "Past events list"
+#: ../browser/events.pt
+#: ../browser/month.pt
+msgid "past_event_list"
+msgstr "Λίστα περασμένων εκδηλώσεων"
+
+#. Default: "${start_month_name} ${day_month_name}"
+#: ../browser/events.pt
+msgid "start_date"
+msgstr ""
+
+#. Default: "View:"
+#: ../browser/events.pt
+#: ../browser/month.pt
+msgid "view"
+msgstr "Προβολή:"
+

@@ -1,0 +1,68 @@
+<dl class="portlet portletCollection"
+    i18n:domain="cynin"
+    tal:define="collection_url view/collection_url;
+                plone_view context/@@plone;
+                toLocalizedTime nocall:plone_view/toLocalizedTime;
+                normalizeString nocall:plone_view/normalizeString;
+                use_view_action here/portal_properties/site_properties/typesUseViewActionInListings|python:();
+                getIcon nocall:plone_view/getIcon;">
+
+    <div class="documentFirstHeading">
+        <span class="portletTopLeft"></span>
+
+            <span tal:content="view/data/header" />
+        <span class="portletTopRight"></span>
+    </div>
+
+    <tal:events tal:repeat="obj view/results">
+    <div class="portletItem"
+        tal:define="oddrow repeat/obj/odd;
+                    item_icon python:getIcon(obj);
+                    item_type obj/portal_type;
+                    item_url obj/getURL;
+                    item_url python:here.evalURL(item_type,use_view_action,item_url);
+                    item_wf_state obj/review_state;
+                    item_wf_state_class python:'state-' + normalizeString(item_wf_state);"
+        tal:attributes="class python:oddrow and 'recentrow hoverhighlight even' or 'recentrow hoverhighlight odd'">
+        <a href="#"
+           tal:attributes="href item_url;
+                           title obj/Description;
+                           class string:$item_wf_state_class">
+            <img tal:replace="structure item_icon/html_tag" />
+            <span tal:replace="obj/pretty_title_or_id">
+             Title
+            </span>
+        </a>
+            <span class="recentportletdate">
+            <span
+                  tal:define="mdate python:toLocalizedTime(obj.modified)" class="" tal:attributes="title string:${mdate}" tal:content="mdate">
+                <tal:comment replace="nothing">Date</tal:comment>
+            </span>
+            &mdash;
+            </span>
+            <a tal:condition="python:item_type == 'Discussion Item'" class="recentportletlink avatarlink"
+                tal:define="itemauthor obj/Creator;
+                            portal_url here/portal_url;
+                            authorurl string:${portal_url}/userinfo/?userid=${itemauthor}"
+                tal:content="itemauthor"
+                tal:attributes="rel authorurl"
+                href="#">
+            </a>
+            <a tal:condition="python:item_type != 'Discussion Item'" class="recentportletlink avatarlink"
+                tal:define="itemauthor python:modules['ubify.viewlets.utils'].getObjectModifiedBy(obj);
+                            portal_url here/portal_url;
+                            authorurl string:${portal_url}/userinfo/?userid=${itemauthor}"
+                tal:content="itemauthor"
+                tal:attributes="rel authorurl"
+                href="#">
+            </a>
+    </div>
+    </tal:events>
+
+    <div tal:condition="view/data/show_more" align="right">
+        <a class="recentportletxmore" tal:attributes="href collection_url" i18n:translate="more_url">
+             More&hellip;
+             </a>
+    </div>
+
+</dl>

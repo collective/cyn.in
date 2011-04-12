@@ -1,0 +1,149 @@
+<tal:comment replace="nothing">
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see http://www.gnu.org/licenses/.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+</tal:comment>
+<div class="portlets-manager"
+     tal:attributes="id string:portletmanager-${view/normalized_manager_name};"
+     i18n:domain="cynin">
+
+  <div metal:use-macro="context/@@manage-portlets-macros/macros/portlet-add-form" />
+
+  <div metal:use-macro="context/@@manage-portlets-macros/macros/current-portlets-list" />
+
+  <tal:block tal:condition="view/is_available">
+  <div class="section">
+
+    <h4 i18n:translate="heading_un_block_portlets">
+        Block/unblock portlets
+    </h4>
+
+    <form method="post" tal:attributes="action view/blacklist_status_action">
+
+      <input type="hidden" name="manager" tal:attributes="value view/manager_name" />
+
+      <div tal:define="status view/context_blacklist_status">
+
+        <span tal:omit-tag=""
+              i18n:translate="label_portlets_parent_folders">
+            Parent portlets:
+        </span>
+
+        <select name="context_status:int" size="1">
+
+            <option value="1"
+                    tal:attributes="selected python:status == True and 'selected' or None"
+                    i18n:translate="portlets_value_block">
+                Block
+            </option>
+
+            <option value="-1"
+                    tal:attributes="selected python:(status == False or status == None) and 'selected' or None"
+                    i18n:translate="portlets_value_show">
+                Do not block
+            </option>
+
+        </select>
+      </div>
+
+      <div tal:define="status view/group_blacklist_status">
+
+        <span tal:omit-tag=""
+              i18n:translate="label_portlets_group_portlets">Group portlets:</span>
+
+        <select name="group_status:int" size="1">
+
+            <option value="0"
+                    tal:attributes="selected python:status == None and 'selected' or None"
+                    i18n:translate="portlets_value_use_parent">
+                Use parent settings
+            </option>
+
+            <option value="1"
+                    tal:attributes="selected python:status == True and 'selected' or None"
+                    i18n:translate="portlets_value_block">
+                Block
+            </option>
+
+            <option value="-1"
+                    tal:attributes="selected python:status == False and 'selected' or None"
+                    i18n:translate="portlets_value_show">
+                Do not block
+            </option>
+
+        </select>
+      </div>
+
+      <div tal:define="status view/content_type_blacklist_status">
+
+        <span tal:omit-tag=""
+              i18n:translate="label_portlets_content_type_portlets">
+            Content type portlets:
+        </span>
+
+        <select name="content_type_status:int" size="1">
+
+            <option value="0"
+                    tal:attributes="selected python:status == None and 'selected' or None"
+                    i18n:translate="portlets_value_use_parent">
+                Use parent settings
+            </option>
+
+            <option value="1"
+                    tal:attributes="selected python:status == True and 'selected' or None"
+                    i18n:translate="portlets_value_block">
+                Block
+            </option>
+
+            <option value="-1"
+                    tal:attributes="selected python:status == False and 'selected' or None"
+                    i18n:translate="portlets_value_show">
+                Do not block
+            </option>
+        </select>
+      </div>
+
+      <div class="formControls">
+          <input class="context"
+                 type="submit"
+                 value="Save settings"
+                 i18n:attributes="value label_save_settings"/>
+      </div>
+
+    </form>
+  </div>
+  </tal:block>
+</div>

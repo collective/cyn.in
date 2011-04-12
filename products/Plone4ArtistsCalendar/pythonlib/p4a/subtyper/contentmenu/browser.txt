@@ -1,0 +1,75 @@
+Defining Content Menu Sub Menu's
+================================
+
+Registering new menu's for the ``contentmenu_extra`` should make them show
+up in the content menu bar.  Classic zope3 style menu's and menu items are
+supported.
+
+Set Up
+------
+
+Setup our Manager user.
+
+    >>> uf = app.acl_users
+    >>> uf._doAddUser('admin', 'admin', ['Manager'], [])
+
+Now we need to setup some new content menu's that should show up.
+
+    >>> from Products.Five import zcml
+    >>> zcml.load_string('''
+    ... <configure xmlns="http://namespaces.zope.org/browser">
+    ...   <menu
+    ...     id="testmenu"
+    ...     title="Test Menu"
+    ...     />
+    ...   <menuItem
+    ...     title="Test Item #1"
+    ...     action="testitem1"
+    ...     for="*"
+    ...     menu="testmenu"
+    ...     permission="zope.Public"
+    ...     />
+    ...   <menuItem
+    ...     title="Test Item #2"
+    ...     action="testitem2"
+    ...     for="*"
+    ...     menu="testmenu"
+    ...     permission="zope.Public"
+    ...     />
+    ...   <subMenuItem
+    ...     menu="contentmenu_extra"
+    ...     submenu="testmenu"
+    ...     title="Test Menu"
+    ...     permission="zope.Public"
+    ...     for="*"
+    ...     />
+    ... </configure>
+    ... ''')
+
+And of course we get the test browser.
+
+    >>> import Products.Five.testbrowser
+    >>> browser = Products.Five.testbrowser.Browser()
+    >>> browser.addHeader('Authorization', 'Basic admin:admin')
+
+Accessing Menu's
+----------------
+
+We should be able to simply go to the root of the plone site and see the
+newly registered content menu's.
+
+    >>> portal = app.plone
+    >>> browser.open(portal.absolute_url())
+
+Make sure the actual menu dropdown is displayed.
+
+    >>> browser.getLink('Test Menu')
+    <Link text='Test Menu' url=...>
+
+And now we make sure the menu item's are there.
+
+    >>> browser.getLink('Test Item #1')
+    <Link text='Test Item #1' url=...>
+
+    >>> browser.getLink('Test Item #2')
+    <Link text='Test Item #2' url=...>

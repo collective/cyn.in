@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<object name="portal_memberdata" meta_type="Plone Memberdata Tool">
+ <property name="twitterusername" type="string"></property>
+ <property name="twitterpassword" type="string"></property>
+ <property name="designation" type="string"></property>
+ <property name="phone_mobile" type="string"></property>
+ <property name="phone_office" type="string"></property>
+ <property name="phone_home" type="string"></property>
+</object>

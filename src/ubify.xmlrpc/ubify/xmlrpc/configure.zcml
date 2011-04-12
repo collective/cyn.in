@@ -1,0 +1,59 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:five="http://namespaces.zope.org/five"
+    xmlns:cmf="http://namespaces.zope.org/cmf"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="cynin">
+
+    <five:registerPackage package="." initialize=".initialize" />
+
+
+    <include file="profiles.zcml" />
+
+    <browser:page
+      for="*"
+      name="stacker"
+      class=".stacker.StackerView"
+      permission="cmf.SetOwnPassword"
+      allowed_interface=".interfaces.IStackerAPI"
+      />
+
+    <browser:page
+      for="*"
+      name="basic_login"
+      class=".basiclogin.HTTPBasicLogin"
+      permission="cmf.SetOwnPassword"
+      />
+
+    <browser:page
+      for="*"
+      name="anonymousfunctions"
+      class=".anonymousfunctions.AnonymousView"
+      permission="zope2.Public"
+      allowed_interface=".interfaces.IAnonymousAPI"
+      />
+
+    <browser:page
+      for="*"
+      name="adminfunctions"
+      class=".admin.AdminFunctions"
+      permission="cmf.ManagePortal"
+      allowed_interface=".interfaces.IAdminFunctions"
+      />
+
+    <browser:page
+        for="*"
+        name="stacker-badge"
+        template="badge.pt"
+        permission="cmf.SetOwnPassword"
+    />
+    <browser:resource
+        name="badge.swf"
+        file="badge.swf"
+    />
+    <browser:resource
+        name="AC_RunActiveContent.js"
+        file="AC_RunActiveContent.js"
+    />
+
+</configure>

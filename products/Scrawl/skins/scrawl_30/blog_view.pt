@@ -1,0 +1,162 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xml:lang="en" lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="cynin">
+<head>
+    <metal:block metal:fill-slot="head_slot">
+        <link rel="alternate" title="RSS 2.0" i18n:attributes="title" type="application/rss+xml"
+              tal:define="qsparams request/QUERY_STRING|nothing;
+                          urlpart python:test(qsparams is not '','?' + qsparams,'');"
+              tal:attributes="href string:$here_url/rss.xml${urlpart}"/>
+        <link rel="alternate" title="Atom" i18n:attributes="title" type="application/atom+xml"
+              tal:define="qsparams request/QUERY_STRING|nothing;
+                          urlpart python:test(qsparams is not '','?' + qsparams,'');"
+              tal:attributes="href string:$here_url/atom.xml${urlpart}"/>
+    </metal:block>
+</head>
+<body>
+
+    <div metal:fill-slot="main">
+    <metal:main-macro define-macro="main"
+                      tal:define="kssClassesView context/@@kss_field_decorator_view;
+                                  getKssClasses nocall:kssClassesView/getKssClassesInlineEditable;
+                                  templateId template/getId;">
+
+        <div tal:replace="structure provider:plone.abovecontenttitle" />
+
+        <div tal:replace="structure provider:plone.abovecontentbody" />
+
+        <div metal:define-macro="text-field-view"
+             id="parent-fieldname-text" class="stx"
+             tal:define="kss_class python:getKssClasses('text',
+                         templateId=templateId, macro='text-field-view');
+                         text here/getText|nothing"
+             tal:condition="text"
+             tal:attributes="class python:test(here.Format() in ('text/structured',
+                                                   'text/x-rst', ), 'stx' + kss_class, 'plain' + kss_class)">
+            <div metal:define-slot="inside" tal:replace="structure text">The body</div>
+        </div>
+
+        <metal:listingmacro define-macro="listing">
+        <tal:foldercontents define="contentFilter contentFilter|request/contentFilter|nothing;
+                            limit_display limit_display|request/limit_display|nothing;
+                            more_url more_url|request/more_url|string:folder_contents;
+                            contentsMethod python:test(here.portal_type=='Topic', here.queryCatalog, here.getFolderContents);
+			    contentsMethod python:test(here.portal_type=='Blog', here.queryBlog, contentsMethod);
+                            folderContents folderContents|python:contentsMethod(contentFilter, batch=True, b_size=limit_display or 10);
+                            batch folderContents;
+                            use_view_action site_properties/typesUseViewActionInListings|python:();
+                            over_limit python: limit_display and len(folderContents) > limit_display;
+                            folderContents python: (over_limit and folderContents[:limit_display]) or folderContents;
+                            portal_discussion nocall:context/portal_discussion;
+                            isDiscussionAllowedFor nocall:portal_discussion/isDiscussionAllowedFor;
+                            getDiscussionFor nocall:portal_discussion/getDiscussionFor;
+                            ratings_tool here/portal_ratings;
+                            ">
+        <tal:listing condition="folderContents">
+
+        <div id="blogviewmaincontainer">
+            <tal:block tal:repeat="item folderContents">
+                <div class="tileItem visualIEFloatFix vevent" width="100%"
+                     tal:define="item_url item/getURL|item/absolute_url;
+                                       item_id item/getId|item/id;
+                                       item_title_or_id item/pretty_title_or_id;
+                                       item_description item/Description;
+                                       item_type item/portal_type;
+                                       item_type_title item/Type;
+                                       item_type_class python: 'contenttype-' + normalizeString(item_type);
+                                       item_effective item/EffectiveDate;
+                                       item_created item/CreationDate;
+                                       item_wf_state item/review_state|python: wtool.getInfoFor(item, 'review_state', '');
+                                       item_wf_state_class python:'state-' + normalizeString(item_wf_state);
+                                       item_creator item/Creator;
+                                       item_start item/start/ISO|item/StartDate|nothing;
+                                       item_end item/end/ISO|item/EndDate|nothing;
+                                       item_object item/getObject;
+                                       talkback python:isDiscussionAllowedFor(item_object) and getDiscussionFor(item_object);
+                                       reply_count python:talkback is not False and talkback.replyCount(item_object);
+                                       item_text item_object/getText|nothing;
+                                       item_index repeat/item/index;
+                                       full_item python:item.getObject();
+                                       comment_count python:here.getcommentcount(full_item);
+                                       lastchangeperformer item/lastchangeperformer;
+                                       item_icon python:plone_view.getIcon(item);
+                                        lastchangeaction item/lastchangeaction;
+                                        lastchangeaction python:modules['ubify.coretypes'].get_action_mapped(lastchangeaction);
+                                        nicedlastchangedate python: item.toLocalizedTime(item.lastchangedate,True);
+                                        item_uid item/UID | nothing;
+                                        nicedcreateddate python: item.toLocalizedTime(item_created,True);
+                                        item_wf_state_title_desc python:modules['ubify.cyninv2theme'].getWorkflowStateTitle(item);
+					item_wf_state_title python:item_wf_state_title_desc[0];
+					item_wf_state_desc python:item_wf_state_title_desc[1];
+                                        show_about python:not isAnon or site_properties.allowAnonymousViewAbout;
+                                       "
+                     tal:attributes="class string:tileItem visualIEFloatFix vevent ${item_type_class}">
+                    <div class="blogavatarblock" tal:define="created full_item/created">
+                        <a tal:attributes="rel string:${portal_url}/userinfo?userid=${item_creator}" class="avatarlink">
+                            <img tal:attributes="src python: item.portal_membership.getPersonalPortrait(item.Creator).absolute_url()"/>
+                        <div tal:content="created/day" class="blogavatarday"/>
+                        <div tal:content="python: created.Month()[0:3]" i18n:translate=""  class="blogavatarmonth"/>
+                        <div tal:content="created/year"  class="blogavataryear"/>
+                        <div tal:define="timefactor created/AMPMMinutes;pmfactor created/_pm;" class="blogavatartime"><tal:block tal:content="python:timefactor.rstrip(pmfactor)" /><tal:translate i18n:translate="" tal:content="pmfactor" /></div>
+                        </a>
+                    </div>
+                    <div class="blogfullpost">
+                        <a tal:condition="python:item_type == 'Link'"
+                           tal:attributes="href python:test(item_type in use_view_action, item_url+'/view', item_url);">
+                           <img src="" alt=""
+                                tal:condition="item_object/image_thumb|nothing"
+                                tal:replace="structure python: item_object.tag(scale='thumb', css_class='tileImage')" />
+                        </a>
+                        <h2 metal:define-macro="listitem" class="blogposttitle">
+                            <a href="#"
+                               class="summary url"
+                               tal:condition="python:item_type != 'Link'"
+                               tal:attributes="href python:test(item_type in use_view_action, item_url+'/view', item_url);"
+                               tal:content="item_title_or_id">
+                                <tal:comment replace="nothing">Item Title</tal:comment>
+                            </a>
+                        </h2>
+                        <tal:name tal:condition="item_creator"
+                            tal:define="author python:mtool.getMemberInfo(item_creator)">
+                          <div class="blogpostauthor">&mdash; <tal:translate i18n:translate="posted_by">Posted by</tal:translate>
+                          <a tal:attributes="rel string:${portal_url}/userinfo?userid=${item_creator}" class="avatarlink"
+                             tal:content="python:author and author['fullname'] or item_creator"
+                             tal:omit-tag="not:author">
+                            <tal:comment replace="nothing">Bob Dobalina</tal:comment>
+                          </a>
+                          </div>
+                        </tal:name>
+                        <div class="tileBody blog-entry maincontentholder"
+                           tal:condition="python: item_text"
+                           tal:content="structure item_text">Item Body</div>			
+                    </div>
+                    <div class="blogiteminfopanel clearboth" tal:attributes="rel item_index" tal:define="isInBlogView python:True">
+                        <tal:listiteminfo metal:use-macro="here/all_listing/macros/listitem" />
+                    </div>
+                </div>
+                </tal:block>
+                <tal:hiddenformfortimeout metal:use-macro="here/all_listing/macros/fetchcommentsform" />
+            </div>
+            <!-- Navigation -->
+            <div metal:use-macro="here/batch_macros/macros/navigation" />
+        </tal:listing>
+        <metal:empty metal:define-slot="no_items_in_listing">
+            <p class="discreet"
+               tal:condition="not: folderContents"
+               i18n:translate="description_no_items_in_folder">
+                There are currently no items in this folder.
+            </p>
+        </metal:empty>
+
+        </tal:foldercontents>
+        <tal:macro metal:use-macro="here/belowcontent_macro/macros/space_footer_actions" />
+        </metal:listingmacro>
+    </metal:main-macro>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,42 @@
+<tal:root define="lt string:&lt;;gt string:&gt;;
+                  dummy python:request.RESPONSE.setHeader('Content-Type', 'text/html;; charset=%s' % here.plone_utils.getSiteEncoding());
+                  member python:options['member'];
+                  reset python:options.get('reset', None) or here.portal_password_reset.requestReset(member.getId())">
+From: "<span tal:replace="python:here.email_from_name" />" <span tal:replace="structure lt"/><span tal:replace="python:here.email_from_address" /><span tal:replace="structure gt"/>
+To: <span tal:replace="python:member.getProperty('email')" />
+Subject: <span i18n:domain="passwordresettool" i18n:translate="mailtemplate_user_account_info" tal:omit-tag="">User Account Information for <span i18n:name="portal_name" tal:omit-tag="" tal:content="python:here.portal_url.getPortalObject().Title()" /></span>
+Content-Type: text/html; charset=<span tal:replace="here/email_charset|here/portal_properties/site_properties/default_charset|string:utf-8" />
+
+<div i18n:domain="passwordresettool"
+     i18n:translate="mailtemplate_registered_user_body"
+     tal:define="fullname python:getattr(here.REQUEST, 'fullname', '')">
+    Welcome <span i18n:name="fullname" tal:replace="fullname" />,
+
+    your user account has been created. Please activate it by visiting
+    <br />
+    <br />
+    <a tal:define="reseturl python:here.pwreset_constructURL(reset['randomstring'],member.getUserName())"
+       tal:attributes="href reseturl"
+       tal:content="structure reseturl"
+          i18n:name="set_password" />
+    <br />
+    <br />
+    
+    <div>
+    You must activate your account within <span
+    i18n:name="expirationtime"
+    tal:replace="here/portal_password_reset/getExpirationTimeout" />
+    hours, so before <span i18n:name="expirationdate" tal:replace="python:
+    context.toLocalizedTime(reset['expires'], long_format=1)" />
+    </div>
+
+</div>
+<div i18n:domain="passwordresettool"
+     i18n:translate="greetings">
+    With kind regards,
+</div>
+
+--
+<span tal:replace="python:here.email_from_name" />
+</tal:root>
+

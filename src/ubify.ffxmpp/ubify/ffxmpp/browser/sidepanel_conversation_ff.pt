@@ -1,0 +1,111 @@
+<tal:comment replace="nothing">
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see http://www.gnu.org/licenses/.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+</tal:comment>
+<html i18n:domain="cynin" tal:condition="request/username|nothing">
+    <head>
+        <link rel="StyleSheet" tal:attributes="href string:${context/portal_url}/ffxmpp.css" type="text/css" />
+        <script type="text/javascript" tal:attributes="src string:${context/portal_url}/jquery.js"></script>
+        <script type="text/javascript" tal:attributes="src string:${context/portal_url}/conversationsidepanel.js"></script>
+    </head>
+    <tal:definitions
+            tal:define="
+                    portal_url context/portal_url;
+                    userid request/username;
+                    recentitems python: context.portal_catalog.searchResults(portal_type=view.alloweditemtypes,sort_on = 'lastchangedate',sort_order='reverse');
+                    profile string:${portal_url}/author/${userid};
+                    mtool python:context.portal_membership;
+                    portrait python: mtool.getPersonalPortrait(userid);
+                    objUser python:mtool.getMemberInfo(userid);
+                    pUser python:mtool.acl_users.getUserById(userid);
+                    fullname objUser/fullname | string:Name not set;
+                    fullname python:(fullname is not None and fullname is '' and 'Name not set') or fullname;
+                    results python:modules['ubify.cyninv2theme.portlets.statistics'].getRecentContributionForUser(context,userid,view.alloweditemtypes,records=10);
+                    results python:results[0];
+                    status_messages python: context.portal_catalog.searchResults(Creator = userid,portal_type=('StatuslogItem',),sort_on = 'created',sort_order='reverse');
+                    recent_message python:status_messages[:1];
+                    is_status_set python:len(recent_message);
+                    is_current_user python:view.isCurrentUser(userid);
+                    is_slog_exists python:view.isUserStatuslogExists(mtool,userid);
+            ">
+    <body class="sidepanelconversation">
+        <div id="cspMainHolder">
+            <div id="infotipstatusmessageholder" tal:condition="is_status_set">
+                <div class="statusmessagepaddingholder">
+                    <!--<label tal:condition="is_status_set" i18n:translate="label_current_status">Status: </label>-->
+                    <a tal:define="message python:recent_message[0].getObject()" tal:attributes="href message/absolute_url" class="normallink">
+                        <tal:status tal:content="python:recent_message[0].Title" />
+                    </a>
+                </div>
+            </div>
+            <div id="infotipstatusmessageholder" tal:condition="python: not is_status_set">
+                <div class="statusmessagepaddingholder" i18n:translate="">
+                    <tal:block tal:replace="userid" i18n:name="userid"/> has not set a status message yet.
+                </div>
+            </div>
+            <div id="infotipstatusmessageholder" tal:condition="python:is_current_user and is_slog_exists">
+                <div class="statusmessagepaddingholder">
+                    <a tal:attributes="href new_status_link;" i18n:translate="" class="normallink">
+                        Set your status here
+                    </a>
+                </div>
+            </div>
+            <div id="recentitemslabelholder">
+                <div class="recentactivitylabelpaddingholder">
+                    <label i18n:translate="">Recent Activity:</label>
+                </div>
+            </div>
+            <div id="conversationsidepanelitems">
+                <tal:repeater tal:repeat="item results">
+                    <tal:definitions tal:define="portrait python: context.portal_membership.getPersonalPortrait(item.lastchangeperformer);
+                    portraiturl portrait/absolute_url;
+                    ptype item/portal_type;
+                    ptobj python:context.portal_types[ptype];
+                    itemurl item/getURL;
+                    displayTitle item/Title;
+                    ">
+                        <a class="conversationsidepanelitem" tal:attributes="href itemurl">
+                            <img tal:attributes="src ptobj/content_icon" class="cspitiletypeicon" />
+                            <span class="cspitiletitle"><tal:titletexttext tal:content="displayTitle"/></span>
+                        </a>
+                    </tal:definitions>
+                </tal:repeater>
+            </div>
+        </div>
+    </body>
+    </tal:definitions>
+</html>

@@ -1,0 +1,48 @@
+==========================
+Roadmap of CMFNotification
+==========================
+
+The feature list is not closed. Future releases may include:
+
+- add a digest mode. In this mode, users would receive e-mail
+  notification in a single, regular (daily or weekly) e-mail;
+
+- add a "Manage my subscriptions" page (a variation of the site map),
+  which lists the subscriptions of the logged-in user;
+
+- add a "Manage subscriptions" page for portal administrators;
+
+- the ability to disallow security check for each rule. Something
+  like:
+
+      * :: here/getReviewers :: python: True
+
+  The third component of the rule would be labeled "trusted". If the
+  second component of the rule is trusted, then no security check is
+  done;
+
+- a nice configuration form: for now, the configuration is done
+  through the automatically generated properties form of the tool,
+  which does not appear to be very user-friendly. Note that redoing
+  the same form with ``zope.formlib`` is not the point. Ideas,
+  sponsors or patches are welcome, since I'm not keen on working on
+  that, for now :)
+
+- notification when a discussion item is added;
+
+- notification when a portal member changes its properties ("partially
+  implemented" but not yet tested);
+
+- notification when an item is renamed or moved (cut and pasted): for
+  now, renaming or moving an item does not send any notification. We
+  might want to send one;
+
+- notification when an item is removed: for now, removing an item does
+  not send any notification;
+
+- anonymous subscription: this will allow anonymous users to subscribe
+  their email address to an item.
+
+If you would like to participate to the development of this product,
+feel free to drop me an email so that I can coordinate everybody's
+efforts.

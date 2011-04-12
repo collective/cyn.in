@@ -1,0 +1,140 @@
+<tal:comment replace="nothing">
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see http://www.gnu.org/licenses/.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+</tal:comment>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="cynin">
+<head>
+    <metal:block metal:fill-slot="head_slot">
+        <tal:rssmacro metal:use-macro="here/rss_macro/macros/rss_macro" />
+    </metal:block>
+</head>
+<body>
+    <div metal:fill-slot="content">
+        <tal:main-macro metal:define-macro="main"
+             tal:define="kssClassesView context/@@kss_field_decorator_view;
+                         getKssClasses nocall:kssClassesView/getKssClassesInlineEditable;
+                         templateId template/getId">
+
+            <div tal:replace="structure provider:plone.abovecontenttitle" />
+            <div id="eventcontentholder" class="maincontentholder"
+                tal:define="
+                    nicedstartdate python: here.toLocalizedTime(here.start(),True);
+                    nicedenddate python: here.toLocalizedTime(here.end(),True);
+            ">
+                <fieldset class="contentheaderlabel"><legend i18n:translate="header_when">When</legend></fieldset>
+                <div class="eventwhenblock">
+                    <div>
+                        <label i18n:translate="label_from">From:</label>
+                        <span class="eventstartdate"><tal:startdate tal:replace="nicedstartdate" /></span>
+                    </div>
+                    <div class="eventdownarrow">&darr;</div>
+                    <div>
+                        <label i18n:translate="label_to">To:</label>
+                        <span class="eventenddate"><tal:startdate tal:replace="nicedenddate" /></span>
+                    </div>
+                </div>
+                <fieldset class="contentheaderlabel" tal:condition="here/event_url | here/location | nothing"><legend i18n:translate="label_where">Where</legend></fieldset>
+                <div class="eventwhereblock" tal:condition="here/event_url | here/location | nothing">
+                    <div tal:condition="here/event_url|nothing">
+                        <label i18n:translate="label_link">Link:</label>
+                        <a
+                            href="event_url"
+                            tal:define="field python:context.getField('eventUrl');"
+                            id="parent-fieldname-eventUrl"
+                            tal:attributes="href here/event_url"
+                            tal:content="here/event_url" />
+                    </div>
+                    <div tal:condition="here/location|nothing">
+                        <label i18n:translate="label_location">Location</label>:
+                        <metal:field use-macro="python:here.widget('location', mode='view')">Location</metal:field>
+                    </div>
+                </div>
+                <fieldset class="contentheaderlabel"  tal:condition="python: here.contact_name or here.contact_email or here.contact_phone or here.getAttendees() or None"><legend i18n:translate="header_who">Who</legend></fieldset>
+                <div class="eventwhoblock" tal:condition="python: here.contact_name or here.contact_email or here.contact_phone or here.getAttendees() or nothing">
+                    <div tal:condition="here/contact_name">
+                        <label i18n:translate="contact_name">Contact Name:</label>
+                        <metal:field use-macro="python:here.widget('contactName', mode='view')">Contact Name</metal:field>
+                    </div>
+                    <div tal:define="contact_email here/contact_email"
+                        tal:condition="here/contact_email">
+                        <label i18n:translate="contact_email">Contact Email:</label>
+                        <a tal:content="structure python: here.spamProtect(contact_email)" id="parent-fieldname-contactEmail" />
+                    </div>
+                    <div tal:condition="here/contact_phone">
+                        <label i18n:translate="contact_phone">Contact Phone:</label>
+                        <metal:field use-macro="python:here.widget('contactPhone', mode='view')">Phone number</metal:field>
+                    </div>
+                    <div tal:condition="here/getAttendees|nothing">
+                        <label i18n:translate="contact_attendees" nowrap="nowrap">Attendees:</label>
+                        <tal:attendees tal:repeat="attendee here/getAttendees">
+                            <tal:attendee tal:replace="attendee" /><tal:comma tal:content="string:, " tal:condition="not:repeat/attendee/end" />
+                        </tal:attendees>
+                    </div>
+                </div>
+                <fieldset class="contentheaderlabel"><legend i18n:translate="header_actions">Actions</legend></fieldset>
+                <div>
+                    <label i18n:translate="heading_add_to_calendar">Download to desktop calendar:</label>
+                        <a href="#"
+                           tal:attributes="href string:$here_url/vcs_view"
+                           title="Add this item to your vCal calendar"
+                           i18n:attributes="title title_add_to_vcal;">
+                            <img tal:replace="structure here/icon_export_vcal.png" src="" alt="" />
+                            <span i18n:translate="label_add_to_vcal">vCal</span></a>
+                        <a href="#"
+                           tal:attributes="href string:$here_url/ics_view"
+                           title="Add this item to your iCal calendar"
+                           i18n:attributes="title title_add_to_ical;">
+                            <img tal:replace="structure here/icon_export_ical.png" src="" alt="" />
+                            <span i18n:translate="label_add_to_ical">iCal</span></a>
+                </div>
+                <fieldset class="contentheaderlabel" tal:condition="here/getText | nothing"><legend i18n:translate="header_body">Details</legend></fieldset>
+                <div tal:condition="here/getText | nothing">
+                    <metal:field use-macro="python:here.widget('text', mode='view')">Body text</metal:field>
+                </div>
+            </div>
+            <tal:belowcontentmacro metal:use-macro="here/belowcontent_macro/macros/below_content" />
+            <div tal:replace="structure provider:plone.abovecontentbody" />
+        </tal:main-macro>
+    </div>
+</body>
+</html>

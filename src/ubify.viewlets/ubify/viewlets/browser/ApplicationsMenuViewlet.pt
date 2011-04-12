@@ -1,0 +1,132 @@
+<tal:comment replace="nothing">
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see http://www.gnu.org/licenses/.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+</tal:comment>
+<div style="display:none;height:40px;" class="titlebarmenurow"
+     tal:define="portal_url here/portal_url;
+                selectedItem view/selectedItem|nothing;
+                ploneview view/ploneview;
+                view_actions view/view_actions;
+                view_wfitems view/workflowmenuitems"
+    i18n:domain="cynin">
+    <ul class="static_menu contentViews" tal:condition="python: context.portal_type in ('ContentSpace','ContentRoot','MemberSpace',)">
+        <li tal:attributes="class dbclass"
+            tal:define="dbclass python:view.dashboard_selected and 'staticmenu_item dashboard selected' or (view.dashboard_item['visible'] and 'staticmenu_item dashboard' or 'hidden')"
+            tal:condition="python: context.portal_type in ('ContentSpace','ContentRoot',)">
+            <a tal:attributes="href homelink" tal:define="is_space python:context.portal_type in ('ContentSpace',);
+                homelink python: is_space and 'dashboard' or 'home'">
+                <img tal:attributes="src string:${portal_url}/icon-application_view_tile.png" class="apptabicon"/>
+                <span i18n:translate="dashboard">Dashboard</span>
+            </a>
+        </li>
+        <li tal:attributes="class asclass"
+            tal:define="asclass python:view.activitystream_selected and 'staticmenu_item activitystream selected' or (view.activitystream_item['visible'] and 'staticmenu_item activitystream' or 'hidden')">
+            <a href="app_all">
+                <img tal:attributes="src string:${portal_url}/icon-asterisk_yellow.png" class="apptabicon"/>
+                <span i18n:translate="activity_stream">Activity Stream</span>
+            </a>
+        </li>
+    </ul>
+    <ul class="applications_menu">
+        <li tal:attributes="class appmenuclass" tal:define="appmenuclass python:selectedItem and 'applicationsmenubuttonholder menu-gray-img selected' or (view.show_appview_nonselected and 'menu-gray-img applicationsmenubuttonholder' or 'hidden')">
+            <span class="applicationsmenumain">
+                <span i18n:translate="application_views">Application views</span>
+                <span class="arrowDownAlternative" tal:condition="python:view.show_appview_nonselected">&#9660;</span>
+                <tal:selectedtext tal:condition="selectedItem">
+                    : <img tal:attributes="src python:portal_url + '/' + selectedItem['icon']" class="apptabicon"/>
+                    <tal:block replace="selectedItem/title" />
+                </tal:selectedtext>
+            </span>
+            <ul>
+                <tal:block
+                tal:repeat="item view/applications"
+                >
+                    <li
+                    tal:define="itemselected item/selected; visible item/visible;hasitemurl python:item['url'] <> '';item_url item/url;item_url python:not hasitemurl and here.absolute_url() or item_url"
+                    tal:condition="python: item['visible'] and item['url'] != '-'"
+                    >
+                        <a tal:attributes="href item_url">
+                            <img tal:attributes="src python:portal_url + '/' + item['icon']" class="apptabicon">
+                            <tal:text replace="item/title" />
+                        </a>
+                    </li>
+                    <li tal:condition="python:item['url'] == '-'" class="topmenuseparator"
+                        tal:content="item/title" />
+                </tal:block>
+            </ul>
+        </li>
+        <li
+            tal:attributes="class mgmenuclass"
+            tal:define="manage_selectedItem view/manage_selectedItem;
+                        mgmenuclass python:manage_selectedItem and 'applicationsmenubuttonholder menu-gray-img selected' or 'menu-gray-img applicationsmenubuttonholder'"
+            tal:condition="python: ploneview.showEditableBorder and view_actions">
+            <span class="applicationsmenumain">
+                <tal:translate i18n:translate="manage_space">Manage Space</tal:translate>
+                <span class="arrowDownAlternative">&#9660;</span>
+                <tal:selectedtext tal:condition="manage_selectedItem">
+                    <img tal:attributes="src string:${portal_url}/${manage_selectedItem/id}.png" class="apptabicon"/>
+                    : <tal:block replace="manage_selectedItem/title" />
+                </tal:selectedtext>                
+            </span>
+            <ul i18n:domain="cynin">
+                <tal:views repeat="action view_actions">
+                  <li tal:define="selected action/selected|nothing;"
+                      tal:attributes="id string:contentview-${action/id};
+                    class python:selected and 'selected' or 'plain'">
+                    <img tal:attributes="src string:${portal_url}/${action/id}.png" />
+                    <a href=""
+                       tal:content="action/title"
+                       tal:attributes="href action/url;"
+                       i18n:translate="">
+                    View name
+                    </a>
+                  </li>
+                </tal:views>
+                <tal:wf tal:define="wfmenu view_wfitems" tal:condition="view_wfitems">
+                    <tal:submenu tal:repeat="submenu wfmenu/submenu">
+                        <li tal tal:condition="python:submenu.has_key('extra') and submenu['extra'].has_key('id') and submenu['extra']['id'] == 'policy' and here.portal_membership.checkPermission('Manage portal', context)">
+                            <a tal:attributes="href submenu/action">
+                                <img tal:attributes="src string:${portal_url}/icon-arrow_switch.png" />
+                                <tal:policy i18n:translate="workflow_policy">Workflow policy</tal:policy>
+                            </a>
+                        </li>
+                    </tal:submenu>
+                </tal:wf>
+            </ul>
+        </li>
+    </ul>
+</div>

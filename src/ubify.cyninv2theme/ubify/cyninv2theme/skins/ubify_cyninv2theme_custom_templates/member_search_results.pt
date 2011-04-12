@@ -1,0 +1,226 @@
+<tal:comment replace="nothing">
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see http://www.gnu.org/licenses/.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+</tal:comment>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="cynin">
+<head>
+    <metal:block fill-slot="column_one_slot" />
+        <metal:block fill-slot="column_two_slot" />
+</head>
+<metal:block fill-slot="top_slot"
+             tal:define="dummy python:request.set('disable_border',1)" />
+
+<tal:titlebarslot metal:fill-slot="titlebar-row1">
+        <tal:titlemacrooverride metal:define-macro="itemtitle">
+            <div id="typeindicator">
+                <img tal:attributes="src string:${portal_url}/icon-group.png"/>
+                <tal:translate  i18n:translate="">People</tal:translate>
+            </div>
+            <div id="maintitleholder"
+                tal:define="url_unquote_plus python:modules['Products.PythonScripts.standard'].url_unquote_plus;
+                            author python:(len(request.traverse_subpath) > 0 and url_unquote_plus(request.traverse_subpath[0])) or request.get('author', None) or (member and member.getId());
+                        authorinfo python: mtool.getMemberInfo(author);">
+                <h1 id="maintitle" i18n:translate="header_people_directory">People Directory</h1>
+            </div>
+        </tal:titlemacrooverride>
+</tal:titlebarslot>
+
+<div metal:fill-slot="content"
+       tal:define="search_view here/@@pas_search;
+                   results python:search_view.searchUsersByRequest(request, sort_by='fullname');
+                   Batch python:modules['Products.CMFPlone'].Batch;
+                   DateTime python:modules['DateTime'].DateTime;
+                   b_size python:30;b_start python:0;b_start request/b_start | b_start;">
+
+    <div class="floatbox">
+        <a class="usersearchlink" tal:attributes="href string:${portal_url}/Members" i18n:translate="link_people_search">People Search</a>
+    </div>
+
+    <div class="usersearchform" tal:define="is_manager python: checkPermission('Manage portal', here)">
+        <form action="member_search_results"
+              class="enableAutoFocus"
+              method="post"
+              name="search"
+              tal:define="DateTime python:modules['DateTime'].DateTime">
+
+            <fieldset>
+                <legend i18n:translate="header_user_search_criteria">User Search Criteria</legend>
+
+                <div class="field">
+                    <label for="login"
+                           i18n:translate="label_name">Name</label>
+
+                    <div class="formHelp" i18n:translate="help_search_name">
+                        Find users whose login-names contain
+                    </div>
+
+                    <input type="text"
+                           id="login"
+                           name="login"
+                           size="50"
+                           />
+                </div>
+
+                <div class="field">
+                    <label for="email"
+                           i18n:translate="label_email">E-mail</label>
+
+                    <div class="formHelp" i18n:translate="help_search_email">
+                        Find users whose email-addresses contain
+                    </div>
+
+                    <input type="text"
+                           id="email"
+                           name="email"
+                           size="50"
+                           />
+                </div>
+
+               <div class="field">
+                    <label for="fullname"
+                           i18n:translate="label_fullname">Full Name</label>
+
+                    <div class="formHelp" i18n:translate="help_search_fullname">
+                    Return users with full names containing this value.
+                    </div>
+
+                    <input type="text"
+                           id="fullname"
+                           name="fullname"
+                           size="50"
+                           />
+                </div>
+
+                <div class="field"
+                     tal:condition="is_manager"
+                     tal:define="memberRoles request/roles|nothing;
+                                 portalRoles python:mtool.getPortalRoles()">
+
+                    <label
+                           i18n:translate="label_roles">Role(s)</label>
+
+                    <div class="formHelp" i18n:translate="help_search_roles">
+                        Find users with all of the selected roles.
+                    </div>
+
+                    <metal:role tal:repeat="role portalRoles">
+                        <input id="roles"
+                               name="roles:list"
+                               type="checkbox"
+                               class="noborder"
+                               tal:attributes="value role;
+                                               id string:roles_${repeat/role/number}"
+                               />
+                        <label for=""
+                               i18n:translate=""
+                               tal:attributes="for string:roles_${repeat/role/number}"
+                               tal:content="role"
+                               />
+                        <br />
+                    </metal:role>
+                </div>
+
+                <div class="formControls">
+                    <input class="smallwhitebutton"
+                           type="submit"
+                           name="submit"
+                           value="Search"
+                           i18n:attributes="value label_search;"
+                           />
+                </div>
+            </fieldset>
+        </form>
+    </div>
+
+    <div tal:condition="results"
+          tal:define="batch python:Batch(results, b_size, int(b_start), orphan=1)">
+        
+        <div class="usersearchresultslabel" i18n:translate="batch_x_items_members_matching_your_criteria">
+            <span i18n:name="number" tal:omit-tag="" tal:content="python:len(results)">234</span> members matching your criteria.
+        </div>
+
+        <div class="spacemembersavatars">
+            <metal:block tal:repeat="result batch">
+                <div class="avatarinfobox"
+                tal:define="userid result/userid | nothing;
+                            fullname result/fullname | nothing;
+                            home python:container.portal_membership.getHomeUrl(userid, verifyPermission=1);
+                            portrait python: here.portal_membership.getPersonalPortrait(userid);
+                            designation result/designation | nothing;
+                            authorEx python:modules['ubify.cyninv2theme'].getAuthorInfo(context, userid);                                                  
+                            "
+                >
+                    <a class="avatarlink imglink" tal:attributes="rel string:${portal_url}/userinfo?userid=${userid}">
+                        <img src="defaultUser.gif" alt="" border="0" tal:attributes="src portrait/absolute_url" />
+                        <tal:definitions tal:condition="authorEx">
+                            <div class="usersearchcardrow fullname"
+                                 tal:condition="fullname"
+                                 tal:define="fullname python:authorEx.getProperty('fullname') or userid;"
+                                 tal:content="fullname" />
+                            <div class="usersearchcardrow designation"
+                                 tal:condition="designation"
+                                 tal:define="designation python:authorEx.getProperty('designation');"
+                                 tal:content="designation" />
+                        </tal:definitions>
+                        <div class="usersearchcardrow fullname" tal:condition="not: authorEx" tal:content="userid" />
+                    </a>
+                </div>
+            </metal:block>
+        </div>
+
+        <!-- Navigation -->
+        <div class="visualClear" id="clear-space-before-navigation"><!-- --></div>
+
+        <div metal:use-macro="here/batch_macros/macros/navigation" />
+
+        <div class="visualClear" id="clear-space-after-navigation"><!-- --></div>
+
+    </div>
+
+    <div tal:condition="not: results">
+        <p><strong i18n:translate="description_no_results_found">No results were found.</strong></p>
+    </div>
+
+</div>
+
+</html>

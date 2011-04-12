@@ -1,0 +1,52 @@
+# $Id$
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2011-03-09 02:31+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
+"Last-Translator: Julio Monteiro <monteiro@incubadora.fapesp.br>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-Code: pt-br\n"
+"Language-Name: Brazillian Portuguese\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: cmfnotification\n"
+
+#. Default: "CMFNotification"
+#: ../profiles/default/controlpanel.xml
+msgid "cmfnotification_configlet_title"
+msgstr ""
+
+#. Default: "Subscribe"
+#: ../browser/templates/portlet.pt:67
+msgid "label_subscribe"
+msgstr "Assinar"
+
+#. Default: "Subscribe to the folder above"
+#: ../browser/templates/portlet.pt:61
+msgid "label_subscribe_to_parent"
+msgstr "Assinar a pasta acima"
+
+#. Default: "Unsubscribe"
+#: ../browser/templates/portlet.pt:23
+msgid "label_unsubscribe"
+msgstr "Cancelar assinatura"
+
+#. Default: "Mail subscription"
+#: ../browser/templates/portlet.pt:9
+msgid "notification_portlet_header"
+msgstr "Assinatura"
+
+#. Default: "You are subscribed to this item."
+#: ../browser/templates/portlet.pt:19
+msgid "subscribed"
+msgstr "Você está inscrito para receber notificações sobre esse item."
+
+#. Default: "You are indirectly subscribed to this item, because you are subscribed to one of its parent folder above."
+#: ../browser/templates/portlet.pt:34
+msgid "subscribed_above"
+msgstr "Você está indiretamente inscrito para receber notificações sobre esse item, por assinar uma das pastas acima."
+

@@ -1,0 +1,37 @@
+<metal:define use-macro="here/global_defines/macros/defines"></metal:define>
+<metal:define 
+    i18n:domain="plone"
+    tal:define="charset site_properties/default_charset | string:utf-8;
+                lt string:&lt;;gt string:&gt;;
+                dummy python:request.RESPONSE.setHeader('Content-Type','text/html;; charset=%s' % charset);
+                creator here/Creator;
+		creator_info python: mtool.getMemberInfo(creator);
+                creatorname python:creator_info and creator_info['fullname'] or creator;
+		creation_date here/creation_date;
+                typestool python:context.portal_types;
+                item_type options/discussed_item/portal_type;
+                itemtypetitle python:typestool[item_type].title;
+                authorid options/discussed_item/Creator;
+                author_info python:mtool.getMemberInfo(authorid);
+                authorname python:author_info and author_info['fullname'] or authorid;">
+From: <span tal:replace="portal/email_from_name"/> <span tal:replace="structure lt"/><span tal:replace="portal/email_from_address" /><span tal:replace="structure gt"/>
+Subject: <span i18n:translate="">[cyn.in Notification]</span> <span i18n:translate="">Comment on <span tal:replace="options/discussed_item/title" i18n:name="discussed_item_title" /> by <span tal:replace="creatorname" i18n:name="creator_name" /></span>
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+
+<span i18n:translate="">A new comment has been posted on the <span tal:replace="itemtypetitle" i18n:name="item_type_title" /> titled <a href="" tal:attributes="href string:${options/discussed_item/absolute_url}/view" tal:content="options/discussed_item/Title" i18n:name="discussed_item_title" /> which was created by <a href="" tal:attributes="href string:${here/portal_url}/Members/author/${authorid}" tal:content="authorname" i18n:name="author_name"></a></span>
+<br /><br />
+
+<span i18n:translate="">Comment subject: <span tal:replace="options/discussion_item/title" i18n:name="discussion_item_title" /></span><br /><br />
+
+<span i18n:translate="">Comment by: <a href="" tal:attributes="href string:${here/portal_url}/Members/author/${creator}" tal:content="creatorname" i18n:name="creator_name"></a> at <span tal:replace="python:here.toLocalizedTime(creation_date,long_format=1)" i18n:name="creation_date" /></span>
+<br /><br />
+
+<span i18n:translate="">Comment: <span tal:replace="options/discussion_item/text" i18n:name="discussion_item_text" /></span><br /><br />
+
+<span i18n:translate="">URL: <a tal:content="python:here.absolute_url().replace('/talkback/','/#')" tal:attributes="href python:here.absolute_url().replace('/talkback/','/#')" i18n:name="absolute_url_talkback" /></span>
+<br /><br />
+<hr />
+<span i18n:translate="">This message is automatically generated from <span tal:replace="portal/title" i18n:name="portal_title" />, a web application powered by cyn.in.<br />Read more about cyn.in at <a href="http://cyn.in" i18n:name="url_cynin">http://cyn.in</a>.</span>
+</metal:define>

@@ -1,0 +1,16 @@
+Installation Instructions
+=========================
+
+- Use the QuickInstaller tool or Plone's Control Panel 'Add/Remove
+  Products' feature to install Archetypes, PortalTransforms,
+  MimetypesRegistry and Calendaring
+
+- Create a Calendar
+
+- Create Events inside a Calendar
+
+- Click on one of the Action Icons for Month/Week/Day views
+
+- Alternatively, create a calendar in Apple's iCal application and use
+  it's publishing feature to create a Calendar filled with Events
+  straight into Plone

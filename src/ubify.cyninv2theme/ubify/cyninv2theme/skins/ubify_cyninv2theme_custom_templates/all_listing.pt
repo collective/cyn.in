@@ -1,0 +1,200 @@
+<tal:comment replace="nothing">
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see http://www.gnu.org/licenses/.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+</tal:comment>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="cynin">
+<body>
+    <div metal:fill-slot="contentwithnopadding">
+        <metal:main-macro define-macro="main"
+            tal:define="kssClassesView context/@@kss_field_decorator_view;
+                        getKssClasses nocall:kssClassesView/getKssClassesInlineEditable;
+                        templateId template/getId">
+            <div tal:replace="structure provider:plone.abovecontenttitle" />
+            <div tal:replace="structure provider:plone.belowcontenttitle" />
+            <div tal:replace="structure provider:plone.abovecontentbody" />
+            <div metal:define-macro="text-field-view"
+                 id="parent-fieldname-text" class="stx"
+                 tal:define="kss_class python:getKssClasses('text',
+                             templateId=templateId, macro='text-field-view');
+                             text here/getText|nothing"
+                 tal:condition="text"
+                 tal:attributes="class python:test(here.Format() in ('text/structured',
+                                'text/x-rst', ), 'stx' + kss_class, 'plain' + kss_class)">
+                <div metal:define-slot="inside" tal:replace="structure text">The body</div>
+            </div>
+            <metal:listingmacro define-macro="listing">
+                <tal:foldercontents define="contentFilter contentFilter|request/contentFilter|nothing;
+                                    limit_display limit_display|request/limit_display|nothing;
+                                    more_url more_url|request/more_url|string:folder_contents;
+                                    is_a_topic python:here.portal_type=='Topic';
+                                    folderContents folderContents|nothing;
+                                    use_view_action site_properties/typesUseViewActionInListings|python:();
+                                    over_limit python: limit_display and len(folderContents) > limit_display;
+                                    folderContents python: (over_limit and folderContents[:limit_display]) or folderContents;
+                                    batch folderContents;
+                                    show_about python:not isAnon or site_properties.allowAnonymousViewAbout;
+                                    passed_id passed_id|python:'';
+                                    allow_discussion_title python:(hasattr(site_properties,'allow_discussion_title') and getattr(site_properties,'allow_discussion_title') == True) or False;">
+                    <tal:listing condition="folderContents">
+                        <div id="comcynapsecyninlisting">
+                            <tal:entry tal:repeat="item folderContents">
+                                <tal:entryrepeater tal:define="item_url item/getURL|item/absolute_url;
+                                                       item_id item/getId|item/id;
+                                                       item_title_or_id item/pretty_title_or_id;
+                                                       item_description item/Description | nothing;
+                                                       item_type item/portal_type;
+                                                       item_type_title item/Type;
+                                                       lastchangedate item/lastchangedate;
+                                                       nicedlastchangedate python: item.toLocalizedTime(item.lastchangedate,True);
+                                                       lastchangeperformer item/lastchangeperformer;
+                                                       lastchangeaction item/lastchangeaction;
+                                                       lastchangeaction python:modules['ubify.coretypes'].get_action_mapped(lastchangeaction);
+                                                       item_icon python:plone_view.getIcon(item);
+                                                       item_type_class python:'contenttype-' + context.plone_utils.normalizeString(item_type);
+                                                       item_creator item/Creator;
+                                                       portal_url here/portal_url;
+                                                       item_index repeat/item/index;
+                                                       item_index string:${passed_id}${item_index};
+                                                       item_uid item/UID | nothing;
+                                ">
+                                <div class="listitemrowcontainer" tal:attributes="rel item_index;id string:listitemrowcontainer${item_index}">
+                                    <tal:listitem metal:define-macro="listitem">
+                                        <div class="listitemtitlerow subcolumns">
+                                            <div tal:attributes="class string:$item_type_class listitemtitle c62l">
+                                                <div>
+                                                    <a class="comcynapseinlinediscusslink smallwhitebutton"
+                                                       tal:attributes="href python:here.evalURL(item_type,use_view_action,item_url) + '#discussion';
+                                                       rel item_index;kssattr:openviewid string:listitemdiscussrow${item_index};
+                                                       kssattr:uid item_uid;kssattr:url string:${item_url};
+                                                       kssattr:state string:closed;
+                                                       id string:listitemdiscusslinktop${item_index};"
+                                                       i18n:translate=""
+                                                       tal:condition="python:item_type not in ('ContentSpace','Topic','SmartView','Folder','Space')">+</a>
+                                                        <tal:itemimage tal:condition="python: item_type not in ('File','Video','Audio')"
+                                                            tal:define="isInBlogView isInBlogView|python:False">
+                                                            <img class="itemtypeicon" tal:attributes="src item_icon/url;" tal:condition="not:isInBlogView"/>
+                                                        </tal:itemimage>
+                                                        <img class="itemtypeicon" src="" tal:condition="python: item_type == 'File'" tal:attributes="src string:${portal_url}/file_icon.png"/>
+                                                        <img class="itemtypeicon" src="" tal:condition="python: item_type == 'Video'" tal:attributes="src string:${portal_url}/icon-film.png"/>
+                                                        <img class="itemtypeicon" src="" tal:condition="python: item_type == 'Audio'" tal:attributes="src string:${portal_url}/icon-sound.png"/>
+                                                        <tal:titlemacro metal:use-macro="here/title_list_macro/macros/title_macro" />
+                                                        <div class="listitemdiscussrow" tal:attributes="id string:listitemdiscussrow${item_index}">
+                                                        </div>
+                                                </div>
+                                            </div>
+                                            <div class="lastchangeblock c38r">
+                                                <div class="lastchangeblockareaholder">
+                                                    <div class="listitemvoteholder">
+                                                        <tal:ratingmacro metal:use-macro="here/rating_macros/macros/voting_result_mini" />
+                                                    </div>
+                                                    <tal:name tal:define="author python:context.portal_membership.getMemberInfo(lastchangeperformer)">
+                                                        <div class="listitemlastchangeavatar"><a tal:attributes="rel string:${portal_url}/userinfo?userid=${lastchangeperformer}"
+                                                               tal:omit-tag="not:author" class="itemauthor avatarlink"><img class="avatarlink"
+                                                                 tal:attributes="src python: item.portal_membership.getPersonalPortrait(lastchangeperformer).absolute_url();
+                                                                 rel string:${portal_url}/userinfo?userid=${lastchangeperformer}" /></a></div>
+                                                        <div class="lastchangeblocktextitem listitemlastchangeperformer" i18n:translate="text_last_action_list">
+                                                            Last <tal:block  i18n:name="lastchangeaction" tal:replace="python: lastchangeaction" /> by
+                                                            <a tal:attributes="rel string:${portal_url}/userinfo?userid=${lastchangeperformer}"
+                                                               tal:omit-tag="not:author" class="itemauthor avatarlink" i18n:name="userlink">
+                                                               <tal:block tal:replace="lastchangeperformer" />
+                                                            </a>
+                                                        </div>
+                                                        <div class="lastchangeblocktextitem listitemlastchangedate" tal:attributes="title string:${nicedlastchangedate}" tal:content="nicedlastchangedate"/>
+                                                        <div class="listitemdetailrow" tal:attributes="id string:listitemdetail${item_index}">
+                                                        </div>
+                                                    </tal:name>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </tal:listitem>
+                                </div>
+                            </tal:entryrepeater>
+                        </tal:entry>
+                        <tal:listfetchcomments metal:define-macro="fetchcommentsform">
+                            <form name="frmListerTimeout" method="GET">
+                                <div class="ksslistrefresh">
+                                    <input type="hidden" name="comcynapsecyninfetchUID" id="comcynapsecyninfetchUID" tal:attributes="value python:'0'" />
+                                    <input type="hidden" name="comcynapsecyninfetchindex" id="comcynapsecyninfetchindex" tal:attributes="value python:-1" />
+                                    <input type="hidden" name="comcynapseviewtype" id="comcynapseviewtype" tal:attributes="value string:listview" />
+                                    <input type="hidden" name="comcynapselasttimestamp" id="comcynapselasttimestamp" tal:attributes="value python:'0'" />
+                                    <input type="hidden" name="comcynapsecommentcount" id="comcynapsecommentcount" tal:attributes="value python:0" />
+                                    <input type="hidden" name="comcynapselastcommentid" id="comcynapselastcommentid" tal:attributes="value python:0" />
+                                </div>
+                            </form>
+                        </tal:listfetchcomments>
+                        </div>
+                        <!-- Navigation -->
+                        <tal:block>
+                            <div metal:use-macro="here/batch_macros/macros/navigation" />
+                        </tal:block>
+                    </tal:listing>
+                    <tal:macro tal:condition="folderContents" metal:use-macro="here/belowcontent_macro/macros/space_footer_actions" />
+
+                    <metal:empty metal:define-slot="no_items_in_listing">
+                        <p class="discreet"
+                           tal:condition="python:not is_a_topic and not folderContents"
+                           i18n:translate="description_no_items_in_folder">
+                            There are currently no items in this folder.
+                        </p>
+
+                        <p class="discreet"
+                            tal:condition="python:is_a_topic and not folderContents and here.listCriteria()"
+                            i18n:domain="cynin"
+                            i18n:translate="description_no_items_in_topic">
+                             There are currently no results for this search.
+                         </p>
+
+                         <p class="discreet"
+                            tal:condition="python: is_a_topic and not here.listCriteria()"
+                            i18n:domain="cynin"
+                            i18n:translate="description_no_criteria_in_topic">
+                             There are currently no criteria on which to search.
+                             Please add them using the 'criteria' tab.
+                         </p>
+                    </metal:empty>
+                </tal:foldercontents>
+            </metal:listingmacro>
+        </metal:main-macro>
+    </div>
+</body>
+</html>

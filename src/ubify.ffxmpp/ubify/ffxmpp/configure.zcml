@@ -1,0 +1,21 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:five="http://namespaces.zope.org/five"
+    xmlns:cmf="http://namespaces.zope.org/cmf"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="ubify.ffxmpp">
+
+  <five:registerPackage package="." initialize=".initialize" />
+  <include package=".browser" />
+  <include file="skins.zcml" />
+  <include file="profiles.zcml" />
+
+    <browser:page
+      for="*"
+      name="ffxmppsupport"
+      class=".ffxmppsupport.FFXMPPSupport"
+      permission="cmf.SetOwnPassword"
+      allowed_interface=".interfaces.IFFXMPPSupport"
+      />
+
+</configure>

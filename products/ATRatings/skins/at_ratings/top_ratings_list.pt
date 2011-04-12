@@ -1,0 +1,164 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      lang="en"
+      i18n:domain="at_ratings"
+      metal:use-macro="here/main_template/macros/master">
+  
+  <head>
+    <metal:block fill-slot="top_slot">
+      <tal:insert tal:replace="nothing"
+                  tal:define="dummy python:request.set('disable_border', 1)" />
+    </metal:block>
+  </head>
+  
+  <body>
+    
+    <div metal:fill-slot="main">
+      <metal:main-macro define-macro="main"
+                        tal:define="rtool here/portal_ratings;
+                                    rtypes rtool/allowed_rating_types;
+                                    brains python: here.portal_catalog.searchResults(portal_type=rtypes, review_state='published');
+                                    item_count python: len(brains);
+                                    results python: rtool.getTopRatings(brains, item_count);
+                                    Batch python:modules['Products.CMFPlone'].Batch;
+                                    b_start python: 0;
+                                    b_start request/b_start | b_start;
+                                    b_size b_size|request/b_size|python:100;
+                                    batch python:Batch(results, int(b_size), int(b_start), orphan=1);
+                                    normalizeString nocall:here/plone_utils/normalizeString;
+                                    ">    
+          
+          <div metal:use-macro="here/document_actions/macros/document_actions">
+            Document actions (print, sendto etc)
+          </div>
+          
+          <h1 i18n:translate="heading_top_rating" class="documentFirstHeading">
+            Top Rated Listing
+          </h1>
+          
+          <p class="discreet"
+             tal:condition="not: batch"
+             i18n:translate="description_no_rating_items">
+            This portal has no visible items with any rating value.
+          </p>
+
+          <div tal:condition="batch">
+            
+            <div metal:use-macro="here/batch_macros/macros/navigation" />
+            
+            <table id="sortable"
+                   class="listing"
+                   summary="Content listing"
+                   style="width: 100%"
+                   >
+              <thead>
+                <tr>
+                  <th class="nosort"
+                      >&nbsp;<tal:title i18n:translate="listingheader_title"
+                      >Title</tal:title>&nbsp;</th>
+                  <th class="nosort"
+                      >&nbsp;<tal:modified i18n:translate="listingheader_modified"
+                      >Modified</tal:modified>&nbsp;</th>
+                  <th class="nosort"
+                      >&nbsp;<tal:author i18n:translate="listingheader_author"
+                      >Author</tal:author>&nbsp;</th>
+                  <th class="nosort"
+                      >&nbsp;<tal:rating i18n:translate="listingheader_rating"
+                      >Rating</tal:rating>&nbsp;</th>
+                </tr>
+              </thead>
+              
+              <tbody>
+                <tal:items tal:repeat="obj batch">
+                  <tr tal:define="item                 python: obj[1].getObject();
+                                  item_rating          python: obj[0];
+                                  oddrow               repeat/obj/odd;
+                                  item_url             item/absolute_url;
+                                  item_id              item/getId;
+                                  item_title_or_id     item/pretty_title_or_id;
+                                  item_description     item/Description;
+                                  item_type            item/portal_type;
+                                  item_modified        item/ModificationDate;
+                                  item_type_class      python:'contenttype-' + normalizeString(item_type);
+                                  item_wf_state        item/review_state|python: wtool.getInfoFor(item, 'review_state', '');
+                                  item_state_title     python:wtool.getTitleForStateOnType(item_wf_state, item_type);
+                                  item_wf_state_class  python:'state-' + normalizeString(item_wf_state);
+                                  item_uid             item/UID;
+                                  item_creator         item/Creator;
+                                  avg                  python:rtool.getRatingMean(item_uid);
+                                  total_count          python:rtool.getRatingCount(item_uid);
+                                  star_icon            string:$portal_url/small_yellow_star.gif;
+                                  blank_star_icon      string:$portal_url/small_gray_star.gif;"
+                    tal:attributes="class python:test(oddrow, 'even', 'odd')" >
+                    
+                    <td>
+                      <span tal:attributes="class item_type_class">
+                        <a href="#" tal:attributes="href  item_url;
+                                                    title string: ${item_type}: ${item_description};
+                                                    class string:$item_wf_state_class visualIconPadding;">
+                          <strong>
+                            <span tal:content="item_title_or_id">
+                              <tal:comment replace="nothing">Item Title</tal:comment>
+                            </span>
+                          </strong>
+                        </a>
+                      </span>
+                      
+                      <span class="state-expired"
+                            tal:condition="python:portal.isExpired(item)"
+                            i18n:translate="time_expired">
+                        expired
+                      </span>
+                    </td>
+
+                    <td tal:content="python:here.toLocalizedTime(item_modified, long_format=1)"
+                        tal:attributes="class item_wf_state_class">
+                      <tal:comment replace="nothing">08/19/2001 03:01 AM</tal:comment>
+                    </td>
+                    
+                    <td tal:condition="item_creator"
+                        tal:define="author python:mtool.getMemberInfo(item_creator)">
+                      <a href="#"
+                         tal:attributes="href string:${portal_url}/author/${item_creator}"
+                         tal:content="python:author and author['fullname'] or item_creator"
+                         tal:omit-tag="not:author">
+                        <tal:comment replace="nothing">Bob Dobalina</tal:comment>
+                      </a>
+                    </td>
+
+                    <td style="text-align: left; white-space: nowrap">
+                      <tal:stars>
+
+                        <div>
+                          <img tal:attributes="src python:test(avg &lt; 1, blank_star_icon, star_icon);"
+                          /><img tal:attributes="src python:test(avg &lt; 2, blank_star_icon, star_icon);"
+                          /><img tal:attributes="src python:test(avg &lt; 3, blank_star_icon, star_icon);"
+                          /><img tal:attributes="src python:test(avg &lt; 4, blank_star_icon, star_icon);"
+                          /><img tal:attributes="src python:test(avg &lt; 5, blank_star_icon, star_icon);" /> 
+                          <br />
+
+                          <span i18n:translate="votes_count"
+                                tal:condition="total_count">
+                            votes:&nbsp;<span i18n:name="total_count" tal:replace="total_count"/>
+                          </span>
+
+                          <br />
+                          <span i18n:translate="rating_value"
+                                tal:condition="total_count">
+                            rating:
+                          </span>
+                          <span tal:content="structure python:here.translate('rating_%d'%item_rating, domain='at_ratings')"/>
+
+                        </div>
+                      </tal:stars>
+                    </td>
+                  </tr>
+                </tal:items>
+              </tbody>
+            </table>
+            <div metal:use-macro="here/batch_macros/macros/navigation" />
+          </div>
+          
+        </metal:main-macro>
+      </div>
+    </body>
+  </html>

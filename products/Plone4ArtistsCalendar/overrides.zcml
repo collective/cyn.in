@@ -1,0 +1,6 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope">
+
+  <includeOverrides package="plone.app.form" file="overrides.zcml" />
+  
+</configure>

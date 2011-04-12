@@ -1,0 +1,112 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      metal:use-macro="context/@@standard_macros/page">
+<head>
+</head>
+
+<body>
+<div metal:fill-slot="body">
+
+<div metal:define-macro="form">
+
+<form action="." metal:define-macro="master"
+      tal:attributes="action request/URL" method="post"
+      class="edit-form" enctype="multipart/form-data"
+      id="zc.page.browser_form">
+
+<div id="viewspace" metal:define-slot="viewspace">
+
+  <h1  i18n:translate=""
+       tal:condition="view/label"
+       tal:content="view/label"
+       metal:define-slot="heading">
+       Do something</h1>
+
+  <p tal:content="view/description|nothing"><tal:comment replace="nothing">Description</tal:comment></p>
+
+  <metal:block define-macro="header">
+
+    <div class="form-status"
+       tal:define="status view/status"
+       tal:condition="status">
+
+      <div class="summary"
+           i18n:translate=""
+           tal:content="view/status">
+        Form status summary
+      </div>
+
+      <ul id="formlib-errors" class="errors" tal:condition="view/errors">
+         <li tal:repeat="error view/error_views">
+            <span tal:replace="error">Error Type</span>
+         </li>
+      </ul>
+    </div>
+
+  </metal:block>
+
+  <div metal:define-slot="extra_info" tal:replace="nothing">
+  </div>
+  <div metal:define-slot="extra_top" tal:replace="nothing">
+  </div>
+
+  <fieldset metal:define-slot="formbody">
+    <legend tal:define="form_name view/form_name|nothing"
+            tal:condition="form_name"
+            tal:content="form_name">Form name</legend>
+  <tal:block tal:repeat="widget view/widgets">
+    <div class="field"
+         tal:define="description widget/hint;
+                     error widget/error"
+         tal:attributes="class python:'field'+(error and ' error' or '')">
+          <label tal:attributes="for widget/name">
+            <span i18n:translate=""
+                  tal:content="widget/label">label</span>
+          </label>
+          <span class="fieldRequired" title="Required" tal:condition="widget/required" i18n:attributes="title;" i18n:translate="">
+            (Required)
+          </span>
+          
+          <div class="formHelp"
+               i18n:translate=""
+               tal:content="description"
+               tal:condition="description"
+               >field description</div>
+          <div tal:condition="error" tal:content="error">
+            The Error
+          </div>
+          <div class="widget" tal:content="structure widget">
+          <input type="text" /></div>
+            <!-- TODO Put this back, the Zope3 way.
+            <img src="alert.gif" alt="Error"
+            tal:replace="structure context/alert.gif" />
+            -->
+    </div>
+</tal:block>
+
+  <metal:block define-slot="extra_bottom" />
+  <metal:block define-slot="above_buttons" />
+<div id="actionsView">
+  <span class="actionButtons"
+        tal:condition="view/availableActions"
+        metal:define-slot="bottom_buttons">
+    <input tal:repeat="action view/actions"
+           tal:replace="structure action/render"
+           />
+  </span>
+</div>
+  </fieldset>
+</div>
+</form>
+
+<script type="text/javascript"
+    tal:define="extra_script view/extra_script | nothing"
+    tal:condition="extra_script"
+    tal:content="structure extra_script" />
+
+
+</div>
+
+</div></body></html>

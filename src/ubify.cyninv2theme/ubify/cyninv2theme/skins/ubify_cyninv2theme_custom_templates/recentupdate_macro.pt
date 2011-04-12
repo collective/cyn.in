@@ -1,0 +1,123 @@
+<tal:comment replace="nothing">
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see http://www.gnu.org/licenses/.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+</tal:comment>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      i18n:domain="cynin">
+<body>
+    <div metal:define-macro="recentupdate" tal:attributes="class item_class"
+        tal:define="item_class string:recentupdateitem;
+                    item_class python:test(statusmessageid <> None and item_uid == statusmessageid,item_class + ' latestmessage', item_class);">
+        <tal:definitions tal:define="author python:context.portal_membership.getMemberInfo(lastchangeperformer);locshowitemicon showitemicon| python: True">
+            <div class="recentupdateitemtitlerow" class="recentupdateitem">
+                <img tal:condition="python: item_type not in ('File','Video','Audio') and locshowitemicon" tal:attributes="src item_icon/url;"/>
+                <img src="" tal:condition="python: item_type == 'File'" tal:attributes="src string:${portal_url}/file_icon.png"/>
+                <img src="" tal:condition="python: item_type == 'Video'" tal:attributes="src string:${portal_url}/icon-film.png"/>
+                <img src="" tal:condition="python: item_type == 'Audio'" tal:attributes="src string:${portal_url}/icon-sound.png"/>
+                <a href="#" tal:attributes="href python:here.evalURL(item_type,use_view_action,item_url);
+                        class string:${item_wf_state_class} url" tal:content="item_title_or_id" />
+            </div>
+            <tal:translate>
+                <div class="recentupdateitemauthorrow" tal:condition="not: showonlydate|nothing" i18n:translate="text_last_action_created">
+                    Last <tal:block tal:replace="python: lastchangeaction" i18n:name="lastchangeaction" /> by
+                    <a tal:attributes="rel string:${portal_url}/userinfo?userid=${lastchangeperformer}"
+                       tal:omit-tag="not:author" class="itemauthor avatarlink">
+                       <tal:block tal:content="python:lastchangeperformer" i18n:name="userlink"/>
+                    </a>
+                    <span class="" tal:attributes="title string:${nicedlastchangedate}" tal:content="nicedlastchangedate" i18n:name="created"/>
+                </div>
+                <div class="recentupdateitemauthorrow" tal:condition="showonlydate|python:False">
+                    <span class="" tal:attributes="title string:${nicedcreateddate}" tal:content="nicedcreateddate" />
+                </div>
+            </tal:translate>
+        </tal:definitions>
+    </div>
+
+    <metal:listingmacro metal:define-macro="listing">
+        <tal:listing condition="folderContents" tal:define="
+            use_view_action here/portal_properties/site_properties/typesUseViewActionInListings|python:();statusmessageid statusmessageid|nothing;">
+            <div class="recentupdateitemsblock">
+            <tal:entry tal:repeat="item folderContents">
+                <tal:entryrepeater tal:define="item_url item/getURL|item/absolute_url;
+                                                item_id item/getId|item/id;
+                                                item_title_or_id item/pretty_title_or_id;
+                                                item_description item/Description | nothing;
+                                                item_type item/portal_type;
+                                                item_type_title item/Type;
+                                                lastchangedate item/lastchangedate;
+                                                nicedlastchangedate python: item.toLocalizedTime(item.lastchangedate,True);
+                                                lastchangeperformer item/lastchangeperformer;
+                                                lastchangeaction item/lastchangeaction;
+                                                lastchangeaction python:modules['ubify.coretypes'].get_action_mapped(lastchangeaction);
+                                                item_modified item/ModificationDate;
+                                                item_created item/CreationDate;
+                                                nicedcreateddate python: item.toLocalizedTime(item_created,True);
+                                                item_icon python:plone_view.getIcon(item);
+                                                item_type_class python:'contenttype-' + context.plone_utils.normalizeString(item_type);
+                                                item_wf_state item/review_state|python: context.portal_workflow.getInfoFor(item, 'review_state', '');
+                                                item_wf_state_class python:'state-' + context.plone_utils.normalizeString(item_wf_state);
+                                                item_creator item/Creator;
+                                                item_modifiedby python:modules['ubify.viewlets.utils'].getObjectModifiedBy(item);
+                                                item_wf_state_title_desc python:modules['ubify.cyninv2theme'].getWorkflowStateTitle(item);
+                                                item_wf_state_title python:item_wf_state_title_desc[0];
+                                                item_wf_state_desc python:item_wf_state_title_desc[1];
+                                                item_start item/start/ISO|item/StartDate|nothing;
+                                                item_end item/end/ISO|item/EndDate|nothing;
+                                                portal_url here/portal_url;
+                                                full_item python:item.getObject();
+                                                comment_count python:here.getcommentcount(full_item);
+                                                item_index repeat/item/index;
+                                                item_uid item/UID | nothing;
+                                                ">
+                        <div metal:use-macro="context/recentupdate_macro/macros/recentupdate"/>
+                </tal:entryrepeater>
+            </tal:entry>
+            </div>
+        </tal:listing>
+        <metal:empty metal:define-slot="no_items_in_listing">
+            <p class="discreet"
+               tal:condition="not: folderContents" i18n:translate="text_no_recent_updates">
+                There are no recent updates.
+            </p>
+        </metal:empty>
+    </metal:listingmacro>
+</body>
+</html>

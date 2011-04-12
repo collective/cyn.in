@@ -1,0 +1,239 @@
+<metal:page define-macro="master">
+<metal:doctype define-slot="doctype"><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"></metal:doctype>
+  <tal:comment replace="nothing">
+  cyn.in is an open source Collaborative Knowledge Management Appliance that
+  enables teams to seamlessly work together on files, documents and content in
+  a secure central environment.
+
+  cyn.in v2 an open source appliance is distributed under the GPL v3 license
+  along with commercial support options.
+
+  cyn.in is a Cynapse Invention.
+
+  Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+  This program is free software: you can redistribute it and/or modify it under
+  the terms of the GNU General Public License as published by the Free Software
+  Foundation, either version 3 of the License, or any later version and observe
+  the Additional Terms applicable to this program and must display appropriate
+  legal notices. In accordance with Section 7(b) of the GNU General Public
+  License version 3, these Appropriate Legal Notices must retain the display of
+  the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+  received a copy of the detailed Additional Terms License with this program.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+  Public License for more details.
+
+  You should have received a copy of the GNU General Public License along with
+  this program.  If not, see http://www.gnu.org/licenses/.
+
+  You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+  For any queries regarding the licensing, please send your mails to
+   legal@cynapse.com
+
+  You can also contact Cynapse at:
+  802, Building No. 1,
+  Dheeraj Sagar, Malad(W)
+  Mumbai-400064, India
+  </tal:comment>
+  <metal:block define-slot="top_slot" />
+  <metal:block use-macro="here/global_defines/macros/defines" />
+  <html xmlns="http://www.w3.org/1999/xhtml"
+        xml:lang="en"
+        lang="en"
+        tal:define="lang language"
+        tal:attributes="lang lang;
+                      xml:lang lang" i18n:domain="cynin">
+    <tal:cache tal:define="charset site_properties/default_charset|string:utf-8">
+      <metal:cache use-macro="here/global_cache_settings/macros/cacheheaders">
+        Get the global cache headers located in global_cache_settings.
+      </metal:cache>
+    </tal:cache>
+    <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7,chrome=1" />
+      <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"
+            tal:define="charset site_properties/default_charset|string:utf-8"
+            tal:attributes="content string:text/html;;charset=${charset}" />
+      <metal:baseslot define-slot="base">
+      <base tal:attributes="href here/renderBase" /><!--[if lt IE 7]></base><![endif]-->
+      </metal:baseslot>
+      <meta name="generator" content="cyn.in - http://cyn.in" />
+      <div tal:replace="structure provider:plone.htmlhead" />
+      <meta tal:define="metatags python:putils.listMetaTags(here).items()"
+            tal:condition="metatags"
+            tal:repeat="keyval metatags"
+            tal:attributes="name python:keyval[0];
+                          content python:keyval[1];" />
+      <!-- Internet Explorer CSS Fixes -->
+      <tal:iefixstart replace="structure string:&lt;!--[if IE]&gt;" />
+        <style type="text/css" media="all" tal:condition="exists: portal/yamliehacks.css"
+               tal:content="string:@import url($portal_url/yamliehacks.css);">
+            </style>
+        <style type="text/css" media="all" tal:condition="exists: portal/IEFixes.css"
+               tal:content="string:@import url($portal_url/IEFixes.css);">
+        </style>
+        <script type="text/javascript" tal:attributes="src string:${portal_url}/excanvas-compressed.js"></script>
+        <script type="text/javascript" tal:attributes="src string:${portal_url}/jquery.bgiframe.min.js"></script>
+      <tal:iefixend replace="structure string:&lt;![endif]--&gt;" />
+      <tal:iefixstart replace="structure string:&lt;!--[if lte IE 6]&gt;" />
+        <script type="text/javascript">location.href="/browser-not-supported"</script>
+      <tal:iefixend replace="structure string:&lt;![endif]--&gt;" />
+      <link tal:replace="structure provider:plone.htmlhead.links" />
+      <!-- Disable IE6 image toolbar -->
+      <meta http-equiv="imagetoolbar" content="no" />
+      <tal:comment replace="nothing"> A slot where you can insert elements in the header from a template </tal:comment>
+      <metal:headslot define-slot="head_slot" />
+      <tal:comment replace="nothing"> A slot where you can insert CSS in the header from a template </tal:comment>
+      <metal:styleslot define-slot="style_slot" />
+      <tal:comment replace="nothing"> This is deprecated, please use style_slot instead. </tal:comment>
+      <metal:cssslot define-slot="css_slot" />
+      <tal:comment replace="nothing"> A slot where you can insert javascript in the header from a template </tal:comment>
+      <metal:javascriptslot define-slot="javascript_head_slot" />
+
+    <tal:block tal:replace="structure string:<script type='text/javascript'>" />
+    <tal:block tal:replace="structure string:portal_url = '${portal_url}';" />
+    <tal:block tal:replace="structure string:</script>" />
+
+    </head>
+    <body name="top" tal:attributes="class string:${here/getSectionFromURL} template-${template/id};
+                        dir python:test(isRTL, 'rtl', 'ltr')">
+      <metal:block define-slot="auth_slot">
+        <tal:conditional tal:define="islicensed python: modules['ubify.cyninv2theme'].licenseCheck(request,context)" tal:condition="islicensed">
+           <tal:block metal:use-macro="context/cynin_properties_macro/macros/custom_header" />
+           <div id="page_margins">
+              <div id="page" tal:define="isauthenticated python: modules['ubify.cyninv2theme'].checkHasPermission('Set own password', here)">
+                      <div id="header" class="hiddenStructure">
+                        <div id="topnav">
+                          <!-- start: skip link navigation -->
+                            <a class="skip purehashlink" name="contentstart" i18n:translate="link_skip_to_content" accesskey="2">Skip to the content</a><span class="hideme">.</span>
+                            <a class="skip purehashlink" name="navigationtreehome" i18n:translate="link_skip_to_navigation" accesskey="6">Skip to the navigation</a><span class="hideme">.</span>
+                          <!-- end: skip link navigation -->
+                        </div>
+                      </div>
+                    <div class="adderbar">
+                      <tal:conditional  tal:condition="isauthenticated"><tal:integration metal:use-macro="here/topbar_my_macro/macros/myblock"/></tal:conditional>
+                      <tal:conditional  tal:condition="python: not isauthenticated">
+                      <div class="myareanotloggedin" 
+                      tal:define="
+                      logout_url python:portal_url + '/logout';
+                      login_url python:portal_url + '/login_form';
+                      register_url python:portal_url + '/join_form';
+                      site_properties python:portal.portal_properties.site_properties;
+                      back_url python:request.get('URL');
+                      logout_url python:hasattr(site_properties,'logout_url') and site_properties.logout_url != '' and site_properties.logout_url or logout_url;
+                      login_url python:hasattr(site_properties,'login_url') and site_properties.login_url != '' and (site_properties.login_url % back_url) or login_url;
+                      register_url python:hasattr(site_properties,'register_url') and site_properties.register_url != '' and (site_properties.register_url % back_url) or register_url;
+                      selfregistrationenabled python: modules['ubify.cyninv2theme'].IsSelfRegistrationEnabled(here);
+                      "
+                      ><tal:block i18n:translate="please">Please </tal:block><a
+                      tal:attributes="href login_url"
+                      i18n:translate="login">login</a><tal:conditional tal:condition="selfregistrationenabled"><tal:block i18n:translate="or"> or </tal:block><a
+                      tal:attributes="href register_url"
+                      i18n:translate="register"
+                      >register</a></tal:conditional><tal:block i18n:translate="to_participate"> to participate.</tal:block></div></tal:conditional>
+                      <tal:block replace="structure provider:ubify.adddiscussionblock" />
+                    </div>
+                    <div id="viewlet-above-content" tal:content="structure provider:plone.abovecontent" />
+                    <div metal:use-macro="here/global_statusmessage/macros/portal_message">Portal status message</div>
+                    <div class="appviewbreadcrumb"><tal:block tal:condition="python:context.portal_type not in ('Plone Site','ContentRoot')" replace="structure provider:ubify.breadcrumbs_manager" /></div>
+                      <!-- end: main navigation -->
+                      <!-- begin: main content area #main -->
+                      <div id="main">                        
+                        <!-- begin: #col1 - first float column -->
+                        <div id="col1">
+                          <div id="col1_content" class="clearfix">
+                            <div id="sidenavigationlogoholder">
+                              <a class="sitelogolink" tal:attributes="href string:${portal_url}" accesskey="1"></a>
+                            </div>
+                            <div id="lsboxholder" class="portletWrapper">
+                                <div tal:define="item_class string:navTreeCurrentNode lsboxcurrentnode;isselected python:context.REQUEST.steps[-1] in ('search','search_form') or False"
+                                     tal:attributes="class python:isselected and item_class or ''">
+                                  <tal:block replace="structure provider:ubify.searchboxmanager" />
+                                </div>
+                            </div>
+                            <tal:block replace="structure provider:ubify.navigationmanager" />
+                            <tal:block replace="structure provider:ubify.myareablock" />
+                            <tal:nonanonymous tal:condition="isauthenticated"><tal:integration metal:use-macro="here/integrationblock_macro/macros/integration_block"/></tal:nonanonymous>
+                            <tal:lang replace="structure provider:ubify.languageselection" />
+                            <tal:help metal:use-macro="here/helpblock_macro/macros/help_block" />
+                          </div>
+                        </div>
+                        <!-- end: #col1 -->
+                        <!-- begin: #col3 static column -->
+                        <div id="col3" class="contentnopadding">
+                          <div id="col3_content" class="clearfix">
+                            <div id="portal-titlebar" tal:condition="python:context.portal_type in ('ContentRoot','MemberSpace','ContentSpace')">
+                                <div id="titlebar-row1" metal:define-slot="titlebar-row1">
+                                    <tal:titlemacro metal:define-macro="folderitemtitle">
+                                        <tal:block replace="structure provider:ubify.itemtitlemanager" />
+                                    </tal:titlemacro>
+                                </div>
+                                <tal:block replace="structure provider:ubify.applicationsmenu" />
+                                <metal:block define-slot="author_slot"></metal:block>
+                            </div>
+                            <div id="portal-titlebar" tal:condition="python:context.portal_type not in ('ContentRoot','MemberSpace','ContentSpace')">
+                                <div id="titlebar-row1" metal:define-slot="titlebar-row1">
+                                    <tal:titlemacro metal:define-macro="itemtitle">
+                                        <tal:block replace="structure provider:ubify.typetitle" />
+                                    </tal:titlemacro>
+                                    <tal:block replace="structure provider:ubify.itemtitlemanager" />
+                                </div>
+                                <div id="titlebar-row2">
+                                    <div class="actionmenuholder">
+                                      <tal:block replace="structure provider:ubify.contentactionsmanager" />
+                                    </div>
+                                    <div id="titlebarnavigationholder">
+                                        <tal:block replace="structure provider:ubify.contentviewsmanager"/>
+                                    </div>
+                                    <metal:block define-slot="author_slot">
+                                    </metal:block>
+                                </div>
+                            </div>
+                            <div class="maincontentarea">
+                            	<div class="hiddenStructure">
+                            		<a id="contentstart">.</a>
+                            	</div>
+                                <metal:block define-slot="contentwithnopadding"></metal:block>
+                                <div id="portal-content-block" tal:define="show_border context/@@plone/showEditableBorder" tal:attributes="class python:test(show_border,'documentEditable','')">
+                                    <metal:block define-slot="content">
+                                        <div metal:define-macro="content">
+                                          <a name="documentContent"></a>
+                                          <metal:slot metal:define-slot="body">
+                                            <div id="content" tal:omit-tag="not:context/@@plone_context_state/is_view_template">
+                                              <metal:header metal:define-slot="header" tal:content="nothing">Visual Header</metal:header>
+                                              <metal:bodytext metal:define-slot="main" tal:content="nothing">Page body text</metal:bodytext>
+                                            </div>
+                                          </metal:slot>
+                                          <metal:sub metal:define-slot="sub">
+                                          </metal:sub>
+                                          <span id="contentBottomLeft"></span>
+                                          <span id="contentBottomRight"></span>
+                                        </div>
+                                    </metal:block>
+                                </div>
+                            </div>
+                          </div>
+                          <div id="ie_clearing">&nbsp;</div>
+                          <!-- End: IE Column Clearing -->
+                        </div>
+                        <!-- end: #col3 -->
+                      </div>
+                      <!-- end: #main -->
+                      <!-- begin: #footer -->
+                      <div id="footer"><tal:block replace="structure provider:ubify.ubifycolophonmanager" /></div>
+                      <!-- end: #footer -->
+              </div>
+          </div>
+      <div id="kss-spinner">
+        <img tal:attributes="src string:${portal_url}/spinner-r-16.gif" alt="" />
+        <span id="kssloading" i18n:translate="label_kss_loading">Loading</span>
+      </div>
+      <tal:block metal:use-macro="context/cynin_properties_macro/macros/custom_footer" />
+        </tal:conditional>
+      </metal:block>
+      <tal:block replace="structure provider:ubify.seoprovider" />
+    </body>
+  </html>
+</metal:page>

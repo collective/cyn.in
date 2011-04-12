@@ -1,0 +1,21 @@
+<div tal:condition="view/data/omit_border"
+     tal:attributes="class string:portletStaticText ${view/css_class} maincontentholder"
+     tal:content="structure view/data/text" />
+<dl tal:condition="not:view/data/omit_border"
+    tal:attributes="class string:portlet portletStaticText ${view/css_class}"
+    i18n:domain="plone">
+
+<fieldset class="contentheaderlabel">
+<legend><tal:block tal:content="view/data/header" /></legend>
+</fieldset>
+           
+
+    <dd class="portletItem odd maincontentholder">
+        <div tal:replace="structure view/data/text" />
+    </dd>
+    
+<a tal:condition="view/has_link" class="recentportletxmore smallwhitebutton"
+              tal:attributes="href view/data/more_url"
+              >Details</a>
+<div class="portletFooter " tal:condition="view/has_footer" tal:content="view/data/footer" />
+</dl>

@@ -1,0 +1,73 @@
+0.2
+
+  - fixed and simplified top ratings and top countings algorithm.
+    [panjunyong]
+
+  - Added Jappenese translations
+
+  - simplified the rating macro, split it to 2 macros: rating_form and rating_result
+    [panjunyuong]
+
+  - enable ratings by default
+    [panjunyong]
+
+  - merged branche: lzdych-branche
+
+  - removed CMFContentPanels related code (moved to CMFContentPanels)
+    [panjunyong]
+
+  - Added brazilian portuguese i18n support
+    [ferri]
+
+  - remove document_byline.pt. you can add macro 'here/rating_macros/macros/portlet'
+    to your template.  
+    [panjunyong]
+
+  - RatingsFolderMixin uses folder properties now and supports aquire/enable/disable.
+    [panjunyong]
+
+  - Added a new RatingsFolderMixin to support disable/enable ratings/countings. Also
+    this makes the viewlets/portlets more clean.
+    [panjunyong]
+
+  - In ZODBStorage, _getObjectRatings will always create new reference in ZODB.
+    But I don't want that happen when use getXXX. Added new createFlag and make
+    that be controlled.
+    [panjunyong]
+
+  - Added 2 portlet to show top ratings and top countings. You can also 
+    disable/enable ratings/countings in the portlet if you have rights. 
+
+    You can added to plone's left_slots/right_slots as::
+
+      portal/path/to/your/folder/portlet_top_ratings
+      portal/path/to/your/folder/portlet_top_countings
+
+    Also there two CMFContentPanels compatible viewlets in viewlet_ratings.
+    [panjunyong]
+
+  - Added UID to portal_catalog's metadata. Also added 2 new method to 
+    fetch new top ratings/countings in some folder.
+    [panjunyong]
+
+  - You can custom 'allowed_rating_types' and
+    'allowed_couting_types' in portal_atratings to allow ratings/coutings for
+    specific content types.
+    [panjunyong]
+
+  - Added two basic interface to the rating tool: isRatingAllowedFor and 
+    isCountingAllowedFor. I need a policy based rating tool. Just like what 
+    PluggableDiscussion does.
+    [panjunyong]
+
+  - Added some UI for plone. It customized plone's document_by_line. 
+    Rating UI is copyed from zwiki.
+    [panjunyong]
+
+  - user who can rate must have permission: "ATRatings: Add rating"
+    [panjunyong]
+
+0.1
+
+  - the rating engine
+    [geoff]

@@ -1,0 +1,9 @@
+button.kupu-save:timeout
+{
+evt-timeout-delay: 60000;
+evt-timeout-repeat: True;
+action-server: savekupu;
+savekupu-text: currentFormVarFromKssAttr("atfieldname", true);
+savekupu-fieldname: kssAttr("atfieldname", true);
+}
+

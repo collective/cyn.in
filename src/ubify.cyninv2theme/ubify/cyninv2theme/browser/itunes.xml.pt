@@ -1,0 +1,49 @@
+<?xml version="1.0" ?>
+
+<rss version="2.0"
+     xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
+     xmlns:tal="http://xml.zope.org/namespaces/tal"
+     xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+     tal:define="feed python:context;
+                 results feed/getSortedFeedEntries"
+     i18n:domain="cynin">
+
+    <channel>
+
+        <title tal:content="feed/getTitle"><tal:comment replace="nothing">Title of page</tal:comment></title>
+        <link tal:content="feed/getWebURL"></link>
+        <description tal:content="feed/getDescription">
+        </description>
+
+        <generator i18n:translate="generator">basesyndication</generator>
+
+        <image>
+            <title tal:content="feed/getTitle"><tal:comment replace="nothing">Title of page</tal:comment></title>
+            <url tal:content="feed/getImageURL"></url>
+            <link tal:content="feed/getWebURL"></link>
+        </image>
+
+        <tal:repeat repeat="feedentry results">
+            <item>
+                <title type="plain" tal:content="feedentry/getTitle"><tal:comment replace="nothing">The Judy's - The Moo Song</tal:comment></title>
+                <itunes:author tal:condition="feedentry/getAuthor | nothing" tal:content="feedentry/getAuthor"><tal:comment replace="nothing">John Doe</tal:comment></itunes:author>
+                <itunes:summary tal:content="feedentry/getDescription"><tal:comment replace="nothing">All About Everything is a show about everything. Each week we dive into any subject known to man and talk about it as much as we can. Look for our Podcast in the iTunes Music Store</tal:comment></itunes:summary>
+                <description tal:content="feedentry/getDescription"><tal:comment replace="nothing">Description</tal:comment></description>
+                <guid tal:content="feedentry/getWebURL"></guid>
+                <link tal:content="feedentry/getWebURL"></link>
+                <author tal:condition="feedentry/getAuthor"
+                        tal:content="feedentry/getAuthor"></author>
+				<itunes:category text="category" tal:attributes="text python:', '.join(feedentry.getTags())"/>
+               	<pubDate tal:content="python:feedentry.getEffectiveDate().rfc822()"></pubDate>
+
+                <enclosure
+                    tal:define="enclosure feedentry/getEnclosure"
+                    tal:condition="python:enclosure is not None"
+                    tal:attributes="url enclosure/getURL;
+                                    length enclosure/getLength;
+                                    type enclosure/getType;" />
+            </item>
+        </tal:repeat>
+
+    </channel>
+</rss>

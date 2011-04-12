@@ -1,0 +1,265 @@
+Let's test that exporting a event with attendees works just
+fine. First step is creating a event:
+
+  >>> from DateTime import DateTime
+  >>> _ = self.portal.invokeFactory('Event', 'event1',
+  ...      attendees=('Foo <foo@bar.com>', 'Bar <bar@baz.com>'),
+  ...      location='Vienna',
+  ...      title='Plone Conference 2004',
+  ...      startDate=DateTime('2004-09-20 01:00:00 GMT+0'),
+  ...      endDate=DateTime('2004-09-24 04:00:00 GMT+0'))
+
+Now let's export it:
+
+  >>> print self.cal.exportCalendar(events=[self.portal.event1])
+  BEGIN:VCALENDAR
+  PRODID:-//Plone/NONSGML Calendaring//EN
+  VERSION:2.0
+  X-WR-CALNAME:Portal
+  BEGIN:VEVENT
+  ATTENDEE;CN=Foo:mailto:foo@bar.com
+  ATTENDEE;CN=Bar:mailto:bar@baz.com
+  DESCRIPTION:
+  DTEND:20040924T040000Z
+  DTSTAMP:...
+  DTSTART:20040920T010000Z
+  LOCATION:Vienna
+  STATUS:TENTATIVE
+  SUMMARY:Plone Conference 2004
+  UID:event1
+  END:VEVENT
+  END:VCALENDAR
+
+Using the CalendarMarshaller with the portal to export the event:
+
+  >>> from Products.Calendaring import CalendarMarshaller
+  >>> marshaller = CalendarMarshaller()
+  >>> print marshaller.marshall(self.portal)[2]
+  BEGIN:VCALENDAR
+  PRODID:-//Plone/NONSGML Calendaring//EN
+  VERSION:2.0
+  X-WR-CALNAME:Portal
+  BEGIN:VEVENT
+  ATTENDEE;CN=Foo:mailto:foo@bar.com
+  ATTENDEE;CN=Bar:mailto:bar@baz.com
+  DESCRIPTION:
+  DTEND:20040924T040000Z
+  DTSTAMP:...
+  DTSTART:20040920T010000Z
+  LOCATION:Vienna
+  STATUS:TENTATIVE
+  SUMMARY:Plone Conference 2004
+  UID:event1
+  END:VEVENT
+  END:VCALENDAR
+
+Using the EventMarshaller with the event:
+
+  >>> from Products.Calendaring import EventMarshaller
+  >>> marshaller = EventMarshaller()
+  >>> print marshaller.marshall(self.portal.event1)[2]
+  BEGIN:VCALENDAR
+  PRODID:-//Plone/NONSGML Calendaring//EN
+  VERSION:2.0
+  BEGIN:VEVENT
+  ATTENDEE;CN=Foo:mailto:foo@bar.com
+  ATTENDEE;CN=Bar:mailto:bar@baz.com
+  DESCRIPTION:
+  DTEND:20040924T040000Z
+  DTSTAMP:...
+  DTSTART:20040920T010000Z
+  LOCATION:Vienna
+  STATUS:TENTATIVE
+  SUMMARY:Plone Conference 2004
+  UID:event1
+  END:VEVENT
+  END:VCALENDAR
+
+  >>> def demarshall(marshaller, instance, data):
+  ...    m = marshaller()
+  ...    m.demarshall(instance, data)
+
+This will create a new event, because the UID doesn't match any
+existing object.
+
+  >>> demarshall(CalendarMarshaller, self.portal, r"""
+  ... BEGIN:VCALENDAR
+  ... PRODID:-//Plone/NONSGML Calendaring//EN
+  ... VERSION:2.0
+  ... BEGIN:VEVENT
+  ... UID:1445300814-1921707519-RID
+  ... SUMMARY:Plone Symposium
+  ... DESCRIPTION:Hosted by Enfold Systems
+  ... LOCATION:New Orleans
+  ... ATTENDEE;CN=Sidnei da Silva:mailto:sidnei@enfoldsystems.com
+  ... ATTENDEE;CN=Alan Runyan:mailto:alan@enfoldsystems.com
+  ... DTSTART:20050525T103000Z
+  ... DTEND:20050601T200000Z
+  ... STATUS:CONFIRMED
+  ... END:VEVENT
+  ... END:VCALENDAR
+  ... """)
+
+  >>> from Products.Calendaring import EventMarshaller
+  >>> from Products.Calendaring.marshaller import _generateId
+  >>> id = _generateId(uid='1445300814-1921707519-RID',
+  ...                  title='Plone Symposium',
+  ...                  context=self.portal)
+  >>> marshaller = EventMarshaller()
+  >>> print marshaller.marshall(self.portal[id])[2]
+  BEGIN:VCALENDAR
+  PRODID:-//Plone/NONSGML Calendaring//EN
+  VERSION:2.0
+  BEGIN:VEVENT
+  ATTENDEE;CN=Sidnei da Silva:mailto:sidnei@enfoldsystems.com
+  ATTENDEE;CN=Alan Runyan:mailto:alan@enfoldsystems.com
+  DESCRIPTION:Hosted by Enfold Systems
+  DTEND:20050601T200000Z
+  DTSTAMP:...
+  DTSTART:20050525T103000Z
+  LOCATION:New Orleans
+  STATUS:CONFIRMED
+  SUMMARY:Plone Symposium
+  UID:1445300814-1921707519-RID
+  END:VEVENT
+  END:VCALENDAR
+
+This will modify the existing event, because we are using the
+EventMarshaller on the object itself.
+
+  >>> 'event1' in self.portal.objectIds()
+  True
+
+  >>> demarshall(EventMarshaller, self.portal.event1, r"""
+  ... BEGIN:VCALENDAR
+  ... PRODID:-//Plone/NONSGML Calendaring//EN
+  ... VERSION:2.0
+  ... BEGIN:VEVENT
+  ... UID:2445300814-1921707519-RID
+  ... SUMMARY:Plone Symposium
+  ... DESCRIPTION:Hosted by Enfold Systems
+  ... LOCATION:New Orleans
+  ... URL;VALUE=URI:http://www.enfoldsystems.com
+  ... ATTENDEE;CN=Sidnei da Silva:mailto:sidnei@enfoldsystems.com
+  ... ATTENDEE;CN=Alan Runyan:mailto:alan@enfoldsystems.com
+  ... DTSTART:20050525T103000Z
+  ... DTEND:20050601T200000Z
+  ... STATUS:CONFIRMED
+  ... END:VEVENT
+  ... END:VCALENDAR
+  ... """)
+
+  >>> 'event1' in self.portal.objectIds()
+  True
+
+  >>> from Products.Calendaring import EventMarshaller
+  >>> marshaller = EventMarshaller()
+  >>> print marshaller.marshall(self.portal['event1'])[2]
+  BEGIN:VCALENDAR
+  PRODID:-//Plone/NONSGML Calendaring//EN
+  VERSION:2.0
+  BEGIN:VEVENT
+  ATTENDEE;CN=Sidnei da Silva:mailto:sidnei@enfoldsystems.com
+  ATTENDEE;CN=Alan Runyan:mailto:alan@enfoldsystems.com
+  DESCRIPTION:Hosted by Enfold Systems
+  DTEND:20050601T200000Z
+  DTSTAMP:...
+  DTSTART:20050525T103000Z
+  LOCATION:New Orleans
+  STATUS:CONFIRMED
+  SUMMARY:Plone Symposium
+  UID:2445300814-1921707519-RID
+  URL;VALUE=URI:http://www.enfoldsystems.com
+  END:VEVENT
+  END:VCALENDAR
+
+Tests for:
+[ 1339945 ] Exception when uploading calendar with UID with @ sign
+[ 1049703 ] Events with a single quote in their title break the import
+
+  >>> demarshall(CalendarMarshaller, self.portal, r"""
+  ... BEGIN:VCALENDAR
+  ... PRODID:-//Plone/NONSGML Calendaring//EN
+  ... VERSION:2.0
+  ... BEGIN:VEVENT
+  ... UID:1921707519@localhost
+  ... SUMMARY:Master Class: BILLY MARTIN - Clave' and World Rhythms
+  ... DESCRIPTION:
+  ... LOCATION:New Orleans
+  ... DTSTART:20050725T203000Z
+  ... DTEND:20050725T220000Z
+  ... STATUS:CONFIRMED
+  ... END:VEVENT
+  ... END:VCALENDAR
+  ... """)
+
+  >>> from Products.Calendaring import EventMarshaller
+  >>> from Products.Calendaring.marshaller import _generateId
+  >>> id = _generateId(uid='1921707519@localhost',
+  ...                  title=("Master Class: BILLY MARTIN - Clave' "
+  ...                         "and World Rhythms"),
+  ...                  context=self.portal)
+  >>> marshaller = EventMarshaller()
+  >>> print marshaller.marshall(self.portal[id])[2]
+  BEGIN:VCALENDAR
+  PRODID:-//Plone/NONSGML Calendaring//EN
+  VERSION:2.0
+  BEGIN:VEVENT
+  DESCRIPTION:
+  DTEND:20050725T220000Z
+  DTSTAMP:...
+  DTSTART:20050725T203000Z
+  LOCATION:New Orleans
+  STATUS:CONFIRMED
+  SUMMARY:Master Class: BILLY MARTIN - Clave' and World Rhythms
+  UID:1921707519@localhost
+  END:VEVENT
+  END:VCALENDAR
+
+Tests for iCal 'title' ('X-WR-CALNAME'):
+[ 1050190 ] Better handling of spaces in title when publishing from iCal
+[ 1048043 ] Subscribing from iCal doesn't get the title of the calendar
+
+  >>> _ = self.portal.invokeFactory('Folder', 'test-calendar')
+
+  >>> self.portal['test-calendar'].Title()
+  ''
+
+  >>> demarshall(CalendarMarshaller, self.portal['test-calendar'], r"""
+  ... BEGIN:VCALENDAR
+  ... PRODID:-//Plone/NONSGML Calendaring//EN
+  ... VERSION:2.0
+  ... X-WR-CALNAME:Between a Rock 'n a Hard Place
+  ... BEGIN:VEVENT
+  ... UID:1921707520@localhost
+  ... SUMMARY:Master Class: BILLY MARTIN - Clave' and World Rhythms
+  ... DESCRIPTION:
+  ... LOCATION:New Orleans
+  ... DTSTART:20050725T203000Z
+  ... DTEND:20050725T220000Z
+  ... STATUS:CONFIRMED
+  ... END:VEVENT
+  ... END:VCALENDAR
+  ... """)
+
+  >>> self.portal['test-calendar'].Title()
+  "Between a Rock 'n a Hard Place"
+
+  >>> from Products.Calendaring import CalendarMarshaller
+  >>> marshaller = CalendarMarshaller()
+  >>> print marshaller.marshall(self.portal['test-calendar'])[2]
+  BEGIN:VCALENDAR
+  PRODID:-//Plone/NONSGML Calendaring//EN
+  VERSION:2.0
+  X-WR-CALNAME:Between a Rock 'n a Hard Place
+  BEGIN:VEVENT
+  DESCRIPTION:
+  DTEND:20050725T220000Z
+  DTSTAMP:...
+  DTSTART:20050725T203000Z
+  LOCATION:New Orleans
+  STATUS:CONFIRMED
+  SUMMARY:Master Class: BILLY MARTIN - Clave' and World Rhythms
+  UID:1921707520@localhost
+  END:VEVENT
+  END:VCALENDAR

@@ -1,0 +1,66 @@
+<configure
+    xmlns="http://namespaces.zope.org/browser"
+    xmlns:zope="http://namespaces.zope.org/zope"
+    i18n_domain="Plone4Artists">
+      
+  <menuItem
+      menu="object_buttons"
+      for="p4a.calendar.interfaces.IPossibleCalendar"
+      title="Configure Calendar"
+      action="${object_url}/calendar-config.html"
+      filter="object/@@p4acalsupport/support_enabled"
+      permission="cmf.ModifyPortalContent"
+      />
+
+  <page
+      name="icalendar.ics"
+      for="p4a.calendar.interfaces.ICalendarEnhanced"
+      permission="zope2.View"
+      class=".icalendar.iCalendarView"
+      template="icalendar.pt"
+      allowed_interface=".icalendar.IiCalendarView"
+      />
+
+  <page
+      name="p4acalsupport"
+      for="*"
+      class=".support.Support"
+      permission="zope.Public"
+      allowed_interface="p4a.calendar.interfaces.IBasicCalendarSupport"
+      />
+  
+  <page
+      name="import_from_url"
+      for="p4a.calendar.interfaces.ICalendarEnhanced"
+      permission="cmf.ModifyPortalContent"
+      class=".icalendar.iCalendarView"
+      attribute="import_from_url"
+      />
+
+  <page
+      name="import_from_hcal"
+      for="p4a.calendar.interfaces.ICalendarEnhanced"
+      permission="cmf.ModifyPortalContent"
+      class=".icalendar.iCalendarView"
+      attribute="import_from_hcal"
+      />
+
+  <page
+      name="import.html"
+      for="p4a.calendar.interfaces.ICalendarEnhanced"
+      permission="zope2.View"
+      class=".icalendar.iCalendarView"
+      template="icalendar_import.pt"
+      allowed_interface=".icalendar.IiCalendarView"
+      />
+
+  <zope:adapter 
+        factory=".displays.CalendarDynamicViews"
+        />
+
+  <zope:adapter 
+        factory=".eventfilter.LocationFilter"
+        name="eventfilter"
+        />
+
+</configure>

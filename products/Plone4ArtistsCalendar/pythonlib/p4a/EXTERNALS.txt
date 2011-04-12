@@ -1,0 +1,9 @@
+# If you want to change externals, modify the relevant line in this
+# file. Afterwards, run:
+# svn propset svn:externals -F EXTERNALS.txt .
+
+common http://www.plone4artists.org/svn/projects/p4a.common/trunk/p4a/common
+z2utils http://www.plone4artists.org/svn/projects/p4a.z2utils/trunk/p4a/z2utils
+calendar http://www.plone4artists.org/svn/projects/p4a.calendar/trunk/p4a/calendar
+plonecalendar http://www.plone4artists.org/svn/projects/p4a.plonecalendar/trunk/p4a/plonecalendar
+subtyper http://www.plone4artists.org/svn/projects/p4a.subtyper/trunk/p4a/subtyper

@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<import-steps>
+  <import-step id="ubify.xmlrpc.various"
+               version="20080802-01"
+               handler="ubify.xmlrpc.setuphandlers.setupVarious"
+               title="Ubify XmlRPC product: miscellaneous import steps">
+    Various import steps that are not handled by GS import/export
+    handlers.
+  </import-step>
+</import-steps>

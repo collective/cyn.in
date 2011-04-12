@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<object name="portal_skins">
+  <object name="cmf_notification" meta_type="Filesystem Directory View"
+          directory="Products.CMFNotification:skins/cmf_notification"/>
+ 
+  <skin-path name="*">
+    <layer name="cmf_notification" insert-after="custom"/>
+ </skin-path>
+</object>

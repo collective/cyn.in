@@ -1,0 +1,826 @@
+<!--
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see <http://www.gnu.org/licenses/>.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+-->
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="cynin">
+
+<!--  +++++++++++++++++++++ Viewlet Managers Begin ++++++++++++++++++++++ -->
+   <browser:viewletManager
+        name="ubify.viewlets.manager_spaces_recent"
+        provides=".interfaces.ISpacesRecent"
+        permission="zope2.View"
+        class="plone.app.viewletmanager.manager.OrderedViewletManager"
+        />
+    <browser:viewletManager
+        name="ubify.viewlets.manager_site_home"
+        provides=".interfaces.ISiteHome"
+        permission="zope2.View"
+        class="plone.app.viewletmanager.manager.OrderedViewletManager"
+        />
+    <browser:viewletManager
+       name="ubify.viewlets.manager_fullview_mindmap"
+       provides=".interfaces.IFullViewMindMap"
+       permission="zope2.View"
+       class="plone.app.viewletmanager.manager.OrderedViewletManager"
+       />
+    <browser:viewletManager
+        name="ubify.allspacesmenumanager"
+        provides=".interfaces.IAllSpacesMenuManager"
+        permission="zope2.Public"
+        class="plone.app.viewletmanager.manager.OrderedViewletManager"
+        />
+    <browser:viewletManager
+        name="ubify.searchboxmanager"
+        provides=".interfaces.ISearchBoxManager"
+        permission="zope2.Public"
+        class="plone.app.viewletmanager.manager.OrderedViewletManager"
+        />
+    <browser:viewletManager
+        name="ubify.viewlets.manager_space_recentupdates"
+        provides=".interfaces.ISpaceRecentUpdates"
+        permission="zope2.View"
+        class="plone.app.viewletmanager.manager.OrderedViewletManager"
+        />
+    <browser:viewletManager
+        name="ubify.viewlets.manager_space_myupdates"
+        provides=".interfaces.ISpaceMyItems"
+        permission="zope2.View"
+        class="plone.app.viewletmanager.manager.OrderedViewletManager"
+        />
+   <browser:viewletManager
+        name="ubify.myubifymenumanager"
+        provides=".interfaces.IMyMenu"
+        permission="zope2.Public"
+        class="plone.app.viewletmanager.manager.OrderedViewletManager"
+        />
+
+   <browser:viewletManager
+        name="ubify.myavatarmanager"
+        provides=".interfaces.IMyAvatar"
+        permission="zope2.View"
+        class="plone.app.viewletmanager.manager.OrderedViewletManager"
+        />
+   <browser:viewletManager
+        name="ubify.space_icon_manager"
+        provides=".interfaces.ISpaceIcon"
+        permission="zope2.View"
+        class="plone.app.viewletmanager.manager.OrderedViewletManager"
+        />
+   <browser:viewletManager
+        name="ubify.space_name_manager"
+        provides=".interfaces.ISpaceName"
+        permission="zope2.View"
+        class="plone.app.viewletmanager.manager.OrderedViewletManager"
+        />
+   <browser:viewletManager
+        name="ubify.space_stats_manager"
+        provides=".interfaces.ISpaceStats"
+        permission="zope2.View"
+        class="plone.app.viewletmanager.manager.OrderedViewletManager"
+        />
+   <browser:viewletManager
+        name="ubify.breadcrumbs_manager"
+        provides=".interfaces.IBreadcrumbsManager"
+        permission="zope2.View"
+        class="plone.app.viewletmanager.manager.OrderedViewletManager"
+        />
+   <browser:viewletManager
+        name="ubify.itemtitlemanager"
+        provides=".interfaces.IItemtitleManager"
+        permission="zope2.View"
+        class="plone.app.viewletmanager.manager.OrderedViewletManager"
+        />
+   <browser:viewletManager
+        name="ubify.typetitle"
+        provides=".interfaces.ITypetitleManager"
+        permission="zope2.View"
+        class="plone.app.viewletmanager.manager.OrderedViewletManager"
+        />
+   <browser:viewletManager
+        name="ubify.addnewmenumanager"
+        provides=".interfaces.IAddNewMenuManager"
+        permission="zope2.View"
+        class="plone.app.viewletmanager.manager.OrderedViewletManager"
+        />
+   <browser:viewletManager
+        name="ubify.itemdatemanager"
+        provides=".interfaces.IItemDateManager"
+        permission="zope2.View"
+        class="plone.app.viewletmanager.manager.OrderedViewletManager"
+        />
+   <browser:viewletManager
+        name="ubify.itemdescriptionmanager"
+        provides=".interfaces.IItemDescriptionManager"
+        permission="zope2.View"
+        class="plone.app.viewletmanager.manager.OrderedViewletManager"
+        />
+   <browser:viewletManager
+        name="ubify.ownerinfomanager"
+        provides=".interfaces.IOwnerInfoManager"
+        permission="zope2.View"
+        class="plone.app.viewletmanager.manager.OrderedViewletManager"
+        />
+   <browser:viewletManager
+        name="ubify.owneravatarmanager"
+        provides=".interfaces.IOwnerAvatarManager"
+        permission="zope2.View"
+        class="plone.app.viewletmanager.manager.OrderedViewletManager"
+        />
+   <browser:viewletManager
+        name="ubify.ubifycolophonmanager"
+        provides=".interfaces.IUbifyColophon"
+        permission="zope2.View"
+        class="plone.app.viewletmanager.manager.OrderedViewletManager"
+        />
+   <browser:viewletManager
+        name="ubify.cynapsecolophonmanager"
+        provides=".interfaces.ICynapseColophon"
+        permission="zope2.View"
+        class="plone.app.viewletmanager.manager.OrderedViewletManager"
+        />
+   <browser:viewletManager
+        name="ubify.contentviewsmanager"
+        provides=".interfaces.IUContentViews"
+        permission="zope2.View"
+        class="plone.app.viewletmanager.manager.OrderedViewletManager"
+        />
+   <browser:viewletManager
+        name="ubify.contentactionsmanager"
+        provides=".interfaces.IUContentActions"
+        permission="zope2.View"
+        class="plone.app.viewletmanager.manager.OrderedViewletManager"
+        />
+
+    <browser:viewletManager
+        name="ubify.site_title_manager"
+        provides=".interfaces.ISiteTitle"
+        permission="zope2.View"
+        class="plone.app.viewletmanager.manager.OrderedViewletManager"
+        />
+    <browser:viewletManager
+        name="ubify.site_logo_manager"
+        provides=".interfaces.ISiteLogo"
+        permission="zope2.View"
+        class="plone.app.viewletmanager.manager.OrderedViewletManager"
+        />
+    <browser:viewletManager
+        name="ubify.site_desc_manager"
+        provides=".interfaces.ISiteDescription"
+        permission="zope2.View"
+        class="plone.app.viewletmanager.manager.OrderedViewletManager"
+        />
+    <browser:viewletManager
+        name="ubify.item_metadata_manager"
+        provides=".interfaces.IItemMetaData"
+        permission="zope2.View"
+        class="plone.app.viewletmanager.manager.OrderedViewletManager"
+        />
+    <browser:viewletManager
+        name="ubify.workflowhistorymanager"
+        provides=".interfaces.IWorkFlowHistoryManager"
+        permission="zope2.View"
+        class="plone.app.viewletmanager.manager.OrderedViewletManager"
+        />
+    <browser:viewletManager
+        name="ubify.documentactionsmanager"
+        provides=".interfaces.IDocumentActionsManager"
+        permission="zope2.View"
+        class="plone.app.viewletmanager.manager.OrderedViewletManager"
+        />
+    <browser:viewletManager
+        name="ubify.dashboardmanager"
+        provides=".interfaces.ICyninDashboard"
+        permission="zope2.View"
+        class="plone.app.viewletmanager.manager.OrderedViewletManager"
+        />
+    <browser:viewletManager
+        name="ubify.spacemembersmanager"
+        provides=".interfaces.ISpaceMembers"
+        permission="zope2.View"
+        class="plone.app.viewletmanager.manager.OrderedViewletManager"
+        />
+
+    <browser:viewletManager
+        name="ubify.spacememberspagemanager"
+        provides=".interfaces.ISpaceMembersPage"
+        permission="zope2.View"
+        class="plone.app.viewletmanager.manager.OrderedViewletManager"
+        />
+    <browser:viewletManager
+        name="ubify.applicationstabs"
+        provides=".interfaces.IApplicationsTabs"
+        permission="zope2.View"
+        class="plone.app.viewletmanager.manager.OrderedViewletManager"
+        />
+    <browser:viewletManager
+        name="ubify.applicationsmenu"
+        provides=".interfaces.IApplicationsMenu"
+        permission="zope2.View"
+        class="plone.app.viewletmanager.manager.OrderedViewletManager"
+        />
+    <browser:viewletManager
+        name="ubify.myareablock"
+        provides=".interfaces.IMyAreaBlock"
+        permission="zope2.View"
+        class="plone.app.viewletmanager.manager.OrderedViewletManager"
+        />
+    <browser:viewletManager
+        name="ubify.itemcounts"
+        provides=".interfaces.IItemCounts"
+        permission="zope2.View"
+        class="plone.app.viewletmanager.manager.OrderedViewletManager"
+        />
+    <browser:viewletManager
+        name="ubify.gototopmanager"
+        provides=".interfaces.IGotoTop"
+        permission="zope2.View"
+        class="plone.app.viewletmanager.manager.OrderedViewletManager"
+        />
+    <browser:viewletManager
+        name="ubify.seoprovider"
+        provides=".interfaces.IUbifySEOProvider"
+        permission="zope2.View"
+        class="plone.app.viewletmanager.manager.OrderedViewletManager"
+        />
+    <browser:viewletManager
+        name="ubify.navigationmanager"
+        provides=".interfaces.INavigationManager"
+        permission="zope2.View"
+        class="plone.app.viewletmanager.manager.OrderedViewletManager"
+        />
+    <browser:viewletManager
+        name="ubify.adddiscussionblock"
+        provides=".interfaces.IAddDiscussionManager"
+        permission="zope2.View"
+        class="plone.app.viewletmanager.manager.OrderedViewletManager"
+        />
+    <browser:viewletManager
+        name="ubify.languageselection"
+        provides=".interfaces.ILanguageSelectionManager"
+        permission="zope2.View"
+        class="plone.app.viewletmanager.manager.OrderedViewletManager"
+        />
+        
+<!--  +++++++++++++++++++++ Viewlet Managers End ++++++++++++++++++++++ -->
+<!--  +++++++++++++++++++++ Viewlets Begin ++++++++++++++++++++++ -->
+  <browser:viewlet  
+      name="ubify.languageselector"
+      manager=".interfaces.ILanguageSelectionManager"
+      class=".selector.UbifyLanguageSelector"
+      permission="zope2.View"
+      />
+
+    <browser:viewlet
+        name="ubify.seoblock"
+        manager=".interfaces.IUbifySEOProvider"
+        class="plone.app.layout.analytics.view.AnalyticsViewlet"
+        permission="zope2.View"
+    />
+    <browser:viewlet
+        name="ubify.viewlets.applications_menu"
+        manager=".interfaces.IApplicationsMenu"
+        class=".ApplicationsMenuViewlet.ApplicationsMenuViewlet"
+        permission="zope2.View"
+    />
+    <browser:viewlet
+        name="ubify.viewlets.spaces_recent"
+        manager=".interfaces.ISpacesRecent"
+        class=".viewlets.SpacesRecentViewlet"
+        permission="zope2.View"
+    />
+    <browser:viewlet
+        name="ubify.viewlets.site_home"
+        manager=".interfaces.ISiteHome"
+        class=".viewlets.SiteHomeViewlet"
+        permission="zope2.View"
+    />
+
+    <browser:viewlet
+        name="ubify.viewlets.fullviewmindmap"
+        manager=".interfaces.IFullViewMindMap"
+        class=".viewlets.FullviewMindmapViewlet"
+        permission="zope2.View"
+    />
+
+
+    <browser:viewlet
+        name="ubify.all_spaces"
+        manager=".interfaces.IAllSpacesMenuManager"
+        class=".allspacesviewlet.AllSpacesViewlet"
+        permission="zope2.View"
+    />
+
+    <browser:viewlet
+        name="cynin.redirect"
+        manager=".interfaces.INavigationManager"
+        view="plone.app.layout.globals.interfaces.IViewView"
+        class=".redirectviewlet.RedirectToRootViewlet"
+        permission="zope2.View"
+    />
+
+    <browser:viewlet
+        name="cynin.redirect"
+        manager=".interfaces.INavigationManager"
+        view="plone.app.content.browser.interfaces.IFolderContentsView"
+        class=".redirectviewlet.RedirectToRootViewlet"
+        permission="zope2.View"
+    />
+    <browser:viewlet
+        name="ubify.viewlets.space_recent_updates"
+        manager=".interfaces.ISpaceRecentUpdates"
+        class=".viewlets.SpaceRecentUpdatesViewlet"
+        permission="zope2.View"
+    />
+    <browser:viewlet
+        name="ubify.viewlets.space_my_items"
+        manager=".interfaces.ISpaceMyItems"
+        class=".viewlets.SpaceMyItemsViewlet"
+        permission="zope2.View"
+    />
+
+    <browser:viewletManager
+        name="ubify.tagfilterpanelmanager"
+        provides=".interfaces.ITagFilterPanel"
+        permission="zope2.View"
+        class="plone.app.viewletmanager.manager.OrderedViewletManager"
+        />
+
+    <browser:viewlet
+        name="ubify.tagfilterpanel"
+        manager=".interfaces.ITagFilterPanel"
+        class=".tagfilterpanel.TagFilterPanelViewlet"
+        permission="zope2.View"
+        />
+
+    <!-- The search box -->
+    <browser:viewlet
+        name="ubify.searchbox"
+        manager=".interfaces.ISearchBoxManager"
+        class=".searchbox.SearchBoxViewlet"
+        permission="zope2.View"
+        />
+
+    <browser:viewlet
+        name="ubify.gototoplink"
+        manager=".interfaces.IGotoTop"
+        template="gototoplink.pt"
+        permission="zope2.View"
+    />
+    <browser:viewlet
+        name="ubify.myavatarblock"
+        manager=".interfaces.IMyMenu"
+        class=".mymenu.MyMenu"
+        permission="zope2.View"
+    />
+    <browser:viewlet
+        name="ubify.myavatarblock"
+        manager=".interfaces.IMyAvatar"
+        class=".myavatar.MyAvatar"
+        permission="zope2.View"
+    />
+    <browser:viewlet
+        name="ubify.space_icon"
+        manager=".interfaces.ISpaceIcon"
+        class=".spaceicon.SpaceIconViewlet"
+        permission="zope2.View"
+    />
+    <browser:viewlet
+        name="ubify.space_name"
+        manager=".interfaces.ISpaceName"
+        class=".spacename.SpaceNameViewlet"
+        permission="zope2.View"
+    />
+    <browser:viewlet
+        name="ubify.space_stats"
+        manager=".interfaces.ISpaceStats"
+        class=".spacestats.SpaceStatsViewlet"
+        permission="zope2.View"
+    />
+    <browser:viewlet
+        name="ubify.itemtitle"
+        manager=".interfaces.IItemtitleManager"
+        class=".itemtitle.ItemtitleViewlet"
+        permission="zope2.View"
+    />
+    <browser:viewlet
+        name="ubify.typetitle"
+        manager=".interfaces.ITypetitleManager"
+        class=".typetitle.TypetitleViewlet"
+        permission="zope2.View"
+    />
+    <browser:viewlet
+        name="ubify.addnewmenu"
+        for="*"
+        manager=".interfaces.IAddNewMenuManager"
+        class=".addnewmenu.AddNewMenuViewlet"
+        permission="zope2.View"
+    />
+    <browser:viewlet
+        name="ubify.personal_bar"
+        manager=".interfaces.IBreadcrumbsManager"
+        class=".path_bar.PathBarViewlet"
+        permission="zope2.View"
+        />
+    <browser:page
+        for="*"
+        name="applications_view"
+        class=".navigation.ApplicationPerspectives"
+        permission="zope.Public"
+        allowed_attributes="applications"
+        />
+
+    <browser:viewlet
+        name="ubify.addnewmenu"
+        view="plone.app.content.browser.interfaces.IFolderContentsView"
+        manager=".interfaces.IAddNewMenuManager"
+        class=".addnewmenu.AddNewMenuViewlet"
+        permission="zope2.View"
+    />
+    <browser:viewlet
+        name="ubify.itemdate"
+        manager=".interfaces.IItemDateManager"
+        class=".itemdate.ItemDateViewlet"
+        permission="zope2.View"
+    />
+    <browser:viewlet
+        name="ubify.itemdescription"
+        manager=".interfaces.IItemDescriptionManager"
+        class=".itemdescription.ItemDescriptionViewlet"
+        permission="zope2.View"
+    />
+    <browser:viewlet
+        name="ubify.ownerinfo"
+        manager=".interfaces.IOwnerInfoManager"
+        class=".ownerinfo.OwnerInfoViewlet"
+        permission="zope2.View"
+    />
+    <browser:viewlet
+        name="ubify.owneravatar"
+        manager=".interfaces.IOwnerAvatarManager"
+        class=".owneravatar.OwnerAvatarViewlet"
+        permission="zope2.View"
+    />
+    <browser:viewlet
+        name="ubify.ubifycolophon"
+        manager=".interfaces.IUbifyColophon"
+        class=".ubifycolophon.UbifyColophonViewlet"
+        permission="zope2.View"
+    />
+    <browser:viewlet
+        name="ubify.cynapsecolophon"
+        manager=".interfaces.ICynapseColophon"
+        class=".cynapsecolophon.CynapseColophonViewlet"
+        permission="zope2.View"
+    />
+     <browser:viewlet
+        name="ubify.contentviews"
+        manager=".interfaces.IUContentViews"
+        template="contentviews.pt"
+        permission="zope2.View"
+    />
+    <browser:viewlet
+        name="ubify.contentactions"
+        for="*"
+        view="plone.app.layout.globals.interfaces.IViewView"
+        manager=".interfaces.IUContentActions"
+        class=".contentactions.ContentActionsViewlet"
+        permission="zope2.View"
+        />
+
+    <browser:viewlet
+        name="plone.contentactions"
+        for="*"
+        view="plone.app.content.browser.interfaces.IFolderContentsView"
+        manager=".interfaces.IUContentActions"
+        class=".contentactions.ContentActionsViewlet"
+        permission="zope2.View"
+        />
+    <browser:viewlet
+        name="ubify.site_title"
+        manager=".interfaces.ISiteTitle"
+        class=".sitetitle.SiteTitleViewlet"
+        permission="zope2.View"
+        />
+    <browser:viewlet
+        name="ubify.site_logo"
+        manager=".interfaces.ISiteLogo"
+        class=".sitelogo.SiteLogoViewlet"
+        permission="zope2.View"
+        />
+    <browser:viewlet
+        name="ubify.site_description"
+        manager=".interfaces.ISiteDescription"
+        class=".sitedescription.SiteDescriptionViewlet"
+        permission="zope2.View"
+        />
+    <!-- Render the workflow history -->
+    <browser:viewlet
+        name="ubify.belowcontentbody.workflowhistory"
+        manager=".interfaces.IWorkFlowHistoryManager"
+        class="plone.app.layout.viewlets.content.WorkflowHistoryViewlet"
+        permission="zope2.View"
+        />
+    <browser:viewlet
+        name="ubify.item_metadata"
+        manager=".interfaces.IItemMetaData"
+        class=".itemmetadata.ItemMetaDataViewlet"
+        permission="zope2.View"
+        for="plone.app.kss.interfaces.IContentish"
+        />
+    <browser:viewlet
+        name="ubify.documentactions"
+        manager=".interfaces.IDocumentActionsManager"
+        class=".documentactions.CyninDocumentActionsViewlet"
+        permission="zope2.View"
+        />
+    <browser:viewlet
+        name="ubify.homecontentportlets"
+        manager=".interfaces.ICyninDashboard"
+        template="homecontentportlets.pt"
+        permission="zope2.View"
+    />
+    <browser:viewlet
+        name="ubify.spacemembersviewlet"
+        manager=".interfaces.ISpaceMembers"
+        template="spacemembersviewlet.pt"
+        permission="zope2.View"
+    />
+    <browser:viewlet
+        name="ubify.spacemembersviewlet"
+        manager=".interfaces.ISpaceMembersPage"
+        class=".spacememberspage.SpaceMembersPageViewlet"
+        permission="zope2.View"
+    />
+    <browser:viewlet
+        name="ubify.applicationstabs"
+        manager=".interfaces.IApplicationsTabs"
+        class=".applicationstabs.ApplicationsTabsViewlet"
+        permission="zope2.View"
+    />
+    <browser:viewlet
+        name="ubify.myareablock"
+        manager=".interfaces.IMyAreaBlock"
+        class=".myareablock.MyAreaBlockViewlet"
+        permission="zope2.View"
+    />
+    <browser:viewlet
+        name="ubify.itemcounts"
+        manager=".interfaces.IItemCounts"
+        class=".itemcounts.ItemCountsViewlet"
+        permission="zope2.View"
+    />
+    <browser:viewlet
+        name="ubify.navigationmanager"
+        manager=".interfaces.INavigationManager"
+        class=".navigationmanager.NavigationViewlet"
+        permission="zope2.View"
+    />
+    <browser:viewlet
+        name="ubify.adddiscussionblock"
+        manager=".interfaces.IAddDiscussionManager"
+        class=".adddiscussion.AddDiscussionViewlet"
+        permission="zope2.View"
+    />
+<!--  +++++++++++++++++++++ Viewlets End ++++++++++++++++++++++ -->
+
+<!--  +++++++++++++++++++++ Ajax Browser Pages Begin ++++++++++++++++ -->
+    <browser:page
+        for="*"
+        name="setstatusmessage"
+        class=".custommethods.CustomMethods"
+        attribute="setstatusmessage"
+        permission="zope2.View"
+        />
+        
+    <browser:page
+        for="*"
+        name="creatediscussion"
+        class=".custommethods.CustomMethods"
+        attribute="creatediscussion"
+        permission="zope2.View"
+        />
+        
+    <browser:page
+        for="*"
+        name="fetchlocationstoaddcontent"
+        class=".custommethods.CustomMethods"
+        attribute="fetchlocationstoaddcontent"
+        permission="zope2.View"
+        />
+    
+    <browser:page
+        for="*"
+        name="ratecontent"
+        class=".custommethods.CustomMethods"
+        attribute="ratecontent"
+        permission="zope2.View"
+        />
+        
+    <browser:page
+        for="*"
+        name="fetchcommentsforlist"
+        class=".custommethods.CustomMethods"
+        attribute="fetchcommentsforlist"
+        permission="zope2.View"
+        />
+        
+    <browser:page
+        for="*"
+        name="addnewcomment"
+        class=".custommethods.CustomMethods"
+        attribute="addnewcomment"
+        permission="zope2.View"
+        />
+        
+    <browser:page
+        for="*"
+        name="fetchnewcomments"
+        class=".custommethods.CustomMethods"
+        attribute="fetchnewcomments"
+        permission="zope2.View"
+        />
+        
+    
+        
+    <browser:page
+        for="*"
+        name="togglecommentsview"
+        class=".custommethods.CustomMethods"
+        attribute="togglecommentsview"
+        permission="zope2.View"
+        />
+        
+        
+<!--  +++++++++++++++++++++ Ajax Browser Pages End ++++++++++++++++ -->
+
+<!--  +++++++++++++++++++++FILES and RESOURCES begin++++++++++++++++++++++ -->
+    <browser:resource
+        name="clickmenu.js"
+        file="jquery.clickmenu.pack.js"
+        />
+    <browser:resource
+        name="swfobject.js"
+        file="swfobject.js"
+        />
+    <browser:resource
+        name="visorFreemind.swf"
+        file="visorFreemind.swf"
+        />
+    <browser:resource
+        name="dimensions.js"
+        file="jquery.dimensions.pack.js"
+        />
+    <browser:resource
+        name="hoverintent.js"
+        file="jquery.hoverIntent.js"
+        />
+    <browser:resource
+        name="cluetip.js"
+        file="jquery.cluetip.js"
+        />
+    <browser:resource
+        name="cynincustom.js"
+        file="jquery.cynincustom.js"
+        />
+    <browser:resource
+        name="ubifyviewlets.kss"
+        file="ubifyviewlets.kss"
+        />
+    <browser:resource
+        name="scrollto.js"
+        file="jquery.scrollTo-1.4.0-min.js"
+        />
+    <browser:resource
+        name="localscroll.js"
+        file="jquery.localscroll-1.2.6-min.js"
+        />
+    <browser:resource
+        name="jqmodal.js"
+        file="jqModal.js"
+        />
+    <browser:resource
+        name="mootools.js"
+        file="mootools.v1.11.js"
+        />
+    <browser:resource
+        name="slimbox.js"
+        file="slimbox.js"
+        />
+    <browser:resource
+        name="biggerlink.js"
+        file="jquery.biggerlink.js"
+        />
+    <browser:resource
+        name="flowplayer.js"
+        file="flowplayer-3.0.1.min.js"
+        />
+    <browser:resource
+        name="tag.js"
+        file="tag.js"
+        />
+    <browser:resource
+        name="daterangepicker.js"
+        file="daterangepicker.jQuery.js"
+        />
+    <browser:resource
+        name="jqui.js"
+        file="jquery-ui-tabs-datepicker-no-effects-1.5.3.js"
+        />
+    <browser:resource
+        name="jqurl.js"
+        file="jquery.query-2.0.1.js"
+        />
+    <browser:resource
+        name="jqpurr.js"
+        file="jquery.purr.js"
+        />
+    <browser:resource
+        name="jqrating.js"
+        file="jquery.rating.pack.js"
+        />
+    <browser:resource
+        name="jqtabs.js"
+        file="ui.tabs.js"
+        />
+    <browser:resource
+        name="jqlightbox.js"
+        file="jquery.lightbox.js"
+        />
+    <browser:resource
+        name="jqnyromodal.js"
+        file="jquery.nyroModal-1.4.2.pack.js"
+        />
+    <browser:resource
+        name="jqbtips.js"
+        file="jquery.bt.js"
+        />
+    <browser:resource
+        name="jqsimpletip.js"
+        file="jquery.simpletip-1.3.1.min.js"
+        />
+    <browser:resource
+        name="aqFloater.js"
+        file="aqFloater.js"
+        />
+    <browser:resource
+        name="cyninautocomplete.js"
+        file="jquery.autocomplete.pack.js"
+        />
+    <browser:resource
+        name="autoresize.js"
+        file="jquery.autoresize.min.js"
+        />
+    <browser:resource
+        name="truncate.js"
+        file="jquery.truncate-2.3-pack.js"
+        />
+    <browser:resource
+        name="timeago.js"
+        file="jquery.timeago.js"
+        />
+    <browser:resource
+        name="date.js"
+        file="date-en-US.js"
+        />       
+<!-- ++++++++++++++++++++++++++++++FILES and RESOURCES end+++++++++++++++++++++++ -->
+
+
+
+</configure>

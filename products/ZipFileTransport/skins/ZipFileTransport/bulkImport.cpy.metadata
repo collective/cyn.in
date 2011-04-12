@@ -1,0 +1,7 @@
+[validators]
+validators=validate_CourseImport
+
+[actions]
+action.failure=traverse_to:string:import_form
+action.success=traverse_to:string:bulkUploadFileLog
+action.successFolder=traverse_to:string:bulkUploadFileLog

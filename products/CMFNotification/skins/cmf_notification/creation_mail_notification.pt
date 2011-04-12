@@ -1,0 +1,24 @@
+<metal:define use-macro="here/global_defines/macros/defines"></metal:define>
+<metal:define 
+    i18n:domain="plone"
+    tal:define="charset site_properties/default_charset | string:utf-8;
+                lt string:&lt;;gt string:&gt;;
+                dummy python:request.RESPONSE.setHeader('Content-Type','text/html;; charset=%s' % charset);
+                creator here/Creator;
+		creator_info python: mtool.getMemberInfo(creator);
+                creatorname python:creator_info and creator_info['fullname'] or creator;
+                typestool python:context.portal_types;
+                item_type python:context.portal_type;
+                itemtypetitle python:typestool[item_type].title;">
+From: <span tal:replace="portal/email_from_name"/> <span tal:replace="structure lt"/><span tal:replace="portal/email_from_address"/><span tal:replace="structure gt"/>
+Subject: <span i18n:translate="">[cyn.in Notification] New <span tal:replace="itemtypetitle" i18n:name="item_type_title" />: <span tal:replace="here/Title" i18n:name="title"/> by <span tal:replace="creatorname" i18n:name="creator_name" /></span>
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+<span i18n:translate="">A new <span tal:replace="itemtypetitle" i18n:name="item_type_title" />, with the title <a href="" tal:attributes="href string:${here/absolute_url}/view" tal:content="here/Title" i18n:name="absolute_url_title" /> has been created by <a href="" tal:attributes="href string:${here/portal_url}/Members/author/${creator}" tal:content="creatorname" i18n:name="portal_url_creator_name"></a>.</span><br /><br />
+
+<span i18n:translate="">URL: <a tal:content="string:${here/absolute_url}/view" tal:attributes="href string:${here/absolute_url}/view" i18n:name="absolute_url_item" /></span>
+<br /><br />
+<hr />
+<span i18n:translate="">This message is automatically generated from <span tal:replace="portal/title" i18n:name="portal_title" />, a web application powered by cyn.in.<br />Read more about cyn.in at <a href="http://cyn.in" i18n:name="url_cynin">http://cyn.in</a>.</span>
+</metal:define>

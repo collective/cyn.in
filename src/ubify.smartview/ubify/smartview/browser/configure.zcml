@@ -1,0 +1,89 @@
+<!--
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see <http://www.gnu.org/licenses/>.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+-->
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="cynin">
+
+
+    <browser:resourceDirectory
+        name="ubify.smartview.stylesheets"
+        directory="stylesheets"
+        />
+    <browser:page
+        for="..interfaces.ISmartView"
+        name="view"
+        template="smartview.pt"
+        permission="zope2.View"
+        />
+
+    <browser:page
+        for="..interfaces.ISmartView"
+        name="Timeline View"
+        template="timelineview.pt"
+        permission="zope2.View"
+        />
+
+    <browser:page
+        for="zope.app.container.interfaces.IAdding"
+        name="ubify.smartview.SmartView"
+        class=".smartview.SmartViewAddForm"
+        permission="ubify.smartview.AddSmartView"
+        />
+
+    <browser:page
+        for="..interfaces.ISmartView"
+        name="edit"
+        class=".smartview.SmartViewEditForm"
+        permission="cmf.ModifyPortalContent"
+        />
+
+    <browser:addMenuItem
+        title="SmartView"
+        factory="ubify.smartview.SmartView"
+        view="ubify.smartview.SmartView"
+        permission="ubify.smartview.AddSmartView"
+        />
+
+    <browser:resource
+        name="smartview_icon.png"
+        image="smartview.png"
+        />
+
+</configure>

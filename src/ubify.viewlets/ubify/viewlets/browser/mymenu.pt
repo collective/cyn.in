@@ -1,0 +1,127 @@
+<tal:comment replace="nothing">
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see http://www.gnu.org/licenses/.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+</tal:comment>
+<table i18n:domain="cynin" width="83" border="0" cellspacing="0" cellpadding="0" tal:condition="not: view/anonymous"
+tal:define="portal_url here/portal_url;portal_state context/@@plone_portal_state;portal portal_state/portal;member python:portal_state.member()">
+  <tr>
+    <td width="5" height="24" align="right" valign="top">
+      <img tal:attributes="src string:${portal_url}/btn_white_l.gif" width="5" height="24" />
+    </td>
+    <td class="btn_white">
+      <script type="text/javascript">
+        jq(document).ready(function() {
+        var $ = jq;
+        $('#mymenu').clickMenu();
+        var mymenuul = document.getElementById("mymenu");
+        mymenuul.style.display = "block";
+        });
+      </script>
+      <table width="107" cellspacing="0" cellpadding="0">
+        <tr>
+          <td id="MyMenuContainer">
+            <ul id="mymenu" style="display:none">
+              <li id="mymenulink">
+                <img class="clickmenuicon" tal:attributes="src string:${here/portal_url}/user.png" border="0" alt="My cyn.in" i18n:attributes="alt" /><span class="allspaceslabel" i18n:translate="">My cyn.in</span><span class="arrowDownAlternative">&#9660;</span>
+                <ul tal:define="rUrl view/cportal_url">
+                  <li>
+                    <a href="" tal:attributes="href python:rUrl + '/dashboard'">
+                      <img tal:attributes="src string:${rUrl}/cursor.png" border="0" alt="My Dashboard" i18n:attributes="alt" />&nbsp;<span i18n:translate="">My Dashboard</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="" tal:attributes="href python:rUrl + '/password_form'">
+                      <img tal:attributes="src string:${rUrl}/change_password.png" border="0" alt="Change Password" i18n:attributes="alt" />&nbsp;<span i18n:translate="">Change Password</span></a>
+                  </li>
+                  <li>
+                    <a href="" tal:define="uName view/user_name" tal:attributes="href python:rUrl + '/author/' + uName">
+                      <img tal:attributes="src string:${rUrl}/user.png" border="0" alt="My Profile" i18n:attributes="alt" />&nbsp;<span i18n:translate="">My Profile</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="" tal:attributes="href python:rUrl + '/personalize_form'">
+                      <img tal:attributes="src string:${rUrl}/user_edit.png" border="0" alt="My Preferences" i18n:attributes="alt" />&nbsp;<span i18n:translate="">My Preferences</span>
+                    </a>
+                  </li>
+                  <li tal:condition="python:(member is not None) and (portal.portal_membership.getHomeFolder() is not None) and (portal.portal_membership.getHomeFolder().hasObject('private'))"
+                            >
+                    <a href="" tal:attributes="href string:${privatespaceurl}" tal:define="privatespaceurl python:portal.portal_membership.getHomeFolder().private.absolute_url()">
+                        <img tal:attributes="src string:${rUrl}/folder_key.png" border="0" alt="My Private Space" i18n:attributes="alt" />&nbsp;<span i18n:translate="">My Private Space</span>
+                    </a>
+                  </li>
+                  <li tal:condition="python:(member is not None) and (portal.portal_membership.getHomeFolder() is not None) and (portal.portal_membership.getHomeFolder().hasObject('statuslog'))"
+                            >
+                    <a href="" tal:attributes="href string:${statuslogurl}" tal:define="statuslogurl python:portal.portal_membership.getHomeFolder().statuslog.absolute_url()">
+                        <img tal:attributes="src string:${rUrl}/status_online.png" border="0" alt="My Status Log" i18n:attributes="alt" />&nbsp;<span i18n:translate="">My Status Log</span>
+                    </a>
+                  </li>
+                  <li tal:condition="python:(member is not None) and (portal.portal_membership.getHomeFolder() is not None) and (portal.portal_membership.getHomeFolder().hasObject('public'))"
+                            >
+                    <a tal:define="pspaceurl python:portal.portal_membership.getHomeFolder().public.absolute_url()" href="" tal:attributes="href string:${pspaceurl}">
+                        <img tal:attributes="src string:${rUrl}/mystuff.png" border="0" alt="My Public Space" i18n:attributes="alt" />&nbsp;<span i18n:translate="">My Public Space</span>
+                    </a>
+                  </li>
+                  <li tal:condition="python:(member is not None) and (portal.portal_membership.getHomeFolder() is not None) and (portal.portal_membership.getHomeFolder().hasObject('myrecyclebin'))">
+                    <a tal:define="mrbinurl python:portal.portal_membership.getHomeFolder().myrecyclebin.absolute_url()" href="" tal:attributes="href string:${mrbinurl}">
+                        <img tal:attributes="src string:${rUrl}/bin.png" border="0" alt="My Recycle Bin" i18n:attributes="alt" />&nbsp;<span i18n:translate="">My Recycle Bin</span>
+                    </a>
+                  </li>
+                  <tal:actions tal:repeat="action view/user_actions">
+                    <li tal:define="icon python:view.getIconFor(action['category'], action['id'], None);
+                            class_name string:visualIcon actionicon-${action/category}-${action/id};
+                            class_name python:icon is not None and class_name or nothing;"
+                        tal:attributes="class class_name">
+                      <a href="" tal:attributes="href action/url;">
+                        <img
+                src="" tal:attributes="src python:view.cportal_url + '/' + action['id'] + '.png'"
+                border="0" />&nbsp;<tal:actionname i18n:translate=""
+     tal:content="action/title">dummy</tal:actionname>
+                      </a>
+                    </li>
+                  </tal:actions>
+                </ul>
+              </li>
+            </ul>
+          </td>
+        </tr>
+      </table>
+    </td>
+    <td width="5" height="24" align="left" valign="top">
+      <img tal:attributes="src string:${portal_url}/btn_white_r.gif" width="5" height="24" />
+    </td>
+  </tr>
+</table>

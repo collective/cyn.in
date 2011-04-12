@@ -1,0 +1,127 @@
+=================================================
+Installation and configuration of CMFNotification
+=================================================
+
+Installation
+============
+
+1. Read the `right documentation`_ if you have never installed any
+   product.
+
+2. Install the product in the file system (as usual).
+
+3. Install the product in your Plone portal, via the Plone control
+   panel (as usual).
+
+.. _right documentation: http://plone.org/documentation/tutorial/third-party-products/installing
+
+
+Principles and rules
+====================
+
+Before frantically clicking everywhere, blindly hoping that this will
+"just work", we would better begin by introducing the principles of
+CMFNotification and, particularly, the rules::
+
+    This is not 'Nam, there are rules.
+
+    -- Walter Sobchak (The Big Lebowski)
+
+This is a required step. Firstly because if you do not configure
+CMFNotification, nothing special will happen. You have to configure
+it. Secondly, understanding what you are doing is the first step to
+understand why it does not work. This will save your time.
+
+CMFNotification lets you define who will receive e-mails, when and
+what mail template will be used. Mail templates can be used to have
+specific mails for specific events (when an event is published with a
+determined keyword, for example).
+
+To determine who, when and what, you have to define rules. There are
+two kinds of rules:
+
+- rules that define who we are sending e-mails to. There is one such
+  rule for each supported type of event (item creation, item
+  modification, workflow transition, etc.) ;
+
+- rules that define which mail template we will use.
+
+
+Configuration
+=============
+
+To configure CMFNotification, click on the "Configuration of
+CMFNotification" configlet in the Plone control panel.
+
+Enabling and disabling features
+-------------------------------
+
+Labels should be self-explanatory. However, here is a quick guide to
+the configuration form:
+
+*enable extra subscriptions*
+  if enabled, users will be able to subscribe or unsubscribe to items
+  via the buttons that appear in the "Mail subscription" portlet
+  (which is added in the right column, by default). They will
+  therefore receive an e-mail notification when an event occurs, if
+  the notification of this event is enabled. See *Rules for list of
+  users* section in the rules reference for further details. Note that
+  this feature is restricted by a permission: *CMFNotification:
+  Subscribe/unsubscribe*. By default, this permission is granted to
+  ``Manager`` and ``Member`` roles. Note that anonymous subscription
+  is not implemented.
+
+  Default: disabled.
+
+*toggle recursive mode for extra subscriptions*
+  if enabled, an user who has subscribed to a folder will
+  automatically be subscribed to items of this folder (and sub-folders
+  and their subitems, etc.)
+
+  Default: enabled.
+
+*toggle debug mode*
+  if enabled, CMFNotification will log the addresses that it sends
+  e-mails to and the messages themselves. This can be particularly
+  helpful when debugging your rules.
+
+  Default: disable.
+
+*rules (ignore)*
+  this is a special rule to disallow notification. This can be handy
+  when you want to temporarily disable notification in one click
+  withoug messing up with the whole configuration. A simple rule like
+  this one does the trick::
+
+      python: True
+
+  You could also want not to send any notification for items in a
+  specific folder. Using an "ignore rule" is much more handy that
+  customizing all rules::
+
+      python: here.isInFooSection()
+
+  Default: the default rule disable notification of temporary items::
+
+      python: getattr(context, 'isTemporary', lambda: False)()
+
+
+Configuration of the rules
+--------------------------
+
+If you are really in a hurry, you may want to look at "How to setup
+CMFNotification in two minutes" (``how-to-setup-in-2-minutes.txt``).
+
+If you are not, take your time and read more about rules
+(``rules-reference.txt``).
+
+
+Logging
+=======
+
+Every error or potential problem (if no user was found for a
+notification, if a problem occurs when trying to find or apply the
+mail template, etc.) is logged. If you do not receive any e-mail,
+check your Zope log file.
+
+For futher details, see ``how-to-troubleshoot.txt``.

@@ -1,0 +1,10 @@
+TO DO
+-----
+* (done)Add security declarations
+* (done)Make the tool configurable through the web
+* Write a PostgreSQL storage class
+* Do we need a policy based rating tool?
+  Just like what PluggableDiscussion does. [panjunyong]
+* Limi's idea:
+
+  http://plone.org/development/teams/website/RatingComponent

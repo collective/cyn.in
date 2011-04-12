@@ -1,0 +1,181 @@
+<tal:comment replace="nothing">
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see http://www.gnu.org/licenses/.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+</tal:comment>
+<tal:recentsiteupdatesportlet
+            tal:define="portal_url view/portal_url;isAnon python:False;plone_view view/plone_view;current_url here/absolute_url"
+            i18n:domain="cynin">
+    <fieldset class="contentheaderlabel"><legend i18n:translate="header_recent_items">Recent Items</legend></fieldset>
+    <div id="siteupdatesportlet">
+        <ul class="vertical-tabs">
+            <li class="verticaltab all"><a href="#siteupdatesportlet-fragment-1" i18n:translate="tab_all">All</a></li>
+            <li class="verticaltab audio"><a href="#siteupdatesportlet-fragment-10" i18n:translate="tab_audios">Audio</a></li>
+            <li class="verticaltab blog"><a href="#siteupdatesportlet-fragment-4" i18n:translate="tab_blog">Blog</a></li>
+            <li class="verticaltab links"><a href="#siteupdatesportlet-fragment-7" i18n:translate="tab_links">Bookmarks</a></li>
+            <li class="verticaltab discussion"><a href="#siteupdatesportlet-fragment-9" i18n:translate="tab_discussions">Discussions</a></li>
+            <li class="verticaltab events"><a href="#siteupdatesportlet-fragment-6" i18n:translate="tab_events">Events</a></li>
+            <li class="verticaltab files"><a href="#siteupdatesportlet-fragment-3" i18n:translate="tab_files">Files</a></li>
+            <li class="verticaltab images"><a href="#siteupdatesportlet-fragment-5" i18n:translate="tab_images">Images</a></li>
+            <li class="verticaltab messages" tal:condition="view/showmessages"><a href="#siteupdatesportlet-fragment-11" i18n:translate="tab_status_log">Statuses</a></li>
+<!--            <li class="verticaltab video"><a href="#siteupdatesportlet-fragment-8" i18n:translate="tab_videos">Video</a></li> -->
+            <li class="verticaltab wiki"><a href="#siteupdatesportlet-fragment-2" i18n:translate="tab_wiki">Wiki</a></li>
+        </ul>
+        <div id="siteupdatesportlet-fragment-1" class="vertical-tabs-panel">
+            <tal:block tal:define="folderContents view/results">
+                <div metal:use-macro="context/recentupdate_macro/macros/listing"/>
+                <div class="morelinkrow">
+                    <a class="recentportletxmore smallwhitebutton smallwhitebutton" href="#" tal:define="morecount view/resultscount" tal:condition="python:morecount > 0"
+                        tal:attributes="href string:${current_url}/app_all" i18n:translate="link_more">
+                        <span tal:content="morecount" i18n:name="morecount"></span> More &raquo;
+                    </a>
+                </div>
+            </tal:block>
+        </div>
+        <div id="siteupdatesportlet-fragment-2" class="vertical-tabs-panel" style="display:none;">
+            <tal:block tal:define="folderContents python:view.results('Document')">
+                <div metal:use-macro="context/recentupdate_macro/macros/listing"/>
+                <div class="morelinkrow">
+                    <a class="recentportletxmore smallwhitebutton" href="#" tal:define="morecount python:view.resultscount('Document')" tal:condition="python:morecount > 0"
+                        tal:attributes="href string:${current_url}/app_wiki" i18n:translate="link_more">
+                        <span tal:content="morecount" i18n:name="morecount"></span> More &raquo;
+                    </a>
+                </div>
+            </tal:block>
+        </div>
+        <div id="siteupdatesportlet-fragment-3" class="vertical-tabs-panel" style="display:none;">
+            <tal:block tal:define="folderContents python:view.results('File')">
+                <div metal:use-macro="context/recentupdate_macro/macros/listing"/>
+                <div class="morelinkrow">
+                    <a class="recentportletxmore smallwhitebutton" href="#" tal:define="morecount python:view.resultscount('File')" tal:condition="python:morecount > 0"
+                        tal:attributes="href string:${current_url}/app_files" i18n:translate="link_more">
+                        <span tal:content="morecount" i18n:name="morecount"></span> More &raquo;
+                    </a>
+                </div>
+            </tal:block>
+        </div>
+        <div id="siteupdatesportlet-fragment-4" class="vertical-tabs-panel" style="display:none;">
+            <tal:block tal:define="folderContents python:view.results('Blog Entry')">
+                <div metal:use-macro="context/recentupdate_macro/macros/listing"/>
+                <div class="morelinkrow">
+                    <a class="recentportletxmore smallwhitebutton" href="#" tal:define="morecount python:view.resultscount('Blog Entry')" tal:condition="python:morecount > 0"
+                        tal:attributes="href string:${current_url}/app_blog" i18n:translate="link_more">
+                        <span tal:content="morecount" i18n:name="morecount"></span> More &raquo;
+                    </a>
+                </div>
+            </tal:block>
+        </div>
+        <div id="siteupdatesportlet-fragment-5" class="vertical-tabs-panel" style="display:none;">
+            <tal:block tal:define="folderContents python:view.results('Image')">
+                <div metal:use-macro="context/recentupdate_macro/macros/listing"/>
+                <div class="morelinkrow">
+                    <a class="recentportletxmore smallwhitebutton" href="#" tal:define="morecount python:view.resultscount('Image')" tal:condition="python:morecount > 0"
+                        tal:attributes="href string:${current_url}/app_images" i18n:translate="link_more">
+                        <span tal:content="morecount" i18n:name="morecount"></span> More &raquo;
+                    </a>
+                </div>
+            </tal:block>
+        </div>
+        <div id="siteupdatesportlet-fragment-6" class="vertical-tabs-panel" style="display:none;">
+            <tal:block tal:define="folderContents python:view.results('Event')">
+                <div metal:use-macro="context/recentupdate_macro/macros/listing"/>
+                <div class="morelinkrow">
+                    <a class="recentportletxmore smallwhitebutton" href="#" tal:define="morecount python:view.resultscount('Event')" tal:condition="python:morecount > 0"
+                        tal:attributes="href string:${current_url}/app_calendar" i18n:translate="link_more">
+                        <span tal:content="morecount" i18n:name="morecount"></span> More &raquo;
+                    </a>
+                </div>
+            </tal:block>
+        </div>
+        <div id="siteupdatesportlet-fragment-7" class="vertical-tabs-panel" style="display:none;">
+            <tal:block tal:define="folderContents python:view.results('Link')">
+                <div metal:use-macro="context/recentupdate_macro/macros/listing"/>
+                <div class="morelinkrow">
+                    <a class="recentportletxmore smallwhitebutton" href="#" tal:define="morecount python:view.resultscount('Link')" tal:condition="python:morecount > 0"
+                        tal:attributes="href string:${current_url}/app_links" i18n:translate="link_more">
+                        <span tal:content="morecount" i18n:name="morecount"></span> More &raquo;
+                    </a>
+                </div>
+            </tal:block>
+        </div>
+<!--
+        <div id="siteupdatesportlet-fragment-8" class="vertical-tabs-panel" style="display:none;">
+            <tal:block tal:define="folderContents python:view.results('Video')">
+                <div metal:use-macro="context/recentupdate_macro/macros/listing"/>
+                <div class="morelinkrow">
+                    <a class="recentportletxmore smallwhitebutton" href="#" tal:define="morecount python:view.resultscount('Video')" tal:condition="python:morecount > 0"
+                        tal:attributes="href string:${current_url}/app_videos" i18n:translate="link_more">
+                        <span tal:content="morecount" i18n:name="morecount"></span> More &raquo;
+                    </a>
+                </div>
+            </tal:block>
+        </div>
+-->
+        <div id="siteupdatesportlet-fragment-9" class="vertical-tabs-panel" style="display:none;">
+            <tal:block tal:define="folderContents python:view.results('Discussion')">
+                <div metal:use-macro="context/recentupdate_macro/macros/listing"/>
+                <div class="morelinkrow">
+                    <a class="recentportletxmore smallwhitebutton" href="#" tal:define="morecount python:view.resultscount('Discussion')" tal:condition="python:morecount > 0"
+                        tal:attributes="href string:${current_url}/app_discussions" i18n:translate="link_more">
+                        <span tal:content="morecount" i18n:name="morecount"></span> More &raquo;
+                    </a>
+                </div>
+            </tal:block>
+        </div>
+        <div id="siteupdatesportlet-fragment-10" class="vertical-tabs-panel" style="display:none;">
+            <tal:block tal:define="folderContents python:view.results('Audio')">
+                <div metal:use-macro="context/recentupdate_macro/macros/listing"/>
+                <div class="morelinkrow">
+                    <a class="recentportletxmore smallwhitebutton" href="#" tal:define="morecount python:view.resultscount('Audio')" tal:condition="python:morecount > 0"
+                        tal:attributes="href string:${current_url}/app_videos" i18n:translate="link_more">
+                        <span tal:content="morecount" i18n:name="morecount"></span> More &raquo;
+                    </a>
+                </div>
+            </tal:block>
+        </div>
+        <div id="siteupdatesportlet-fragment-11" class="vertical-tabs-panel" tal:condition="view/showmessages" style="display:none;">
+            <tal:block tal:define="folderContents python:view.results('StatuslogItem')">
+                <div metal:use-macro="context/recentupdate_macro/macros/listing"/>
+                <div class="morelinkrow">
+                    <a class="recentportletxmore smallwhitebutton" href="#" tal:define="morecount python:view.resultscount('StatuslogItem')" tal:condition="python:morecount > 0"
+                        tal:attributes="href string:${current_url}/app_statuslog" i18n:translate="link_more">
+                        <span tal:content="morecount" i18n:name="morecount"></span> More &raquo;
+                    </a>
+                </div>
+            </tal:block>
+        </div>
+    </div>
+</tal:recentsiteupdatesportlet>

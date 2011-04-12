@@ -1,0 +1,98 @@
+==========================================
+How to set up CMFNotification in 2 minutes
+==========================================
+
+This how-to provides an executive summary for those who want a
+standard setup of CMFNotification (notification when item are created
+and modified, and when a workflow transition occurs) without too much
+reading.
+
+
+About this document
+===================
+
+Several users have criticized CMFNotification for being too
+complicated to set up. That is a fact; the author is well aware of
+that and the available documentation (shipped with the product),
+though comprehensive, aims administrators/developers to deploy any
+configuration (and possibly complex ones).
+
+Hopefully, CMFNotification can be set up to provide simple, standard
+notification features, and you do not have to read the aforementioned
+documentation to enable them. (Though you should: see `Further
+reading`_ below for more information.)
+
+
+The executive configuration (a.k.a. how to please your boss in 2 minutes)
+=========================================================================
+
+There a few steps which are inevitable when it comes to installing a
+new product in a Plone site :
+
+1. Read the `right documentation`_ if you have never installed any
+   product before.
+
+2. Install CMFNotification in the file system (as usual).
+
+3. Install the product in the Plone portal of your choice (with Portal
+   Quick Installer, as usual).
+
+.. _right documentation: http://plone.org/documentation/tutorial/third-party-products/installing
+
+Now you have installed CMFNotification in your portal. However,
+nothing happens, by default. You have to configure it. Since this is
+the executive how-to, blindly follow these steps:
+
+1. Go to the control panel (by clicking on the *site setup* link) and
+   then click on "Configuration of CMFNotification".
+
+2. By default, nothing is enabled. If you want to allow authenticated
+   users to subscribe to items, check the first box (*Enable extra
+   subscriptions*).
+
+3. Check the following boxes: *Enable item creation notification*,
+   *Enable item modification notification* and *Enable workflow
+   transition notification*.
+
+4. In *Rules on item creation (users)*, *Rules on item modification
+   (users)* and *Rules on workflow transition (users)* text areas, add
+   the line ``* :: *``.
+
+5. In *Rules on item creation (mail template)*, add the line::
+
+       * :: string:creation_mail_notification
+
+6. In *Rules on item modification (mail template)*, add the line::
+
+       * :: string:modification_mail_notification
+
+7. *Rules on workflow transition (mail template)*, add the line::
+
+       * :: string:workflow_mail_notification
+
+8. Click on the *Save changes* button.
+
+CMFNotification is now configured to send e-mail notification when an
+item is created or modified and when a workflow transition happens on
+an item.
+
+You can now test it by creating an user (if needed) and adding a new
+item.
+
+
+Troubleshooting
+===============
+
+If you do not receive any e-mail, read "How to trouble shoot your
+configuration" (``how-to-troubleshoot.txt``).
+
+
+Further reading
+===============
+
+This brief how-to explained how to set up a simple, standard
+configuration for CMFNotification. But this product can do a lot more.
+It is based on rules. These rules let you precisely define who to
+notify and which mail template to use on any supported event. To know
+more about the syntax of these rules, it is highly suggested that you
+read the rest of the documentation.

@@ -1,0 +1,25 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser">
+
+  <browser:page
+      name="global_contentmenu"
+      for="*"
+      template="global_contentmenu.pt"
+      class=".browser.ContentMenuView"
+      permission="zope.Public"
+      />
+
+  <browser:page
+      name="test"
+      for="*"
+      class=".browser.TestView"
+      permission="zope.Public"
+      />
+
+  <browser:menu 
+      id="contentmenu_extra" 
+      title="Content Extra Menu's" 
+      />
+
+</configure>

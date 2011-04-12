@@ -1,0 +1,38 @@
+<div tal:replace="structure context/manage_page_header" />
+<div tal:replace="structure context/manage_tabs" />
+
+<h2 i18n:translate="">Add a WebServerAuth plugin</h2>
+
+<p class="form-help" i18n:translate="">
+  Install a WebServerAuth plugin. This allows Zope to delegate authentication concerns to Apache or another web server.
+</p>
+
+<form action="manage_addWebServerAuth" method="POST">
+	<table>
+		<tr>
+			<td class="form-label" i18n:translate="">
+				ID
+			</td>
+			<td>
+				<input type="text" name="id" />
+			</td>
+		</tr>
+		<tr>
+			<td class="form-label" i18n:translate="">
+				Title
+			</td>
+			<td>
+				<input type="text" name="title" />
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<div class="form-element">
+					<input type="submit" value="Add" i18n:attributes="value" />
+				</div>
+			</td>
+		</tr>
+	</table>
+</form>
+
+<div tal:replace="structure context/manage_page_footer" />

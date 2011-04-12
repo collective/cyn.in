@@ -1,0 +1,36 @@
+================================
+How to notify members of a group
+================================
+
+Notifying members of a group is a standard feature of numerous Plone
+portals. For example, you might want to notify all members of the
+"Reviewers" group when an item is submitted.
+
+To configure CMFNotification, you have to go to the ZMI. Then click on
+the ``portal_notification`` object and fill the *Rules on workflow
+transition (users)* rule with something like::
+
+    python: transition == 'submit' :: python: context.getGroupMembers('Reviewers')
+
+Fill the *Rules on workflow transition (mail template)* with something
+like::
+
+    * :: string:workflow_mail_notification
+
+Save the configuration and add the following script somewhere (e.g. in
+``portal_skins/custom``) ``group_id`` parameter::
+
+    from Products.CMFCore.utils import getToolByName
+
+    tool = getToolByName(context, 'portal_groups')
+    group = tool.getGroupById(group_id)
+    if group is None:
+        return ()
+    return group.getGroupMembers()
+
+Add a ``group_id`` paramater to the script, and a ``Manager`` proxy
+role. (Warning: it lets any user able to list users of a group on your
+portal. It is up to you to consider whether this is a security risk.)
+
+You might want to include this script in a product rather than putting
+it in ``portal_skins/custom``.

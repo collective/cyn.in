@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8'?>
+<map version="0.9.0_Beta_8"
+     xmlns:tal="http://xml.zope.org/namespaces/tal"
+     xmlns:map="http://xml.cynapse.org/namespaces/freemind"
+     xmlns:node="http://xml.cynapse.org/namespaces/freemindnodes"
+     >
+    <node BACKGROUND_COLOR="#ffffff" STYLE="bubble"
+        tal:define="is_c_root python:context.portal_type == 'ContentRoot';
+		    portal python:context.portal_url.getPortalObject();
+		    objrnode python:is_c_root and portal or view.isfullview and portal or view.context;
+		    subitems python:view.getChildren(objrnode)"
+    >	
+	<richcontent TYPE="NODE"><html><head/><body><p align="left"><img tal:attributes="src python:view.getTypeIcon(options['mainnode'])" /><span tal:content="options/mainnode/title">asdf</span></p></body></html></richcontent>
+        <edge COLOR="#808080" STYLE="sharp_bezier" WIDTH="8"/>
+        <font BOLD="true" SIZE="20"/>
+        <tal:mainchildren  tal:repeat="subitem subitems" tal:condition="subitems">
+            <node BACKGROUND_COLOR="#ffffff"
+	        tal:attributes="LINK alink"
+                tal:define="actual subitem/getObject;atitle actual/Title;
+			    is_c_root python:actual.portal_type=='ContentRoot';
+			    atitle python:is_c_root and 'Spaces' or atitle;			    
+			    alink python:not is_c_root and subitem.getURL or ''"
+            >
+		<richcontent TYPE="NODE"><html><head/><body><p align="left"><img tal:condition="python:not is_c_root" tal:attributes="src python:view.getTypeIcon(actual)" />
+                <img tal:condition="python:is_c_root" tal:attributes="src string:${actual/portal_url}/folder_icon.png" />
+		<span tal:content="atitle">asdf</span></p></body></html></richcontent>
+                <tal:recursenodes tal:replace="structure python:view.recurse(nodes=gotnodes)"
+                                  tal:condition="gotnodes"
+                                  tal:define="gotnodes python:view.getChildren(actual);"
+                                  />
+                <font BOLD="true" SIZE="16"/>
+            </node>
+        </tal:mainchildren>
+    </node>
+</map>

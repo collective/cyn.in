@@ -1,0 +1,175 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2007-10-18 15:57+0000\n"
+"PO-Revision-Date: 2007-10-18 19:52:00 GMT+2\n"
+"Last-Translator: Souheil Chelfouh <trollfot@gmail.com>\n"
+"Language-Team: Souheil Chelfouh <trollfot@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: fr\n"
+"Language-Name: Français\n"
+"Preferred-Encodings: utf-8\n"
+"Domain: p4a.calendar\n"
+"X-Is-Fallback-For: fr-be fr-ca fr-lu fr-mc fr-ch fr-fr\n"
+
+
+#. Default: "Create event"
+#: ../browser/events.pt
+#: ../browser/month.pt
+msgid "create_event"
+msgstr "Créer un événement"
+
+#. Default: "Event list"
+#: ../browser/month.pt
+msgid "event_list"
+msgstr "Liste des événements"
+
+#. Default: "Event list"
+#: ../browser/month.pt
+msgid "Event_list"
+msgstr "Liste des événements"
+
+#. Default: "Export"
+#: ../browser/month.pt
+msgid "export"
+msgstr "Export"
+
+#. Default: "Import"
+#: ../browser/month.pt
+msgid "import"
+msgstr "Import"
+
+#. Default: "Month"
+#: ../browser/events.pt
+msgid "month"
+msgstr "Retour au mois en cours"
+
+#. Default: "Past events list"
+#: ../browser/events.pt
+#: ../browser/month.pt
+msgid "past_event_list"
+msgstr "Liste des événéments passés"
+
+#. Default: "${start_month_name} ${day_month_name}"
+#: ../browser/events.pt
+msgid "start_date"
+msgstr ""
+
+#. Default: "View:"
+#: ../browser/events.pt
+#: ../browser/month.pt
+msgid "view"
+msgstr "Voir:"
+
+#. Default: "View:"
+#: ../browser/month.py
+msgid "Monday"
+msgstr "Lundi"
+
+#. Default: "View:"
+#: ../browser/month.py
+msgid "Tuesday"
+msgstr "Mardi"
+
+#. Default: "View:"
+#: ../browser/month.py
+msgid "Wednesday"
+msgstr "Mercredi"
+
+#. Default: "View:"
+#: ../browser/month.py
+msgid "Thursday"
+msgstr "Jeudi"
+
+#. Default: "View:"
+#: ../browser/month.py
+msgid "Friday"
+msgstr "Vendredi"
+
+#. Default: "View:"
+#: ../browser/month.py
+msgid "Saturday"
+msgstr "Samedi"
+
+#. Default: "View:"
+#: ../browser/month.py
+msgid "Sunday"
+msgstr "Dimanche"
+
+#. Default: "View:"
+#: ../browser/month.py
+msgid "N/A"
+msgstr "Non communiqué"
+
+#. Default: "View:"
+#: ../browser/month.py
+msgid "January"
+msgstr "Janvier"
+
+#. Default: "View:"
+#: ../browser/month.py
+msgid "February"
+msgstr "Février"
+
+#. Default: "View:"
+#: ../browser/month.py
+msgid "March"
+msgstr "Mars"
+
+#. Default: "View:"
+#: ../browser/month.py
+msgid "April"
+msgstr "Avril"
+
+#. Default: "View:"
+#: ../browser/month.py
+msgid "May"
+msgstr "Mai"
+
+#. Default: "View:"
+#: ../browser/month.py
+msgid "June"
+msgstr "Juin"
+
+#. Default: "View:"
+#: ../browser/month.py
+msgid "July"
+msgstr "Juillet"
+
+#. Default: "View:"
+#: ../browser/month.py
+msgid "August"
+msgstr "Août"
+
+#. Default: "View:"
+#: ../browser/month.py
+msgid "September"
+msgstr "Septembre"
+
+#. Default: "View:"
+#: ../browser/month.py
+msgid "October"
+msgstr "Octobre"
+
+#. Default: "View:"
+#: ../browser/month.py
+msgid "November"
+msgstr "Novembre"
+
+#. Default: "View:"
+#: ../browser/month.py
+msgid "December"
+msgstr "Décembre"
+
+#. Default: "Calendar settings"
+#: interfaces.py
+msgid "calendar_activated_label"
+msgstr "Paramètres calendaires"
+
+#. Default: "Calendar activated for this folder"
+#: interfaces.py
+msgid "calendar_activated_desc"
+msgstr "Activer l'option 'calendrier' pour cet élément"

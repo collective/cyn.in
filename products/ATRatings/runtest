@@ -1,0 +1,4 @@
+#! /bin/sh
+export SOFTWARE_HOME="c:\\Program Files\\Zope-2.7.0\\lib\\python"
+export INSTANCE_HOME=/zope/phds
+/cygdrive/c/Python23/python.exe /zope/phds/Products/ATRatings/tests/$1

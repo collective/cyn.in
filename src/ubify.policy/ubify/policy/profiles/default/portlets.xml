@@ -1,0 +1,226 @@
+<?xml version="1.0"?>
+<!--
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see <http://www.gnu.org/licenses/>.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+-->
+<portlets
+   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+    i18n:domain="cynin">
+ <portletmanager
+   name="ubify.homecontentportletsmanager"
+   type="ubify.viewlets.browser.interfaces.IHomeContent"
+ />
+ <portletmanager
+   name="ubify.spacemembersportletsmanager"
+   type="ubify.cyninv2theme.browser.interfaces.ISpaceMembersContent"
+ />
+
+ <portletmanager
+   name="ubify.mindmapportletmanager"
+   type="ubify.cyninv2theme.browser.interfaces.IMindMapContent"
+ />
+
+ <portletmanager
+   name="ubify.homeleftblockportletmanager"
+   type="ubify.cyninv2theme.browser.interfaces.IHomeLeftblockContent"
+ />
+
+ <portletmanager
+   name="ubify.navigationspacesportletmanager"
+   type="ubify.cyninv2theme.browser.interfaces.INavigationSpacesContent"
+ />
+
+ <portletmanager
+   name="ubify.navigationcollectionportletmanager"
+   type="ubify.cyninv2theme.browser.interfaces.INavigationCollectionContent"
+ />
+
+ <portletmanager
+   name="ubify.navigationmembersportletmanager"
+   type="ubify.cyninv2theme.browser.interfaces.INavigationCollectionContent"
+ />
+
+  <portlet
+    addview="portlets.Wikiportlet"
+    title="Wiki Portlet"
+    description="A portlet which can render a listing of all wiki pages">
+   <for interface="ubify.cyninv2theme.browser.interfaces.IUnknownColumn" />
+  </portlet>
+
+  <portlet
+    addview="portlets.Blogportlet"
+    title="Blog Portlet"
+    description="A portlet which can render a listing of all blog posts">
+   <for interface="ubify.cyninv2theme.browser.interfaces.IUnknownColumn" />
+  </portlet>
+
+  <portlet
+    addview="portlets.Eventsportlet"
+    title="Events Portlet"
+    description="A portlet which can render a listing of all events">
+   <for interface="ubify.cyninv2theme.browser.interfaces.IUnknownColumn" />
+  </portlet>
+
+  <portlet
+    addview="portlets.Filesportlet"
+    title="Files Portlet"
+    description="A portlet which can render a listing of all files">
+   <for interface="ubify.cyninv2theme.browser.interfaces.IUnknownColumn" />
+  </portlet>
+
+  <portlet
+    addview="portlets.Linksportlet"
+    title="Links Portlet"
+    description="A portlet which can render a listing of all links">
+   <for interface="ubify.cyninv2theme.browser.interfaces.IUnknownColumn" />
+  </portlet>
+
+  <portlet
+    addview="portlets.Imagesportlet"
+    title="Images Portlet"
+    description="A portlet which can render a listing of all images">
+   <for interface="ubify.cyninv2theme.browser.interfaces.IUnknownColumn" />
+  </portlet>  
+
+  <portlet
+    addview="portlets.SpaceMembersPortlet"
+    title="Space Member Portlet"
+    description="A portlet which can render a listing of members for space in context.">
+   <for interface="ubify.cyninv2theme.browser.interfaces.IUnknownColumn" />
+  </portlet>
+  
+  <portlet
+    addview="portlets.RecentUpdatesPortlet"
+    title="Recent Updates"
+    description="A portlet which can render recent updates.">
+   <for interface="ubify.cyninv2theme.browser.interfaces.IUnknownColumn" />
+  </portlet>
+
+  <portlet
+    addview="portlets.MyItemsPortlet"
+    title="My Items"
+    description="A portlet which can render items created by current user.">
+   <for interface="ubify.cyninv2theme.browser.interfaces.IUnknownColumn" />
+  </portlet>
+  
+  <portlet
+    addview="portlets.ApplicationPortlet"
+    title="Manage space Portlet"
+    description="A portlet which can render add links for allowed applications inside a space.">
+    <for interface="ubify.cyninv2theme.browser.interfaces.IUnknownColumn" />
+  </portlet>
+  
+  <portlet
+    addview="portlets.DocumentActionsPortlet"
+    title="Document Actions Portlet"
+    description="A portlet which can render document actions.">
+    <for interface="ubify.cyninv2theme.browser.interfaces.IUnknownColumn" />
+  </portlet>
+  
+  <portlet
+    addview="portlets.Commentsportlet"
+    title="Recent Comments"
+    description="A portlet that renders a list of recent comments within the context of the space and all contained spaces"
+    i18n:attributes="title; description">
+   <for interface="ubify.viewlets.browser.interfaces.IDashboardColumn *" />
+  </portlet>
+
+  <portlet
+    addview="portlets.SiteMindmapPortlet"
+    title="Site Mindmap"
+    description="A portlet that renders a mindmap for the entire cyn.in sitemap"
+    i18n:attributes="title; description">
+   <for interface="ubify.cyninv2theme.browser.interfaces.IMindmapColumn" />
+  </portlet>
+
+  <portlet
+    addview="portlets.SpaceMindmapPortlet"
+    title="Space Mindmap"
+    description="A portlet that renders a mindmap for the sitemap of the space"
+    i18n:attributes="title; description">
+   <for interface="ubify.cyninv2theme.browser.interfaces.IMindmapColumn" />
+  </portlet>  
+
+  <portlet
+    addview="portlets.ActivityPortlet"
+    title="Recently Active Users"
+    description="A portlet that renders a tile list of recently active user's avatars within the context of the space and all contained spaces"
+    i18n:attributes="title; description">
+    <for interface="*" />
+  </portlet>
+
+  <portlet
+    addview="portlets.StatisticsPortlet"
+    title="Statistics"
+    description="A portlet that renders statistical information of the collaborative activity and content within the context of the space and all contained spaces"
+    i18n:attributes="title; description">
+    <for interface="*" />
+  </portlet>
+
+  <portlet
+    addview="portlets.TopRatedPortlet"
+    title="Top Rated"
+    description="A portlet that renders a list of the highest rated content within the context of the space and all contained spaces"
+    i18n:attributes="title; description">
+    <for interface="*" />
+  </portlet>
+
+  <portlet
+    addview="portlets.TagsPortlet"
+    title="Tags Portlet"
+    description="A portlet that renders a tag cloud of tags used within the context of the space and all contained spaces"
+    i18n:attributes="title; description">
+    <for interface="*" />
+  </portlet>
+
+  <portlet
+    addview="portlets.SiteDescriptionPortlet"
+    title="Description"
+    description="A portlet that displays the description of the cyn.in site or the current space, depending upon its context"
+    i18n:attributes="title; description">
+    <for interface="*" />
+  </portlet>  
+
+  <portlet
+    addview="portlets.RecentSiteUpdatesPortlet"
+    title="Recent Site Updates"
+    description="A portlet that renders a list of recent content of all types from within the context of the space and all contained spaces"
+    i18n:attributes="title; description">
+   <for interface="*" />
+  </portlet>  
+  
+</portlets>

@@ -1,0 +1,5 @@
+# If you want to change externals, modify the relevant line in this
+# file. Afterwards, run:
+# svn propset svn:externals -F EXTERNALS.txt .
+
+form https://svn.plone.org/svn/plone/plone.app.form/branches/old-trunk/plone/app/form

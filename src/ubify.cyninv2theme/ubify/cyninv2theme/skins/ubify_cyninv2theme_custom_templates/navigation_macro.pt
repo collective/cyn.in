@@ -1,0 +1,12 @@
+<tal:definemacro metal:define-macro="navigation_buttons_block" i18n:domain="cynin" tal:condition="python: modules['ubify.cyninv2theme'].checkHasPermission('Set own password', here)">
+    <div class="navTreeMindmapHolder">
+            <a tal:define="rootid python:modules['ubify.cyninv2theme'].getRootID()" tal:attributes="href string:${here/absolute_url}/fullviewmindmap" class="nyroMindmap smallwhitebutton navtipVertical"
+            title="View sitewide mindmap. Click on the red arrow links to navigate to the item."
+            rel="Site Mind Map"
+             i18n:attributes="title navtip_mindmap;rel title_site_mindmap">
+                <img tal:attributes="src string:${portal_url}/icon-sitemap_color.png" border="0" />
+            </a>        
+            <a href="#" class="navtipVertical smallwhitebutton toggleMaxWidth" title="Toggle maximum usage of width of your web browser."
+               i18n:attributes="title cluetip_toggle_max_width"><img tal:attributes="src python:context.portal_url() + '/icon-arrow_inout.png'" /></a>
+    </div>    
+</tal:definemacro>

@@ -1,0 +1,42 @@
+pkgloader
+=========
+
+*pkgloader* is a module for loading modules and packages and ammending
+the system PYTHONPATH when necessary.  It will also attempt to fix
+any existing (loaded by the interpreter already) module __path__
+entries.
+
+Lets begin by ensuring loading our tests packages doesn't yet work.
+
+  >>> import ns.pkg1
+  Traceback (most recent call last):
+    ...
+  ImportError: No module named ns.pkg1
+
+Now we go ahead and some values to the path.
+
+  >>> import os
+  >>> import p4a.z2utils.tests
+  >>> from p4a.z2utils import pkgloader
+  >>> testsdir = p4a.z2utils.tests.__path__[0]
+  >>> samplesdir = os.path.join(testsdir, 'samples')
+  >>> pkgloader.setup_pythonpath(os.path.join(samplesdir, 'dir1'),
+  ...                            'ns.pkg1')
+
+Importing ``ns.pkg1`` should now work.
+
+  >>> import ns.pkg1
+
+Of course we know at this point that ``ns.pkg2`` hasn't yet been made
+available.
+
+  >>> import ns.pkg2
+  Traceback (most recent call last):
+    ...
+  ImportError: No module named pkg2
+  
+So we go ahead and set that one up as well.
+
+  >>> pkgloader.setup_pythonpath(os.path.join(samplesdir, 'dir2'),
+  ...                            'ns.pkg2')
+  >>> import ns.pkg2

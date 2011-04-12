@@ -1,0 +1,6 @@
+<layers>
+ <layer
+     name="ubify.ffxmpp"
+     interface="ubify.ffxmpp.browser.interfaces.IThemeSpecific"
+     />
+</layers>

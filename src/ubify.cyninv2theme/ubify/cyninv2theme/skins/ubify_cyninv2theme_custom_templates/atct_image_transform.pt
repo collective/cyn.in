@@ -1,0 +1,36 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
+      lang="en-US"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="cynin">
+
+<body>
+
+<div class="mainformcontainer" metal:fill-slot="contentwithnopadding" tal:define="image nocall:here;
+                                        size python:here.getObjSize(here)">
+
+    <img src="#" alt="" tal:replace="structure python:here.tag(scale='mini')" />
+    <div class="field"
+         tal:define="transforms image/getTransformMap">
+      <form tal:attributes="action string:${request/URL1}/transformImage">
+        <label i18n:translate="label_transform">Transform: </label>
+        <select name="method">
+          <option disabled="disabled"
+                  value=""
+                  i18n:translate="label_select_method">Select method</option>
+          <option tal:repeat="trans transforms"
+                  i18n:translate=""
+                  tal:attributes="value trans/value"
+                  tal:content="trans/name">transformation</option>
+        </select>
+        <input class="context"
+               type="submit"
+               i18n:attributes="value label_execute;"
+               value="Execute" />
+      </form>
+    </div>
+
+</div>
+
+</body>
+
+</html>

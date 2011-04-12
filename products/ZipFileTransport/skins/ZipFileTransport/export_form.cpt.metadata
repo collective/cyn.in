@@ -1,0 +1,13 @@
+[default]
+title=Export
+
+[validators]
+validators=validate_CourseExport
+
+[actions]
+action.failure=traverse_to:string:export_form
+action.success=traverse_to:string:export_form
+action.success..Export=traverse_to:string:bulkExport
+action.success..Cancel=traverse_to_action:string:contents
+
+

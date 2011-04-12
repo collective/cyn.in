@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<tal:child
+            tal:define="nodes options/nodes"
+            tal:repeat="anode nodes"
+            tal:condition="nodes"
+     xmlns:tal="http://xml.zope.org/namespaces/tal"
+     xmlns:map="http://xml.cynapse.org/namespaces/freemind"
+     xmlns:node="http://xml.cynapse.org/namespaces/freemindnodes"
+            >
+    <node BACKGROUND_COLOR="#ffffff"
+        tal:attributes="LINK anode/getURL"
+        tal:define="actual anode/getObject"
+    >
+<richcontent TYPE="NODE"><html><head/><body><p align="left"><img tal:attributes="src python:view.getTypeIcon(actual)" /><span tal:content="actual/Title">asdf</span></p></body></html></richcontent>                <tal:recursenodes tal:replace="structure python:view.recurse(nodes=gotnodes)"
+                                  tal:condition="gotnodes"
+                                  tal:define="gotnodes python:view.getChildren(actual);"
+                                  />
+        <font BOLD="true" SIZE="12"/>
+
+    </node>
+</tal:child>

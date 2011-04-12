@@ -1,0 +1,131 @@
+Subtyping From a Browser
+========================
+
+Subtypes of content should be available from the browser.
+
+Set Up
+------
+
+Setup our Manager user.
+
+    >>> uf = app.acl_users
+    >>> uf._doAddUser('admin', 'admin', ['Manager'], [])
+        
+First we go about setting up a ``IContentType`` based interface that our
+content will ultimately get marked up with.  This is used with the descriptor.
+The reason we need to assign our IFoo interface to a module is so that
+python's pickling will operate properly (python cannot pickle classes defined
+in the builtin module). 
+
+    >>> import p4a.subtyper.tests
+    >>> import zope.interface
+    >>> import zope.app.content.interfaces    
+
+    >>> class IFoo(zope.interface.Interface): pass
+    >>> zope.interface.alsoProvides(IFoo,
+    ...                             zope.app.content.interfaces.IContentType)
+
+    >>> IFoo.__module__ = 'p4a.subtyper.tests'
+    >>> p4a.subtyper.tests.IFoo = IFoo
+
+Now we need to setup some new content type descriptors.
+
+    >>> from p4a.subtyper import interfaces
+    >>> import zope.component
+
+    >>> class Foo1Descriptor(object):
+    ...     zope.interface.implements(interfaces.IPortalTypedDescriptor)
+    ...     title = u'Foo1 Bar1'
+    ...     description = u'Random Description'
+    ...     type_interface = IFoo
+    ...     for_portal_type = 'Document'
+
+    >>> zope.component.provideUtility(Foo1Descriptor(), name=u'foo1')
+
+    >>> class Foo2Descriptor(object):
+    ...     zope.interface.implements(interfaces.IPortalTypedDescriptor)
+    ...     title = u'Foo2 Bar2'
+    ...     description = u'Random Description 2'
+    ...     type_interface = IFoo
+    ...     for_portal_type = 'Document'
+
+    >>> zope.component.provideUtility(Foo2Descriptor(), name=u'foo2')
+
+And of course we get the test browser.
+
+    >>> import Products.Five.testbrowser
+    >>> browser = Products.Five.testbrowser.Browser()
+    >>> browser.handleErrors = False
+    >>> browser.addHeader('Authorization', 'Basic admin:admin')
+
+Accessing Menu's
+----------------
+
+We should be able to simply go to the root of the plone site and see the
+newly registered content menu's.
+
+    >>> portal = app.plone
+    
+Run the setup script
+
+    >>> from p4a.subtyper.sitesetup import setup_site
+    >>> setup_site(portal)
+    
+We gotta clear the skin cache after the setup:
+
+    >>> portal.clearCurrentSkin()
+    
+Setup a simple document.  But first we have to ensure that a document
+can have an ``IAnnotations`` adapter.
+
+    >>> from zope.app.annotation.interfaces import IAttributeAnnotatable
+    >>> from Products.ATContentTypes.content import document
+    >>> zope.interface.classImplements(document.ATDocument,
+    ...                                IAttributeAnnotatable)
+
+    >>> browser.open(portal.absolute_url())
+    >>> browser.getLink('Page').click()
+    >>> browser.getControl('Title').value = 'testdoc'
+    >>> browser.getControl('Body Text').value = 'test body'
+    >>> browser.getControl('Save').click()
+
+Make sure the actual subtypes menu dropdown is displayed on the new document.
+
+    >>> browser.getLink('Sub-types')
+    <Link text='Sub-types...>
+
+And now we make sure the menu item's are there.
+
+    >>> link = browser.getLink('Foo1')
+    >>> link
+    <Link text='Foo1 Bar1' url='.../@@subtyper/change_type?subtype=foo1'>
+
+And of course clicking that link should change the sub type.
+
+    >>> link.click()
+    >>> 'Changed subtype to Foo1 Bar1' in browser.contents
+    True
+
+This ensures that the Foo1 link now has a bullet in front of it, as it now
+is active. (This test is a bit tricky, because in Plone 3 it's a bullet put 
+in with &bull; while in Plone 2.5 it's a css class.
+
+    >>> link = browser.getLink('Foo1')
+    >>> '\xe2\x80\xa2' in link.text or link.attrs.get('class') == 'actionMenuSelected'
+    True
+
+OK, now enable subtype 2:
+
+    >>> link = browser.getLink('Foo2')
+    >>> link
+    <Link text='Foo2 Bar2' url='.../@@subtyper/change_type?subtype=foo2'>
+
+Make sure it's reflected that Foo2 is the newly used subtype.
+
+    >>> link.click()
+    >>> 'Changed subtype to Foo2 Bar2' in browser.contents
+    True
+
+    >>> link = browser.getLink('Foo2')
+    >>> '\xe2\x80\xa2' in link.text or link.attrs.get('class') == 'actionMenuSelected'
+    True    

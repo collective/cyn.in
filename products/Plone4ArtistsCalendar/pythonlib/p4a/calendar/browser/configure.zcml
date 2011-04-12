@@ -1,0 +1,41 @@
+<configure
+    xmlns="http://namespaces.zope.org/browser">
+
+  <resourceDirectory
+      name="p4acalendar"
+      directory="resources"
+      permission="zope.Public"
+      />
+
+  <page
+      name="calendar-config.html"
+      for="p4a.calendar.interfaces.IPossibleCalendar"
+      permission="cmf.ModifyPortalContent"
+      class=".config.ConfigView"
+      />
+
+  <page
+      name="month.html"
+      for="p4a.calendar.interfaces.ICalendarEnhanced"
+      permission="zope2.View"
+      class=".month.MonthView"
+      template="month.pt"
+      />
+
+  <page
+      name="events.html"
+      for="p4a.calendar.interfaces.ICalendarEnhanced"
+      permission="zope2.View"
+      class=".events.EventListingView"
+      attribute="upcomingEvents"
+      />
+
+  <page
+      name="past_events.html"
+      for="p4a.calendar.interfaces.ICalendarEnhanced"
+      permission="zope2.View"
+      class=".events.EventListingView"
+      attribute="pastEvents"
+      />
+
+</configure>

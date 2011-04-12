@@ -1,0 +1,181 @@
+<tal:comment replace="nothing">
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see http://www.gnu.org/licenses/.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+</tal:comment>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xml:lang="en" lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="cynin">
+
+<head>
+    <metal:block fill-slot="top_slot"
+                 tal:define="dummy python:request.set('disable_border',1)" />
+    <metal:block fill-slot="column_one_slot" />
+    <metal:block fill-slot="column_two_slot" />
+</head>
+
+<body>
+
+<tal:titlebarslot metal:fill-slot="titlebar-row1">
+    <tal:titlemacrooverride metal:define-macro="itemtitle">
+	<div id="typeindicator">
+	    <img tal:attributes="src string:${portal_url}/icon-cog.png" alt="Administration" 
+                 i18n:attributes="alt header_administration" />
+	    <tal:translate i18n:translate="header_administration">Administration</tal:translate>
+	</div>
+	<div id="maintitleholder"
+	    tal:define="url_unquote_plus python:modules['Products.PythonScripts.standard'].url_unquote_plus;
+			author python:(len(request.traverse_subpath) > 0 and url_unquote_plus(request.traverse_subpath[0])) or request.get('author', None) or (member and member.getId());
+  		        authorinfo python: mtool.getMemberInfo(author);">
+	    <h1 id="maintitle" i18n:translate="">Edit Site Logo</h1>
+	</div>
+    </tal:titlemacrooverride>
+</tal:titlebarslot>
+
+<metal:main fill-slot="content"
+            tal:define="errors options/state/getErrors;">
+
+    <tal:main-macro metal:define-macro="main">
+
+     <div class="documentEditable">
+
+            <div class="documentContent" id="content">
+
+                <a name="documentContent"></a>
+
+                <div metal:use-macro="here/global_statusmessage/macros/portal_message">
+                    Portal status message
+                </div>
+
+                <form action="sitelogosettings"
+                      class="enableAutoFocus enableUnloadProtection"
+                      method="post"
+                      enctype="multipart/form-data"
+                      tal:condition="member"
+                      tal:attributes="action string:${portal_url}/sitelogo_settings">
+
+                    <metal:userdetails define-macro="user_form">
+
+                    <fieldset tal:define="macros here/additional_memberdata/macros | nothing;
+                                          top_macro macros/top | nothing;
+                                          showTop python:top_macro;
+                                          bottom_macro macros/bottom | nothing;
+                                          showBottom python:bottom_macro;
+                                          after_primary macros/after_primary| nothing;
+                                          showAfterPrimary python:after_primary;">
+
+                        <div class="field"
+                             tal:define="sitelogo python:getattr(context.portal_skins.custom,'logo.jpg');">
+
+                            <label for="portrait" class="formQuestion" 
+                                   i18n:translate="label_site_logo">Site Logo</label>
+
+
+                            <div class="formHelp" i18n:translate="help_site_logo_description">
+                            To add or change the site logo: click the "Browse" button;
+                            select an image for your logo. The uploaded image should be less than or equal to 200 pixels wide and 60 pixels height. Larger images will be auto-scaled to fit this size.
+                            </div>
+
+			    <div class="formHelp" i18n:translate="">
+				If you have uploaded a new logo and it does not appear immediately, <a tal:attributes="href portal_url" i18n:name="away_url"><tal:translate i18n:translate="">navigate away</tal:translate></a> from this page and clear your web browser's cache. This can be done in most browsers by pressing Ctrl + F5 or Ctrl + R.
+			    </div>
+
+			    <div>
+				<img class="portraitPhoto"
+                                     tal:condition="sitelogo"
+                                     tal:attributes="src sitelogo/absolute_url" />
+			    </div>
+
+			    <div>
+				<input type="file"
+				       name="sitelogo"
+				       id="sitelogo"
+				       size="20" />
+				<div>
+				    <input class="noborder"
+					type="checkbox"
+					id="pdeletesitelogo"
+					value="Delete Site Logo"
+					name="delete_sitelogo" />
+				    <span i18n:translate="label_delete_site_logo">Reset to default</span>
+				</div>
+
+			    </div>
+
+                        </div>
+
+                        <tal:macro condition="showBottom">
+                            <div metal:use-macro="bottom_macro" />
+                        </tal:macro>
+
+                        <div class="formControls">
+                            <input class="context"
+                                   type="submit"
+                                   value="Save"
+                                   name="form.button.Save"
+                                   i18n:attributes="value label_save;" />
+                            <input class="standalone"
+                                   type="submit"
+                                   value="Cancel"
+                                   name="form.button.Cancel"
+                                   i18n:attributes="value label_cancel;" />
+                        </div>
+
+                        <input type="hidden" name="form.submitted" value="1" />
+
+                        <input tal:replace="structure context/@@authenticator/authenticator" />
+
+                    </fieldset>
+
+                    </metal:userdetails>
+
+                </form>
+
+            </div>
+
+     </div>
+
+    </tal:main-macro>
+
+</metal:main>
+
+</body>
+</html>

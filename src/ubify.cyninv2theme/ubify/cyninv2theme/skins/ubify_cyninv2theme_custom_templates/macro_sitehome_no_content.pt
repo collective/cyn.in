@@ -1,0 +1,25 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      i18n:domain="cynin">
+    <tal:definemacro metal:define-macro="no_content" tal:define="isauthenticated python: modules['ubify.cyninv2theme'].checkHasPermission('Set own password', here)">
+        <tal:definitions tal:define="totalcount python:modules['ubify.cyninv2theme.portlets.statistics'].getTotalItemCount(context) or 0;"
+        tal:condition="isauthenticated"
+        >
+        <div class="sitehomenocontentcontainer">
+            <div class="sitehomenocontent" tal:condition="python:totalcount == 0">
+                <div class="sitehomenocontentheader" i18n:translate="">Welcome to cyn.in!</div>
+                <div class="addnewbuttonholder">
+                    <a href="addcontentselector" class="nyroModalnew">
+                        <img src="btn-plus.png" />
+                        <div class="addnewbuttontext" i18n:translate="addnewbuttontext">New</div>
+                    </a>
+                </div>
+                <div class="formHelp" i18n:translate="">There is no content added to this cyn.in site that you can see, yet. Click on the new button (generally available to you in the top bar of the cyn.in site) or click the one on the right to create new content.</div>
+            </div>
+        </div>
+        </tal:definitions>
+    </tal:definemacro>
+</html>

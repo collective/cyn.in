@@ -1,0 +1,109 @@
+<tal:comment replace="nothing">
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see http://www.gnu.org/licenses/.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+</tal:comment>
+<tal:translate i18n:domain="cynin">
+<div tal:replace="structure provider:ubify.documentactionsmanager" />
+<table border="0" width="100%" cellpadding="10" cellspacing="0" class="tablemetadata">
+    <tr>
+        <td valign="top" class="tdmetadatafirst">
+            <div class="tablemetadataheader" tal:condition="view/has_type" tal:content="python: typename + ' Info' + ':'" tal:define= "typename view/type_name" />
+            <div class="divpaddingleft">
+                <div class="divHighlight" tal:condition="view/has_size"><label i18n:translate="">Size:</label> <span class="labelvalues" tal:content="view/size"></span> bytes</div>
+                <div class="divHighlight" tal:condition="view/has_state" tal:define="rawitemstate view/raw_item_state;ploneview context/@@plone;state_class python:'state-' + ploneview.normalizeString(rawitemstate)"><label i18n:translate="">State:</label> <b><span tal:attributes="class string:${state_class} labelvalues" class="labelvalues" tal:content="view/item_state" i18n:translate="">Published</span></b></div>
+                <div><label i18n:translate="">Created Date:</label> <span class="labelvalues" tal:content="view/creationDate"></span></div>
+                <div><label i18n:translate="">Modified Date:</label> <span class="labelvalues" tal:content="view/modifiedDate"></span></div>
+                <div tal:condition="view/has_effectiveDate"><label i18n:translate="">Publishing Date:</label> <span class="labelvalues" tal:content="view/publishingDate"></span></div>
+                <div tal:condition="view/has_expiryDate"><label i18n:translate="">Expiration Date:</label> <span class="labelvalues" tal:content="view/expirationDate"></span></div>
+                <div tal:define="rights here/Rights|nothing" tal:condition="python:rights <> ''"><label i18n:translate="">Rights:</label>
+                    <span tal:condition="rights" tal:content="rights" class="labelvalues"/>
+                </div>
+                <div tal:condition="view/has_location"><label i18n:translate="">Location:</label> <span class="labelvalues" tal:content="view/location"/></div>
+                <div tal:condition="view/has_lang"><label i18n:translate="">Language:</label> <span class="labelvalues" tal:content="view/lang"/></div>
+                <div tal:define="url here/getURL | here/absolute_url | nothing" tal:condition="url"><a href="" tal:attributes="href url" i18n:translate="">Permalink</a></div>
+            </div>
+        </td>
+        <td class="tdmetadatasecond" valign="top" align="left">
+            <div tal:define="categories context/Subject|nothing;
+                            parentURL python:context.getParentNode().absolute_url();
+                            URLsuffix python:modules['ubify.cyninv2theme'].getListingTemplateForContextParent(context);"
+                tal:condition="categories"><label class="metadatarightlabel" i18n:translate="">Tags:</label><br/>
+                <div class="divpaddingleft">
+                <span tal:repeat="category categories">
+                <a href=""
+                   rel="tag"
+                   tal:content="category"
+                   tal:attributes="href string:${parentURL}/${URLsuffix}?Subject%3Alist=${category}">
+                  <tal:comment replace="nothing">Category</tal:comment>
+                  </a><tal:separator condition="not: repeat/category/end">,</tal:separator>
+                </span>
+
+                </div>
+            </div>
+            <div tal:define="items context/getRelatedItems|nothing"
+                tal:condition="items"><label class="metadatarightlabel" i18n:translate="">Related Items:</label><br/>
+                <div class="divpaddingleft">
+                    <ul tal:repeat="item items" class="relateditemsmetadata">
+                        <li><a href=""
+                           tal:define="item_url item/getURL|item/absolute_url;
+                           use_view_action here/portal_properties/site_properties/typesUseViewActionInListings|python:();
+                           item_url python:here.evalURL(item.portal_type,use_view_action,item_url);
+                           item_wf_state item/review_state|python: context.portal_workflow.getInfoFor(item, 'review_state', '');
+                           ploneview context/@@plone;
+                           item_wf_state_class python:'state-' + ploneview.normalizeString(item_wf_state)"
+                           tal:attributes="href item_url;class string:${item_wf_state_class} relateditemlink"
+                           >
+                            <img tal:attributes="src item/icon" border="0"/>
+                            <span tal:content="item/title" />
+                          </a></li>
+                    </ul>
+                </div>
+            </div>
+            <div tal:define="modifiers python:context.getProperty('modifiers');" tal:condition="modifiers"><label class="metadatarightlabel" i18n:translate="">Contributors:</label><br/>
+                <div class="divpaddingleft">
+                    <span tal:repeat="modifier modifiers">
+                        <a
+                        class="avatarlink contributoravatarlink"
+                        tal:attributes="rel string:${view/cportal_url}/userinfo?userid=${modifier}"
+                        tal:define="pmt view/portal_membership"><img tal:attributes="src python:pmt.getPersonalPortrait(modifier,1).absolute_url()" class="contributoravatar" border="0" /></a>
+                    </span>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+</tal:translate>

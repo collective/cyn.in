@@ -1,0 +1,134 @@
+=============================
+Plone4ArtistsCalendar Changes
+=============================
+
+Plone4ArtistsCalendar 1.1 (2008-04-12)
+======================================
+
+* Install fixes under Plone 2.5.
+
+* Fixed some bugs in the documentation.
+
+
+Plone4ArtistsCalendar 1.1b1 (2008-02-20)
+========================================
+
+New features
+------------
+
+* Plone 3 support.
+
+* Now uses p4a.subtyper.
+
+* Translations to german, french, spanish, norwegian and greek.
+
+Bugfixes
+--------
+
+* #23: Grey out currently selected view
+
+* Improved timezone handling
+
+* and more.
+
+
+
+Plone4ArtistsCalendar 1.0 (2007-10-14)
+======================================
+
+Bugfixes
+--------
+
+* Fixed issue #24 where folders created by uploading ICS files via
+  webdav were not becoming calendar enhanced (Rocky Burt)
+
+* Fixed issue #41 where regular users couldn't activate their
+  own folders to be calendars (Rocky Burt)
+
+* Fixed issue #45: events that span across several months can now be viewed
+  properly on the ending month (Rocky Burt)
+
+* Fixed issue #42: days with multiple events show the events
+  overlapping in IE 6 (Rocky Burt)
+
+  
+Plone4ArtistsCalendar 1.0rc1 (2007-07-31)
+=========================================
+
+Bugfixes
+--------
+
+* Many bug fixes (resulting from Boston 2007 P4A sprint)
+
+* #40 - Events not displayed in Month View on Windows IE6. Default install would not display events in IE 6.  Rob Baker supplied fix.
+
+* #39 - Timezone issue when exporting to iCal. Issue is resolved. It was an old version of DateTime.py that caused the trouble. Replacing the file with the new version (available at zope.org) solved the problem.
+
+* #38 - Time formatting for internationalization. P4A Calendar now uses the i18n library to convert the hour/minute format to the locale based on the language of the incoming browser request.  This change removed several methods on the Month class that were formally handling this formatting chore.  However, this new code does not have any tests written against it.
+
+* #36 - Event starting in the past, ending in the future is not listed. The submitter of the original bug supplied a patch. The patch was applied to the code base and tested. We concluded that the patch solves this issue.
+
+* #35 — KeyError causes month view to crash
+
+* #34 and #37 - Bug deals with a site breakage when the P4A product is removed from the file system.  This occurs after marker interfaces are set on containerish objects.  Rocky Burt concluded that this is a core Zope issue and provided a workaround is to remove all marker interfaces for P4A when uninstalling the product via the QuickInstaller.   Reinstall does not affect the marker interface settings.  The drawback is that if the product is uninstalled all site setting dealing with the calendar will be lost.   But it was considered worse to have a product that breaks a site with its removal from the files system.  The long term solution will have to come from Zope core.
+
+* #30 — Changing folder back to normal causes error.
+
+* #28 — Events with future month don't show up
+
+
+Plone4ArtistsCalendar 1.0beta1 (2007-04-29)
+===========================================
+
+Bugfixes
+--------
+
+* Various bugfixes
+
+
+Plone4ArtistsCalendar 1.0alpha2 (2007-01-14)
+============================================
+
+Features
+--------
+
+* Now has support for setting up a site/portal which means calendaring
+  functionality is only available after this has been performed on the
+  site/portal (Rocky Burt)
+
+* Added support to import iCalendar from a remote URL (Lennart Regebro)
+
+* Added support for add links (Lennart Regebro)
+
+* Added new support interfaces (Rocky Burt)
+
+* Added links between views + add view (Lennart Regebro)
+
+* Added support for sticking in a content provider in the month view
+  (Lennart Regebro)
+
+Bugfixes
+--------
+
+* Fixed bug where URL retrieval was getting the brain's incorrect URL
+  (Lennart Regebro)
+
+* Day popup view now shows complete daily list of events instead of
+  just two, fixes issue #6 (Rocky Burt)
+
+* Fixed issue where times representing noon hour were improperly being
+  given the 'am' identifier, fixes #8, thanks to Bill Schindler
+  (Rocky Burt)
+
+* Made the week tuple generation (monthweeks) more robust again, fixes
+  issue #7 (Rocky Burt)
+
+* Fixed an issue where when using december getting the current set of
+  weeks would error out with OverflowError.  Resolves #5 (Rocky Burt)
+
+
+Plone4ArtistsCalendar 1.0alpha1 (2006-10-21)
+============================================
+
+* First release with unrecorded set of functionality (Rocky Burt)
+

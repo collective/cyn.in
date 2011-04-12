@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<stackerRecentUpdates version="0.9.0_Beta_8"
+     xmlns:tal="http://xml.zope.org/namespaces/tal"
+     xmlns:stackerRecentUpdates="http://xml.cynapse.org/namespaces/stacker"
+     >
+    <item>
+	<id>when-smokey-sings</id>
+	<uid>2345678</uid>
+	<title>When Smokey Sings</title>
+	<description>The lyrics for the song, "When Smokey Sings" by ABC</description>
+	<portal_type>Document</portal_type>
+	<modified>2008/08/05</modified>
+	<modifiedby>dhiraj</modifiedby>
+	<creator>apurva</creator>
+	<commentcount>5</commentcount>
+    </item>
+    <item>
+	<id>when-smokey-sings</id>
+	<uid>2345678</uid>
+	<title>When Smokey Sings</title>
+	<description>The lyrics for the song, "When Smokey Sings" by ABC</description>
+	<portal_type>Document</portal_type>
+	<modified>2008/08/05</modified>
+	<modifiedby>dhiraj</modifiedby>
+	<creator>apurva</creator>
+	<commentcount>5</commentcount>
+    </item>
+</stackerRecentUpdates>

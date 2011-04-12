@@ -1,0 +1,127 @@
+<?xml version="1.0"?>
+<!--
+cyn.in is an open source Collaborative Knowledge Management Appliance that 
+enables teams to seamlessly work together on files, documents and content in 
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license 
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software 
+Foundation, either version 3 of the License, or any later version and observe 
+the Additional Terms applicable to this program and must display appropriate 
+legal notices. In accordance with Section 7(b) of the GNU General Public 
+License version 3, these Appropriate Legal Notices must retain the display of 
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have 
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program.  If not, see <http://www.gnu.org/licenses/>.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in. 
+For any queries regarding the licensing, please send your mails to 
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+-->
+<dc-workflow workflow_id="ubify_recyclebin_workflow"
+             title="Recycle Bin Workflow"
+             description=""
+             state_variable="review_state"
+             initial_state="private"
+             xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+             i18n:domain="cynin"
+             i18n:attributes="title; description">
+
+  <permission>Access contents information</permission> 
+  <permission>View</permission>
+  <permission>Modify portal content</permission>
+  <permission>Add portal content</permission>
+  <permission>Spaces Add Space</permission>
+  <permission>Delete objects</permission>
+ 
+ 
+ <state state_id="private" title="Deleted" i18n:attributes="title">
+   <description i18n:translate=""></description>
+   <permission-map name="Access contents information" acquired="False">
+    <permission-role>Manager</permission-role>    
+   </permission-map>
+   <permission-map name="View" acquired="False">
+    <permission-role>Manager</permission-role>    
+   </permission-map>   
+   <permission-map name="Modify portal content" acquired="False">
+    <permission-role>Manager</permission-role>    
+   </permission-map>
+   <permission-map name="Add portal content" acquired="False">
+    <permission-role>Manager</permission-role>    
+   </permission-map>
+   <permission-map name="Spaces Add Space" acquired="False">
+    <permission-role>Manager</permission-role>    
+   </permission-map>   
+   <permission-map name="Delete objects" acquired="False">
+    <permission-role>Manager</permission-role>
+   </permission-map>
+ </state>
+   
+  <variable variable_id="action" for_catalog="False"
+            for_status="True" update_always="True">
+    <description>The last transition</description>
+    <default>
+      <expression>transition/getId|nothing</expression>
+    </default>
+    <guard>
+    </guard>
+  </variable>
+  <variable variable_id="actor" for_catalog="False"
+            for_status="True" update_always="True">
+    <description>The ID of the user who performed the last transition</description>
+    <default>
+      <expression>user/getId</expression>
+    </default>
+    <guard>
+    </guard>
+  </variable>
+  <variable variable_id="comments" for_catalog="False"
+            for_status="True" update_always="True">
+    <description>Comments about the last transition</description>
+    <default>
+      <expression>python:state_change.kwargs.get('comment', '')</expression>
+    </default>
+    <guard>
+    </guard>
+  </variable>
+  <variable variable_id="review_history" for_catalog="False"
+            for_status="False" update_always="False">
+    <description>Provides access to workflow history</description>
+    <default>
+      <expression>state_change/getHistory</expression>
+    </default>
+    <guard>
+      <guard-permission>Request review</guard-permission>
+      <guard-permission>Review portal content</guard-permission>
+    </guard>
+  </variable>
+  <variable variable_id="time" for_catalog="False"
+            for_status="True" update_always="True">
+    <description>Time of the last transition</description>
+    <default>
+      <expression>state_change/getDateTime</expression>
+    </default>
+    <guard>
+    </guard>
+  </variable>
+
+</dc-workflow>

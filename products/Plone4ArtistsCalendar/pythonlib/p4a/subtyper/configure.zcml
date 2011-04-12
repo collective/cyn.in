@@ -1,0 +1,51 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:zcml="http://namespaces.zope.org/zcml"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    i18n_domain="p4a.subtyper">
+
+  <browser:menu
+      id="subtypes"
+      title="Sub-types"
+      class=".menu.SubtypesMenu"
+      />
+
+  <!-- Plone 2.5 support -->
+  <configure zcml:condition="installed zope.app.annotation.tests">
+    <include package="zope.app.annotation" />
+    <include package=".contentmenu" />
+    <include package=".contentmenu" file="meta.zcml" />
+    <browser:subMenuItem
+        menu="contentmenu_extra"
+        submenu="subtypes"
+        title="Sub-types"
+        permission="zope.Public"
+        for="*"
+        />
+
+  </configure>
+
+  <!-- Plone 3.0+ support -->
+  <configure zcml:condition="installed zope.annotation">
+    <include package="zope.annotation" />
+    <include package="plone.app.contentmenu" />
+    <adapter for="* *"
+             name="subtypes"
+             factory=".submenu.SubtypesSubMenuItem"
+             provides="plone.app.contentmenu.interfaces.IContentMenuItem" />
+  </configure>
+
+  <utility factory=".engine.Subtyper" />
+  <adapter factory=".default.nonfolderish_possible_descriptors" />
+  <adapter factory=".default.folderish_possible_descriptors" />
+
+  <browser:page
+      name="subtyper"
+      for="*"
+      permission="zope.Public"
+      class=".browser.SubtyperView"
+      allowed_interface=".browser.ISubtyperView"
+      />
+
+</configure>

@@ -1,0 +1,51 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:five="http://namespaces.zope.org/five">
+
+  <class
+      class="plone.app.form._named.ViewTemplateFromPageTemplate">
+    <allow
+        attributes="getId id title"
+        />
+  </class>
+  
+  <adapter
+      for="Products.Five.BrowserView"
+      factory="plone.app.form.default_named_template_adapter"
+      name="default"
+      provides="zope.formlib.namedtemplate.INamedTemplate"
+      />
+  
+  <adapter
+      for=".interfaces.IPloneSubPageForm"
+      factory="plone.app.form.default_subpage_template"
+      name="default"
+      provides="zope.formlib.namedtemplate.INamedTemplate"
+      />
+
+  <browser:page
+      for="*"
+      permission="zope2.View"
+      class=".visualtest.TestForm"
+      name="plone-form-test.html"
+      template="pageform.pt"
+      />
+
+  <browser:page
+      for="*"
+      permission="zope2.Public"
+      name="base-pageform.html"
+      template="pageform.pt"
+      />
+
+  <browser:page
+      for="*"
+      permission="zope2.Public"
+      name="base-subpageform.html"
+      template="subpageform.pt"
+      />
+
+  <five:traversable class="Products.CMFPlone.Portal.PloneSite" />
+
+</configure>

@@ -1,0 +1,24 @@
+# Carlos Tabasco <ctabasco@yaco.es>, 2005
+msgid ""
+msgstr ""
+"Project-Id-Version: ATRatings 0.2\n"
+"POT-Creation-Date: 2005-01-05 12:33:09 -0200\n"
+"PO-Revision-Date: 2011-03-09 10:48-0400\n"
+"Last-Translator: Leonardo J. Caballero G. <leonardocaballero@gmail.com>\n"
+"Language-Team: Spanish <plone-conosur@lists.plone.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-code: es\n"
+"Language-name: Español\n"
+"Preferred-Encodings: latin1 utf-8\n"
+"Domain: plone\n"
+"X-Is-Fallback-For: es-ar es-bo es-cl es-co es-cr es-do es-ec es-es es-sv es-gt es-hn es-mx es-ni es-pa es-py es-pe es-pr es-us es-uy es-ve\n"
+
+msgid "Ratings"
+msgstr "Puntuaciones"
+
+msgid "Thanks for your vote!"
+msgstr "Gracias por Votar"
+

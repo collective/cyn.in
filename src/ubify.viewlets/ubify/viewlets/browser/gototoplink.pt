@@ -1,0 +1,3 @@
+<div class="toplinkbar" i18n:domain="cynin">
+    <a href="#top" name="top" class="purehashlink simplefloatedlink" i18n:translate="button_top">Go to Top<tal:translate i18n:name="uparrow">&uarr; </tal:translate></a>
+</div>

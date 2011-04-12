@@ -1,0 +1,115 @@
+<tal:comment replace="nothing">
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see http://www.gnu.org/licenses/.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+</tal:comment>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="cynin">
+
+<head>
+    <metal:block fill-slot="top_slot"
+                 tal:define="dummy python:request.set('disable_border',1)" />
+</head>
+
+<body>
+
+<tal:block tal:condition="exists: here/portal_skins | nothing"
+           tal:replace="nothing">
+    <tal:block tal:condition="here/portal_skins/updateSkinCookie | nothing"
+               tal:define="dummy here/setupCurrentSkin" />
+</tal:block>
+
+<div metal:fill-slot="main">
+  <div tal:condition="not:isAnon">
+    <div tal:define="came_from request/came_from|nothing;
+                     initial_login request/initial_login|nothing;
+                     js_enabled python:request.get('js_enabled','1')!='0';">
+<center>
+      <h1 class="documentFirstHeading"
+          i18n:translate="heading_you_are_now_logged_in">You are now logged in</h1>
+
+        <p tal:condition="initial_login"
+           i18n:translate="description_logged_in_explain">
+           Notice that the top right bar has changed. It now
+           contains several personalized items. Use these items
+           to control your settings and your personal area.
+           They will remain as long as you are logged in.
+        </p>
+
+      <div tal:condition="not:initial_login">
+        <br />
+      </div>
+
+      <p tal:condition="came_from">
+        <a href=""
+           tal:attributes="href came_from"
+           i18n:translate="label_login_continue">
+          Continue</a>
+      </p>
+
+      <p tal:condition="python:not came_from">
+        <a href=""
+           tal:attributes="href context/@@plone_portal_state/navigation_root_url"
+           i18n:translate="label_login_continue_to_home_page">
+          Continue to the
+          <span tal:content="portal/title" i18n:name="portal_title">
+              portal title
+          </span>
+          home page
+          </a>
+      </p>
+
+      <div tal:condition="not:js_enabled">
+         <p i18n:translate="description_enable_cookies_to_stay_logged_in">
+            Note: If you do not remain logged in after leaving this page,
+            it is because you need to enable cookies in your browser.
+         </p>
+      </div>
+</center>
+    </div>
+  </div>
+  <div tal:condition="isAnon">
+    <div metal:use-macro="here/login_failed/macros/login_failed" />
+  </div>
+</div>
+
+</body>
+</html>

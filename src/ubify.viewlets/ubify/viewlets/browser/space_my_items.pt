@@ -1,0 +1,121 @@
+<tal:comment replace="nothing">
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see http://www.gnu.org/licenses/.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+</tal:comment>
+<tal:block tal:condition="view/results" tal:define="portal_url context/@@plone_portal_state/portal_url" i18n:domain="cynin">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" class="myrecentitems" id="myitems">
+        <tr id="headermyrecentitems">
+            <td width="100%" valign="middle" align="left"><div class="documentFirstHeading" i18n:translate="">My Items</div></td>
+        </tr>
+        <tr>
+            <td class="bodymyrecentitems">
+
+
+    <tal:foldercontents define="contentFilter contentFilter|request/contentFilter|nothing;
+                            limit_display limit_display|request/limit_display|view/limit_display|nothing;
+                            more_url more_url|request/more_url|string:folder_contents;
+                            is_a_topic python:here.portal_type=='Topic';
+                            is_a_smartview python:here.portal_type=='SmartView';
+                            folderContents view/results;
+                            use_view_action here/portal_properties/site_properties/typesUseViewActionInListings|python:();
+                            over_limit python: limit_display and len(folderContents) > limit_display;
+                            folderContents python: (over_limit and folderContents[:limit_display]) or folderContents;
+                            show_about python:True;">
+        <tal:listing condition="folderContents">
+                <tal:entry tal:repeat="item folderContents">
+                <tal:block tal:define="item_url item/getURL|item/absolute_url;
+                                       item_id item/getId|item/id;
+                                       item_title_or_id item/pretty_title_or_id;
+                                       item_description item/Description;
+                                       item_type item/portal_type;
+                                       item_type_title item/Type;
+                                       item_modified item/ModificationDate;
+                                       item_created item/CreationDate;
+                                       plone_view view/plone_view;
+                                       item_icon python:plone_view.getIcon(item);
+                                       item_type_class python:'contenttype-' + context.plone_utils.normalizeString(item_type);
+                                       item_wf_state item/review_state|python: context.portal_workflow.getInfoFor(item, 'review_state', '');
+                                       item_wf_state_class python:'state-' + context.plone_utils.normalizeString(item_wf_state);
+                                       item_creator item/Creator;
+                                       item_start item/start/ISO|item/StartDate|nothing;
+                                       item_end item/end/ISO|item/EndDate|nothing;
+                                       portal_url here/portal_url;
+                                       oddrow repeat/item/odd
+                                   "><table cellpadding="0" cellspacing="0" width="100%" tal:attributes="class python:oddrow and  'hoverhighlight recentitemrow even' or 'hoverhighlight recentitemrow odd'">
+                        <tr>
+
+                            <td width="100%" valign="top"><dt metal:define-macro="listitem"
+                        >
+                        <span class="summary"
+                              tal:attributes="class string:$item_type_class summary"
+                              tal:condition="python:item_type != 'Link'">
+                            <a href="#"
+                               tal:attributes="href python:here.evalURL(item_type,use_view_action,item_url);
+                                               class string:${item_wf_state_class} url"
+                               >
+                            <img tal:replace="structure item_icon/html_tag" />
+                               <span tal:replace="item_title_or_id">
+                                Item Title
+                               </span>
+                            </a>
+                        </span> <span class=""
+                              tal:attributes="class string:$item_type_class"
+                              tal:condition="python:item_type == 'Link'">
+                            <img tal:replace="structure item_icon/html_tag" valign="middle"/>
+                            <a href="#"
+                               class="link-plain"
+                               tal:content="item_title_or_id"
+                               tal:attributes="href item_url;
+                                               class string:${item_wf_state_class} link-plain">
+                                <tal:comment replace="nothing">External Link</tal:comment>
+                            </a>
+                        </span> <span class="myitemdate">&mdash; <span tal:define="mdate python:item.toLocalizedTime(item_modified)" class="" tal:attributes="title string:${mdate}" tal:content="mdate">
+                          <tal:comment replace="nothing">August 16, 2001 at 23:35:59</tal:comment>
+                        </span></span>
+                    </dt>
+</td>
+
+                        </tr>
+                    </table>
+                </tal:block>
+                </tal:entry>
+            </tal:listing>
+    </tal:foldercontents>
+            </td>
+        </tr>
+    </table>
+</tal:block>

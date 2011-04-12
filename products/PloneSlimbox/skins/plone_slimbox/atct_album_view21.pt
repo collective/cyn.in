@@ -1,0 +1,95 @@
+<metal:page define-macro="master"><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
+      lang="en-US"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="plone">
+
+<head>
+
+    <metal:block fill-slot="css_slot">
+        <style type="text/css" media="screen"
+               tal:content="structure string:<!-- @import url($portal_url/atcontenttypes.css); -->"></style>
+    </metal:block>
+
+</head>
+
+<body>
+
+<div metal:fill-slot="main">
+<metal:main_macro define-macro="main"
+     tal:define="result python:here.atctListAlbum(images=1, folders=1, subimages=0, others=1);
+                 images result/images;
+                 albums result/folders;
+                 otherContents result/others;
+                 Batch python:modules['Products.CMFPlone'].Batch;
+                 b_start python:request.get('b_start', 0);
+                 batch python:Batch(images, 12, int(b_start), orphan=1)">
+
+    <div metal:use-macro="here/document_actions/macros/document_actions">
+        Document actions (print, sendto etc)
+    </div>
+
+    <h1 tal:content="here/pretty_title_or_id" class="documentFirstHeading">Title or id</h1>
+
+    <div tal:content="here/Description" tal:condition="here/Description" class="documentDescription">
+        Description
+    </div>
+
+    <tal:albumsimages tal:condition="python:albums or images">
+        <tal:images tal:condition="batch" tal:repeat="image batch">
+            <div class="photoAlbumEntry">
+                <div metal:use-macro="here/lightbox_macros/macros/photo" />
+            </div>
+        </tal:images>
+
+        <tal:albums tal:condition="albums" tal:repeat="album albums">
+            <div class="photoAlbumEntry photoAlbumFolder"
+                 tal:define="image_brains_in_album python:album.atctListAlbum(subimages=1)['subimages'];
+                             number_of_images python:len(image_brains_in_album);
+                             random python:modules['random'];
+                             random_image python:number_of_images and random.choice(image_brains_in_album).getObject() or None">
+                        <a tal:attributes="href album/getURL;
+                                           title album/Description">
+                            <span class="photoAlbumEntryWrapper">
+                                <img src="" alt=""
+                                     tal:condition="number_of_images"
+                                     tal:replace="structure python:random_image.tag(scale='thumb', title=album.Description)" />
+                            </span>
+                            <span class="photoAlbumEntryTitle">
+                               <tal:title content="album/pretty_title_or_id">Title</tal:title>
+                            (<tal:number content="number_of_images" />)
+                            </span>
+                        </a>
+            </div>
+        </tal:albums>
+
+        <div class="visualClear"><!-- --></div>
+
+    </tal:albumsimages>
+
+    <p class="discreet"
+       i18n:domain="atcontenttypes"
+       i18n:translate="text_no_albums_uploaded"
+       tal:condition="python:not (albums or images)">
+        No albums or photos uploaded yet.
+    </p>
+
+    <div tal:condition="python:albums or images"
+         metal:use-macro="here/batch_macros/macros/navigation" />
+
+    <tal:listing condition="otherContents"
+                 define="folderContents otherContents">
+        <metal:listing metal:use-macro="here/folder_listing/macros/listing">
+            <metal:empty metal:fill-slot="no_items_in_listing"></metal:empty>
+        </metal:listing>
+
+    </tal:listing>
+
+    <metal:subtopics use-macro="here/atct_topic_view/macros/folderlisting_macro" />
+
+</metal:main_macro>
+</div>
+
+</body>
+
+</html>
+</metal:page>

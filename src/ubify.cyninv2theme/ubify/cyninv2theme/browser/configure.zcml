@@ -1,0 +1,323 @@
+<!--
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see <http://www.gnu.org/licenses/>.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+-->
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:plone="http://namespaces.plone.org/plone"
+    i18n_domain="cynin">
+
+    <interface
+        interface=".interfaces.IThemeSpecific"
+        type="zope.publisher.interfaces.browser.IBrowserSkinType"
+        name="cynin"
+        />
+
+    <!-- Viewlets registration -->
+       <browser:viewletManager
+        name="plone.belowcontentbody"
+        provides="plone.app.layout.viewlets.interfaces.IBelowContentBody"
+        permission="zope2.View"
+        layer=".interfaces.IThemeSpecific"
+        class="plone.app.viewletmanager.manager.OrderedViewletManager"
+        />
+
+    <!-- Zope 3 browser resources -->
+
+    <browser:page
+        for="*"
+        name="home"
+        template="sitehome.pt"
+        permission="zope2.View"
+        />
+
+    <browser:page
+        for="*"
+        name="userinfo"
+        class="ubify.cyninv2theme.browser.userinfo.UserInfo"
+        permission="zope2.View"
+        />
+        
+
+    <browser:page
+        for="*"
+        name="topbarmybutton"
+        class="ubify.cyninv2theme.browser.topbarmybutton.TopbarMyButton"
+        permission="zope2.View"
+        />
+        
+    <browser:page
+        for="*"
+        name="itemdetails"
+        class="ubify.cyninv2theme.browser.itemdetails.ItemDetails"
+        permission="zope2.View"
+        />
+
+    <browser:page
+        for="*"
+        name="about-cynin"
+        template="aboutcynin.pt"
+        permission="zope2.View"
+        />
+    <browser:page
+        for="*"
+        name="browser-support"
+        template="browsersupported.pt"
+        permission="zope2.View"
+        />
+    <browser:page
+        for="*"
+        name="browser-not-supported"
+        template="browsernotsupported.pt"
+        permission="zope2.View"
+        />
+    <browser:page
+        for="*"
+        permission="zope2.View"
+        name="fullviewmindmap"
+        layer=".interfaces.IThemeSpecific"
+        template="fullviewmindmap.pt"
+        />
+
+    <browser:page
+        name="app_calendar"
+        for="*"
+        permission="zope2.View"
+        class=".cynincalendar.MonthView"
+        template="app_cal_month.pt"
+        />
+
+    <browser:page
+        name="app_calendar_events"
+        for="*"
+        permission="zope2.View"
+        class=".cynincalendar.EventListingView"
+        attribute="upcomingEvents"
+        />
+
+    <browser:page
+        name="app_calendar_past_events"
+        for="*"
+        permission="zope2.View"
+        class=".cynincalendar.EventListingView"
+        attribute="pastEvents"
+        />
+
+    <browser:page
+        name="app_calendar_import"
+        for="*"
+        permission="zope2.View"
+        class=".cynincalendar.iCalendarView"
+        template="icalendar_import.pt"
+        allowed_interface=".cynincalendar.IiCalendarView"
+        />
+
+    <browser:page
+        name="icalendar.ics"
+        for="*"
+        permission="zope2.View"
+        class="p4a.plonecalendar.browser.icalendar.iCalendarView"
+        template="../../../../../products/Plone4ArtistsCalendar/pythonlib/p4a/plonecalendar/browser/icalendar.pt"
+        allowed_interface="p4a.plonecalendar.browser.icalendar.IiCalendarView"
+        />
+    <browser:page
+        for="ubify.coretypes.interfaces.IContentSpace"
+        name="dashboard"
+        template="spacehome.pt"
+        class=".cynindashboards.SpaceDashboardView"
+        permission="zope2.View"
+        />
+
+    <include package="plone.app.portlets" />
+    <include package="plone.portlet.collection" />
+
+    <class class=".navigation.QueryBuilder">
+        <allow interface="plone.app.layout.navigation.interfaces.INavigationQueryBuilder" />
+    </class>
+
+
+    <plone:portletRenderer
+        portlet="plone.app.portlets.portlets.navigation.INavigationPortlet"
+        class=".navigation.Renderer"
+        layer=".interfaces.IThemeSpecific"
+        />
+
+    <plone:portletRenderer
+        portlet="plone.app.portlets.portlets.review.IReviewPortlet"
+        class=".review.Renderer"
+        layer=".interfaces.IThemeSpecific"
+        />
+
+    <plone:portletRenderer
+        portlet="plone.portlet.collection.collection.ICollectionPortlet"
+        class=".collection.Renderer"
+        layer=".interfaces.IThemeSpecific"
+        />
+
+    <plone:portletRenderer
+        portlet="plone.portlet.static.static.IStaticPortlet"
+        class=".static.Renderer"
+        layer=".interfaces.IThemeSpecific"
+        />
+
+    <include package="plone.app.workflow" />
+    <browser:page
+        name="sharing"
+        for="*"
+        class=".sharing.SharingView"
+        layer=".interfaces.IThemeSpecific"
+        permission="plone.DelegateRoles"
+        />
+
+    <browser:page
+        for="plone.portlets.interfaces.ILocalPortletAssignable"
+        class="plone.app.portlets.browser.manage.ManageContextualPortlets"
+        name="manage-content"
+        template="managecontent.pt"
+        permission="plone.app.portlets.ManagePortlets"
+    />
+
+    <browser:page
+        for="plone.portlets.interfaces.ILocalPortletAssignable"
+        class="plone.app.portlets.browser.manage.ManageContextualPortlets"
+        name="manage-spacemembers"
+        template="managespacemembers.pt"
+        permission="plone.app.portlets.ManagePortlets"
+    />
+
+    <browser:page
+        for="plone.portlets.interfaces.ILocalPortletAssignable"
+        class="plone.app.portlets.browser.manage.ManageContextualPortlets"
+        name="manage-mindmap"
+        template="managemindmap.pt"
+        permission="plone.app.portlets.ManagePortlets"
+    />
+
+    <browser:page
+        for="plone.portlets.interfaces.ILocalPortletAssignable"
+        class="plone.app.portlets.browser.manage.ManageContextualPortlets"
+        name="manage-leftblock"
+        template="managehomeleftblock.pt"
+        permission="plone.app.portlets.ManagePortlets"
+    />
+
+    <adapter
+      factory=".portletmanager.DashboardColumnPortletRenderer"
+      provides="plone.portlets.interfaces.IPortletManagerRenderer"
+      />
+
+    <adapter
+        factory=".portletmanager.SpaceMembersColumnPortletRenderer"
+        provides="plone.portlets.interfaces.IPortletManagerRenderer"
+        />
+
+    <adapter
+        factory=".portletmanager.MindmapColumnPortletRenderer"
+        provides="plone.portlets.interfaces.IPortletManagerRenderer"
+        />
+
+    <adapter
+        factory=".portletmanager.HomeLeftBlockColumnPortletRenderer"
+        provides="plone.portlets.interfaces.IPortletManagerRenderer"
+        />
+
+    <adapter factory=".navigation.CyninNavigation" />
+
+    <adapter factory=".cynindashboards.SpaceDefaultDashboard" />
+
+    <adapter factory=".cynindashboards.SiteHomeDefaultDashboard" />
+
+    <browser:page
+        for="Products.CMFCore.interfaces.ISiteRoot"
+        name="dashboard"
+        permission="plone.app.portlets.ManageOwnPortlets"
+        class="plone.app.layout.dashboard.dashboard.DashboardView"
+        template="dashboard.pt"
+        layer=".interfaces.IThemeSpecific"
+        />
+
+    <browser:page
+      for="Products.CMFCore.interfaces.ISiteRoot"
+      class="plone.app.portlets.browser.manage.ManageDashboardPortlets"
+      name="manage-dashboard"
+      template="manage-dashboard.pt"
+      permission="plone.app.portlets.ManageOwnPortlets"
+      layer=".interfaces.IThemeSpecific"
+      />
+
+    <browser:page
+      for="ubify.coretypes.interfaces.IImportExportCoretype"
+      name="spacemembers"
+      template="spacemembers.pt"
+      permission="zope2.View"
+      layer=".interfaces.IThemeSpecific"
+      />
+    <browser:page
+      for="Products.CMFCore.interfaces.ISiteRoot"
+      class="plone.app.portlets.browser.manage.ManageGroupPortlets"
+      name="manage-group-portlets"
+      template="manage-group.pt"
+      permission="plone.app.portlets.ManagePortlets"
+      />
+    <browser:page
+      for="*"
+      class=".selectdefaultwikipage.SelectDefaultWikiPage"
+      name="selectdefaultwikipage"
+      permission="cmf.ModifyPortalContent"
+      />
+      
+    <browser:page
+        for="*"
+        class=".addcontentselector.AddContentSelector"
+        name="addcontentselector"
+        permission="zope2.View"
+        />
+        
+    <browser:page
+        for="*"
+        class=".spaceselector.SpaceSelector"
+        name="spaceselector"
+        permission="zope2.View"
+        />
+    <browser:page
+       for="*"
+       name="tickupdate"
+       class=".tickers.TickTriggerView"
+       permission="zope2.Public"
+       />
+</configure>

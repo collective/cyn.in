@@ -1,0 +1,140 @@
+<tal:comment replace="nothing">
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see http://www.gnu.org/licenses/.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+</tal:comment>
+<tal:block define="userHasReplyPermission view/can_reply;
+                   isDiscussionAllowed view/is_discussion_allowed;
+                   replies view/get_replies;
+                   lasttimestamp view/lasttimestamp;
+                   lastcommentid view/lastcommentid;
+                   isAnon view/is_anonymous"
+           i18n:domain="cynin">
+    <tal:commentscondition  tal:condition="python:replies or (userHasReplyPermission and isDiscussionAllowed) or (isAnon and not userHasReplyPermission and isDiscussionAllowed)">
+        <form id="discussionaddnewform" name="reply"
+              action=""
+              method="post"
+              tal:condition="python:isDiscussionAllowed"
+              tal:attributes="action string:${context/absolute_url}/discussion_reply_form">
+                <fieldset class="contentheaderlabel">
+                    <legend>
+                        <span>
+                        <tal:block i18n:translate="" tal:condition="python: context.portal_type not in ('Discussion')">Comments</tal:block>
+                        <tal:block i18n:translate="" tal:condition="python: context.portal_type in ('Discussion')">Replies</tal:block>
+                        (<span tal:content="python:len(replies)" id="discussionlabel"/>)</span>
+                    <a id="comcynapsehiddencomments"
+                       tal:attributes="kssattr:lasttimestamp string:${lasttimestamp};
+                       kssattr:commentcount python:len(replies);
+                       kssattr:lastcommentid string:${lastcommentid};
+                       kssattr:viewtype string:threadedview"
+                       class="link_refreshtrigger navtipVertical"
+                       tal:condition="python: not isAnon"
+                       title="Load new comments by other users" i18n:attributes="title refreshcommentstitle">
+                        <img tal:attributes="src string:${here/portal_url}/icon-arrow_refresh.png" />
+                    </a>
+                    </legend>
+                </fieldset>
+        </form>
+        <div id="commentscontainer">
+            <form tal:condition="python:isAnon and not userHasReplyPermission and isDiscussionAllowed"
+                  tal:attributes="action view/login_action">
+                <input class="standalone"
+                       style="margin-bottom: 1.25em;"
+                       type="submit"
+                       value="Log in to add comments"
+                       i18n:attributes="value label_login_to_add_comments;"
+                       />
+            </form>
+            <div id="togglecommentsview">
+                <a href="#" class="simplefloatedlink selected" title="Threaded View"
+                   i18n:attributes="title cluetip_threaded_view"
+                   i18n:translate="lbl_threaded_view"
+                   viewtype="threadedview">Threaded View</a>
+                <a href="#" class="simplefloatedlink" title="Flat View"
+                   i18n:attributes="title cluetip_flat_view" i18n:translate="lbl_flat_view" viewtype="flatview">Flat View</a>
+            </div>
+            <div id="comcynapsecyninitemcommentscontainer" width="100%">
+                <tal:getreplies repeat="reply_dict replies">
+                    <tal:commentrow metal:use-macro="here/commentrow_macro/macros/comment_kss_reply" />
+                </tal:getreplies>
+            </div>
+            <a name="DiscussionAddNew"></a>
+            <div id="comcynapsefrmDiscussionAddNew" class="commenttopcontainer" tal:condition="python: userHasReplyPermission and isDiscussionAllowed" >
+                <form name="frmDiscussionAddNew"
+                tal:condition="python:userHasReplyPermission and isDiscussionAllowed"
+                action=""
+                >
+                    <a tal:attributes="rel string:${here/portal_url}/userinfo?userid=${userid};"
+                       id="postcommentavatar0"
+                       rel = "0"
+                       tal:define="pmt here/portal_membership;
+                       pst here/plone_portal_state;
+                       userid python:pst.member().getId();
+                       portraiturl python:pmt.getPersonalPortrait(userid,1);
+                       "
+                      class="avatarlink myareaavatar"
+                      >
+                        <img tal:replace="structure portraiturl"/>
+                    </a>
+                <div class="commentbodytaholder">
+                    <textarea
+                        class="inlinecommentformitem inputboxes commentbodyta inputLabel"
+                        id="taAddNewComment" name="comcynapsecyninNewCommentBody"
+                        rows="1"
+                        title="Post a comment..."
+                        i18n:attributes="title lbl_commentbox_title"
+                    ></textarea>
+                </div>
+                    <div class="commentactionbuttonsrow">
+                        <input type="hidden" name="comcynapsecynincontextUID" tal:attributes="value context/UID" />
+                        <input type="hidden" name="comcynapsenewcommenttitle" id="comcynapsenewcommenttitle" />
+                        <input type="hidden" id="comcynapseviewtype" name="comcynapseviewtype" tal:attributes="value string:threadedview" />
+                        <input type="hidden" id="comcynapselasttimestamp" name="comcynapselasttimestamp" tal:attributes="value string:${lasttimestamp}" />
+                        <input type="hidden" id="comcynapsecommentcount" name="comcynapsecommentcount" tal:attributes="value python:len(replies)" />
+                        <input type="hidden" id="comcynapselastcommentid" name="comcynapselastcommentid" tal:attributes="value string:${lastcommentid}" />                        
+                        <input type="button" value="Cancel" class="comcynapsecyninlistcommentcancel cancelbutton" style="display:none" i18n:attributes="value button_cancel"/>
+                        <input type="submit" class="smallwhitebutton allowMultiSubmit comcynapsecyninlistcommentsubmit" id="comcynapsecyninnewcommentsubmit" name="comcynapsecyninnewcommentsubmit" value="Post" i18n:attributes="value button_post_comment" style="display:none"/>
+                    </div>
+                    <dl id="comcynapsecommenterror" class="portalMessage error inlineerror" style="display: none;">
+                        <dt i18n:translate="">Error</dt>
+                        <dd i18n:translate="">Please enter comment text.</dd>
+                    </dl>
+                </form>
+                <tal:emptycommenthtml metal:use-macro="context/emptyhtml/macros/comment_display" />
+            </div>
+        </div>
+    </tal:commentscondition>
+</tal:block>

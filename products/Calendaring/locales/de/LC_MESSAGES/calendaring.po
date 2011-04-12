@@ -1,0 +1,183 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Plone Message Catalog\n"
+"POT-Creation-Date: 2004-12-15 12:40+0000\n"
+"PO-Revision-Date: 2003-09-18 09:09+Westeuropäische Normalzeit\n"
+"Last-Translator:  <Oliver Merkel, merkel@kom.tu-darmstadt.de>\n"
+"Language-Team: de <>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-Code: de\n"
+"Language-Name: Deutsch\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: plone\n"
+"X-Generator: KBabel 1.3.1\n"
+"X-Is-Fallback-For: de-at de-li de-lu de-ch de-de\n"
+
+#. <table cellspacing="0" class="ploneCalendar" i18n:attributes="summary" id="thePloneCalendar" summary="Calendar">
+#: skins/plone_calendar/portlet_calendaring.pt
+msgid "Calendar"
+msgstr "Kalender"
+
+#. <th i18n:translate="box_events">
+#.  Events
+#. </th>
+#: skins/calendaring/day_view.pt
+msgid "box_events"
+msgstr "Events"
+
+#. <a href="#" i18n:translate="calendar_next_day" tal:attributes="href urlNext">
+#.  next day
+#. </a>
+#: skins/calendaring/day_view.pt
+msgid "calendar_next_day"
+msgstr "Nächster Tag"
+
+#. <a href="#" i18n:translate="calendar_next_month" tal:attributes="href urlNext">
+#.  next month
+#. </a>
+#: skins/calendaring/month_view.pt
+msgid "calendar_next_month"
+msgstr "Nächster Monat"
+
+#. <a href="#" i18n:translate="calendar_next_week" tal:attributes="href urlNext">
+#.  next week
+#. </a>
+#: skins/calendaring/week_view.pt
+msgid "calendar_next_week"
+msgstr "Nächste Woche"
+
+#. <a href="#" i18n:translate="calendar_prev_day" tal:attributes="href urlPrev">
+#.  previous day
+#. </a>
+#: skins/calendaring/day_view.pt
+msgid "calendar_prev_day"
+msgstr "Vorheriger Tag"
+
+#. <a href="#" i18n:translate="calendar_prev_month" tal:attributes="href urlPrev">
+#.  previous month
+#. </a>
+#: skins/calendaring/month_view.pt
+msgid "calendar_prev_month"
+msgstr "Vorheriger Monat"
+
+#. <a href="#" i18n:translate="calendar_prev_week" tal:attributes="href urlPrev">
+#.  previous week
+#. </a>
+#: skins/calendaring/week_view.pt
+msgid "calendar_prev_week"
+msgstr "Vorherige Woche"
+
+#. <th class="hour" i18n:translate="calendar_time">
+#.  Hour
+#. </th>
+#: skins/calendaring/day_view.pt
+msgid "calendar_time"
+msgstr "Uhrzeit"
+
+#. <th i18n:translate="calendar_whole_day_or_running">
+#.  Ongoing Events
+#. </th>
+#: skins/calendaring/day_view.pt
+msgid "calendar_whole_day_or_running"
+msgstr "Ganztägige Termine oder begonnene und laufende Termine"
+
+#. <th i18n:translate="calendar_whole_month_or_running">
+#.  Ongoing Events
+#. </th>
+#: skins/calendaring/month_view.pt
+msgid "calendar_whole_month_or_running"
+msgstr "Ganzmonatige Termine oder begonnene und laufende Termine"
+
+#. <th i18n:translate="calendar_whole_week_or_running">
+#.  Ongoing Events
+#. </th>
+#: skins/calendaring/week_view.pt
+msgid "calendar_whole_week_or_running"
+msgstr "Ganzwöchige Termine oder begonnene und laufende Termine"
+
+#~ msgid "Apr"
+#~ msgstr "Apr."
+
+#~ msgid "Aug"
+#~ msgstr "Aug."
+
+#~ msgid "Dec"
+#~ msgstr "Dez."
+
+#~ msgid "Feb"
+#~ msgstr "Feb."
+
+#~ msgid "Friday"
+#~ msgstr "Freitag"
+
+#~ msgid "Jan"
+#~ msgstr "Jan."
+
+#~ msgid "Jul"
+#~ msgstr "Juli"
+
+#~ msgid "Jun"
+#~ msgstr "Juni"
+
+#~ msgid "Mar"
+#~ msgstr "März"
+
+#~ msgid "May"
+#~ msgstr "Mai"
+
+#~ msgid "Monday"
+#~ msgstr "Montag"
+
+#~ msgid "Nov"
+#~ msgstr "Nov."
+
+#~ msgid "Oct"
+#~ msgstr "Okt."
+
+#~ msgid "Saturday"
+#~ msgstr "Samstag"
+
+#~ msgid "Sep"
+#~ msgstr "Sept."
+
+#~ msgid "Sunday"
+#~ msgstr "Sonntag"
+
+#~ msgid "Thursday"
+#~ msgstr "Donnerstag"
+
+#~ msgid "Tuesday"
+#~ msgstr "Dienstag"
+
+#~ msgid "Wednesday"
+#~ msgstr "Mittwoch"
+
+#~ msgid "calendar_created_on"
+#~ msgstr "Erstellt am"
+
+#~ msgid "calendar_day"
+#~ msgstr "Tag"
+
+#~ msgid "calendar_end"
+#~ msgstr "Ende"
+
+#~ msgid "calendar_month"
+#~ msgstr "Monat"
+
+#~ msgid "calendar_show_all_events"
+#~ msgstr "Alle Termine anzeigen"
+
+#~ msgid "calendar_show_only_my_events"
+#~ msgstr "Eigene Termine anzeigen"
+
+#~ msgid "calendar_start"
+#~ msgstr "Beginn"
+
+#~ msgid "calendar_week"
+#~ msgstr "Woche"
+
+#~ msgid "calendar_week_tabular"
+#~ msgstr "Woche (Tabelle)"

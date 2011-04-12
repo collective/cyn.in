@@ -1,0 +1,111 @@
+<tal:comment replace="nothing">
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see http://www.gnu.org/licenses/.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+</tal:comment>
+<html i18n:domain="cynin">
+<head>
+<style type="text/css" media="all"><!-- @import url(/portal_css/cynin/ploneCustom.css); --></style>    
+<tal:block tal:replace="structure string:<script type='text/javascript'>" />
+var portal_url = '<tal:block replace="context/portal_url" />';
+<tal:block tal:replace="structure string:</script>" />
+</head>
+<body>
+ <script type="text/javascript" 
+ src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"> </script>
+  
+ 
+ <div id="placeholder"></div>
+    <div class="notsupportedfullcontainer">
+    <div class="notsupportedbrowser">
+        <div class="browsernotsupportedheadline">Microsoft Internet Explorer lower than 7.x is not supported !</div>
+        <div class="browsernotsupportedtext">Please switch to a different browser (study the list below), or upgrade to the latest version of Internet Explorer.</div>
+    </div>
+    <div class="supportedbrowserscontainer">
+        <div id="content" metal:define-macro="supportedbrowsers" class="paragraph">
+            <div class="popupdialogheading" i18n:translate="">Recommended browsers</div>
+            <div class="formHelp" i18n:translate="">For best experience, use one of these browsers (click to download):</div>
+            <div class="recommdedbrowserbuttonholder">
+                <div class="recommdedbrowserbutton">
+                    <a href="http://www.mozilla.com/en-US/" target="_blank">
+                        <img tal:attributes="src string:browser-mozilla-firefox.png" />
+                    </a>
+                    <br />
+                    Mozilla Firefox 3.x +
+                </div>
+                <div class="recommdedbrowserbutton">
+                    <a href="http://www.google.com/chrome" target="_blank">
+                        <img tal:attributes="src string:browser-google-chrome.png" />
+                    </a>
+                    <br />
+                    Google Chrome 2.x +
+                </div>
+            </div>
+            <div class="popupdialogheading" i18n:translate="">Other supported web browsers</div>
+            <div class="supportedbrowserbuttonholder">
+                <div class="supportedbrowserbutton">
+                    <a href="http://www.opera.com/download/" target="_blank">
+                        <img tal:attributes="src string:browser-opera.png" />
+                    </a>
+                    <br />
+                    Opera
+                </div>
+                <div class="supportedbrowserbutton">
+                    <a href="http://www.apple.com/safari/download/" target="_blank">
+                        <img tal:attributes="src string:browser-apple-safari.png" />
+                    </a>
+                    <br />
+                    Safari 4.x +
+                </div>
+                <div class="supportedbrowserbutton">
+                    <a href="http://www.microsoft.com/windows/Internet-explorer/default.aspx" target="_blank">
+                        <img tal:attributes="src string:browser-microsoft-ie.png" />
+                    </a>
+                    <br />
+                    Internet Explorer 7.x+
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+ <script>
+  CFInstall.check({
+     node: "content",
+     destination: portal_url
+   });
+ </script>
+</body>
+</html>

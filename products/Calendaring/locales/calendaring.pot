@@ -1,0 +1,129 @@
+# --- PLEASE EDIT THE LINES BELOW CORRECTLY ---
+# SOME DESCRIPTIVE TITLE.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2004-12-15 12:40+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: en\n"
+"Language-Name: English\n"
+"Preferred-Encodings: latin1 utf-8\n"
+"Domain: plone\n"
+
+#: ./skins/plone_calendar/portlet_calendaring.pt
+#. <table cellspacing="0" class="ploneCalendar" i18n:attributes="summary" id="thePloneCalendar" summary="Calendar">
+msgid "Calendar"
+msgstr ""
+
+
+#: ./skins/calendaring/day_view.pt
+#. <th i18n:translate="box_events">
+#.  Events
+#. </th>
+msgid "box_events"
+msgstr "Events"
+
+
+#: ./skins/calendaring/day_view.pt
+#. <a href="#" i18n:translate="calendar_next_day" tal:attributes="href urlNext">
+#.  next day
+#. </a>
+## 1 more: ./skins/calendaring/day_view.pt
+msgid "calendar_next_day"
+msgstr "next day"
+
+
+#: ./skins/calendaring/month_view.pt
+#. <a href="#" i18n:translate="calendar_next_month" tal:attributes="href urlNext">
+#.  next month
+#. </a>
+## 1 more: ./skins/calendaring/month_view.pt
+msgid "calendar_next_month"
+msgstr "next month"
+
+
+#: ./skins/calendaring/week_view.pt
+#. <a href="#" i18n:translate="calendar_next_week" tal:attributes="href urlNext">
+#.  next week
+#. </a>
+## 1 more: ./skins/calendaring/week_view.pt
+msgid "calendar_next_week"
+msgstr "next week"
+
+
+#: ./skins/calendaring/day_view.pt
+#. <a href="#" i18n:translate="calendar_prev_day" tal:attributes="href urlPrev">
+#.  previous day
+#. </a>
+## 1 more: ./skins/calendaring/day_view.pt
+msgid "calendar_prev_day"
+msgstr "previous day"
+
+
+#: ./skins/calendaring/month_view.pt
+#. <a href="#" i18n:translate="calendar_prev_month" tal:attributes="href urlPrev">
+#.  previous month
+#. </a>
+## 1 more: ./skins/calendaring/month_view.pt
+msgid "calendar_prev_month"
+msgstr "previous month"
+
+
+#: ./skins/calendaring/week_view.pt
+#. <a href="#" i18n:translate="calendar_prev_week" tal:attributes="href urlPrev">
+#.  previous week
+#. </a>
+## 1 more: ./skins/calendaring/week_view.pt
+msgid "calendar_prev_week"
+msgstr "previous week"
+
+
+#: ./skins/calendaring/day_view.pt
+#. <th class="hour" i18n:translate="calendar_time">
+#.  Hour
+#. </th>
+msgid "calendar_time"
+msgstr "Hour"
+
+
+#: ./skins/calendaring/day_view.pt
+#. <th i18n:translate="calendar_whole_day_or_running">
+#.  Ongoing Events
+#. </th>
+msgid "calendar_whole_day_or_running"
+msgstr "Ongoing Events"
+
+
+#: ./skins/calendaring/month_view.pt
+#. <th i18n:translate="calendar_whole_month_or_running">
+#.  Ongoing Events
+#. </th>
+msgid "calendar_whole_month_or_running"
+msgstr "Ongoing Events"
+
+
+#: ./skins/calendaring/week_view.pt
+#. <th i18n:translate="calendar_whole_week_or_running">
+#.  Ongoing Events
+#. </th>
+msgid "calendar_whole_week_or_running"
+msgstr "Ongoing Events"
+
+#- Removed msgids:
+# 
+
+#- Added msgids:
+#  calendar_prev_day calendar_next_day calendar_whole_day_or_running
+# calendar_time box_events calendar_prev_month calendar_next_month
+# calendar_whole_month_or_running calendar_prev_week calendar_next_week
+# calendar_whole_week_or_running Calendar
+
+#- Added msgids by merging file None:
+# 

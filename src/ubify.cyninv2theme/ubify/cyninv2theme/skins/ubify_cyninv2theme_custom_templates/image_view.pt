@@ -1,0 +1,89 @@
+<tal:comment replace="nothing">
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see http://www.gnu.org/licenses/.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+</tal:comment>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="cynin">
+<head>
+    <metal:block metal:fill-slot="head_slot">
+        <tal:rssmacro metal:use-macro="here/rss_macro/macros/rss_macro" />
+    </metal:block>
+</head>
+<body>
+
+<tal:mainslot metal:fill-slot="content">
+    <tal:main-macro metal:define-macro="main"
+                    tal:define="kssClassesView context/@@kss_field_decorator_view;
+                                getKssClasses nocall:kssClassesView/getKssClassesInlineEditable;
+                                size here/size">
+        <div tal:replace="structure provider:plone.abovecontenttitle" />
+        <div tal:replace="structure provider:plone.abovecontentbody" />
+        <div id="imagepreviewcontainer" class="maincontentholder" align="center" >
+            <a href=""
+               class="previewimagelink"
+               tal:attributes="href string:$here_url/image_view_fullscreen">
+                <tal:block condition="size" replace="structure python: here.tag(scale='preview')" /></a>
+                <br />
+            <a href="" class="previewimagetextlink"
+               tal:attributes="href string:$here_url/image_view_fullscreen">
+                    <img src="" alt="" tal:replace="structure here/icon-zoom_in.png" valign="middle"/><tal:translate i18n:translate="label_click_to_view_full_image">Click to view full-size image</tal:translate>&hellip;</a>
+            <span class="discreet visualNoPrint">
+                <span tal:condition="python:test(size, 0, 1)"
+                      i18n:translate="no_image_uploaded">
+                    (No image has been uploaded yet)
+                </span>
+            </span>
+            <div id="filecontenttyperow">
+                <tal:contenttype tal:content="here/getContentType" />
+            </div>
+            <a tal:attributes="href string:${context/absolute_url};" i18n:translate="link_download_image">
+                Click to download
+            </a>
+            <span tal:content="python:here.getObjSize(here)" />
+        </div>
+        <tal:belowcontentmacro metal:use-macro="here/belowcontent_macro/macros/below_content" />
+    </tal:main-macro>
+</tal:mainslot>
+
+</body>
+
+</html>

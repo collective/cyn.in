@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<componentregistry>
+ <adapters/>
+ <utilities>
+  <utility 
+     interface="p4a.plonecalendar.interfaces.ICalendarSupport"
+     factory="p4a.plonecalendar.content.CalendarSupport" />
+ </utilities>
+</componentregistry>

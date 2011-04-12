@@ -1,0 +1,165 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      i18n:domain="cynin">
+<body>
+    <div metal:define-macro="description" id="descriptionareaholder" i18n:domain="cynin">
+        <tal:definitions tal:define="
+            pmt here/portal_membership;
+            item_url context/getURL|context/absolute_url;
+            item_id context/getId|context/id;
+            item_title_or_id context/pretty_title_or_id;
+            item_description context/Description | nothing;
+            item_type context/portal_type;
+            item_type_title context/Type;
+            lastchangedate context/lastchangedate|nothing;
+            nicedlastchangedate python: context.toLocalizedTime(lastchangedate,True);
+            lastchangeperformer context/lastchangeperformer|nothing;
+            lastchangeaction context/lastchangeaction|nothing;
+            lastchangeaction python:modules['ubify.coretypes'].get_action_mapped(lastchangeaction);
+            item_modified context/ModificationDate;
+            item_created context/CreationDate;
+            nicedcreateddate python: context.toLocalizedTime(item_created,True);
+            nicedmodifieddate python: context.toLocalizedTime(item_modified,True);
+            item_icon python:plone_view.getIcon(context);
+            item_type_class python:'contenttype-' + context.plone_utils.normalizeString(item_type);
+            item_wf_state context/review_state|python: context.portal_workflow.getInfoFor(context, 'review_state', '');
+            item_wf_state_class python:'state-' + context.plone_utils.normalizeString(item_wf_state);
+            item_creator context/Creator;
+            item_modifiedby python:modules['ubify.viewlets.utils'].getObjectModifiedBy(context);
+            item_wf_state_title_desc python:modules['ubify.cyninv2theme'].getWorkflowStateTitle(context);
+            item_wf_state_title python:item_wf_state_title_desc[0];
+            item_wf_state_desc python:item_wf_state_title_desc[1];
+            item_start context/EffectiveDate|nothing;
+            item_end context/ExpirationDate|nothing;
+            portal_url here/portal_url;
+            comment_count python:here.getcommentcount(context);
+            showdescription request/showdescriptionmacro|string: true;
+            showdescriptionstyle python:test(showdescription=='false','display:none','display:block');
+            togglelinkclass python:test(showdescription=='false','descriptiontoggle','descriptiontoggle opened');
+            item_uid context/UID | nothing;">
+
+            <div class="descriptiontoggleholder">
+                <a tal:attributes="class togglelinkclass">
+                    <img tal:attributes="src string:${portal_url}/icon-information.png" alt="Info" i18n:attributes="alt" />
+                    <span i18n:translate="button_info">Info</span>
+                </a>
+            </div>
+            <div id="singleviewdescriptionarea" tal:attributes="style showdescriptionstyle">
+                <div class="subcolumns">
+                    <div class="c62l">
+                        <div class="listitemdetailleftblockholder">
+                            <div class="documentByLine" tal:condition="item_description">
+                                    <label i18n:translate="label_description">Description</label>:
+                                    <span tal:content="item_description" />
+                            </div>
+                            <div class="avatarlistholder" tal:condition="item_creator">
+                                <label i18n:translate="label_creator">Creator: </label>
+                                <a class="avatarlink avatarlist" tal:attributes="rel string:${portal_url}/userinfo?userid=${item_creator};
+                                                href string:${portal_url}/Members/${item_creator}/app_all;">
+                                    <tal:block tal:replace="item_creator" />
+                                </a>
+                            </div>
+                            <div class="avatarlistholder" tal:define="modifiers context/modifiers|nothing" tal:condition="modifiers">
+                                <label i18n:translate="label_contributors">Contributors: </label>
+                                <tal:modifiers tal:repeat="modifier modifiers">
+                                    <a class="avatarlink avatarlist"
+                                       tal:attributes="rel string:${portal_url}/userinfo?userid=${modifier};
+                                                    href string:${portal_url}/Members/${modifier}/app_all;"><tal:block tal:replace="modifier" /><tal:separator condition="not: repeat/modifier/end" tal:content="string:," /></a>
+                                </tal:modifiers>
+                            </div>
+                            <div class="avatarlistholder" tal:condition="lastchangeaction">
+                                <label i18n:translate="label_last_activity">Last Activity: </label>
+                                <span>
+                                    <tal:block tal:replace="python: lastchangeaction" /> <span i18n:translate="">by</span>
+                                    <a class="avatarlink"
+                                       tal:attributes="rel string:${portal_url}/userinfo?userid=${lastchangeperformer};
+                                                    href string:${portal_url}/Members/${lastchangeperformer}/app_all;">
+                                        <tal:block tal:replace="lastchangeperformer" />
+                                    </a> <span class="" tal:attributes="title string:${nicedlastchangedate}" tal:content="nicedlastchangedate"/>
+                                </span>
+                            </div>
+                            <tal:categoriesblock tal:define="categories context/Subject|nothing">
+                                <div tal:condition="categories">
+                                    <label i18n:translate="label_tags">Tags:</label>
+                                    <tal:categories tal:repeat="category categories"
+                                               tal:define="parentURL python:context.getParentNode().absolute_url();
+                                                            URLsuffix python:modules['ubify.cyninv2theme'].getListingTemplateForContextParent(context);"
+                                                tal:condition="categories"
+                                    ><a class="detaildescriptiontag"
+                                        title="Click to add this tag as filter"
+                                           tal:content="category"
+                                           tal:attributes="href string:${parentURL}/${URLsuffix}?Subject%3Alist=${category};rel category"
+                                            i18n:attributes="title tip_add_tag_to_filter">
+                                          <tal:comment replace="nothing">Category</tal:comment>
+                                          </a><tal:separator condition="not: repeat/category/end">,</tal:separator></tal:categories>
+                                </div>
+                            </tal:categoriesblock>
+                            <div tal:define="fullpath context/getPhysicalPath;
+                                fullpath python: '/'.join(fullpath);
+                                splitpath python:fullpath.split('/')[2:-1];
+                                prettypath python: '/' + '/'.join(splitpath);
+                                prettypathtitle python:test(len(splitpath) > 1,prettypath.startswith('/root/') and prettypath.replace('/root/','/home/') or prettypath,prettypath.replace('/root','/home'));
+                                URLsuffix python:modules['ubify.cyninv2theme'].getListingTemplateForContextParent(context);
+                                pathlink python: portal_url + prettypath + '/' + URLsuffix;
+                                pathtitle python:modules['ubify.cyninv2theme'].getAppTitleForContext(context);"
+                                tal:condition="python: context.portal_type not in ('Topic','SmartviewFolder','RecycleBin')"
+                                >
+                                    <label i18n:translate="label_location">Location</label>:
+                                    <a tal:attributes="href pathlink"><tal:block tal:replace="prettypathtitle" /></a>
+                            </div>
+                            <div>
+                            <div class="navtipleft" title="Copy and paste this including the [[ ]] brackets inside a wiki page to link to this item"
+                             i18n:attributes="title cluetip_wiki_link">
+                                <label i18n:translate="label_wiki_link">Wiki link:</label>
+                                <tal:wikilink tal:content="string:[[${item_id}]]" />
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="c38r">
+                        <div class="listitemdetailrightblockholder">
+                            <div>
+                                <a id="rateitnamedlink" href="#rateit" i18n:translate="">
+                                    Rate it (Replace input macro here)
+                                </a>
+                            </div>
+                            <div tal:condition="context/isDiscussable">
+                                <a id="discussionnamedlink" href="#discussion">
+                                    <tal:translate i18n:translate="link_comment_count">Comments:</tal:translate> <span tal:content="comment_count" id="itemcountcommentcount"/> &darr;
+                                </a>
+                            </div>
+                            <div tal:condition="nicedcreateddate">
+                                    <label i18n:translate="label_created">Created:</label>
+                                    <span class="" tal:attributes="title string:${nicedcreateddate}" tal:content="nicedcreateddate" />
+                            </div>
+                            <div tal:condition="nicedmodifieddate">
+                                    <label i18n:translate="label_modified">Modified:</label>
+                                    <span class="" tal:attributes="title string:${nicedmodifieddate}" tal:content="nicedmodifieddate" />
+                            </div>
+                            <div tal:condition="python: len(item_start) > 5">
+                                    <label i18n:translate="label_publish">Publish:</label>
+                                    <span tal:define="pubdate python:context.toLocalizedTime(item_start,True)" tal:content="pubdate" />
+                            </div>
+                            <div tal:condition="python: len(item_end) > 5">
+                                    <label i18n:translate="label_expires">Expires:</label>
+                                    <span><tal:block tal:replace="python: context.toLocalizedTime(item_end,True)" /></span>
+                            </div>
+                            <div tal:define="size context/getObjSize" tal:condition="size">
+                                <label i18n:translate="label_size">Size:</label>
+                                <span><tal:block tal:replace="size"/></span>
+                            </div>
+                            <div tal:condition="item_wf_state">
+                                    <label i18n:translate="label_state">State:</label>
+                                    <span tal:attributes="class string:workflowstatelabel ${item_wf_state_class} navtipVertical;title string:${item_wf_state_desc}" i18n:attributes="title"><tal:block tal:replace="item_wf_state_title" i18n:translate=""/></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </tal:definitions>
+    </div>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="p4a.calendar">
+
+<head>
+
+  <metal:block metal:fill-slot="head_slot">
+  <style type="text/css"
+         media="all"
+         tal:content=
+          "string: @import url(${context/absolute_url}/++resource++p4acalendar/calendar.css);">
+  </style>
+  <script type="text/javascript" src="calendar.js"
+          tal:attributes="src string:${context/++resource++p4acalendar/anchor-position.js}">
+  </script>
+  <script type="text/javascript" src="calendar.js"
+          tal:attributes="src string:${context/++resource++p4acalendar/popup-window.js}">
+  </script>
+  <script type="text/javascript" src="calendar.js"
+          tal:attributes="src string:${context/++resource++p4acalendar/calendar.js}">
+  </script>
+  </metal:block>
+
+</head>
+
+<body>
+
+<div metal:fill-slot="main"
+     class="p4acalendar">
+            <tal:comment replace="nothing">ccccccccccccccccccccccccccccccccccccccccccccc</tal:comment>
+  <tal:block tal:repeat="day view/alldays">
+     <div id=""
+          style="visibility:hidden"
+          class="day-event-popup"
+          tal:condition="day/allevents"
+          tal:attributes="id string:p4acalendar-allevents-${day/datestr}">
+
+       <ul>
+         <li tal:repeat="event day/allevents">
+           <dl class="event">
+             <dt>
+	       <a class="event_title"
+		  href=""
+		  tal:content="event/title"
+		  tal:attributes="href event/local_url" />
+	     </dt>
+             <dd tal:content="event/timespan" />
+             <dd class="location"
+		 tal:content="event/location" />
+             <dd class="description"
+		 tal:content="event/description" />
+            </dl>
+         </li>
+       </ul>
+     </div>
+  </tal:block>
+
+  <span style="float:right"
+	tal:define="icalview nocall:context/@@icalendar.ics"
+	tal:condition="icalview/has_ical_support">
+    <a href="icalendar.ics">
+      <img tal:attributes="src string:${portal_url}/icon_export_ical.png" 
+           alt="Export" i18n:attributes="alt export" /><span i18n:translate="export"> Export </span>
+    </a>
+    <a tal:condition="view/event_creation_link" href="import.html">
+      <img src="++resource++p4aplonecalendar/icon_import_ical.png" 
+           alt="Import" i18n:attributes="alt import" /><span i18n:translate="import"> Import </span>
+    </a>
+  </span>
+
+  <h1 class="documentFirstHeading">
+    <a href=""
+       class="previous"
+       tal:attributes="href view/prev_month_link">&larr;</a>
+    <span tal:replace="view/month"></span> <span tal:replace="view/year"></span>
+    <a href=""
+       class="next"
+       tal:attributes="href view/next_month_link">&rarr;</a>
+  </h1>
+
+  <div class="month">
+
+    <p>
+      <tal:block replace="structure view/render_filter"/>
+      <tal:block define="link view/event_creation_link" condition="python:link">
+	<a i18n:translate="create_event" tal:attributes="href link">Create event</a> |
+      </tal:block>
+      <span i18n:translate="view">View:</span> <span i18n:translate="">Month</span> | <a class="view_link" href="events.html" i18n:translate="event_list">Event list</a> |
+      <a class="view_link" href="past_events.html" i18n:translate="past_event_list">Past events list</a>
+    </p>
+
+    <br />
+
+    <div class="standard-week-days">
+      <tal:block tal:repeat="day view/standard_week_days">
+      <div tal:attributes="class string:day ${day/extrastyleclass}"
+           ><strong tal:content="day/day" /></div>
+      </tal:block>
+      <div class="visualClear"><!-- --></div>
+    </div>
+
+    <!-- bug in IE7 where sometimes it refuses to acknowledge the visualClear items -->
+    <br class="ie7-break" />
+
+    <div tal:repeat="week view/weeks"
+         class="week"
+         tal:attributes="class string:week ${week/extrastyleclass}">
+
+       <div tal:repeat="day week/days"
+            tal:attributes="class string:day ${day/extrastyleclass};
+                            id string:p4acalendar-day-${day/datestr}"
+            class="day"
+            id="">
+
+            <tal:block tal:define="extra python:len(day.allevents) - len(day.events)">
+
+            <dl>
+              <dt tal:condition="day/day">
+                <a href=""
+                   tal:content="day/day"
+                   tal:attributes="onclick string:events_popup('${day/datestr}');;return false;;"></a>
+              </dt>
+              <dt tal:condition="not:day/day">&nbsp;</dt>
+              <tal:block repeat="event day/events">
+                <dd tal:attributes="class string:event-item ${event/type}">
+                  <a class="event-title"
+                     tal:content="event/label"
+                     tal:attributes="href event/local_url;
+                                     title event/description"></a>
+                </dd>
+              </tal:block>
+              <dd tal:condition="extra" class="extra-events">
+                <a href=""
+                   tal:attributes="onclick string:events_popup('${day/datestr}');;return false;;">
+                  +<span tal:replace="extra"></span>
+                </a>
+              </dd>
+            </dl>
+
+            </tal:block>
+       </div>
+       <div class="visualClear"></div>
+    </div>
+    <div class="visualClear"></div>
+  </div>
+
+</div> <!-- end main fill slot -->
+
+</body>
+</html>

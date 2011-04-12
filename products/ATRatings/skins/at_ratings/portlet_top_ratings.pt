@@ -1,0 +1,69 @@
+<html xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      i18n:domain="cynin">
+<body>
+<div metal:define-macro="portlet"
+     tal:define="rtool here/portal_ratings;
+		 rtypes rtool/allowed_rating_types;
+		 brains python: here.portal_catalog.searchResults(portal_type=rtypes);
+		 records records|python:3;
+                 results topratedresults|python: rtool.getTopRatings(brains, records);
+		 use_view_action here/portal_properties/site_properties/typesUseViewActionInListings|python:();
+                 plone_view here/@@plone;
+                 showmorelink showmorelink|python:len(brains) > len(results)"
+     tal:condition="results">
+    <dl class="recentupdateitemsblock" id="portlet-top-ratings">
+        <tal:rateditems tal:repeat="record results">
+        <div tal:define="count python: record[0];
+                        obj python: record[1];
+                        item_type obj/portal_type;
+                        item_icon python:plone_view.getIcon(obj);
+                        oddrow repeat/record/odd;
+                        item_creator obj/Creator;
+                        item_wf_state obj/review_state;
+                        item_wf_state_class python:'state-' + here.plone_utils.normalizeString(item_wf_state);
+                        item_type_class python: 'contenttype-' + here.plone_utils.normalizeString(obj.portal_type);
+                        star_icon            string:$portal_url/icon-rating-on.png;
+                        blank_star_icon      string:$portal_url/icon-rating-off.png;
+                        total_count python:record[2];
+                        individual_count python:record[3];
+			uid obj/UID;"
+            tal:attributes="class python:test(oddrow, 'recentupdateitem even', 'recentupdateitem odd')">
+            <div tal:attributes="class string:${item_type_class} recentupdateitemtitlerow">
+              <img tal:condition="python: item_type != 'File'" tal:attributes="src item_icon/url;"/>
+              <img src="" tal:condition="python: item_type == 'File'" tal:attributes="src string:${portal_url}/file_icon.png"/>
+              <a href=""
+                 tal:attributes="href python:here.evalURL(obj.portal_type,use_view_action ,obj.getURL());
+                                 title obj/Description;
+                                 class string:$item_wf_state_class visualIconPadding">
+                  <span tal:replace="obj/pretty_title_or_id">
+                  </span>
+              </a>
+            </div>
+            <div class="recentupdateitemauthorrow">                
+                <tal:block tal:define="score count;
+				       score python:test(score >0,'+' + str(score),score);
+				       total_count total_count;positive_count python:individual_count['positive'];
+                                       positive_score python:individual_count['positivescore'];
+                                       negative_count python:individual_count['negative'];
+                                       negative_score python:individual_count['negativescore']">
+                    <span i18n:translate="label_score">Rating:</span>
+                    <tal:ratingmacro metal:use-macro="here/rating_macros/macros/voting_result_display" />
+                </tal:block>
+            </div>
+        </div>
+        </tal:rateditems>
+        <div class="morelinkrow" tal:condition="showmorelink">
+	  <a href=""
+	     tal:attributes="href more_url|string:${here/absolute_url}/app_all?sort_on=rating&sort_order=reverse"
+	     i18n:translate="box_top_ragings_list_link"
+             class="smallwhitebutton"
+	     >
+	    More &raquo;
+	  </a>
+        </div>
+    </dl>
+
+</div>
+</body>
+</html>

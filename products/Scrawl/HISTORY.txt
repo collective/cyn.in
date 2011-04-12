@@ -1,0 +1,21 @@
+Changelog for Scrawl
+
+Scrawl 1.0 - final
+- Changed templates slightly to fully enable Plone 2.1 support. [jbaldivieso]
+- Cleaned up presentation of blog entries if they haven't been published yet (and therefore lack Effective Date). [jbaldivieso]
+
+
+Scrawl 1.0 - beta 3
+- Fixed a bug in Plone 3.0 where the Plone Types Ctrl Panel protested when you tried to save settings for Blog Entries.  [jbaldivieso]
+- Made Blog Entries open for commenting by default [jbaldivieso]
+- Added Blog Entries to the portal factory, so that skeleton Blog Entries don't clutter up your site when you add one but don't save it. [jbaldivieso]
+- Added External Method for migrating Quills blog entries to Scrawl [ohtogo]
+
+
+Scrawl 1.0 - beta 2
+- slimmed down blog_view so that it just shows descriptions of blog entries if they exist (full bodies otherwise) [jbaldivieso]
+
+
+Scrawl 1.0 - beta 1
+
+- inital release [jbaldivieso]

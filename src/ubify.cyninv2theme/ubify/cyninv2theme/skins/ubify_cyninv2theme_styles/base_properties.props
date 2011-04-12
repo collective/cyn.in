@@ -1,0 +1,150 @@
+title:string=cyn.in v2 Product theme's color, font, logo and border defaults
+
+plone_skin:string=cynin
+
+logoName:string=logo.jpg
+
+fontFamily:string=Helvetica, Arial, sans-serif
+fontBaseSize:string=69%
+fontColor:string=Black
+fontSmallSize:string=85%
+
+backgroundColor:string=White
+
+linkColor:string=#0074d9
+linkActiveColor:string=Red
+linkVisitedColor:string=Purple
+
+borderWidth:string=1px
+borderStyle:string=solid
+borderStyleAnnotations:string=dashed
+
+globalBorderColor:string=#999999
+globalBackgroundColor:string=#ff0000
+globalFontColor:string=#436976
+
+headingFontFamily:string=Helvetica, Arial, sans-serif
+
+contentViewBorderColor:string=#74ae0b
+contentViewBackgroundColor:string=#cde2a7
+contentViewFontColor:string=#578308
+
+inputFontColor:string=Black
+
+textTransform:string=lowercase
+
+evenRowBackgroundColor:string=#eef3f5
+oddRowBackgroundColor:string=transparent
+
+notifyBorderColor:string=#ffa500
+notifyBackgroundColor:string=#ffce7b
+
+discreetColor:string=#76797c
+helpBackgroundColor:string=#ffffe1
+
+portalMinWidth:string=70em
+columnOneWidth:string=16em
+columnTwoWidth:string=16em
+
+ciblue:string=#4092d8
+cilightblue1:string=#71b9f7
+cilightblue2:string=#bbdffe
+cilightblue3:string=#cfe8f5
+cilightblue4:string=#E8F2FC;
+cidarkblue1:string=#0f6bba
+cidarkblue2:string=#0c4b81
+cigraye6:string=#e6e6e6
+cigraycc:string=#cccccc
+cigray80:string=#808080
+cigray55:string=#555555
+cigray44:string=#444444
+cigray29:string=#292929
+cigray1f:string=#1f1f1f
+cigray40:string=#404040
+cigreen:string=#57AC0B
+cigreenlesslight:string=#92cd59
+cigreenlight:string=#CDEFA6
+cidarkgreen:string=#387600
+cired:string=#CF3738
+ciredlight:string=#FFACAD
+cireddark:string=#CF3738
+ciorange:string=#FFBB65
+cilightorange:string=#FFE0B6
+cidarkorange1:string=#FF9900
+cidarkorange2:string=#FF6600
+cidarkorange3:string=#A14000
+
+cigradientblue1:string=#61aced
+cigradientblue2:string=#0f6bba
+ciyellow:string=#fffccc
+ciredlight:string=#ff6e6e
+cired:string=#cc0000
+cireddark:string=#881515
+
+#basics----
+ciwhite:string=#ffffff
+ciblack:string=#000000
+
+#grays----
+cigray1:string=#f1f1f1
+cigray2:string=#e5e5e5
+cigray3:string=#d9d9d9
+cigray4:string=#cccccc
+cigray5:string=#b3b3b3
+cigray6:string=#999999
+cigray7:string=#808080
+cigray8:string=#666666
+cigray9:string=#4d4d4d
+cigray10:string=#333333
+cigray11:string=#262626
+cigray12:string=#1a1a1a
+
+#blue---- FIX DONE REMOVE REST
+ci1co1:string=#DBE9FD
+ci1co2:string=#91AEDA
+ci1co3:string=#19509C
+ci1co4:string=#011E47
+ci1co5:string=red
+ci1co6:string=green
+ci1co7:string=pink
+
+#green----
+ci2co1:string=#e4faca
+ci2co2:string=#cdefa6
+ci2co3:string=#92cd59
+ci2co4:string=#57ac0b
+ci2co5:string=#387600
+
+#green NEW----
+
+ci2co6:string=#295E07
+#Dark Green
+
+ci2co7:string=#E8FFDA 
+#Light Green
+
+#red ----
+ci3co1:string=#A7001D 
+#Dark Red
+
+ci3co2:string=#FFE5F0 
+#Light Pink
+
+#yellow----
+ci4co1:string=#FCFF9D 
+#Light Yellow
+
+ci4co2:string=#555708 
+#Dark Yellow
+
+ci4co3:string=#F0EA80 
+#Medium yellow only for events
+
+#yellow OLD REMOVE----
+ci4co4:string=#656222
+
+#oranges-----
+ci5co1:string=#ffe9c8
+ci5co2:string=#ff9900
+ci5co3:string=#ff6600
+ci5co4:string=#a14000

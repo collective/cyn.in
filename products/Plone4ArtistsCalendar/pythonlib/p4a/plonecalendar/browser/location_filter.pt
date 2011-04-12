@@ -1,0 +1,14 @@
+<span class="filter">
+<form method="post" tal:attributes="action options/provider/url">  
+  <tal:block repeat="field options/provider/hidden_fields">
+    <input type="hidden" tal:attributes="name field/name;value field/value" />
+  </tal:block>
+  <select tal:attributes="name options/provider/field_name" 
+          tal:define="selected options/provider/selected">
+     <option tal:repeat="location options/provider/locations"
+       tal:content="location" 
+       tal:attributes="selected python:location==selected" />
+  </select>
+  <input class="form-element" name="submit" value=" Filter " type="submit" i18n:attributes="value input_value_filter;" />
+</form>
+</span>

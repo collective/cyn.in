@@ -1,0 +1,61 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="cynin">
+
+  <!-- 'ffxmppskin' Zope 3 browser layer
+    Register views, viewlets and resources for this layer to make sure
+    they only apply to the 'ffxmppskin' theme.
+    You can also use this layer to override default Plone browser views
+    and viewlets only within the 'ffxmppskin' theme.
+  -->
+  <interface
+      interface=".interfaces.IThemeSpecific"
+      type="zope.publisher.interfaces.browser.IBrowserSkinType"
+      name="ffxmppskin"
+      />
+
+    <browser:page
+        for="*"
+        permission="cmf.SetOwnPassword"
+        name="ffxmpp_addnew"
+        template="addnew_ff.pt"
+        />
+    <browser:page
+        for="*"
+        permission="cmf.SetOwnPassword"
+        name="ffxmpp_conversation_sidepanel"
+        class=".sidepanel_conversation_ff.SidepanelConversation"
+        />
+    <browser:page
+        for="*"
+        permission="cmf.SetOwnPassword"
+        name="ffxmpp_activity_stream"
+        class=".activity_stream_ff.ActivityStream"
+        />
+
+  <!-- Zope 3 browser resources -->
+
+  <!-- Resource directory for images
+    See ubify/ffxmpp/browser/images/README.txt
+    for more information about registering images as Zope 3 browser
+    resources.
+  -->
+  <browser:resourceDirectory
+      name="ubify.ffxmpp.images"
+      directory="images"
+      layer=".interfaces.IThemeSpecific"
+      />
+
+  <!-- Resource directory for stylesheets
+    See ubify/ffxmpp/browser/stylesheets/README.txt
+    for more information about registering stylesheets as Zope 3 browser
+    resources.
+  -->
+  <browser:resourceDirectory
+      name="ubify.ffxmpp.stylesheets"
+      directory="stylesheets"
+      layer=".interfaces.IThemeSpecific"
+      />
+
+</configure>

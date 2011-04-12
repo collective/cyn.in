@@ -1,0 +1,1 @@
+<metal:use_macro metal:use-macro="python:path('here/atct_album_view30/macros/master')" />

@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<!--
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see <http://www.gnu.org/licenses/>.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+-->
+<object name="portal_languages" meta_type="Plone Language Tool">
+ <default_language value="en-us"/> 
+ <use_request_negotiation value="True"/>
+ <use_combined_language_codes value="True" />
+ <use_cookie_negotiation value="True"/>
+ <supported_langs>
+  <element value="en"/>
+  <element value="de"/>
+  <element value="ja"/>
+  <element value="es"/>
+  <element value="fr"/>
+  <element value="it"/>
+  <element value="zh"/>
+  <element value="zh-tw"/>
+  <element value="ko"/>
+  <element value="nl"/>
+  <element value="ru"/>
+  <element value="th"/>
+  <element value="sv"/>
+  <element value="vi"/>
+  <element value="pt"/>
+  <element value="pt-br"/>
+  <element value="cs"/>
+  <element value="cy"/>
+  <element value="ga"/>
+  <element value="da"/>
+  <element value="pl"/>
+  <element value="sk"/>
+  <element value="ca"/>
+  <element value="fi"/>
+  <element value="lv"/>
+  <element value="mt"/>
+  <element value="sr"/>
+  <element value="sw"/>
+  <element value="tr"/>
+  <element value="et"/>
+  <element value="gl"/>
+  <element value="hr"/>
+  <element value="ro"/>
+  <element value="sq"/>
+  <element value="uk"/>
+  <element value="af"/>
+  <element value="bg"/>
+  <element value="hu"/>
+  <element value="is"/>
+  <element value="no"/>
+  <element value="be"/>
+  <element value="id"/>
+  <element value="lt"/>
+  <element value="mk"/>
+  <element value="hi"/>
+ </supported_langs>
+</object>

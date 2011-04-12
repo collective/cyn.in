@@ -1,0 +1,9 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope">
+
+  <include 
+      package=".contentmenu"
+      file="meta.zcml" 
+      />
+
+</configure>

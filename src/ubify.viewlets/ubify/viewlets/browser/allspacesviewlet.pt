@@ -1,0 +1,135 @@
+<tal:comment replace="nothing">
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see http://www.gnu.org/licenses/.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+</tal:comment>
+<tal:block i18n:domain="cynin">
+    <div style="overflow:hidden;height:40px;" id="topmenuholder" tal:define="portal_url here/portal_url;portal_state context/@@plone_portal_state;portal portal_state/portal;">
+        <ul id="spacesMenu">
+            <li class="menu-white-img" id="allspaceslink" tal:condition="python:view.spacesbrains">
+            <img  class="clickmenuicon" tal:attributes="src string:${portal_url}/icon-folder.png" border="0" alt="Spaces" i18n:attributes="alt" />
+            <span class="allspaceslabel" i18n:translate="">Spaces</span>
+            <span class="arrowDownAlternative">&#9660;</span>
+                <ul tal:attributes="id python:view.spacesbrains and view.spacesbrains[0].getParentNode().UID()">
+                    <li tal:repeat="space view/spacesbrains">
+                        <a tal:attributes="href space/absolute_url">
+                            <img border="0" tal:attributes="src string:${portal_url}/icon-folder.png" alt="Spaces" i18n:attributes="alt" />&nbsp;
+                            <tal:replace tal:content="space/Title" />
+                        </a>
+                        <ul tal:replace="structure python:view.getChildren(space)"></ul>
+                    </li>
+                </ul>
+            </li>
+            <li class="menu-white-img" id="viewmenulink">
+                <img class="clickmenuicon" tal:attributes="src string:${portal_url}/icon-magnifier.png" border="0" alt="Views" i18n:attributes="alt" />
+                <span class="allspaceslabel" i18n:translate="">Views</span>
+                <span class="arrowDownAlternative">&#9660;</span>
+                <ul>
+                    <li tal:repeat="aview view/viewbrains">
+                        <a tal:attributes="href aview/absolute_url" tal:define="ttool aview/portal_types;
+                                                                tobj python:ttool[aview.portal_type];
+                                                                ticon tobj/content_icon
+                                                                ">
+                            <img border="0" tal:attributes="src string:${portal_url}/${ticon}" alt="" i18n:attributes="alt" />&nbsp;<tal:replace tal:content="aview/Title" /></a>
+                        <ul tal:replace="structure python:view.getChildrenViews(aview)"></ul>
+                    </li>
+                </ul>
+            </li>
+            <li class="menu-white-img" id="peoplemenulink">
+                <img class="clickmenuicon" tal:attributes="src string:${portal_url}/icon-group.png" border="0" alt="People" i18n:attributes="alt" />
+                &nbsp;<span class="allspaceslabel" i18n:translate="">People</span>
+                <span class="arrowDownAlternative">&#9660;</span>
+                <ul>
+                    <li><a href="#" tal:attributes="href string:${portal_url}/Members"><img border="0" tal:attributes="src string:${portal_url}/icon-group_go.png" alt="People Search" i18n:attributes="alt" />&nbsp;<span i18n:translate="">People Search</span></a></li>
+                </ul>
+            </li>
+            <li class="menu-white-img" id="helpmenulink">
+                <img class="clickmenuicon" tal:attributes="src string:${portal_url}/icon-help.png" border="0" alt="Help" i18n:attributes="alt" />
+                <span class="arrowDownAlternative">&#9660;</span>
+                <ul>
+                    <li><a href="#" tal:attributes="href string:${portal_url}/about-cynin"><img border="0" tal:attributes="src string:${portal_url}/icon-rosette.png" alt="About cyn.in" i18n:attributes="alt" />&nbsp;<span i18n:translate="">About cyn.in</span></a></li>
+                    <li><a tal:attributes="href string:${portal_url}/enterprise-support"><img border="0" tal:attributes="src string:${portal_url}/icon-wand.png" alt="Enterprise Support" i18n:attributes="alt" />&nbsp;<span i18n:translate="">Enterprise Support</span></a></li>
+                    <li><a href="#"><img border="0" tal:attributes="src string:${portal_url}/icon-world.png" alt="Web Links" i18n:attributes="alt" />&nbsp;<span i18n:translate="">Web Links</span></a>
+                        <ul>
+                            <li><a href="http://cyn.in" target="_blank"><img border="0" tal:attributes="src string:${portal_url}/cynin_icon.png" alt="cyn.in Homepage" i18n:attributes="alt" />&nbsp;<span i18n:translate="">cyn.in Homepage</span></a></li>
+                            <li><a  href="http://www.cynapse.com" target="_blank"><img border="0" tal:attributes="src string:${portal_url}/icon-emoticon_smile.png" alt="" i18n:attributes="alt" />&nbsp;<span i18n:translate="">Cynapse Homepage</span></a></li>
+                            <li><a  href="http://www.sourceforge.net/projects/cynin" target="_blank"><img  border="0" tal:attributes="src string:${portal_url}/icon-cog.png" alt="Open Source Community" i18n:attributes="alt" />&nbsp;<span i18n:translate="">Open Source Community</span></a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li class="menu-white-img" id="managemenulink" tal:condition="view/display_managemenu">
+                <img class="clickmenuicon" tal:attributes="src string:${portal_url}/icon-cog.png" border="0" alt="Manage menu" i18n:attributes="alt" />
+                <span class="arrowDownAlternative">&#9660;</span>
+                <ul>
+                    <li>
+                        <a href="" tal:attributes="href string:$portal_url/plone_control_panel">
+                            <img tal:attributes="src string:${portal_url}/cynin_icon.png" border="0" alt="Control Panel" i18n:attributes="alt" />&nbsp;<span i18n:translate="">Control Panel</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="" tal:attributes="href string:$portal_url/sitelogo_settings">
+                            <img tal:attributes="src string:${portal_url}/icon-image_edit.png" border="0" alt="Site Logo" i18n:attributes="alt" />&nbsp;<span i18n:translate="">Site Logo</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="" tal:attributes="href string:$portal_url/@@mail-controlpanel">
+                            <img tal:attributes="src string:${portal_url}/icon-email_error.png" border="0" alt="Mail Setup" i18n:attributes="alt" />&nbsp;<span i18n:translate="">Mail Setup</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="" tal:attributes="href string:$portal_url/prefs_users_overview">
+                            <img tal:attributes="src string:${portal_url}/icon-user_add.png" border="0" alt="User Management" i18n:attributes="alt" />&nbsp;<span i18n:translate="">User Management</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="" tal:attributes="href string:$portal_url/prefs_groups_overview">
+                            <img tal:attributes="src string:${portal_url}/icon-group_add.png" border="0" alt="Group Management" i18n:attributes="alt" />&nbsp;<span i18n:translate="">Group Management</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="" tal:attributes="href string:$portal_url/@@site-controlpanel">
+                            <img tal:attributes="src string:${portal_url}/icon-layout_content.png" border="0" alt="Site Settings" i18n:attributes="alt" />&nbsp;<span i18n:translate="">Site Settings</span>
+                        </a>
+                    </li>
+                    <li tal:condition="python:portal.hasObject('recyclebin')">
+                        <a href="" tal:attributes="href python:portal.recyclebin.absolute_url()"><img tal:attributes="src string:${portal_url}/icon-bin.png" border="0" alt="Recycle Bin" i18n:attributes="alt" />&nbsp;<span i18n:translate="">Recycle Bin</span></a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</tal:block>

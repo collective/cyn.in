@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<action-icons xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+	      i18n:domain="ZipFileTransport">
+ <action-icon category="controlpanel"
+              action_id="ZipFileTransport"
+              title="ZipFileTransport"
+              priority="0" icon_expr="zip.gif"
+              i18n:attributes="title"/>
+</action-icons>

@@ -1,0 +1,104 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:five="http://namespaces.zope.org/five"
+    xmlns:zcml="http://namespaces.zope.org/zcml"
+    xmlns:meta="http://namespaces.zope.org/meta"
+    i18n_domain="cynin">
+ 
+  <include package="p4a.z2utils" />
+  <include package="p4a.common" />
+  <include package="p4a.calendar" />
+
+  <browser:resourceDirectory
+      name="p4aplonecalendar"
+      directory="browser/resources"
+      permission="zope.Public"
+      />
+        
+  <five:implements
+      class="Products.ATContentTypes.content.folder.ATFolder"
+      interface="p4a.calendar.interfaces.IPossibleCalendar"
+      />
+
+  <five:implements
+      class="Products.ATContentTypes.content.folder.ATBTreeFolder"
+      interface="p4a.calendar.interfaces.IPossibleCalendar"
+      />
+
+  <five:implements
+      class="Products.ATContentTypes.content.topic.ATTopic"
+      interface="p4a.calendar.interfaces.IPossibleCalendar"
+      />
+
+  <five:implements
+      class="ubify.coretypes.content.calendar.Calendar"
+      interface="p4a.calendar.interfaces.IPossibleCalendar"
+      />
+
+  <adapter factory=".calendar.FolderCalendarConfig" />
+  <adapter factory=".eventprovider.ATEventProvider" />
+  <adapter factory=".eventprovider.TopicEventProvider" />
+  <adapter factory=".eventprovider.BrainEvent" />
+
+  <subscriber
+      for="p4a.calendar.interfaces.ICalendarEnhanced
+           zope.app.event.interfaces.IObjectModifiedEvent"
+      handler=".update_catalog"
+      />
+
+  <subscriber
+      zcml:condition="installed Products.Calendaring.zopeevents"
+      for="*
+            Products.Calendaring.zopeevents.IDemarshalledVEventEvent"
+      handler=".vevent_demarshalled"
+      />
+
+  <include package=".browser" />
+
+  <!-- Subtyping -->
+  
+  <utility
+      name="p4a.plonecalendar.FolderCalendar"
+      factory=".subtype.FolderCalendarDescriptor" />
+
+  <utility
+      name="p4a.plonecalendar.TopicCalendar"
+      factory=".subtype.TopicCalendarDescriptor" />
+
+  <utility
+      name="p4a.plonecalendar.CalendarCalendar"
+      factory=".subtype.CalendarCalendarDescriptor" />
+ 
+  <!-- Generic Setup Profile -->
+  <genericsetup:registerProfile
+      name="default"
+      title="P4A Calendar"
+      directory="profiles/default"
+      description="A calendar for plone"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+      
+  <!-- Plone 2.5 support -->
+  <configure zcml:condition="installed zope.app.annotation.tests">
+  
+    <five:implements
+      class="Products.ATContentTypes.content.folder.ATFolder"
+      interface="zope.app.annotation.IAttributeAnnotatable"
+      />
+
+    <five:implements
+      class="Products.ATContentTypes.content.folder.ATBTreeFolder"
+      interface="zope.app.annotation.IAttributeAnnotatable"
+      />
+
+    <five:implements
+      class="Products.ATContentTypes.content.topic.ATTopic"
+      interface="zope.app.annotation.IAttributeAnnotatable"
+      />
+
+  </configure>
+      
+
+</configure>

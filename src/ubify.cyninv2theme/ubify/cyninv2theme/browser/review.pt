@@ -1,0 +1,86 @@
+<tal:comment replace="nothing">
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see http://www.gnu.org/licenses/.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+</tal:comment>
+<dl class="portlet portletWorkflowReview"
+    i18n:domain="cynin">
+
+    <dt class="portletHeader">
+        <span class="portletTopLeft"></span>
+        <a href="#"
+           class="tile"
+           tal:attributes="href view/full_review_link"
+           i18n:translate="box_review_list">My Review List</a>
+        <span class="portletTopRight"></span>
+    </dt>
+
+    <tal:items tal:define="plone_view context/@@plone;
+                           getIcon nocall:plone_view/getIcon;
+                           toLocalizedTime nocall:plone_view/toLocalizedTime;"
+               tal:repeat="o view/review_items">
+        <dd class="portletItem"
+            tal:define="oddrow repeat/o/odd;
+                        item_icon python:getIcon(o);"
+            tal:attributes="class python:oddrow and 'portletItem even' or 'portletItem odd'">
+
+            <a href="#"
+               class="visualIconPadding tile"
+               tal:attributes="href string:${o/path}/view;
+                               title o/title">
+                <img tal:replace="structure o/icon" />
+                <span tal:content="o/title">
+                    <tal:comment replace="nothing">Title</tal:comment>
+                </span>
+                <span class="portletItemDetails"
+                      tal:define="moddate o/mod_date;">
+                    <span tal:replace="o/creator">Jim Smith</span> &mdash;
+                    <span tal:define="mdate python:toLocalizedTime(moddate)" class="" tal:attributes="title string:${mdate}" tal:content="mdate"> <tal:comment replace="nothing">May 5</tal:comment></span>
+                </span>
+            </a>
+
+        </dd>
+    </tal:items>
+
+    <dd class="portletFooter">
+        <a href="#"
+           class="tile"
+           tal:attributes="href view/full_review_link"
+           i18n:translate="box_full_review_list">Full review list&hellip;</a>
+        <span class="portletBottomLeft"></span>
+        <span class="portletBottomRight"></span>
+    </dd>
+</dl>

@@ -1,0 +1,192 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xml:lang="en" lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="plone">
+
+<body>
+
+    <div metal:fill-slot="main">
+    <metal:main-macro define-macro="main">
+
+        <div metal:use-macro="here/document_actions/macros/document_actions">
+            Document actions (print, sendto etc)
+        </div>
+
+        <h1 tal:content="object_title" class="documentFirstHeading">
+            <tal:comment replace="nothing">Title or id</tal:comment>
+        </h1>
+
+        <a href=""
+           class="link-parent"
+           tal:define="parent_url python:here.navigationParent(here, template_id)"
+           tal:condition="parent_url"
+           tal:attributes="href parent_url"
+           i18n:translate="go_to_parent_url">
+        Up one level
+        </a>
+
+        <p class="documentDescription"
+           tal:content="here/Description"
+           tal:condition="here/Description">
+            Description
+        </p>
+
+        <div class="blog-filter"
+             tal:condition="request/Subject|nothing">Showing blog entries tagged as: 
+                <strong tal:content="request/Subject"><tal:comment replace="nothing">[keyword]</tal:comment></strong>
+        </div>
+
+        <metal:listingmacro define-macro="listing">
+        <tal:foldercontents define="contentFilter contentFilter|request/contentFilter|nothing;
+                            limit_display limit_display|request/limit_display|nothing;
+                            more_url more_url|request/more_url|string:folder_contents;
+                            contentsMethod python:test(here.portal_type=='Topic', here.queryCatalog, here.getFolderContents);
+                            folderContents folderContents|python:contentsMethod(contentFilter);
+                            use_view_action site_properties/typesUseViewActionInListings|python:();
+                            over_limit python: limit_display and len(folderContents) > limit_display;
+                            folderContents python: (over_limit and folderContents[:limit_display]) or folderContents;
+                            show_about python:not isAnon or site_properties.allowAnonymousViewAbout;
+                            portal_discussion nocall:context/portal_discussion;
+                            isDiscussionAllowedFor nocall:portal_discussion/isDiscussionAllowedFor;
+                            getDiscussionFor nocall:portal_discussion/getDiscussionFor;
+                            toLocalTime nocall:toLocalizedTime|nocall:context/toLocalizedTime;">
+        <tal:listing condition="folderContents">
+                <tal:entry tal:repeat="item folderContents">
+                <div class="tileItem visualIEFloatFix vevent" 
+                     tal:define="item_url item/getURL|item/absolute_url;
+                                 item_id item/getId|item/id;
+                                 item_title_or_id item/pretty_title_or_id;
+                                 item_description item/Description;
+                                 item_effective item/EffectiveDate;
+                                 item_type item/portal_type;
+                                 item_type_title item/Type;
+                                 item_modified item/ModificationDate;
+                                 item_created item/CreationDate;
+                                 item_type_class python: 'visualIcon contenttype-' + normalizeString(item_type);
+                                 item_wf_state        item/review_state|python: wtool.getInfoFor(item, 'review_state', '');
+                                 item_wf_state_class python:'state-' + normalizeString(item_wf_state);
+                                 item_creator item/Creator;
+                                 item_start item/start/ISO|item/StartDate|nothing;
+                                 item_end item/end/ISO|item/EndDate|nothing;
+                                 item_object item/getObject;
+                                 talkback python:isDiscussionAllowedFor(item_object) and getDiscussionFor(item_object);
+                                 reply_count python:talkback is not False and talkback.replyCount(item_object);
+                                 item_text item_object/getText|nothing;"
+                     tal:attributes="class string:tileItem visualIEFloatFix vevent">
+
+                    <a href="#"
+                       tal:condition="python:item_type != 'Link'"
+                       tal:attributes="href python:test(item_type in use_view_action, item_url+'/view', item_url);">
+                        <img src="" alt=""
+                             tal:condition="item_object/image_thumb|nothing"
+                             tal:replace="structure python: item_object.tag(scale='thumb', css_class='tileImage')" />
+                    </a>
+
+                    <a href="#"
+                       tal:condition="python:item_type == 'Link'"
+                       tal:attributes="href python:test(item_type in use_view_action, item_url+'/view', item_url);">
+                        <img src="" alt=""
+                             tal:condition="item_object/image_thumb|nothing"
+                             tal:replace="structure python: item_object.tag(scale='thumb', css_class='tileImage')" />
+                    </a>
+
+                    <h2 class="tileHeadline"
+                        metal:define-macro="listitem">
+
+                        <a href="#"
+                           class="summary url"
+                           tal:condition="python:item_type != 'Link'"
+                           tal:attributes="href python:test(item_type in use_view_action, item_url+'/view', item_url);"
+                           tal:content="item_title_or_id">
+                            Item Title
+                        </a>
+
+                        <a href="#"
+                           tal:condition="python:item_type == 'Link'"
+                           tal:content="item_title_or_id"
+                           tal:attributes="href item/getRemoteUrl;">
+                            External Link
+                        </a>
+                    </h2>
+
+                    <div class="documentByLine">
+                        <tal:name tal:condition="item_creator"
+                            tal:define="author python:mtool.getMemberInfo(item_creator)">
+                          <span i18n:translate="label_by_author">Posted by
+                          <a href="#"
+                             title="Read more posts by this author" i18n:attributes="title"
+                             tal:attributes="href python:'%s/%s?%s' % (context.absolute_url(), template.id, context.create_query_string(Creator=item_creator))"
+                             tal:content="python:author and author['fullname'] or item_creator"
+                             i18n:name="author">
+                            <tal:comment replace="nothing">Bob Dobalina</tal:comment>
+                          </a>
+                          </span>
+                        </tal:name>
+                        <tal:hasEDate condition="python:item_effective !='None'">at</tal:hasEDate>
+                        <span tal:replace="python:toLocalTime(item_effective,long_format=1)">
+                        <tal:comment replace="nothing">August 16, 2001 at 23:35:59</tal:comment>
+                        </span>
+                        |
+                        <a class="permalink" title="Link to this post and its comments.  Use this for bookmarking."
+                           tal:attributes="href item_url" i18n:attributes="title" i18n:translate="">Permalink</a>
+
+                        <div class="keyword-info"
+                             tal:condition="item/Subject">
+                            Filed under: 
+                            <tal:loop repeat="subject item/Subject">
+                                <a class="item-keyword"
+                                   tal:content="subject"
+                                   tal:attributes="href python:'%s/%s?%s' % (context.absolute_url(), 
+                                                   template.id, context.create_query_string(Subject=subject));
+                                                   title string:Limit to listings labelled '$subject'">
+                                 <tal:comment replace="nothing">[Feature Story]</tal:comment>
+                                </a>
+                            </tal:loop>
+                        </div>
+                    <div class="comment-info" tal:condition="python:reply_count is not False">
+                        <a tal:attributes="href item_url"
+                           title="Read comments on this post and weigh in yourself!" i18n:attributes="title" i18n:translate="">Read comments 
+                        <span class="comment-count"
+                            tal:condition="reply_count">(<tal:commentCount replace="reply_count" i18n:name="comment_count">1</tal:commentCount> so far)</span>
+                        <span class="comment-count"
+                            tal:condition="not:reply_count" i18n:name="not_comment_count">(None yet)</span></a>
+                    </div>
+                 </div>
+
+                <p class="tileBody" tal:condition="item_description">
+                   <span class="description" tal:content="item_description">
+                        <tal:comment replace="nothing">description</tal:comment>
+                    </span>
+                </p>
+
+                <p class="tileBody blog-entry" tal:condition="python: not item_description and item_text"
+                   tal:content="structure item_text">Item Body</p>
+
+                <p class="tileFooter">
+                    <a href=""
+                       tal:attributes="href python:test(item_type in use_view_action, item_url+'/view', item_url);"
+                       i18n:translate="read_more">
+                    Read More&hellip;
+                    </a>
+                </p>
+
+                <div class="visualClear"><!-- --></div>
+
+                </div>
+                </tal:entry>
+        </tal:listing>
+        <metal:empty metal:define-slot="no_items_in_listing">
+            <p class="discreet"
+               tal:condition="not: folderContents"
+               i18n:translate="description_no_items_in_folder">
+                There are currently no items in this folder.
+            </p>
+        </metal:empty>
+
+        </tal:foldercontents>
+        </metal:listingmacro>
+    </metal:main-macro>
+    </div>
+
+</body>
+</html>

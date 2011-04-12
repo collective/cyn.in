@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<export-steps>
+  <export-step
+     id="export_cmfnotification"
+     version=""
+     handler="Products.CMFNotification.exportimport.exportCMFNotification"
+     title="Export CMF Notification settings">
+    Export CMF Notification settings
+  </export-step>
+ 
+</export-steps>

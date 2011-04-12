@@ -1,0 +1,52 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: CMFNotification\n"
+"POT-Creation-Date: 2009-12-01 09:43 +ZONE\n"
+"PO-Revision-Date: 2011-03-08 21:44-0400\n"
+"Last-Translator: Leonardo J. Caballero G. <leonardocaballero@gmail.com>\n"
+"Language-Team: Spanish <plone-conosur@lists.plone.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: es\n"
+"Language-Name: Spanish\n"
+"Preferred-Encodings: latin1 utf-8\n"
+"Domain: cmfnotification\n"
+"X-Is-Fallback-For: es-ar es-bo es-cl es-co es-cr es-do es-ec es-es es-sv es-gt es-hn es-mx es-ni es-pa es-py es-pe es-pr es-us es-uy es-ve\n"
+
+#. Default: "CMFNotification"
+#: ../profiles/default/controlpanel.xml
+msgid "cmfnotification_configlet_title"
+msgstr "Configuración de CMFNotification"
+
+#. Default: "Subscribe"
+#: ../browser/templates/portlet.pt:67
+msgid "label_subscribe"
+msgstr "Subscribir"
+
+#. Default: "Subscribe to the folder above"
+#: ../browser/templates/portlet.pt:61
+msgid "label_subscribe_to_parent"
+msgstr "Subscribir a la carpeta anterior"
+
+#. Default: "Unsubscribe"
+#: ../browser/templates/portlet.pt:23
+msgid "label_unsubscribe"
+msgstr "Anular subscripción"
+
+#. Default: "Mail subscription"
+#: ../browser/templates/portlet.pt:9
+msgid "notification_portlet_header"
+msgstr "Subscripción por correo electrónico"
+
+#. Default: "You are subscribed to this item."
+#: ../browser/templates/portlet.pt:19
+msgid "subscribed"
+msgstr "Usted ha sido subscrito a este elemento."
+
+#. Default: "You are indirectly subscribed to this item, because you are subscribed to one of its parent folder above."
+#: ../browser/templates/portlet.pt:34
+msgid "subscribed_above"
+msgstr "Usted está indirectamente suscrito a este elemento, porque estás suscrito a una de su carpeta principal superior."
+

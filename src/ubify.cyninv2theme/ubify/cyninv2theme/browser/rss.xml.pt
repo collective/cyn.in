@@ -1,0 +1,50 @@
+<?xml version="1.0" ?>
+
+<rss version="2.0"
+     xmlns:tal="http://xml.zope.org/namespaces/tal"
+     xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+     tal:define="feed python:context;
+                 results feed/getSortedFeedEntries"
+     i18n:domain="cynin">
+
+    <channel>
+
+        <title tal:content="feed/getTitle"><tal:comment replace="nothing">Title of page</tal:comment></title>
+        <link tal:content="feed/getWebURL"></link>
+        <description tal:content="feed/getDescription">
+        </description>
+
+        <generator i18n:translate="generator">basesyndication</generator>
+
+        <image>
+            <title tal:content="feed/getTitle"><tal:comment replace="nothing">Title of page</tal:comment></title>
+            <url tal:content="feed/getImageURL"></url>
+            <link tal:content="feed/getWebURL"></link>
+        </image>
+
+        <tal:repeat repeat="feedentry results">
+            <item>
+                <title tal:content="feedentry/getTitle"></title>
+                <guid tal:content="feedentry/getWebURL"></guid>
+                <link tal:content="feedentry/getWebURL"></link>
+                <description tal:content="feedentry/getBody"><tal:comment replace="nothing">body</tal:comment></description>
+                <author tal:condition="feedentry/getAuthor"
+                        tal:content="feedentry/getAuthor"></author>
+
+                <tal:repeat repeat="tag feedentry/getTags">
+                    <category tal:content="tag"><tal:comment replace="nothing">tag</tal:comment></category>
+                </tal:repeat>
+
+                <pubDate tal:content="python:feedentry.getEffectiveDate().rfc822()"></pubDate>
+
+                <enclosure
+                    tal:define="enclosure feedentry/getEnclosure"
+                    tal:condition="python:enclosure is not None"
+                    tal:attributes="url enclosure/getURL;
+                                    length enclosure/getLength;
+                                    type enclosure/getType;" />
+            </item>
+        </tal:repeat>
+
+    </channel>
+</rss>

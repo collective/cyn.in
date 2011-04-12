@@ -1,0 +1,94 @@
+<tal:comment replace="nothing">
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see http://www.gnu.org/licenses/.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+</tal:comment>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      i18n:domain="cynin">
+<body>
+    <tal:definemacro metal:define-macro="below_listtitle_content">
+        <div class="listingfiledescrow listitemspecificdetail" tal:condition="python:item_type=='File'">
+            <a tal:attributes="href string:${full_item/absolute_url};title full_item/getFilename">
+                <img tal:attributes="src string:${portal_url}/${full_item/getBestIcon}" />
+                <tal:filename tal:replace="full_item/getFilename" />
+            </a>
+        </div>
+        <div tal:condition="python:item_type=='Link'" class="listitemspecificdetail weblink">
+            <a target="_blank" tal:attributes="href full_item/remote_url">
+                <span class="listitemremotelink" tal:content="full_item/remote_url" />
+            </a>
+        </div>
+        <div tal:condition="python:item_type=='Image'" class="listitemspecificdetail">
+            <a target="_blank" tal:attributes="href string:${full_item/absolute_url}/view">
+                <img tal:attributes="src string:${full_item/absolute_url}/image_thumb" />
+            </a>
+        </div>
+        <div tal:condition="python:item_type=='Event'" class="listitemspecificdetail">
+            <div class="listeventstartdate" tal:define="startdate python: full_item.toLocalizedTime(full_item.start(),True);">
+                <label i18n:translate="eventstartdate">Start:</label>
+                <span tal:content="startdate" />
+            </div>
+            <div class="listeventstartdate" tal:define="end python: full_item.toLocalizedTime(full_item.end(),True);">
+                <label i18n:translate="eventenddate">End:</label>
+                <span tal:content="end" />
+            </div>
+        </div>
+        <div align="center" class="maincontentholder listitemspecificdetail" id="listaudiocontentholder" tal:condition="python:item_type=='Audio'"
+                               tal:define="swf_url string:${portal_url}/player_mp3_maxi.swf">
+            <object type="application/x-shockwave-flash" tal:attributes="data swf_url" width="175" height="20">
+                <param name="movie" value="" tal:attributes="value swf_url" />
+                <param name="wmode" value="transparent" />
+                <param name="bgcolor" value="#ffffff" />
+                <param name="FlashVars"  tal:attributes="value string:mp3=${full_item/absolute_url}&amp;width=175&amp;showstop=1&amp;showvolume=1&amp;showloading=always&amp;buttonwidth=22&amp;sliderheight=8&amp;volumeheight=8&amp;loadingcolor=E8FFDA&amp;bgcolor1=666666&amp;bgcolor2=262626&amp;slidercolor1=F1F1F1&amp;slidercolor2=cccccc&amp;sliderovercolor=ffffff&amp;buttoncolor=d9d9d9&amp;buttonovercolor=ffffff" />
+                <embed type="application/x-shockwave-flash" width="175" height="20" allowFullScreen="true" tal:attributes="src swf_url;flashvars string:mp3=${full_item/absolute_url}&amp;width=175&amp;showstop=1&amp;showvolume=1&amp;showloading=always&amp;buttonwidth=22&amp;sliderheight=8&amp;volumeheight=8&amp;loadingcolor=E8FFDA&amp;bgcolor1=666666&amp;bgcolor2=262626&amp;slidercolor1=F1F1F1&amp;slidercolor2=cccccc&amp;sliderovercolor=ffffff&amp;buttoncolor=d9d9d9&amp;buttonovercolor=ffffff" wmode="transparent"/>
+            </object>
+        </div>
+        <div align="center" class="maincontentholder listitemspecificdetail" id="listvideocontentholder" tal:condition="python:item_type=='Video'"
+                               tal:define="swf_url string:${here/portal_url}/toobplayer_dark.swf">
+            <object type="application/x-shockwave-flash" data="swf_url" width="240" height="160" allowFullScreen="true">
+                <param name="movie" value="" tal:attributes="value swf_url"/>
+                <param name="flashvars"  value="" tal:attributes="value string:url=${full_item/absolute_url}&autoPlay=false&volume=70&showFullScreenButton=true" />
+                <param name="wmode" value="transparent" />
+                <embed type="application/x-shockwave-flash" width="240" height="160" allowFullScreen="true"  src="" tal:attributes="src swf_url;flashvars string:url=${full_item/absolute_url}&autoPlay=false&volume=70&showFullScreenButton=true" wmode="transparent"/>
+            </object>
+        </div>
+    </tal:definemacro>
+</body>
+</html>

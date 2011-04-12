@@ -1,0 +1,102 @@
+<div tal:replace="structure here/manage_page_header|nothing" />
+<div tal:replace="structure here/manage_tabs" />
+
+<h2 tal:define="form_title string:WebServerAuth Options"
+    tal:replace="structure here/manage_form_title" />
+
+<form tal:define="config context/configForView" method="post" action="manage_changeConfig">
+    <fieldset style="margin: .5em 0 0 0; padding: .5em; border: none">
+        <legend i18n:translate="">Make Plone recognize...</legend>
+        <table border="0" cellspacing="0" cellpadding="2" style="margin: 0 0 1em 2em">
+            <tr valign="top">
+                <td>
+                    <input type="radio" name="authenticate_everybody" id="authenticate_everybody_1" value="1" tal:attributes="checked config/authenticate_everybody" />
+                </td>
+                <td>
+                    <label for="authenticate_everybody_1" i18n:translate="">Any user the web server authenticates (recommended)</label>
+                </td>
+            </tr>
+            <tr valign="top">
+                <td>
+                    <input type="radio" name="authenticate_everybody" id="authenticate_everybody_0" value="0" tal:attributes="checked not:config/authenticate_everybody" />
+                </td>
+                <td>
+                    <label for="authenticate_everybody_0" i18n:translate="">Only users made within Plone</label>
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+    <fieldset style="margin: .5em 0 0 0; padding: .5em; border: none">
+        <legend i18n:translate="">To prompt the user for credentials, redirect...</legend>
+        <table border="0" cellspacing="0" cellpadding="2" style="margin: 0 0 1em 2em">
+            <tr valign="top">
+                <td>
+                    <input type="radio" name="use_custom_redirection" id="use_custom_redirection_0" value="0" tal:attributes="checked not:config/use_custom_redirection" />
+                </td>
+                <td>
+                    <label for="use_custom_redirection_0" i18n:translate="">To the HTTPS version of wherever he was going</label>
+                </td>
+            </tr>
+            <tr valign="top">
+                <td>
+                    <input type="radio" name="use_custom_redirection" id="use_custom_redirection_1" value="1" tal:attributes="checked config/use_custom_redirection" />
+                </td>
+                <td>
+                    <label for="use_custom_redirection_1" i18n:translate="">To a custom URL:</label>
+                </td>
+            </tr>
+            <tr valign="top">
+                <td>
+                </td>
+                <td>
+                    <table border="0" cellspacing="0" cellpadding="2">
+                        <tr valign="top">
+                            <td align="right">
+                                <label for="challenge_pattern" i18n:translate="">Matching&nbsp;pattern:</label>
+                            </td>
+                            <td>
+                                <input name="challenge_pattern" id="challenge_pattern" type="text" size="40" tal:attributes="value config/challenge_pattern_uncompiled" />
+                                <p class="form-help" style="margin: .5em 0">
+                                    <font size="-1" i18n:translate="">A regular expression matching every URL in your Plone site and capturing (using parentheses) the parts you'll need when constructing the replacement pattern.</font>
+                                </p>
+                                <p class="form-help" style="margin: .5em 0">
+                                    <font size="-1"><a href="http://www.python.org/doc/2.5.2/lib/re-syntax.html" target="_blank" i18n:translate="">Regular expression reference</a></font>
+                                </p>
+                            </td>
+                        </tr>
+                        <tr valign="top">
+                            <td align="right">
+                                <label for="challenge_replacement" i18n:translate="">Replacement&nbsp;pattern:</label>
+                            </td>
+                            <td>
+                                <input name="challenge_replacement" id="challenge_replacement" type="text" size="40" tal:attributes="value config/challenge_replacement" />
+                                <p class="form-help" style="margin: .5em 0">
+                                    <font size="-1" i18n:translate="">The URL to redirect to. Make sure it's an HTTPS URL, and <a href="http://docs.python.org/library/re.html#re.sub">use backreferences</a> (like \1, \2, and so on) to substitute in the parts you captured above.</font>
+                                </p>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+    
+    <table border="0" cellspacing="0" cellpadding="2" style="margin: 0; padding: 0">
+        <tr valign="top">
+            <td>
+                <input type="checkbox" id="strip_domain_names" name="strip_domain_names" value="1" tal:attributes="checked config/strip_domain_names" />
+            </td>
+            <td>
+                <label for="strip_domain_names" i18n:translate="">Strip domain names from login names</label>
+            </td>
+        </tr>
+    </table>
+    
+    <p style="margin: 1em 0 0 0; padding: 0" i18n:translate="">
+        Login name is in the <input type="text" size="20" name="username_header" id="username_header" tal:attributes="value config/username_header" i18n:name="username_header" /> header.
+    </p>
+    
+    <input type="submit" name="submit" value="Save Changes" style="margin: 1em 0 0 0" i18n:attributes="value" />
+</form>
+
+<tal:footer tal:replace="structure here/manage_page_footer|nothing"><tal:comment replace="nothing">Footer</tal:comment></tal:footer>

@@ -1,0 +1,254 @@
+==================================
+Rules reference in CMFNotification
+==================================
+
+General principles
+==================
+
+All types of rules follow the same principles:
+
+First, a rule is one line long. It can be as long as we want,
+though. However, it is suggested that very long rules components be
+put in a script, a tool/content type method or a view.
+
+A rule have two components, separated by two colons: ``::``. Spaces
+can be put before or after the colons, for readability's sake (se
+examples below)::
+
+    <match-expr> :: <rule-expr>
+
+The first component is a conditional expression. If this expression is
+evaluated to ``True``, then the rule matches. The type of the second
+component and the behaviour of the rule depend of its type (see
+below).
+
+These expressions can be:
+
+- Python expressions, e.g.::
+
+    python: here.meta_type == 'Document'
+
+- TAL expressions, e.g.::
+
+    not: here/keepSecret
+
+- an asterisk (``*``), which basically means "always" or "everyone",
+  depending on the context. A rule with ``*`` always match.
+
+Python and TAL expressions are provided some bindings (like ``here``,
+``author``, etc.). See the `Bindings`_ paragraph below.
+
+
+Rules
+=====
+
+Rules for list of users
+-----------------------
+
+These rules are used to decide who should be notified. As all rules,
+they look like the following::
+
+    <match-expr> :: <get-notified-expr>
+
+The ``<get-notified-expr>`` expression is used to determine who has to
+be notified. It must return a list of user names, email addresses or
+both. If multiple rules match, then the global subscribers list **is
+an union of all subscribers list returned by each rule**. In other
+words, if we have the following rules::
+
+    here/iAmTrue :: python: [user1']
+    here/iAmAlsoTrue :: python: ['user2']
+
+Then both users will receive a mail notification.
+
+Note that this list will be **extended by the list of users who have
+manually subscribed to the item** (if we have enabled this feature).
+
+Moreover a label can be added after a selection rule ::
+
+    <match-expr> :: <get-notified-expr> :: <label>
+
+This label lets us decide which e-mail template to use for users that
+match this rule. In other words: on the same event, we can decide to
+send a different e-mail for various (groups of) users. More than one
+rule may use the same label: in this case, as above, the global list
+of matching users is an union of all subscribers list returned by each
+rule. Also note that the same user may be retrieved for different
+rules with different labels: (s)he will then receive **more than one**
+e-mail. See below for an example.
+
+If no label is specified, it is considered to be empty string. Users
+who manually suscribe to the item are also registered under this empty
+label.
+
+**Important:** Also note that a security check is done in any case: no
+user will receive notification of an item which (s)he cannot
+view. Therefore, you have to think twice if you want to notify all
+users of our portal when there are a lot of users: security checks are
+costly. If you are not sure, test
+``NotificationTool.removeUnAuthorizedSubscribers()`` on a development
+portal with all users. Note that a future version of CMFNotification
+might allow certain rules to be trusted; in this case, security checks
+would not be done.
+
+Some examples:
+
+- if we want to notify all users who can view the item::
+
+      * :: *
+
+- if we want to send an e-mail to only one user when an item is
+  submitted::
+
+      python: transition == 'submit' :: python: ['jsmith']
+
+
+Rules for e-mail template
+-------------------------
+
+There are also rules to determine what e-mail template will be used to
+notify users. They look like this::
+
+    <match-expr> :: <template-expr>
+
+``<template-expr>`` is a TAL or Python expression which can return
+either a page template (ZPT) or the "id" of a page template. This page
+template will be "applied to" (or "evaluated in the context of") the
+object to generate the email message of the notification. Again,
+specific bindings are available (see below).
+
+Contrary to subscribers rules, **only the first rule** to match is
+taken in account. In other words, if we have the following rules::
+
+    here/iAmTrue :: string:creation_mail_notification
+    here/iAmAlsoTrue :: string:modification_mail_notification
+
+Then the mail template will be the first one that matches:
+``creation_mail_notification``.
+
+If user selection rules had labels, template selection is runned for each 
+groups corresponding to each label independantly.
+
+Note that CMFNotification ships with simple yet usable mail template:
+
+- ``creation_mail_notification``: for item creation (not for
+  discussion item, though, see below);
+
+- ``modification_mail_notification``: for item modification;
+
+- ``workflow_mail_notification``: for workflow transitions;
+
+- ``discussion_mail_notification``: for discussion item creation;
+
+- ``registration_mail_notification``: for member registration;
+
+
+Bindings
+========
+
+Bindings are injected into the expression context when rule
+expressions and mail templates are evaluated.
+
+
+Default bindings
+----------------
+
+The following bindings are always available:
+
+- ``here``: the current item;
+
+- ``context``: same as ``here``;
+
+- ``current_state``: workflow state of the current item;
+
+- ``author``: the current member;
+
+- ``nothing``: equals to None;
+
+- ``portal``;
+
+- ``request``;
+
+- ``modules``: a ``SecureModuleImporter`` instance.
+
+
+Special bindings for template selection rules
+---------------------------------------------
+
+The following bindings are only available in the template selection
+rules (for all events):
+
+- ``label``: one of the matching labels of user selection rules. Using
+  ``label`` in our mail template selection rules lets us select a
+  different template for users that have matched the corresponding
+  label. For example, we could define these rules for users::
+
+      * :: python: ['manager'] :: simple
+      * :: python: ['dev1', 'dev2'] :: detailed
+
+  And the following rules for template selection::
+
+      python: label == 'simple' :: string:simple_mail_template
+      python: label == 'detailed' :: string:detailed_mail_template
+
+  The three users would receive an e-mail:
+
+  - ``manager`` would receive a simplified notification;
+
+  - ``dev1`` and ``dev2`` would received a detailed notification,
+    since we asked for another mail template.
+
+
+Special bindings for item modification
+--------------------------------------
+
+The following bindings are available in the context of an item
+modification:
+
+- ``current``: the current version of the object;
+
+- ``previous``: the previous version of the object, if available, or
+  ``None`` otherwise (or when the item is created).
+
+
+Special bindings for workflow transition
+----------------------------------------
+
+The following bindings are available in the context of a workflow
+transition:
+
+- ``transition``: the transition (as a string) which was triggered;
+
+- ``current_state``: the current workflow state (as a string) of the
+  item;
+  
+- ``previous_state``: the previous workflow state (as a string) of the
+  item;
+
+- ``comments``: the (possibly empty) comments.
+
+
+Special bindings for member registration and modification
+---------------------------------------------------------
+
+The following bindings are available in the context of a member
+registration or modification:
+
+- ``current_user``: the user who has has registered the member (could
+  be the member him/herself, i.e. an anonymous user, or an existing
+  portal member), or the user who has modified the member properties
+  (can be the user him/herself or another user);
+
+- ``member``: the new portal member;
+
+- ``properties``: the new portal member's properties;
+
+- ``event``: either ``registration`` or ``modification``. FIXME: ?
+
+
+Special bindings for discussion item creation
+---------------------------------------------
+
+Since ``here`` and ``context`` are ambiguous, two special bindings are
+provided to access the discussed item (``discussed_item``) and the
+discussion item itself (``discussion_item``).

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<import-steps>
+  <import-step id="openxml-mimetypes-registry"
+               version="20071010-02"
+               handler="Products.OpenXml.setuphandlers.setupOpenXml"
+               title="OpenXML setup">
+    OpenXml setup for MimeTypesRegistry
+  </import-step>
+</import-steps>

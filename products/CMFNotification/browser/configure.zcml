@@ -1,0 +1,69 @@
+<configure xmlns:plone="http://namespaces.plone.org/plone"
+           xmlns:browser="http://namespaces.zope.org/browser">
+
+  <!-- Subscription portlet -->
+  <include package="plone.app.portlets"/>
+  <plone:portlet
+     name="portlets.Subscription"
+     interface=".portlet.ISubscriptionPortlet"
+     assignment=".portlet.Assignment"
+     renderer=".portlet.Renderer"
+     addview=".portlet.AddForm"
+     />
+
+  <!-- Subscription browser views -->
+  <browser:page
+     for="*"
+     name="subscribe"
+     class=".subscription.Subscription"
+     attribute="subscribe"
+     permission="zope2.View"
+     />
+
+  <browser:page
+     for="*"
+     name="unsubscribe"
+     class=".subscription.Subscription"
+     attribute="unsubscribe"
+     permission="zope2.View"
+     />
+
+  <browser:page
+     for="*"
+     name="unsubscribeFromAbove"
+     class=".subscription.Subscription"
+     attribute="unsubscribeFromAbove"
+     permission="zope2.View"
+     />
+
+  <!-- Subscription KSS actions -->
+  <browser:page
+     for="*"
+     name="kssSubscribe"
+     class=".subscription.KSSActions"
+     attribute="subscribe"
+     permission="zope2.View"
+     />
+
+  <browser:page
+     for="*"
+     name="kssUnsubscribe"
+     class=".subscription.KSSActions"
+     attribute="unsubscribe"
+     permission="zope2.View"
+     />
+
+  <browser:page
+     for="*"
+     name="kssUnsubscribeFromAbove"
+     class=".subscription.KSSActions"
+     attribute="unsubscribeFromAbove"
+     permission="zope2.View"
+     />
+
+  <!-- KSS stylesheet -->
+  <browser:resource
+     name="cmfnotification.kss"
+     file="resources/cmfnotification.kss"/>
+
+</configure>

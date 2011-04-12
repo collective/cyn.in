@@ -1,0 +1,341 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: ATRatings 0.2\n"
+"POT-Creation-Date: 2005-10-20 21:24+0000\n"
+"PO-Revision-Date: 2005-01-05 12:33:09 -0200\n"
+"Last-Translator: Lukas Zdych <lukas.zdych@corenet.cz>\n"
+"Language-Team: Core Net Solutions, s.r.o. <info@corenet.cz>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-Code: cs\n"
+"Language-Name: Czech\n"
+"Preferred-Encodings: utf-8 latin2\n"
+"Domain: at_ratings\n"
+
+#. <label for="best_ratings" i18n:translate="best_ratings">
+#. best ratings
+#. </label>
+#. Default: "best ratings"
+#: ../skins/at_ratings/viewlet_ratings.pt
+msgid "best_ratings"
+msgstr "nejlépe hodnocené"
+
+#. <span i18n:translate="box_top_countings">
+#. Top hit countings
+#. </span>
+#. Default: "Top hit countings"
+#: ../skins/at_ratings/viewlet_ratings.pt
+msgid "box_top_countings"
+msgstr "Nejsledovanější"
+
+#. <a href="" i18n:translate="box_top_countings_list_link" tal:attributes="href string:${utool}/top_countings_list">
+#. Complete Record
+#. </a>
+#. Default: "Complete Record"
+#: ../skins/at_ratings/portlet_top_countings.pt
+msgid "box_top_countings_list_link"
+msgstr "Kompletní soupis"
+
+#. <a href="" i18n:translate="box_top_ragings_list_link" tal:attributes="href string:${utool}/top_ratings_list">
+#. Complete Record
+#. </a>
+#. Default: "Complete Record"
+#: ../skins/at_ratings/portlet_top_ratings.pt
+msgid "box_top_ragings_list_link"
+msgstr "Kompletní soupis"
+
+#. <a href="#" i18n:translate="box_top_rated" tal:attributes="href string:${utool}/top_ratings_list">
+#. Top Rated
+#. </a>
+#. Default: "Top Rated"
+#: ../skins/at_ratings/portlet_top_ratings.pt
+msgid "box_top_rated"
+msgstr "Nejlépe hodnocené"
+
+#. <span i18n:translate="box_top_ratings">
+#. Top ratings
+#. </span>
+#. Default: "Top ratings"
+#: ../skins/at_ratings/viewlet_ratings.pt
+msgid "box_top_ratings"
+msgstr "Nejlepší hodnocení"
+
+#. <a href="#" i18n:translate="box_top_viewed" tal:attributes="href string:${utool}/top_countings_list">
+#. Top Viewed
+#. </a>
+#. Default: "Top Viewed"
+#: ../skins/at_ratings/portlet_top_countings.pt
+msgid "box_top_viewed"
+msgstr "Nejvíce sledované"
+
+#. Default: "Click to vote:"
+msgid "click_to_vote"
+msgstr ""
+
+#. <span i18n:translate="click_to_vote_1" metal:define-macro="click_to_vote_1">
+#. click to vote:
+#. <strong>
+#. outdated
+#. </strong>
+#. </span>
+#. Default: "click to vote: <strong>outdated</strong>"
+#: ../skins/at_ratings/rating_macros.pt
+msgid "click_to_vote_1"
+msgstr "Klikni pro hlas: <strong>zastaralé</strong>"
+
+#. <span i18n:translate="click_to_vote_2" metal:define-macro="click_to_vote_2">
+#. click to vote:
+#. <strong>
+#. misleading or not useful
+#. </strong>
+#. </span>
+#. Default: "click to vote: <strong>misleading or not useful</strong>"
+#: ../skins/at_ratings/rating_macros.pt
+msgid "click_to_vote_2"
+msgstr "Klikni pro hlas: <strong>nepoužitelné</strong>"
+
+#. <span i18n:translate="click_to_vote_3" metal:define-macro="click_to_vote_3">
+#. click to vote:
+#. <strong>
+#. average
+#. </strong>
+#. </span>
+#. Default: "click to vote: <strong>average</strong>"
+#: ../skins/at_ratings/rating_macros.pt
+msgid "click_to_vote_3"
+msgstr "Klikni pro hlas: <strong>průměrné</strong>"
+
+#. <span i18n:translate="click_to_vote_4" metal:define-macro="click_to_vote_4">
+#. click to vote:
+#. <strong>
+#. good
+#. </strong>
+#. </span>
+#. Default: "click to vote: <strong>good</strong>"
+#: ../skins/at_ratings/rating_macros.pt
+msgid "click_to_vote_4"
+msgstr "Klikni pro hlas: <strong>dobré</strong>"
+
+#. <span i18n:translate="click_to_vote_5" metal:define-macro="click_to_vote_5">
+#. click to vote:
+#. <strong>
+#. great
+#. </strong>
+#. </span>
+#. Default: "click to vote: <strong>great</strong>"
+#: ../skins/at_ratings/rating_macros.pt
+msgid "click_to_vote_5"
+msgstr "Klikni pro hlas: <strong>skvělé</strong>"
+
+#. Default: "${count}x"
+msgid "count_number"
+msgstr ""
+
+#. <p class="discreet" i18n:translate="description_no_counting_items" tal:condition="not: batch">
+#. This portal has no visible items with any counting value.
+#. </p>
+#. Default: "This portal has no visible items with any counting value."
+#: ../skins/at_ratings/top_countings_list.pt
+msgid "description_no_counting_items"
+msgstr "Tento portál neobsahuje žádné dostupné položky s jakým-koli záznamem o zobrazení."
+
+#. <p class="discreet" i18n:translate="description_no_rating_items" tal:condition="not: batch">
+#. This portal has no visible items with any rating value.
+#. </p>
+#. Default: "This portal has no visible items with any rating value."
+#: ../skins/at_ratings/top_ratings_list.pt
+msgid "description_no_rating_items"
+msgstr "Tento portál neobsahuje žádné dostupné položky s jakým-koli hodnocením."
+
+#. <h1 class="documentFirstHeading" i18n:translate="heading_top_hits">
+#. Top Hits Listing
+#. </h1>
+#. Default: "Top Hits Listing"
+#: ../skins/at_ratings/top_countings_list.pt
+msgid "heading_top_hits"
+msgstr "Přehled Nejsledovanějšího"
+
+#. <h1 class="documentFirstHeading" i18n:translate="heading_top_rating">
+#. Top Rated Listing
+#. </h1>
+#. Default: "Top Rated Listing"
+#: ../skins/at_ratings/top_ratings_list.pt
+msgid "heading_top_rating"
+msgstr "Přehled Nejlépe Hodnoceného"
+
+#. <span i18n:translate="hits_count">
+#. hits
+#. </span>
+#. Default: "hits"
+#: ../skins/at_ratings/rating_macros.pt
+msgid "hits_count"
+msgstr "zobrazení"
+
+#. <tal:author i18n:translate="listingheader_author">
+#. Author
+#. </tal:author>
+#. Default: "Author"
+#: ../skins/at_ratings/top_ratings_list.pt
+msgid "listingheader_author"
+msgstr "Autor"
+
+#. <tal:hits i18n:translate="listingheader_hits">
+#. Hits
+#. </tal:hits>
+#. Default: "Hits"
+#: ../skins/at_ratings/top_countings_list.pt
+msgid "listingheader_hits"
+msgstr "Zobrazení"
+
+#. <tal:modified i18n:translate="listingheader_modified">
+#. Modified
+#. </tal:modified>
+#. Default: "Modified"
+#: ../skins/at_ratings/top_ratings_list.pt
+msgid "listingheader_modified"
+msgstr "Aktualizace"
+
+#. <tal:rating i18n:translate="listingheader_rating">
+#. Rating
+#. </tal:rating>
+#. Default: "Rating"
+#: ../skins/at_ratings/top_ratings_list.pt
+msgid "listingheader_rating"
+msgstr "Hodnocení"
+
+#. <tal:title i18n:translate="listingheader_title">
+#. Title
+#. </tal:title>
+#. Default: "Title"
+#: ../skins/at_ratings/top_ratings_list.pt
+msgid "listingheader_title"
+msgstr "Nadpis"
+
+#. <label for="worst_countings" i18n:translate="lower_countings">
+#. lower countings
+#. </label>
+#. Default: "lower countings"
+#: ../skins/at_ratings/viewlet_ratings.pt
+msgid "lower_countings"
+msgstr "nejméně sledované"
+
+#. <span i18n:translate="rating_1" metal:define-macro="rating_1">
+#. <strong>
+#. outdated
+#. </strong>
+#. </span>
+#. Default: "<strong>outdated</strong>"
+#: ../skins/at_ratings/rating_macros.pt
+msgid "rating_1"
+msgstr "<strong>zastaralé</strong>"
+
+#. <span i18n:translate="rating_2" metal:define-macro="rating_2">
+#. <strong>
+#. misleading or not useful
+#. </strong>
+#. </span>
+#. Default: "<strong>misleading or not useful</strong>"
+#: ../skins/at_ratings/rating_macros.pt
+msgid "rating_2"
+msgstr "<strong>nepoužitelné</strong>"
+
+#. <span i18n:translate="rating_3" metal:define-macro="rating_3">
+#. <strong>
+#. average
+#. </strong>
+#. </span>
+#. Default: "<strong>average</strong>"
+#: ../skins/at_ratings/rating_macros.pt
+msgid "rating_3"
+msgstr "<strong>průměrné</strong>"
+
+#. <span i18n:translate="rating_4" metal:define-macro="rating_4">
+#. <strong>
+#. good
+#. </strong>
+#. </span>
+#. Default: "<strong>good</strong>"
+#: ../skins/at_ratings/rating_macros.pt
+msgid "rating_4"
+msgstr "<strong>dobré</strong>"
+
+#. <span i18n:translate="rating_5" metal:define-macro="rating_5">
+#. <strong>
+#. great
+#. </strong>
+#. </span>
+#. Default: "<strong>great</strong>"
+#: ../skins/at_ratings/rating_macros.pt
+msgid "rating_5"
+msgstr "<strong>skvělé</strong>"
+
+#. <span i18n:translate="rating_value" tal:condition="total_count">
+#. rating:
+#. </span>
+#. Default: "rating:"
+#: ../skins/at_ratings/top_ratings_list.pt
+msgid "rating_value"
+msgstr "hodnocení:"
+
+#. <label i18n:translate="sort_mode">
+#. sort mode
+#. </label>
+#. Default: "sort mode"
+#: ../skins/at_ratings/viewlet_ratings.pt
+msgid "sort_mode"
+msgstr "způsob řazení"
+
+#. <span class="state-expired" i18n:translate="time_expired" tal:condition="python:portal.isExpired(item)">
+#. expired
+#. </span>
+#. Default: "expired"
+#: ../skins/at_ratings/top_ratings_list.pt
+msgid "time_expired"
+msgstr "prošlé"
+
+#. <label for="best_countings" i18n:translate="top_countings">
+#. top countings
+#. </label>
+#. Default: "top countings"
+#: ../skins/at_ratings/viewlet_ratings.pt
+msgid "top_countings"
+msgstr "nejsledovanější"
+
+#. <span i18n:translate="try_to_vote_after_login" tal:condition="isAnon">
+#. please try after log in
+#. </span>
+#. Default: "please try after log in"
+#: ../skins/at_ratings/rating_macros.pt
+msgid "try_to_vote_after_login"
+msgstr "zkuste to po přihlášení"
+
+#. <span i18n:translate="votes_count" tal:condition="total_count">
+#. (
+#. ${total_count}
+#. votes)
+#. </span>
+#. votes:
+#. Default: "votes: ${total_count}"
+#: ../skins/at_ratings/top_ratings_list.pt
+#: ../skins/at_ratings/rating_macros.pt
+msgid "votes_count"
+msgstr "hlasy: ${total_count}"
+
+#. <label for="worst_ratings" i18n:translate="worst_ratings">
+#. worst ratings
+#. </label>
+#. Default: "worst ratings"
+#: ../skins/at_ratings/viewlet_ratings.pt
+msgid "worst_ratings"
+msgstr "nejhůře hodnocené"
+
+#. <span i18n:translate="you_can_not_vote" tal:condition="not: allowRating">
+#. You can't vote
+#. </span>
+#. Default: "You can't vote"
+#: ../skins/at_ratings/rating_macros.pt
+msgid "you_can_not_vote"
+msgstr "Nemůžete hodnotit"
+

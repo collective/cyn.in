@@ -1,0 +1,207 @@
+# Carlos Tabasco <ctabasco@yaco.es>, 2005
+msgid ""
+msgstr ""
+"Project-Id-Version: ATRatings 0.2\n"
+"POT-Creation-Date: 2005-10-20 21:24+0000\n"
+"PO-Revision-Date: 2011-03-08 21:34-0400\n"
+"Last-Translator: Leonardo J. Caballero G. <leonardocaballero@gmail.com>\n"
+"Language-Team: Spanish <plone-conosur@lists.plone.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: es\n"
+"Language-Name: Spanish\n"
+"Preferred-Encodings: latin1 utf-8\n"
+"Domain: at_ratings\n"
+"X-Is-Fallback-For: es-ar es-bo es-cl es-co es-cr es-do es-ec es-es es-sv es-gt es-hn es-mx es-ni es-pa es-py es-pe es-pr es-us es-uy es-ve\n"
+
+#. Default: "best ratings"
+#: ../skins/at_ratings/viewlet_ratings.pt
+msgid "best_ratings"
+msgstr "Mejor Puntuados"
+
+#. Default: "Top hit countings"
+#: ../skins/at_ratings/viewlet_ratings.pt
+msgid "box_top_countings"
+msgstr "Mas veces Puntuados"
+
+#. Default: "Complete Record"
+#: ../skins/at_ratings/portlet_top_countings.pt
+msgid "box_top_countings_list_link"
+msgstr "Todas las puntuaciones"
+
+#. Default: "Complete Record"
+#: ../skins/at_ratings/portlet_top_ratings.pt
+msgid "box_top_ragings_list_link"
+msgstr "Todas las puntuaciones"
+
+#. Default: "Top Rated"
+#: ../skins/at_ratings/portlet_top_ratings.pt
+msgid "box_top_rated"
+msgstr "Mejor Puntuados"
+
+#. Default: "Top ratings"
+#: ../skins/at_ratings/viewlet_ratings.pt
+msgid "box_top_ratings"
+msgstr "Mejor Puntuados"
+
+#. Default: "Top Viewed"
+#: ../skins/at_ratings/portlet_top_countings.pt
+msgid "box_top_viewed"
+msgstr "Mas visitados"
+
+#. Default: "Click to vote:"
+msgid "click_to_vote"
+msgstr "Vote:"
+
+#. Default: "click to vote: <strong>outdated</strong>"
+#: ../skins/at_ratings/rating_macros.pt
+msgid "click_to_vote_1"
+msgstr "Pinche para votar: <strong>Anticuado</strong>"
+
+#. Default: "click to vote: <strong>misleading or not useful</strong>"
+#: ../skins/at_ratings/rating_macros.pt
+msgid "click_to_vote_2"
+msgstr "Pinche para votar: <strong>Malo</strong>"
+
+#. Default: "click to vote: <strong>average</strong>"
+#: ../skins/at_ratings/rating_macros.pt
+msgid "click_to_vote_3"
+msgstr "Pinche para votar: <strong>Regular</strong>"
+
+#. Default: "click to vote: <strong>good</strong>"
+#: ../skins/at_ratings/rating_macros.pt
+msgid "click_to_vote_4"
+msgstr "Pinche para votar: <strong>Bueno</strong>"
+
+#. Default: "click to vote: <strong>great</strong>"
+#: ../skins/at_ratings/rating_macros.pt
+msgid "click_to_vote_5"
+msgstr "Pinche para votar: <strong>Muy Bueno</strong>"
+
+#. Default: "${count}x"
+msgid "count_number"
+msgstr "${count}x"
+
+#. Default: "This portal has no visible items with any counting value."
+#: ../skins/at_ratings/top_countings_list.pt
+msgid "description_no_counting_items"
+msgstr "No hay elementos visibles puntuados."
+
+#. Default: "This portal has no visible items with any rating value."
+#: ../skins/at_ratings/top_ratings_list.pt
+msgid "description_no_rating_items"
+msgstr "No hay elementos visibles puntuados."
+
+#. Default: "Top Hits Listing"
+#: ../skins/at_ratings/top_countings_list.pt
+msgid "heading_top_hits"
+msgstr "Mas visitados"
+
+#. Default: "Top Rated Listing"
+#: ../skins/at_ratings/top_ratings_list.pt
+msgid "heading_top_rating"
+msgstr "Mejor puntuados"
+
+#. Default: "hits"
+#: ../skins/at_ratings/rating_macros.pt
+msgid "hits_count"
+msgstr "puntuaciones"
+
+#. Default: "Author"
+#: ../skins/at_ratings/top_ratings_list.pt
+msgid "listingheader_author"
+msgstr "Autor"
+
+#. Default: "Hits"
+#: ../skins/at_ratings/top_countings_list.pt
+msgid "listingheader_hits"
+msgstr "Puntuaciones"
+
+#. Default: "Modified"
+#: ../skins/at_ratings/top_ratings_list.pt
+msgid "listingheader_modified"
+msgstr "Modificado"
+
+#. Default: "Rating"
+#: ../skins/at_ratings/top_ratings_list.pt
+msgid "listingheader_rating"
+msgstr "Puntuación"
+
+#. Default: "Title"
+#: ../skins/at_ratings/top_ratings_list.pt
+msgid "listingheader_title"
+msgstr "Titulo"
+
+#. Default: "lower countings"
+#: ../skins/at_ratings/viewlet_ratings.pt
+msgid "lower_countings"
+msgstr "Menos veces puntuados"
+
+#. Default: "<strong>outdated</strong>"
+#: ../skins/at_ratings/rating_macros.pt
+msgid "rating_1"
+msgstr "<strong>anticuado</strong>"
+
+#. Default: "<strong>misleading or not useful</strong>"
+#: ../skins/at_ratings/rating_macros.pt
+msgid "rating_2"
+msgstr "<strong>malo</strong>"
+
+#. Default: "<strong>average</strong>"
+#: ../skins/at_ratings/rating_macros.pt
+msgid "rating_3"
+msgstr "<strong>regular</strong>"
+
+#. Default: "<strong>good</strong>"
+#: ../skins/at_ratings/rating_macros.pt
+msgid "rating_4"
+msgstr "<strong>bueno</strong>"
+
+#. Default: "<strong>great</strong>"
+#: ../skins/at_ratings/rating_macros.pt
+msgid "rating_5"
+msgstr "<strong>muy bueno</strong>"
+
+#. Default: "rating:"
+#: ../skins/at_ratings/top_ratings_list.pt
+msgid "rating_value"
+msgstr "puntuación:"
+
+#. Default: "sort mode"
+#: ../skins/at_ratings/viewlet_ratings.pt
+msgid "sort_mode"
+msgstr "orden"
+
+#. Default: "expired"
+#: ../skins/at_ratings/top_ratings_list.pt
+msgid "time_expired"
+msgstr "expirado"
+
+#. Default: "top countings"
+#: ../skins/at_ratings/viewlet_ratings.pt
+msgid "top_countings"
+msgstr "Más veces votado"
+
+#. Default: "please try after log in"
+#: ../skins/at_ratings/rating_macros.pt
+msgid "try_to_vote_after_login"
+msgstr "Intentelo despues de identificarse"
+
+#. Default: "votes: ${total_count}"
+#: ../skins/at_ratings/rating_macros.pt
+#: ../skins/at_ratings/top_ratings_list.pt
+msgid "votes_count"
+msgstr "votos: ${total_count}"
+
+#. Default: "worst ratings"
+#: ../skins/at_ratings/viewlet_ratings.pt
+msgid "worst_ratings"
+msgstr "Peores puntuados"
+
+#. Default: "You can't vote"
+#: ../skins/at_ratings/rating_macros.pt
+msgid "you_can_not_vote"
+msgstr "No puede votar"
+

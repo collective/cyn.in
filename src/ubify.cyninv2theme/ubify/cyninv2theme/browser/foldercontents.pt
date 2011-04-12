@@ -1,0 +1,31 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xml:lang="en" lang="en"
+      i18n:domain="cynin"
+      metal:use-macro="here/main_template/macros/master">
+
+  <head>
+      <metal:block fill-slot="top_slot">
+        <tal:insert tal:replace="nothing"
+              tal:define="dummy python:request.set('enable_border', 1)" />
+      </metal:block>
+  </head>
+
+  <body>
+
+    <div metal:fill-slot="contentwithnopadding" id="portal-content-block">
+      <form name="folderContentsForm"
+            method="post"
+            action="folder_object"
+            tal:attributes="action context/absolute_url"
+            class="kssattr-serveraction-foldercontents_update_table">
+        <div tal:replace="structure view/contents_table"></div>
+        <input tal:replace="structure context/@@authenticator/authenticator" />
+      </form>
+    </div>
+
+
+  </body>
+</html>

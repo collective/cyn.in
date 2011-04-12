@@ -1,0 +1,77 @@
+======================================
+How to troubleshoot your configuration
+======================================
+
+Most of the time, when CMFNotification does not work, it is caused by
+an error in the configuration. Hopefully, there are ways to know what
+is wrong. Hence, before cursing me and my family for three
+generations, read this. It will save your time (and hopefully mine,
+too).
+
+
+First checks
+============
+
+If you do not receive any e-mail, first check:
+
+- that you have followed the configuration steps;
+
+- that there is at least one user who should have received an
+  e-mail. Remember that if an user is not allowed to view an item,
+  (s)he will not be notified;
+
+- that this user has a valid e-mail address.
+
+These verifications might seem obvious. They are. Always check the
+obvious things first. You will find yourself much less comfortable
+when checking the obvious after two hours of long, complex and vain
+debugging...
+
+
+Use the log, Luke
+=================
+
+CMFNotification is very polite: it logs its errors and will tell you
+what it does or why it could not do what you you have asked it for.
+CMFNotification logs in the "event log". It is a file; it is not the
+"error_log" object that you can access through the web. If you do not
+know where is this file, see `this FAQ`_. In this file, look for lines
+like this one::
+
+    2007-08-30T18:39:48 WARNING CMFNotification No mail template for item_creation' notification of plone-site/folder/document
+
+If everything seems fine but you still do not receive any e-mail, go
+to the ZMI, click on ``portal_notification`` and check the *Toggle
+debug mode: log addresses* box. Then repeat the action which should
+have sent an e-mail notification (but has not), and read the event log
+of you Zope instance. CMFNotification will log the list of addresses
+that it is going to send the notification to, and the message itself,
+too. If the addresses list is empty, you may want to check users'
+access or your rules. If this list is not empty, then:
+
+- the e-mail has been correctly sent. Double-check the e-mail
+  address. Perhaps the e-mail is "in the pipe"; wait a few minutes and
+  check your inbox again. Check that the message has not been blocked
+  an anti-spam somewhere.
+
+- the e-mail has not yet been sent. Check the mail queue of your SMTP
+  server (or the queue of MaildropHost if you use this product).
+
+.. _this FAQ: http://plone.org/documentation/faq/plone-logs
+
+
+Asking for help
+===============
+
+If you cannot get your configuration working, feel free to ask for
+help. See the `support page`_ to know more about the best ways to
+receive help.
+
+If you are positively, absolutely, completely sure (got it?) that
+there is nothing wrong with your configuration and that there must be
+a bug in CMFNotification, then `use the issue tracker`_. There might
+be bugs in CMFNotification, but most of users' requests could actually
+be solved by reading this page and double-checking everything.
+
+.. _support page: http://plone.org/support
+.. _use the issue tracker: http://plone.org/products/cmfnotification/issues

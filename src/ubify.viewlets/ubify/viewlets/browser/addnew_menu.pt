@@ -1,0 +1,171 @@
+<tal:comment replace="nothing">
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see http://www.gnu.org/licenses/.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+</tal:comment>
+<tal:block tal:define="portal_url here/portal_url;" i18n:domain="cynin">
+<h1 id="nyroModalTitle" i18n:translate="lbl_addcontent_title">Add new content</h1>
+<div class="formHelp" i18n:translate="lbl_addcontent_desc">
+    To begin adding new content, select the Space in which you would like to add it to, and then click one of the content types below.
+</div>
+    <tal:addcontenttypes tal:condition="not: view/anonymous" tal:define="dummylist python:[a for a in view.addnewitems if a['id'] not in view.contextdisallowedtypes];lendummy python:len(dummylist)">
+        <div class="AddToSpaceHolder">
+            <label class="" i18n:translate="">Add to Space:</label>
+            <select id="comcynapsespaceselector">
+                <tal:spaces repeat="item view/spaceslist">    
+                    <option tal:define="space item/object;depth item/depth;depthlist python:depth > 0 and [k for k in range(1,depth+1)] or [];" tal:attributes="value space/getURL;SELECTED python:space.UID == view.contextuid and 'SELECTED' or '';id space/UID;rel python:','.join(item['disallowedtypes']);class python:item['canAdd'] == False and 'disabledspaceselection' or '';"><tal:repeatdash repeat="dashitem depthlist">&mdash;&nbsp;</tal:repeatdash><tal:block tal:content="space/Title" /></option>
+                </tal:spaces>
+            </select>
+            <label i18n:translate="" id="comcynapseaddernotallowed" tal:attributes="class python:((lendummy > 0 or len(view.viewmenu) > 0 or 'ContentSpace' not in view.contextdisallowedtypes) and 'hidden') or ''">You are not allowed to add content to this Space.</label>
+        </div>
+        <fieldset id="addcontentlegend"
+                  tal:attributes="class python:(lendummy > 0 and 'contentheaderlabel addnewscreenlabel') or 'contentheaderlabel addnewscreenlabel hidden'">
+            <legend i18n:translate="">Content</legend>
+        </fieldset>        
+        <div id="addnewmenuholder">
+            <tal:items tal:repeat="action view/addnewitems">
+                <div tal:attributes="id string:addnewaction-${action/id};class python:(action['id'] in view.contextdisallowedtypes and 'addnewactionholder hidden') or 'addnewactionholder'">
+                    <a class="addselector" tal:attributes="rel python:action['id'];href string:${view/contextualurl}/createObject?type_name=${action/id}">
+                        <img alt="" src=""
+                             tal:condition="action/icon"
+                             tal:attributes="src action/icon; alt action/title;"
+                             class="addnewtypeicon"/>
+                        <span tal:content="action/title" class="addnewtypetitle"/>
+                        <div tal:content="action/description" class="addnewtypedescription discreet" />
+                    </a>
+                </div>
+            </tal:items>
+        </div>
+        <fieldset id="addcontainerlegend" class="contentheaderlabel addnewscreenlabel" tal:attributes="class python:('ContentSpace' in view.contextdisallowedtypes and 'contentheaderlabel addnewscreenlabel hidden') or 'contentheaderlabel addnewscreenlabel'">
+            <legend i18n:translate="">Container</legend>
+        </fieldset>
+        <div id="addnewspaceholder" tal:attributes="class python:'ContentSpace' in view.contextdisallowedtypes and 'hidden'">
+            <tal:items tal:repeat="action view/addnewcontainers">
+                <div tal:attributes="id string:addnewaction-${action/id};" class="addnewactionholder">
+                    <a class="addselector" tal:attributes="rel python:action['id'];href string:${view/contextualurl}/createObject?type_name=${action/id}">
+                        <img alt="" src=""
+                             tal:condition="action/icon"
+                             tal:attributes="src action/icon; alt action/title;"
+                             class="addnewtypeicon"/>
+                        <span tal:content="action/title" class="addnewtypetitle"/>
+                        <div tal:content="action/description" class="addnewtypedescription discreet" />
+                    </a>
+                </div>
+            </tal:items>
+        </div>
+        <fieldset class="contentheaderlabel addnewscreenlabel" tal:condition="python:view.viewmenu">
+        <legend i18n:translate="">Saved Search</legend>
+        </fieldset>
+        <div id="addnewcollectionholder" tal:condition="python:view.viewmenu">
+            <tal:items tal:repeat="vmenu view/viewmenu">
+                <div class="addnewactionholder">
+                    <a class="addselector" tal:attributes="href vmenu/absolute_url" tal:define="ttool context/portal_types;
+                                                                tobj python:ttool[vmenu['portal_type']];
+                                                                ticon tobj/content_icon
+                                                                ">
+                        <img border="0"
+                             tal:attributes="src string:${portal_url}/${ticon}"
+                             class="addnewtypeicon" />
+                        <span tal:content="vmenu/Title" class="addnewtypetitle"/>
+                        <div tal:content="vmenu/description" class="addnewtypedescription discreet" />
+                    </a>
+                </div>
+            </tal:items>
+        </div>
+        <script type="text/javascript" rel="forceLoad">        
+        jq('#comcynapsespaceselector').change(function(event){
+            if (jq('#comcynapsespaceselector option:selected').attr('class') != 'disabledspaceselection'){                        
+                jq('#comcynapseaddernotallowed').hide();
+                var selectedspaceurl = jq(this).val();
+                var vardisallowedtypes = jq('#comcynapsespaceselector option:selected').attr('rel');          
+                var arrdisallowedtypes = vardisallowedtypes.split(',');
+                var flag = false;
+                jq('#addnewmenuholder, #addnewspaceholder').find('.addselector').each(function(){
+                    var tname = jq(this).attr('rel');
+                    if (tname.toLowerCase() != 'contentspace' && jq.inArray(tname,arrdisallowedtypes) > -1){
+                       jq(this).parent('div.addnewactionholder').addClass('hidden');                        
+                    }
+                    else{
+                       jq(this).parent('div.addnewactionholder').removeClass('hidden');                        
+                       var addurl = selectedspaceurl + '/createObject?type_name=' + tname;
+                       jq(this).attr('href',encodeURI(addurl));
+                       if (tname.toLowerCase() != 'contentspace'){
+                           flag = true;
+                       }                        
+                    }
+                });                 
+                
+                if (jq.inArray('ContentSpace',arrdisallowedtypes) > -1){
+                   jq('#addcontainerlegend').addClass('hidden');
+                   jq('#addnewspaceholder').addClass('hidden');
+                }
+                else{
+                   jq('#addcontainerlegend').removeClass('hidden');
+                   jq('#addnewspaceholder').removeClass('hidden');
+                }
+                if (flag == true){
+                   jq('#addcontentlegend').removeClass('hidden');
+                }
+                if (flag == false){
+                   jq('#addcontentlegend').addClass('hidden');
+                }
+                
+                if(jq('#addcontentlegend').hasClass('hidden') && jq('#addcontainerlegend').hasClass('hidden') && jq('#addnewspaceholder').hasClass('hidden') && jq('#addnewcollectionholder').length == 0 ){
+                    jq('#comcynapseaddernotallowed').show();
+                }
+            }
+            else{
+                jq('#comcynapseaddernotallowed').show();
+                jq('#addnewmenuholder, #addnewspaceholder').find('.addselector').each(function(){                     
+                    jq(this).removeAttr('href');
+                    jq(this).css('cursor','pointer');                    
+                });
+                jq('#addnewmenuholder > .addnewactionholder,#addnewspaceholder > .addnewactionholder').addClass('hidden');
+                jq('#addcontainerlegend').addClass('hidden');
+                jq('#addcontentlegend').addClass('hidden');
+            }
+        });
+        jq('#comcynapsespaceselector').ready(function(event){            
+            if (jq('#comcynapsespaceselector option:selected').attr('class') == 'disabledspaceselection'){
+                jq('#comcynapseaddernotallowed').show();
+                jq('#addnewmenuholder > .addnewactionholder,#addnewspaceholder > .addnewactionholder').addClass('hidden');
+                jq('#addcontainerlegend').addClass('hidden');
+                jq('#addcontentlegend').addClass('hidden');
+            }
+        });
+        </script>
+    </tal:addcontenttypes>
+</tal:block>

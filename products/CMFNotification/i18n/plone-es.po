@@ -1,0 +1,112 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: CMFNotification\n"
+"POT-Creation-Date: 2011-03-09 02:32+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
+"Last-Translator: Leonardo J. Caballero G. <leonardocaballero@gmail.com>\n"
+"Language-Team: Spanish <plone-conosur@lists.plone.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: es\n"
+"Language-Name: Spanish\n"
+"Preferred-Encodings: latin1 utf-8\n"
+"Domain: plone\n"
+"X-Is-Fallback-For: es-ar es-bo es-cl es-co es-cr es-do es-ec es-es es-sv es-gt es-hn es-mx es-ni es-pa es-py es-pe es-pr es-us es-uy es-ve\n"
+
+#: ../skins/cmf_notification/workflow_mail_notification.pt:22
+msgid "${authorid} has changed the state of the ${itemtypetitle}, titled ${view_title} at ${modified_date}"
+msgstr "${authorid} ha cambiando el estado del ${itemtypetitle}, titulado ${view_title} el ${modified_date}"
+
+#: ../skins/cmf_notification/modification_mail_notification.pt:20
+msgid "${modifier_name} has modified the ${item_type_title}, titled ${absolute_url_Title} at ${modifier_date}"
+msgstr "${modifier_name} ha modificado el/la ${item_type_title}, titulado ${absolute_url_Title} el ${modifier_date}"
+
+#: ../skins/cmf_notification/creation_mail_notification.pt:18
+msgid "A new ${item_type_title}, with the title ${absolute_url_title} has been created by ${portal_url_creator_name}."
+msgstr "Un(a) nuevo(a) ${item_type_title}, con el titulo ${absolute_url_title} ha sido creado por ${portal_url_creator_name}."
+
+#: ../skins/cmf_notification/discussion_mail_notification.pt:23
+msgid "A new comment has been posted on the ${item_type_title} titled ${discussed_item_title} which was created by ${author_name}"
+msgstr "Un nuevo comentario ha sido realizado en el/la ${item_type_title} titulado(a) ${discussed_item_title} el cual fue creado por ${author_name}"
+
+#: ../profiles/default/portlets.xml
+msgid "A portlet that lets user subscribe to content."
+msgstr "Un portlet que le permite al usuario suscribirse al contenido"
+
+#: ../skins/cmf_notification/discussion_mail_notification.pt:28
+msgid "Comment by: ${creator_name} at ${creation_date}"
+msgstr "Comentario por: ${creator_name} el ${creation_date}"
+
+#: ../skins/cmf_notification/discussion_mail_notification.pt:18
+msgid "Comment on ${discussed_item_title} by ${creator_name}"
+msgstr "Comentario en ${discussed_item_title} por ${creator_name}"
+
+#: ../skins/cmf_notification/discussion_mail_notification.pt:26
+msgid "Comment subject: ${discussion_item_itle}"
+msgstr "Asunto del comentario: ${discussion_item_itle}"
+
+#: ../skins/cmf_notification/discussion_mail_notification.pt:31
+msgid "Comment: ${discussion_item_text}"
+msgstr "Comentario: ${discussion_item_text}"
+
+#: ../skins/cmf_notification/member_modified_notification.pt:12
+msgid "Hello,<br /> <br /> A member has modified his profile.<br /> <br /> Regards,"
+msgstr "Hola,<br /> <br /> Un nuevo miembro ha modificado su perfil de usuario.<br /> <br /> Saludos,"
+
+#: ../skins/cmf_notification/member_register_notification.pt:12
+msgid "Hello,<br /> <br /> A new memeber has been registered<br /> <br /> Regards,"
+msgstr "Hola,<br /> <br /> Un nuevo miembro ha siso registrado<br /> <br /> Saludos,"
+
+#: ../profiles/default/portlets.xml
+msgid "Subscription portlet"
+msgstr "Portlet de subscripción"
+
+#: ../skins/cmf_notification/workflow_mail_notification.pt:24
+msgid "The state was changed from ${previous_state_title} to ${current_state_title}."
+msgstr "El estado fue cambiado de ${previous_state_title} a ${current_state_title}."
+
+#: ../skins/cmf_notification/creation_mail_notification.pt:23
+#: ../skins/cmf_notification/discussion_mail_notification.pt:36
+#: ../skins/cmf_notification/modification_mail_notification.pt:25
+msgid "This message is automatically generated from ${portal_title}, a web application powered by cyn.in.<br />Read more about cyn.in at ${url_cynin}."
+msgstr "Este mensaje es generado automáticamente desde ${portal_title}, una aplicación Web basada en cyn.in.<br />Leer más acerca de cyn.in en ${url_cynin}."
+
+#: ../skins/cmf_notification/creation_mail_notification.pt:20
+#: ../skins/cmf_notification/modification_mail_notification.pt:22
+msgid "URL: ${absolute_url_item}"
+msgstr "Dirección URL: ${absolute_url_item}"
+
+#: ../skins/cmf_notification/discussion_mail_notification.pt:33
+msgid "URL: ${absolute_url_talkback}"
+msgstr "Dirección URL: ${absolute_url_talkback}"
+
+#: ../skins/cmf_notification/workflow_mail_notification.pt:26
+msgid "URL: ${absolute_url_view}"
+msgstr "Dirección URL: ${absolute_url_view}"
+
+#: ../skins/cmf_notification/member_modified_notification.pt:8
+msgid "[Notification from ${portal_title}] Member modified"
+msgstr "[Notificación desde ${portal_title}] Miembro modificado"
+
+#: ../skins/cmf_notification/member_register_notification.pt:8
+msgid "[Notification from ${portal_title}] New memeber registered"
+msgstr "[Notificación desde ${portal_title}] Nuevo miembro registrado"
+
+#: ../skins/cmf_notification/discussion_mail_notification.pt:18
+msgid "[cyn.in Notification]"
+msgstr "[Notificación cyn.in]"
+
+#: ../skins/cmf_notification/workflow_mail_notification.pt:17
+msgid "[cyn.in Notification] ${current_state_title} ${item_type_title}: ${title} by ${author_name}"
+msgstr "[Notificación cyn.in] ${current_state_title} ${item_type_title}: ${title} por ${author_name}"
+
+#: ../skins/cmf_notification/modification_mail_notification.pt:15
+msgid "[cyn.in Notification] Modified ${item_type_title}: ${Title} by ${modifier_name}"
+msgstr "[Notificación cyn.in] Modificado ${item_type_title}: ${Title} por ${modifier_name}"
+
+#: ../skins/cmf_notification/creation_mail_notification.pt:14
+msgid "[cyn.in Notification] New ${item_type_title}: ${title} by ${creator_name}"
+msgstr "[Notificación cyn.in] Nuevo ${item_type_title}: ${title} por ${creator_name}"
+

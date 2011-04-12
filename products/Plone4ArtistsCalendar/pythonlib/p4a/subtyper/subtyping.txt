@@ -1,0 +1,162 @@
+Subtyping
+=========
+
+Mostly this is about the ability to add a sub type to an object defined
+as a content object in classic CMF/Plone style.
+
+First a little set up.
+
+    >>> import zope.interface
+    >>> import zope.component
+    >>> import zope.app.annotation.attribute
+    >>> zope.component.provideAdapter(zope.app.annotation.attribute.AttributeAnnotations)
+
+Defining Subtypes
+-----------------
+
+First we start with defining our new sub content type using typical
+Zope 3 convention which is to create a new interface and make sure that
+interface provides ``zope.app.content.interfaces.IContentType``.
+
+    >>> import zope.app.content.interfaces
+
+    >>> class IFoo(zope.interface.Interface): pass
+    >>> zope.interface.alsoProvides(IFoo,
+    ...                             zope.app.content.interfaces.IContentType)
+
+The next step is to create and register a few utilities which provides
+the ``IContentTypeDescriptor`` interface.
+
+    >>> from p4a.subtyper import interfaces
+
+    >>> class Foo1Descriptor(object):
+    ...     zope.interface.implements(interfaces.IPortalTypedDescriptor)
+    ...     title = u'Foo1'
+    ...     description = u'Random Description'
+    ...     type_interface = IFoo
+    ...     for_portal_type = 'Document'
+
+    >>> zope.component.provideUtility(Foo1Descriptor(), name=u'foo1')
+
+    >>> class Foo2Descriptor(object):
+    ...     zope.interface.implements(interfaces.IPortalTypedDescriptor)
+    ...     title = u'Foo2'
+    ...     description = u'Random Description'
+    ...     type_interface = IFoo
+    ...     for_portal_type = 'Document'
+
+    >>> zope.component.provideUtility(Foo2Descriptor(), name=u'foo2')
+
+    >>> class DemoFolderishDescriptor(object):
+    ...     zope.interface.implements(interfaces.IPortalTypedFolderishDescriptor)
+    ...     title = u'DemoFolderish'
+    ...     description = u'Folderish Random Description'
+    ...     type_interface = IFoo
+    ...     allowed_child_portal_types = []
+    ...     for_portal_type = 'Folder'
+
+    >>> zope.component.provideUtility(DemoFolderishDescriptor(),
+    ...                               name=u'demofolder')
+
+
+Querying Subtypes
+-----------------
+
+To discover the sub types that are available on a given object it is required
+to access the IPossibleTypes adapter.  But first we have to setup a demo
+implementation and our standard adapters.
+
+    >>> from p4a.subtyper import default
+    >>> import Products.Archetypes.interfaces
+
+    >>> zope.component.provideAdapter(default.nonfolderish_possible_descriptors)
+    >>> class SimpleContent(object):
+    ...     zope.interface.implements(Products.Archetypes.interfaces.IBaseContent)
+    ...     portal_type = 'Document'
+
+    >>> adapted = interfaces.IPossibleDescriptors(SimpleContent())
+    >>> adapted
+    <PossibleDescriptors comment=nonfolderish>
+
+    >>> adapted.possible
+    [(u'foo2', <Foo2Descriptor ...>), (u'foo1', <Foo1Descriptor ...>)]
+
+    >>> zope.component.provideAdapter(default.folderish_possible_descriptors)
+    >>> class SimpleFolder(object):
+    ...     zope.interface.implements(Products.Archetypes.interfaces.IBaseFolder)
+    ...     portal_type = 'Folder'
+    >>> zope.interface.classImplements(SimpleFolder, zope.app.annotation.interfaces.IAttributeAnnotatable)
+
+    >>> adapted = interfaces.IPossibleDescriptors(SimpleFolder())
+    >>> adapted
+    <PossibleDescriptors comment=folderish>
+
+    >>> adapted.possible
+    [(u'demofolder', <DemoFolderishDescriptor ...>)]
+
+Subtyping Engine
+----------------
+
+Everything discussed above was the default implementation that the
+``p4a.subtyper.engine.Subtyper`` utility uses.  All top-level integration
+points interface with this utility to get it's information so components
+can be overridden on granular or less-granular levels.
+
+First we go ahead and register the default engine utility.
+
+    >>> from p4a.subtyper import engine
+    >>> zope.component.provideUtility(engine.Subtyper())
+
+Now we can query the engine as we need information.
+
+    >>> subtyper = zope.component.getUtility(interfaces.ISubtyper)
+
+    >>> folder = SimpleFolder()
+
+At first the simple folder we created has no subtype.
+
+    >>> subtyper.existing_type(folder) is None
+    True
+
+We go ahead and see what sub types are allowable. 
+
+    >>> [x for x in subtyper.possible_types(folder)]
+    [<DescriptorWithName name=demofolder; descriptor=<DemoFolderishDescriptor ...>>]
+
+Now we go ahead and set the type and confirm the type was set.
+
+    >>> subtyper.change_type(folder, u'demofolder')
+    >>> subtyper.existing_type(folder)
+    <DescriptorWithName name=demofolder; descriptor=<DemoFolderishDescriptor ...>>
+    >>> interfaces.ISubtyped.providedBy(folder)
+    True
+
+Removing a type should mean the existing check returns None.
+
+    >>> subtyper.remove_type(folder)
+    >>> subtyper.existing_type(folder) is None
+    True
+    >>> interfaces.ISubtyped.providedBy(folder)
+    False
+
+And trying to remove a type when there's been no type set will raise
+an exception.
+
+    >>> subtyper.remove_type(folder)
+    Traceback (most recent call last):
+        ...
+    NoSubtypeDefined
+
+Subtype Activation Descriptor
+-----------------------------
+
+There is a descriptor defined which makes it easier to query whether or
+not an object has a particular subtype.
+
+    >>> from p4a.subtyper import activated
+    >>> class AnotherFolder(SimpleFolder):
+    ...     foo_activated = activated('foo1')
+
+    >>> folder = AnotherFolder()
+    >>> folder.foo_activated
+    False

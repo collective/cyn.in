@@ -1,0 +1,13 @@
+/*
+** Stylesheet with Internet Explorer-specific workarounds.
+*/
+.clickMenu a
+{
+color: expression(this.parentNode.currentStyle.color);
+}
+.editformfieldset.closed .editformheaderlegend
+{
+    display:inline;
+}
+/* <dtml-with base_properties> */
+/* </dtml-with> */

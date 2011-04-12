@@ -1,0 +1,6 @@
+
+- implement configuration for defining what content types should be
+  queried as events
+
+- make first day of the week configurable (will mean removing dependencies
+  on the builtin calendar module)

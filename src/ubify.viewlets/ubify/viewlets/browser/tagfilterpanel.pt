@@ -1,0 +1,113 @@
+<tal:comment replace="nothing">
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see http://www.gnu.org/licenses/.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+</tal:comment>
+
+<div tal:define="categories view/tags|nothing;
+            parentURL python:context.absolute_url();
+            URLsuffix view/urlsuffix;
+            selectedtags request/Subject | nothing;"
+        tal:condition="categories" i18n:domain="cynin">
+    <div><tal:content i18n:translate="text_filter_showing">Filter: Showing</tal:content>
+        <span tal:repeat="seltag selectedtags">
+            <span tal:content="seltag" />
+            <tal:separator condition="not: repeat/seltag/end">,</tal:separator>
+        </span>
+        <span tal:condition="python:not selectedtags" i18n:translate="text_all_tags">All Tags</span>
+    </div>
+    <div class="divpaddingleft">
+    <span tal:repeat="category categories">
+    <a href=""
+       class="filterpaneltag"
+       rel="tag"
+       tal:content="category"
+       tal:define="isinselectedtags python:selectedtags and len(selectedtags) > 0 and category in selectedtags or False;
+                    item_class python:isinselectedtags and 'filterpaneltag filterpaneltagselected' or 'filterpaneltag';"
+       tal:attributes="href string:${parentURL}/${URLsuffix}?Subject%3Alist=${category};class item_class">
+      <tal:comment replace="nothing">Category</tal:comment>
+      </a><tal:separator condition="not: repeat/category/end">,</tal:separator>
+    </span>
+    </div>
+    <div align="right">
+        <a id="filtertagpanelapplybutton" name="filtertagpanelapplybutton" href="#" i18n:translate="link_appy">Apply</a>
+    </div>
+    <tal:block tal:replace="structure string:<script type='text/javascript'>" />
+    <tal:block tal:condition="python:not selectedtags" tal:replace="structure string:var currentselectedtags=new Array();" />
+    <tal:block tal:condition="python:selectedtags" tal:replace="structure string:var currentselectedtags=jq.makeArray(${selectedtags});" />
+    <tal:block tal:replace="structure string:var currentURL = '${parentURL}/${URLsuffix}'" />
+    <tal:block tal:replace="structure string:</script>" />
+    <script type="text/javascript">
+    jq(document).ready(function()
+    {
+        jq(".filterpaneltag").click(function (event) {
+            event.preventDefault();
+            var lenofarray = currentselectedtags.length;
+            tagindexinarray = jq.inArray(this.innerHTML,currentselectedtags);
+            if( tagindexinarray < 0 ){
+                currentselectedtags[lenofarray] = this.innerHTML;
+                jq(this).addClass("filterpaneltagselected");
+            }
+            else{
+                currentselectedtags = currentselectedtags.slice(0,tagindexinarray).concat( currentselectedtags.slice(tagindexinarray+1) );
+                jq(this).removeClass("filterpaneltagselected");
+            }
+        });
+
+        jq("#filtertagpanelapplybutton").click(function(event){
+            event.preventDefault();
+            var qparam = '';
+            var strURL = '';
+
+            for(i=0;i < currentselectedtags.length; i++){
+                if (i == currentselectedtags.length -1){
+                    qparam += 'Subject:list=' + currentselectedtags[i];
+                }
+                else{
+                    qparam += 'Subject:list=' + currentselectedtags[i] + '&';
+                }
+            }
+            if(currentselectedtags.length > 0){
+                strURL = currentURL + '?' + qparam;
+            }
+            else
+                strURL = currentURL;
+
+            window.location = strURL;
+        });
+    });
+    </script>
+</div>

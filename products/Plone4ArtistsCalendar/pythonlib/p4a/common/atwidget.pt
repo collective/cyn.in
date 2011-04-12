@@ -1,0 +1,37 @@
+<div tal:define="content_context view/content_context;
+                 context nocall:content_context;
+                 pu nocall:context/portal_url;
+                 portal_url context/portal_url;
+                 portal pu/getPortalObject;
+                 tabindex python:{'next': None};
+                 mtool portal/portal_membership;
+                 member mtool/getAuthenticatedMember;
+                 errors python:{};
+                 widgets python:content_context.archetype_tool.getWidgets(fields=['body'], mode='edit', package='Archetypes', type='DDocument')">
+<style>
+.widget .field LABEL,
+.widget .field .fieldRequired,
+.kupuoverride,
+.fieldTextFormat {
+  display: none;
+}
+</style>
+  <tal:fields repeat="widget widgets" tal:define="kupu_base_override portal_url">
+    <tal:mimetype tal:define="dummy python:widget._args['field'].setContentType(widget._args['instance'], 'text/html')" />
+    <metal:fieldMacro use-macro="widget" />
+  </tal:fields>
+
+<script>
+
+var field_el = document.getElementById('archetypes-fieldname-body');
+var tofix = field_el.getElementsByTagName('lib_prefix');
+
+for (var x = 0; x < tofix.length; x++) {
+    var el = tofix[x];
+    el.innerHTML = el.innerHTML.replace('/fake_instance', '');
+}
+
+</script>
+
+</div>
+ 

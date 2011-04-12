@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<portlets>
+  <portlet addview="portlets.Subscription"
+           title="Subscription portlet"
+           description="A portlet that lets user subscribe to content."
+  >
+    <for interface="ubify.cyninv2theme.browser.interfaces.IUnknownColumn" />
+  </portlet>
+</portlets>

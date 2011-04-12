@@ -1,0 +1,193 @@
+<tal:comment replace="nothing">
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see http://www.gnu.org/licenses/.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+</tal:comment>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="here/prefs_main_template/macros/master"
+      i18n:domain="cynin">
+
+<metal:block fill-slot="top_slot"
+             tal:define="dummy python:request.set('disable_border',1)" />
+
+<metal:block fill-slot="column_one_slot" />
+
+<body>
+
+<tal:titlebarslot metal:fill-slot="titlebar-row1">
+    <div id="maintitleholder">
+        <h1 id="maintitle" i18n:translate="header_control_panel">
+            Control Panel
+        </h1>
+    </div>
+</tal:titlebarslot>
+<div metal:fill-slot="prefs_configlet_main"
+    tal:define="controlPanel python:modules['Products.CMFCore.utils'].getToolByName(here, 'portal_controlpanel');
+                 groups python:controlPanel.getGroups('site');
+                 getIconFor nocall:putils/getIconFor">
+
+    <div tal:define="mt context/portal_migration;
+                     sys mt/coreVersions;
+                     mailhost context/MailHost/smtp_host|nothing;
+                     mailfrom context/email_from_address|nothing">
+
+        <dl class="portalMessage warning"
+            tal:condition="python:not (mailhost and mailfrom)">
+            <dt i18n:translate="">
+                Warning
+            </dt>
+            <dd i18n:translate="text_no_mailhost_configured">
+            You have not configured a mail host or a site 'From'
+            address, various features including contact forms, email
+            notification and password reset will not work. Go to the
+            <tal:link i18n:name="label_mail_control_panel_link">
+                <a href=""
+                   i18n:translate="text_no_mailhost_configured_control_panel_link"
+                   tal:attributes="href string:${portal_url}/@@mail-controlpanel"
+                >Mail control panel</a>
+            </tal:link>
+            to fix this.
+            </dd>
+        </dl>
+
+        <dl class="portalMessage warning"
+            tal:condition="not:sys/PIL">
+            <dt i18n:translate="">
+                Warning
+            </dt>
+            <dd i18n:translate="text_no_pil_installed">
+            Warning: PIL is not installed properly, image scaling will not work.
+            </dd>
+        </dl>
+
+
+    </div>
+    <tal:configletgroup tal:repeat="group groups">
+            <fieldset class="contentheaderlabel" tal:define="gTitle group/title" tal:condition="python:test(gTitle == 'Plone Configuration',True,False)">
+                <legend i18n:translate="header_cynin_configuration">cyn.in Configuration</legend>
+            </fieldset>
+            <fieldset class="contentheaderlabel" tal:define="gTitle group/title" tal:condition="python:test(gTitle == 'Add-on Product Configuration',True,False)">
+                <legend i18n:translate="header_cynin_addon_product_configuration">cyn.in Add-on Product Configuration</legend>
+            </fieldset>
+        <div class="configletsgroupcontainer" tal:define="allconfiglets python:controlPanel.enumConfiglets(group=group['id']);
+                         configlets python:here.createMultiColumnList(allconfiglets, numCols=3);">
+
+            <div class="configletscontainer" tal:repeat="sublist configlets"
+                 tal:condition="configlets"
+                 style="float:left; margin-right: 1em; width: 29%">
+
+                <ul class="configlets" tal:condition="sublist">
+
+                    <tal:configlet repeat="configlet sublist">
+                        <li tal:condition="configlet/visible">
+                            <a href=""
+                               tal:attributes="href configlet/url">
+                                <img src="" alt="" tal:attributes="src python:getIconFor('controlpanel',configlet['id']);"
+                                     tal:on-error="string:" />
+                            <tal:configletname tal:content="configlet/title"
+                                               i18n:translate=""></tal:configletname>
+                            </a>
+                        </li>
+                    </tal:configlet>
+
+                </ul>
+
+            </div>
+
+            <div class="visualClear"><!-- --></div>
+
+            <div class="discreet"
+                 tal:condition="not:allconfiglets"
+                 i18n:translate="label_no_prefs_panels_available">
+                No preference panels available.
+            </div>
+
+        </div>
+
+
+    </tal:configletgroup>
+
+    <tal:versions define="mt here/portal_migration;
+                          sys mt/coreVersions">
+            <fieldset class="contentheaderlabel">
+                <legend i18n:translate="header_cynin_version_overview">cyn.in Version Overview</legend>
+            </fieldset>
+            <ul>
+                <li i18n:translate="">cyn.in <span i18n:name="cynin_version" tal:replace="python:context.portal_url.getPortalObject().portal_quickinstaller.getProductVersion('ubify.policy')"/></li>
+                <li i18n:translate="">Plone <span i18n:name="plon_version" tal:replace="mt/getInstanceVersion" /></li>
+                <li i18n:translate="">CMF <span i18n:name="cmf_version" tal:replace="sys/CMF" /></li>
+                <li i18n:translate="">Zope <span i18n:name="zope_version" tal:replace="sys/Zope" /></li>
+                <li i18n:translate="">Python <span i18n:name="python_version" tal:replace="sys/Python" /></li>
+            <tal:pil condition="sys/PIL">
+                <li i18n:translate="">PIL <span i18n:name="pil_version" tal:replace="sys/PIL" /></li>
+            </tal:pil>
+        </ul>
+    </tal:versions>
+
+    <tal:debugmode define="QI python:context.portal_url.getPortalObject().portal_quickinstaller">
+        <p tal:condition="not:QI/isDevelopmentMode"
+           class="discreet"
+           i18n:translate="description_production_mode">
+          You are running in "production mode". This is the preferred mode of
+          operation for a live cyn.in site, but means that some
+          configuration changes will not take effect until your server is
+          restarted or a product refreshed. If this is a development instance,
+          and you want to enable debug mode, edit your buildout.cfg file to say
+          'debug-mode on' &mdash; then restart the server process. Alternatively, you can run the instance
+          in 'foreground' mode by using <code>./bin/instance fg</code> which automatically
+          runs the instance in debug mode.
+        </p>
+
+        <p tal:condition="QI/isDevelopmentMode"
+           class="discreet"
+           i18n:translate="description_debug_mode">
+          Note: You are running in "debug mode". This mode is intended for
+          sites that are under development. This allows many configuration
+          changes to be immediately visible, but will make your site
+          run more slowly. To turn off debug mode, edit your buildout.cfg file to
+          say 'debug-mode off' &mdash; then restart the server process and remember to run the instance in
+          'daemon' mode by using <code>./bin/instance start</code> instead of <code>./bin/instance fg</code>.
+        </p>
+    </tal:debugmode>
+
+</div>
+
+</body>
+</html>

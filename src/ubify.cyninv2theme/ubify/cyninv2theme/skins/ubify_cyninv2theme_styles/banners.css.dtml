@@ -1,0 +1,42 @@
+/* <dtml-with base_properties> (do not remove this :) */
+/* <dtml-call "REQUEST.set('portal_url', portal_url())"> (not this either :) */
+/* Site home banner begin*/
+.homebannercontainer {
+	background: #cdefa6 url(banner-tile.png) repeat-x center top;
+	overflow: hidden;
+}
+.homebannertexttitle {
+	color: #387600;
+	font: bold 28px/40px "Trebuchet MS", Arial, Helvetica, sans-serif;
+}
+.homebannerimgholder {
+	height: 250px;
+	width: 330px;
+	padding-left: 12px;
+	background: #cdefa6 url(banner-tile2.png) repeat-x left top;
+	float: left;
+}
+.homebannertextholder {
+	margin-left: 350px;
+	margin-top: 113px;
+	padding-right: 10px;
+}
+.homebannertextwelcome {
+	color: #57ac0b;
+	font: bold 14px/20px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	margin-left: 5px;
+}
+.homebannertextmessage {
+	text-transform: none;
+	color: #295e07;
+	font: bold normal 13px/20px Arial, Helvetica, sans-serif;
+	margin-left: 5px;
+}
+.homebannercontainer
+,.homebannerimgholder
+{
+ -moz-border-radius:5px;
+ -webkit-border-radius:5px;
+}
+/* Site home banner end */
+/* </dtml-with> */

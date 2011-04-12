@@ -1,0 +1,540 @@
+<tal:comment replace="nothing">
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see http://www.gnu.org/licenses/.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+</tal:comment>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="cynin">
+
+<head>
+    <metal:block fill-slot="top_slot"
+                 tal:define="dummy python:request.set('disable_border',1)" />
+    <metal:block fill-slot="column_one_slot" />
+    <metal:block fill-slot="column_two_slot" />
+</head>
+<body>
+<div metal:fill-slot="author_slot">
+    <ul class="contentViews">
+      <li>
+        <a href=""
+           tal:attributes="href string: ${portal_url}/author/${member}"
+           i18n:translate="label_view">View</a>
+      </li>
+      <li class="selected">
+        <a href=""
+           tal:attributes="href string:${portal_url}/personalize_form"
+           i18n:translate="label_edit">Edit</a>
+      </li>
+    </ul>
+</div>
+<tal:titlebarslot metal:fill-slot="titlebar-row1">
+    <tal:titlemacrooverride metal:define-macro="itemtitle">
+	<div id="typeindicator">
+	    <img tal:attributes="src string:${portal_url}/icon-user.png"/>
+	    <tal:translate i18n:translate="">Edit Profile</tal:translate>
+	</div>
+	<div id="maintitleholder"
+	    tal:define="url_unquote_plus python:modules['Products.PythonScripts.standard'].url_unquote_plus;
+			author python:(len(request.traverse_subpath) > 0 and url_unquote_plus(request.traverse_subpath[0])) or request.get('author', None) or (member and member.getId());
+		    authorinfo python: mtool.getMemberInfo(author);">
+	    <h1 id="maintitle">
+		<tal:fullname tal:condition="authorinfo/fullname" tal:content="authorinfo/fullname" />
+		<tal:username tal:condition="not: authorinfo/fullname" tal:content="author" />
+	    </h1>
+	</div>
+    </tal:titlemacrooverride>
+</tal:titlebarslot>
+
+
+<metal:main fill-slot="content"
+            tal:define="errors options/state/getErrors;">
+    <tal:main-macro metal:define-macro="main">
+
+     <div class="documentEditable">
+
+
+            <div class="documentContent" id="content">
+
+                <a name="documentContent"></a>
+
+                <div metal:use-macro="here/global_statusmessage/macros/portal_message">
+                    Portal status message
+            </div>
+
+                <form action="personalize"
+                      class="enableAutoFocus enableUnloadProtection editprofileform"
+                      method="post"
+                      enctype="multipart/form-data"
+                      tal:condition="member"
+                      tal:attributes="action template_id">
+
+                    <metal:userdetails define-macro="user_form">
+                    <fieldset tal:define="macros here/additional_memberdata/macros | nothing;
+                                          top_macro macros/top | nothing;
+                                          showTop python:top_macro;
+                                          bottom_macro macros/bottom | nothing;
+                                          showBottom python:bottom_macro;
+                                          after_primary macros/after_primary| nothing;
+                                          showAfterPrimary python:after_primary;">
+
+                        <tal:macro condition="showTop">
+                            <div metal:use-macro="top_macro"/>
+                        </tal:macro>
+
+			<div class="infobox">
+
+
+			    <div class="field"
+				 tal:define="error errors/fullname | nothing;
+					     fullname python:request.get('fullname', member.getProperty('fullname', ''));"
+				 tal:attributes="class python:test(error, 'field error', 'field')">
+
+				<label class="formQuestion" for="fullname" i18n:translate="label_full_name">Full Name</label>
+
+				<div tal:content="error" class="fielderror"><tal:comment replace="nothing">Validation error output</tal:comment></div>
+
+				<input type="text"
+				       id="fullname"
+				       name="fullname"
+				       size="50"
+				       value="member.fullname html_quote"
+				       tal:attributes="value fullname;
+						       disabled python:member.canWriteProperty('fullname') and default or 'disabled'"
+				       />
+
+			    </div>
+
+			    <div class="field"
+				 tal:define="error errors/email | nothing;
+					     email python:request.get('email', member.getProperty('email',''));"
+				 tal:attributes="class python:test(error, 'field error', 'field')">
+
+				<label class="formQuestion" for="email" i18n:translate="label_email">E-mail</label>
+
+				<span class="fieldRequired" title="Required"
+				      i18n:attributes="title title_required;"
+				      i18n:translate="label_required">(Required)</span>
+
+				<div tal:content="error" class="fielderror"><tal:comment replace="nothing">Validation error output</tal:comment></div>
+
+				<input type="text"
+				       id="email"
+				       name="email"
+				       size="50"
+				       value="member.email html_quote"
+				       tal:attributes="value email;
+							readonly python:member.canWriteProperty('email') and default or 'readonly'"
+				       />
+
+			    </div>
+
+			    <tal:macro condition="showAfterPrimary">
+				<div metal:use-macro="after_primary"/>
+			    </tal:macro>
+
+			    <div class="professional_info">
+				<div class="field">
+				    <label class="formQuestion" i18n:translate="">Designation</label>
+				    <div>
+					<input name="designation" type="text" size="50"
+					tal:define="designation python:request.get('designation',
+								     member.getProperty('designation',''))"
+					tal:attributes="value designation"/>
+				    </div>
+				</div>
+			    </div>
+
+
+			    <div class="field"
+				 tal:define="error errors/location | nothing;
+					     location python:request.get('location', member.getProperty('location', ''));"
+				 tal:attributes="class python:test(error, 'field error', 'field')">
+
+				<label class="formQuestion" for="location" i18n:translate="label_location">Location</label>
+
+				<div class="formHelp" i18n:translate="help_location">
+				Your location - either city and country - or in a company setting,
+				where your office is located.
+				</div>
+
+				<div tal:content="error" class="fielderror"><tal:comment replace="nothing">Validation error output</tal:comment></div>
+
+				<input type="text"
+				       id="location"
+				       name="location"
+				       size="50"
+				       value="member.location html_quote"
+				       tal:attributes="value location;
+						       disabled python:member.canWriteProperty('location') and default or 'disabled'"
+				       />
+
+			    </div>
+			    <div class="field" tal:define="portrait python:mtool.getPersonalPortrait(member.getId());">
+
+				<label class="formQuestion" for="portrait" i18n:translate="label_portrait">Portrait</label>
+
+				<div>
+				    <img src="" alt=""
+					 class="portraitPhoto editprofileavatarimg"
+					 tal:condition="portrait"
+					 tal:attributes="src portrait/absolute_url"
+					 />
+
+				    <div class="formHelp" i18n:translate="help_portrait">
+				    To add or change the portrait: click the "Browse" button;
+				    select a picture of yourself. Recommended image size is 40
+				    pixels wide by 40 pixels tall.
+				    </div>
+
+
+				    <input type="file"
+					   name="portrait"
+					   id="portrait"
+					   size="20"
+					   />
+
+				    <br />
+
+				    <input class="noborder"
+					type="checkbox"
+					id="pdelete"
+					value="Delete Portrait"
+					name="delete_portrait"
+					/>
+				    <span for="pdelete" i18n:translate="label_delete_portrait">Delete Portrait</span>
+				</div>
+
+			    </div>
+
+			    <div class="field"
+				 tal:define="error errors/description | nothing;
+					     description python:request.get('description', member.getProperty('description', ''));"
+				 tal:attributes="class python:test(error, 'field error', 'field')">
+
+				<label class="formQuestion" for="description" i18n:translate="label_biography">Biography</label>
+
+				<div class="formHelp" i18n:translate="help_biography">
+				A short overview of who you are and what you do. Will be displayed
+				on the your author page, linked from the items you create.
+				</div>
+
+				<div tal:content="error" class="fielderror"><tal:comment replace="nothing">Validation error output</tal:comment></div>
+
+				<textarea type="text"
+				       id="description"
+				       name="description"
+				       tal:content="description"
+				       rows="5"
+				       tal:attributes="disabled python:member.canWriteProperty('description') and default or 'disabled'"
+				       />
+
+			    </div>
+			    <div class="phone_numbers">
+				<div class="field">
+				    <label class="formQuestion" i18n:translate="">Mobile</label>
+				    <div>
+					<input name="phone_mobile" type="text" size="50"
+					tal:define="phone_mobile python:request.get('phone_mobile',
+								     member.getProperty('phone_mobile',''))"
+					tal:attributes="value phone_mobile"/>
+				    </div>
+				</div>
+				<div class="field">
+				    <label class="formQuestion" i18n:translate="">Office Phone</label>
+				    <div>
+					<input name="phone_office" type="text" size="50"
+					tal:define="phone_office python:request.get('phone_office',
+								     member.getProperty('phone_office',''))"
+					tal:attributes="value phone_office"/>
+				    </div>
+				</div>
+				<div class="field">
+				    <label class="formQuestion" i18n:translate="">Home Phone</label>
+				    <div>
+					<input name="phone_home" type="text" size="50"
+					tal:define="phone_home python:request.get('phone_home',
+								     member.getProperty('phone_home',''))"
+					tal:attributes="value phone_home"/>
+				    </div>
+				</div>
+			    </div>
+
+
+			    <div class="field"
+				 tal:define="error errors/home_page | nothing;
+					     home_page python:request.get('home_page', member.getProperty('home_page', ''));"
+				 tal:attributes="class python:test(error, 'field error', 'field')">
+
+				<label class="formQuestion" for="home_page" i18n:translate="label_homepage">Home page</label>
+
+				<div class="formHelp" i18n:translate="help_homepage">
+				The URL for your external home page, if you have one.
+				</div>
+
+				<div tal:content="error" class="fielderror"><tal:comment replace="nothing">Validation error output</tal:comment></div>
+
+				<input type="text"
+				       id="home_page"
+				       name="home_page"
+				       size="50"
+				       value="member.home_page html_quote"
+				       tal:attributes="value home_page;
+						       disabled python:member.canWriteProperty('home_page') and default or 'disabled'"
+				       />
+
+			    </div>
+			</div>
+
+			<div class="infobox">
+
+			    <div class="field"
+				     tal:define="wysiwyg_editor python:request.get('wysiwyg_editor',
+								member.getProperty('wysiwyg_editor',''))">
+				<label class="formQuestion" for="wysiwyg_editor" i18n:translate="label_content_editor">Content editor</label>
+
+				<div class="formHelp" i18n:translate="help_content_editor">
+				Select the content editor that you would like to use.
+				Note that content editors often have specific browser
+				requirements.
+				</div>
+
+				<select name="wysiwyg_editor"
+					id="wysiwyg_editor"
+					tal:attributes="disabled python:member.canWriteProperty('wysiwyg_editor') and default or 'disabled'">
+				    <tal:block tal:repeat="editor site_properties/available_editors">
+				    <option tal:condition="python:editor != 'None'"
+					    value="None"
+					    tal:attributes="value editor;
+							    selected python:test(editor==wysiwyg_editor, 'selected', None);"
+					    tal:content="editor"
+					    i18n:translate="">
+				    WYSIWYG-editor
+				    </option>
+				    <option tal:condition="python:editor == 'None'"
+					    value="None"
+					    tal:attributes="value editor;
+							    selected python:test(editor==wysiwyg_editor, 'selected', None);"
+					    i18n:translate="label_ordinary_content_editor">
+				    Basic HTML textarea editor (works in all browsers)
+				    </option>
+
+				    </tal:block>
+				 </select>
+			     </div>
+
+			     <div class="field"
+				      tal:define="ext_editor python:request.get('ext_editor',
+								 member.getProperty('ext_editor',''))">
+				<input type="checkbox"
+				       class="noborder"
+				       name="ext_editor"
+				       id="cb_ext_editor"
+				       tal:attributes="checked python:test(ext_editor, 'checked', None);
+						       disabled python:member.canWriteProperty('ext_editor') and default or 'disabled'"
+				       />
+
+				<label class="formQuestion" for="cb_ext_editor" i18n:translate="label_ext_editor">Enable external editing</label>
+
+				 <div class="formHelp" i18n:translate="help_content_ext_editor">
+				 When checked, an icon will be made visible on each page which allows
+				 you to edit content with your favorite editor instead of using
+				 browser-based editors. This requires an additional application
+				 called ExternalEditor installed client-side.
+				 Ask your administrator for more information if needed.
+				 </div>
+			    </div>
+
+			    <div class="field"
+				 tal:define="listed python:request.get('listed', member.getProperty('listed',''));">
+
+				<input type="checkbox"
+				       class="noborder"
+				       name="listed"
+				       id="cb_listed"
+				       tal:attributes="checked python:test(listed, 'checked', None);
+						       disabled python:member.canWriteProperty('listed') and default or 'disabled'"
+				       />
+
+				<label class="formQuestion" for="cb_listed" i18n:translate="label_listed_status">Listed in searches</label>
+
+				<div class="formHelp" i18n:translate="help_listed_search">
+				Determines if your user name is listed in user searches done on this site.
+				</div>
+
+			    </div>
+
+			    <div class="field"
+				     tal:condition="site_properties/visible_ids|nothing"
+				     tal:define="visible_ids python:request.get('visible_ids', member.getProperty('visible_ids',''));">
+
+				<input type="checkbox"
+				       class="noborder"
+				       name="visible_ids"
+				       id="cb_invisible_ids"
+				       tal:attributes="checked python:test(visible_ids, 'checked', None);
+						       disabled python:member.canWriteProperty('visible_ids') and default or 'disabled'"
+				       />
+
+				<label class="formQuestion" for="cb_invisible_ids"
+				       i18n:translate="label_edit_short_names">Allow editing of Short Names</label>
+
+				<div class="formHelp" i18n:translate="help_display_names">
+				Determines if Short Names (also known as IDs) are
+				changable when editing items. If Short Names
+				are not displayed, they will be generated automatically.
+				</div>
+
+			    </div>
+
+			    <div class="field"
+				    tal:condition="here/portal_skins/allow_any"
+				    tal:define="skinvar python:request.get(here.portal_skins.getRequestVarname(), '');
+				    skindefault here/portal_skins/getDefaultSkin;
+				    skincurrent python:test(skinvar, skinvar, skindefault);">
+
+				<label class="formQuestion" for="portal_skin" i18n:translate="label_look">Look</label>
+
+				<div i18n:translate="help_look"
+				     class="formHelp">
+				Appearance of the site.
+				</div>
+
+				<select name="portal_skin"
+					id="portal_skin"
+					tal:attributes="disabled python:member.canWriteProperty('portal_skin') and default or 'disabled'"
+					>
+				<option value="#"
+					i18n:translate=""
+					tal:repeat="skin container/portal_skins/getSkinSelections"
+					tal:attributes="value skin;
+							selected python:test(skincurrent==skin, 'selected', None);"
+					tal:content="skin"
+					>dummy skin</option>
+				</select>
+			    </div>
+
+			    <div class="twitterdetails" tal:condition="python: False">
+				<div><label class="formQuestion" i18n:translate="">Twitter Username:</label></div>
+				<div><input name="twitterusername" type="text"
+				    tal:define="twitterusername python:request.get('twitterusername',
+								 member.getProperty('twitterusername',''))"
+				    tal:attributes="value twitterusername"/></div>
+				<div><label class="formQuestion" i18n:translate="">Twitter password:</label></div>
+				<div><input name="twitterpassword" type="password" tal:define="twitterpassword python:request.get('twitterpassword',
+								 member.getProperty('twitterpassword',''))"
+								 tal:attributes="value twitterpassword"/></div>
+				<div><label class="formQuestion" i18n:translate="">Post status messages to Twitter:</label></div>
+				<div>
+				<input type="checkbox" name="crossposttotwitter"
+				tal:define="crossposttotwitter python:request.get('crossposttotwitter',
+								 member.getProperty('crossposttotwitter',''))"
+				tal:attributes="checked python:test(crossposttotwitter, 'checked', None);
+						       disabled python:member.canWriteProperty('crossposttotwitter') and default or 'disabled'" />
+				</div>
+			    </div>
+			    <div class="field"
+				 tal:define="error errors/language | nothing;
+					     language python:request.get('language', member.getProperty('language', ''));"
+				 tal:attributes="class python:test(error, 'field error', 'field')" tal:condition="python: False">
+
+				<label class="formQuestion" for="language" i18n:translate="label_language">Language</label>
+
+				<div class="formHelp" i18n:translate="help_preferred_language">
+				Your preferred language.
+				</div>
+
+				<div tal:content="error" class="fielderror"><tal:comment replace="nothing">Validation error output</tal:comment></div>
+
+
+				<select name="language"
+					id="language"
+					tal:attributes="disabled python:member.canWriteProperty('language') and default or 'disabled'">
+				    <tal:block tal:repeat="lang portal/availableLanguages">
+					<option value="None"
+					    tal:content="python:lang[1]"
+					    tal:attributes="value python:lang[0];
+							    selected python:test(language==lang[0], 'selected', None);">
+					</option>
+				    </tal:block>
+				 </select>
+
+			    </div>
+
+			</div>
+
+
+
+
+
+
+                        <tal:macro condition="showBottom">
+                            <div metal:use-macro="bottom_macro" />
+                        </tal:macro>
+
+                        <div class="formControls">
+                            <input class="context"
+                                   type="submit"
+                                   value="Save"
+                                   name="form.button.Save"
+                                   i18n:attributes="value label_save;"
+                                   />
+                            <input class="standalone"
+                                   type="submit"
+                                   value="Cancel"
+                                   name="form.button.Cancel"
+                                   i18n:attributes="value label_cancel;"
+                                   />
+                        </div>
+                        <input type="hidden" name="form.submitted" value="1" />
+
+                        <input tal:replace="structure context/@@authenticator/authenticator" />
+
+                    </fieldset>
+                    </metal:userdetails>
+                </form>
+            </div>
+        </div>
+    </tal:main-macro>
+
+</metal:main>
+
+</body>
+</html>

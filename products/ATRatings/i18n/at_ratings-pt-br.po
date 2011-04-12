@@ -1,0 +1,82 @@
+# Translation of at_ratings.pot to Portuguese (Brazil)
+# Gettext Message File for ATRatings
+# Jean Rodrigo Ferri <jeanrodrigoferri@yahoo.com.br>, 2005.
+msgid ""
+msgstr ""
+"Project-Id-Version: ATRatings 0.2\n"
+"POT-Creation-Date: 2005-01-05 12:33:09 -0200\n"
+"PO-Revision-Date: 2005-10-19 01:00:00 -0300\n"
+"Last-Translator: Jean Rodrigo Ferri\n"
+"Language-Team: TcheZope.org <tchezope@yahoogroups.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-code: pt-br\n"
+"Language-name: Português do Brasil\n"
+"Preferred-encodings: utf-8\n"
+"Domain: at_ratings\n"
+
+msgid "hits_count"
+msgstr "acessos"
+
+msgid "click_to_vote_1"
+msgstr "clique para votar: <strong>ruim</strong>."
+
+msgid "click_to_vote_2"
+msgstr "clique para votar: <strong>razoável</strong>."
+
+msgid "click_to_vote_3"
+msgstr "clique para votar: <strong>normal</strong>."
+
+msgid "click_to_vote_4"
+msgstr "clique para votar: <strong>bom</strong>."
+
+msgid "click_to_vote_5"
+msgstr "clique para votar: <strong>muito bom</strong>."
+
+msgid "you_can_not_vote"
+msgstr "Você não pode votar."
+
+msgid "try_to_vote_after_login"
+msgstr "Por favor tente após logar"
+
+msgid "votes_count"
+msgstr "(${total_count} votos)"
+
+###############
+# portlet_ratings
+####################
+msgid "box_top_ratings"
+msgstr "Melhores avaliados"
+
+msgid "box_top_countings"
+msgstr "Mais acessados"
+
+msgid "label_enable_ratings"
+msgstr "Habilitar avaliação"
+
+msgid "description_enable_ratings"
+msgstr "Habilitar avaliação nesta pasta"
+
+msgid "label_enable_countings"
+msgstr "Habilitar contagem de cliques"
+
+msgid "description_enable_countings"
+msgstr "Habilitar contagem de cliques nesta pasta"
+
+msgid "sort_mode"
+msgstr "modo de ordenação"
+
+msgid "best_ratings"
+msgstr "melhores avaliações"
+
+msgid "worst_ratings"
+msgstr "piores avaliações"
+
+msgid "top_countings"
+msgstr "mais acessados"
+
+msgid "lower_countings"
+msgstr "menos acessados"
+

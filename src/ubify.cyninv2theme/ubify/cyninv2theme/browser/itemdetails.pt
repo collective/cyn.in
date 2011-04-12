@@ -1,0 +1,207 @@
+<tal:comment replace="nothing">
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see http://www.gnu.org/licenses/.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+</tal:comment>
+<html tal:condition="request/uid|nothing" i18n:domain="cynin">
+    <body>        
+        <div id="comcynapsejsondata">
+        <tal:block tal:replace="structure string:<script type='text/javascript'>" />
+        <tal:block tal:replace="structure string:var commentsdata=${options/reply_dict};" />
+        <tal:block tal:replace="structure string:</script>" />
+        </div>
+        <div id="comcynapseitemcomments">            
+            <tal:definitions tal:define="xmorecomments options/xmorecomments;
+                            showxmorelink options/showxmorelink;
+                            contobj python:options['contobj'];
+                            itemindex options/itemindex;
+                            item_uid options/uid;
+                            item_title_or_id options/title;
+                            comment_count python:options['commentcount'];
+                            canreply options/usercanreply;
+                            isdiscussable options/allowdiscussion;
+                            isnotauthenticated python: not modules['ubify.cyninv2theme'].checkHasPermission('Set own password', here);
+                            ">
+                <div class="listitemdetailrowholder" i18n:domain="cynin">
+                    <div class="xmorecommentsholder">
+                        <a id="comcynapserefreshlistcomments" class="link_refreshtrigger navtipVertical"
+                           title="Load new comments by other users" i18n:attributes="title refreshcommentstitle">
+                            <img tal:attributes="src string:${here/portal_url}/icon-arrow_refresh.png" />
+                        </a>
+                        <span class="xmorecommentstatement logintopostcomments" i18n:translate="logintopostcomments" tal:attributes="style python: isnotauthenticated and  'display:inline' or 'display:none'">
+                            Please login to post comments.
+                        </span>
+                        <span class="xmorecommentstatement nocommentsyet" i18n:translate="nocommentsyet" tal:attributes="style python: isdiscussable and canreply and comment_count == 0 and  'display:inline' or 'display:none'">
+                            There are no comments yet. Be the first to comment!
+                        </span>
+                        <span class="xmorecommentstatement recentcomments" tal:attributes="id string:commentcountspan${itemindex};style python: canreply and comment_count == 0 and  'display:none' or 'display:inline'" tal:condition="python: not isnotauthenticated">
+                            <label i18n:translate="recentcomments">Recent Comments:</label>
+                            <a tal:attributes="href string:${contobj/absolute_url}/view;style python: showxmorelink and comment_count > 0 and  'display:inline' or 'display:none'" i18n:translate=""><span tal:attributes="id string:listdiscussioncount${itemindex}" tal:content="xmorecomments" i18n:name="commentscount"/> more &raquo;</a>
+                        </span>
+                    </div>
+                    <div class="listitemcommentscontainer" tal:attributes="id string:comcynapsecyninitemcommentscontainer${itemindex}">
+                        <div tal:attributes="id string:comcynapselistcommentscontainer${itemindex}">
+                        </div>
+                        <tal:emptycommenthtml metal:use-macro="context/emptyhtml/macros/comment_display" />
+                        <tal:block tal:replace="structure string:<script type='text/javascript'>" />
+                        <tal:block tal:replace="structure string:var commentsdata =${options/reply_dict};" />
+                        <tal:block tal:replace="structure string:</script>" />
+                        <div class="inlinereplyform commenttopcontainer" tal:attributes="id string:comcynapsefrmDiscussionAddNew${itemindex}" tal:condition="python:isdiscussable and canreply">
+                            <form name="frmDiscussionAddNew" action="">
+                                <a tal:attributes="rel string:${here/portal_url}/userinfo?userid=${userid};
+                                                    id string:postcommentavatar${itemindex}"
+                                   tal:define="pmt here/portal_membership;
+                                               pst here/plone_portal_state;
+                                               userid python:pst.member().getId();
+                                               portraiturl python:pmt.getPersonalPortrait(userid,1);" class="avatarlink myareaavatar commentavatarlink">
+                                    <img tal:replace="structure portraiturl"/>
+                                </a>
+                                <div class="commentbodytaholder">
+                                    <textarea class="inlinecommentformitem commentbodyta inputLabel"
+                                          tal:attributes="id string:taAddNewComment${itemindex};rel itemindex"
+                                          name="comcynapsecyninNewCommentBody"
+                                          title="Post a comment..."
+                                          i18n:attributes="title lbl_commentbox_title"
+                                          rows="1" ></textarea>
+                                </div>
+                                <div class="commentactionbuttonsrow">
+                                    <input type="hidden" name="comcynapsecynincontextUID" tal:attributes="value item_uid" />                    
+                                    <input type="hidden" name="comcynapsecyninitemindex" tal:attributes="value itemindex" />
+                                    <input type="hidden" name="comcynapsenewcommenttitle" tal:attributes="id string:comcynapsenewcommenttitle${itemindex}" />
+                                    <input type="hidden" name="comcynapseviewtype" tal:attributes="id string:comcynapseviewtype${itemindex};value string:listview" />
+                                    <input type="hidden" name="comcynapselasttimestamp" tal:attributes="id string:comcynapselasttimestamp${itemindex};value options/lasttimestamp;" />
+                                    <input type="hidden" name="comcynapsecommentcount" tal:attributes="id string:comcynapsecommentcount${itemindex};value comment_count" />
+                                    <input type="hidden" name="comcynapselastcommentid" tal:attributes="id string:comcynapselastcommentid${itemindex};value options/lastcommentid" />
+                                    <input type="button" value="Cancel" class="comcynapsecyninlistcommentcancel cancelbutton" style="display:none" i18n:attributes="value button_cancel"/>
+                                    <input type="submit" class="smallwhitebutton allowMultiSubmit comcynapsecyninlistcommentsubmit" style="display:none"
+                                           tal:attributes="id string:comcynapsecyninnewcommentsubmit${itemindex}" name="comcynapsecyninnewcommentsubmit" value="Post" i18n:attributes="value button_post_comment"/>
+                                </div>
+                                <dl tal:attributes="id string:comcynapsecommenterror${itemindex}" class="portalMessage error inlineerror" style="display: none;">
+                                    <dt i18n:translate="">Error</dt>
+                                    <dd i18n:translate="">Please enter comment text.</dd>
+                                </dl>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </tal:definitions>
+        </div>
+        <div id="comcynapseitemdetails">
+            <tal:definitions tal:define="item_type options/item_type;
+                            portal_url context/portal_url;
+                            item_type_title options/item_type_title;
+                            item options/item;
+                            pathlink options/pathlink;
+                            prettypathtitle options/pathtitle;
+                            full_item python:options['contobj'];
+                            hidetitlerowinfo python:False;
+                            item_icon full_item/getIcon;
+                            item_url item/getURL|item/absolute_url;
+                            use_view_action site_properties/typesUseViewActionInListings|python:();
+                            ">
+                <div class="listitemdetailrowholder">
+                    <tal:belowtitlemacro metal:use-macro="here/belowlisttitlecontent_macro/macros/below_listtitle_content" />
+                    <div class="listitemcommondetailrow">
+                        <label i18n:translate="label_content_type">Content Type:</label>
+                        <span class="listtypelabel">
+                            <img tal:condition="python: item_type not in ('File','Video','Audio')" tal:attributes="src string:${portal_url}/${item_icon};"/>
+                            <img tal:condition="python: item_type == 'File'" tal:attributes="src string:${portal_url}/file_icon.png"/>
+                            <img tal:condition="python: item_type == 'Video'" tal:attributes="src string:${portal_url}/icon-film.png"/>
+                            <img tal:condition="python: item_type == 'Audio'" tal:attributes="src string:${portal_url}/icon-sound.png"/>
+                            <tal:typetitle tal:replace="item_type_title" />
+                        </span>
+                    </div>
+                    <div tal:condition="python: nicedcreateddate and item_creator"
+                         tal:define="item_creator full_item/Creator;
+                                    createddate full_item/CreationDate;
+                                    nicedcreateddate python: full_item.toLocalizedTime(createddate,True);"
+                         class="listitemcommondetailrow">
+                            <span ><label i18n:translate="created_by">Created by:</label><a class="avatarlink" tal:attributes="rel string:${portal_url}/userinfo?userid=${item_creator};
+                                        href string:${portal_url}/Members/${item_creator}/app_all;"><tal:block
+                                        tal:replace="item_creator" /></a> <span class="discreet" tal:attributes="title string:${nicedcreateddate}" tal:content="nicedcreateddate"/></span>
+                    </div>
+                    <tal:categoriesblock tal:define="categories python:full_item.Subject or None">
+                        <div tal:condition="categories" class="listitemcommondetailrow">
+                            <label i18n:translate="">Tags:</label>
+                            <tal:categories tal:repeat="category categories"
+                                       tal:define="parentURL python:context.absolute_url();
+                                                    URLsuffix python:modules['ubify.cyninv2theme'].getListingTemplateForContextParent(context);"
+                                        tal:condition="categories"
+                            ><a class="listtag"
+                                title="Click to add this tag as filter"
+                                   tal:content="category"
+                                   tal:attributes="href string:${parentURL}/${URLsuffix}?Subject%3Alist=${category};rel category" /></tal:categories>
+                        </div>
+                    </tal:categoriesblock>
+                    <div class="listitemcommondetailrow">
+                            <label i18n:translate="label_location">Location</label>:
+                            <a tal:attributes="href pathlink"><tal:block tal:replace="prettypathtitle" /></a>
+                    </div>
+                    <div tal:define="modifiers full_item/modifiers" tal:condition="modifiers" class="listitemcommondetailrow">
+                        <label i18n:translate="">Contributors: </label>
+                        <tal:modifiers tal:repeat="modifier modifiers">
+                            <a class="avatarlink"
+                               tal:attributes="rel string:${portal_url}/userinfo?userid=${modifier};
+                                            href string:${portal_url}/Members/${modifier}/app_all;"><tal:block
+                                            tal:replace="modifier" /></a><tal:separator
+                                condition="not: repeat/modifier/end">,</tal:separator>
+                        </tal:modifiers>
+                    </div>
+                    <div tal:define="size full_item/getObjSize" tal:condition="size" class="listitemcommondetailrow">
+                        <label i18n:translate="">Size:</label><span><tal:block tal:replace="size"/></span>
+                    </div>
+                    <tal:listratingmacro metal:use-macro="here/rating_macros/macros/kss_listing_rating_form" /> 
+                    <div tal:condition="item_wf_state"
+                         tal:define="item_wf_state full_item/review_state|python: context.portal_workflow.getInfoFor(full_item, 'review_state', '');
+                                                                    item_wf_state_title_desc python:modules['ubify.cyninv2theme'].getWorkflowStateTitle(full_item);
+                                                                    item_wf_state_title python:item_wf_state_title_desc[0];
+                                                                    item_wf_state_desc python:item_wf_state_title_desc[1];
+                                                                    item_wf_state_class python:'state-' + context.plone_utils.normalizeString(item_wf_state);"
+                         class="listitemcommondetailrow">
+                            <label i18n:translate="">State:</label>
+                            <span tal:attributes="class string:workflowstatelabel ${item_wf_state_class} navtipVertical;title string:${item_wf_state_desc}" i18n:attributes="title"><tal:block tal:replace="item_wf_state_title" i18n:translate=""/></span>
+                    </div>
+                    <div class="listitemnonajaxbuttons" class="listitemcommondetailrow">
+                        <div class="listitemnonajaxbuttonrow">
+                            <a class="smallwhitebutton" tal:attributes="href python:here.evalURL(item_type,use_view_action,item_url)" i18n:translate="">View</a>
+                            <a class="smallwhitebutton" tal:attributes="href string:${item_url}/edit" tal:condition="python:item.portal_type <> 'StatuslogItem' and modules['ubify.cyninv2theme'].checkEditPermission(full_item)" i18n:translate="">Edit</a>
+                        </div>
+                    </div>
+                </div>
+            </tal:definitions>
+        </div>
+    </body>
+</html>

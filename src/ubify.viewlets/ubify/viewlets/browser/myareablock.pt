@@ -1,0 +1,91 @@
+<tal:comment replace="nothing">
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see http://www.gnu.org/licenses/.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+</tal:comment>
+<tal:block tal:define="portal_url here/portal_url;
+                        portal_state context/@@plone_portal_state;
+                        member python:portal_state.member();
+                        portal portal_state/portal;
+                        userid user/getId;
+                        homefolder python:portal.portal_membership.getHomeFolder();
+                        has_memberfolder python:homefolder <> None and True or False;
+                        logout_url python:portal_url + '/logout';
+                        site_properties python:portal.portal_properties.site_properties;
+                        logout_url python:hasattr(site_properties,'logout_url') and site_properties.logout_url != '' and site_properties.logout_url or logout_url"
+                        tal:condition="not: view/anonymous" i18n:domain="cynin">
+  <div id="comcynapsecyninmyareablock" tal:attributes="class string:kssRefreshViewlet kssattr-messageid-${view/messageuid} kssattr-count-${view/status_comment_count}">
+    <div id="statusinputholder">
+      <form action="" id="comcynapsecyninstatusmessageinputform">
+          <textarea id="statusinputtextarea"
+                    class="kssattr-message statusmessageinput inputLabel"
+                    name="com.cynapse.cynin.statusmessageinput"
+                    title="What are you doing?"
+                    i18n:attributes="title label_blankmessage"
+                    rows="1" cols="50"></textarea>
+          <div id="statusbuttontable" class="hidden">
+            <div id="charlenholder"><span id="charleninfo">140</span></div>
+            <input type="hidden" id="comcynapsesmessagetitle" name="comcynapsesmessagetitle" />
+            <input class="cancelbutton" type="button" id="comcynapsecynincancelstatusmessageinput" value="Cancel" i18n:attributes="value button_cancel"/>
+            <input class="statussubmitbutton allowMultiSubmit smallwhitebutton" type="submit" name="com.cynapse.cynin.statusmessagesubmit" value="Set"
+             i18n:attributes="value button_set"/>
+          </div>
+          <dl id="comcynapsemessageerror" class="portalMessage error inlineerror" style="display: none;">
+              <dt i18n:translate="">Error</dt>
+              <dd i18n:translate="">Please enter message.</dd>
+          </dl>
+      </form>
+    </div>
+    <div style="display:none" id="logoutconfirm">
+        <div class="logoutmodal">
+            <div class="logouthelp" i18n:translate="text_log_out_sure">Are you sure you want to log out?</div>
+        <a class="smallwhitebutton" tal:attributes="href string:javascript:window.location='${logout_url}'" i18n:translate="button_confirm_log_out">Confirm Log out</a>
+        <a class="nyroModalClose smallwhitebutton" href="#" i18n:translate="button_cancel">Cancel</a>
+        </div>
+    </div>
+    <div tal:condition="has_memberfolder" id="currentstatusholder">
+        <label tal:define="lblheaderclass python:view.recent_message == '' and 'statusheaderlabel hidden' or 'statusheaderlabel';" tal:attributes="class lblheaderclass"><tal:block i18n:translate="label_my_current_status">My Current Status:</tal:block>
+          <tal:hascomments tal:condition="python:view.has_status_message and (view.status_comment_count > 0)">
+              <a tal:attributes="href view/discuss_url;class string:normallink;id string:comcynapsestatusmessagecommentscount">                
+                <img tal:attributes="src string:${portal_url}/discussionitem_icon.png" />
+                <tal:commentcount tal:content="view/status_comment_count" />
+              </a>
+          </tal:hascomments>
+        </label>
+      <div id="currentmessagediv" tal:content="view/recent_message" />
+    </div>
+  </div>
+</tal:block>

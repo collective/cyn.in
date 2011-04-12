@@ -1,0 +1,100 @@
+Plone zope.formlib Integration
+==============================
+
+For the most part zope.formlib based applications are capable of 
+running on Plone.  But there are a few integration notes necessary.
+
+Lack of request.locale
+----------------------
+
+The standard edit forms built with zope.formlib rely on a Zope 3
+style request object.  More specifically, formlib requires access
+to the locale attribute on the request object.  Zope 2 requests do
+not have this attribute by default.  And to complicate matters,
+Zope 2 requests override ``__getattr__`` such that looking up an
+attribute on the request checks the request's form dict.  So if
+we simply forced Zope 2 requests to have a locale attribute, it
+would potentially over-shadow locale being provided by request.form
+(and possibly break many legacy applications in the process).
+
+Lets demonstrate the problem.  We begin by defining some interfaces
+and classes and of course make sure that the patch isn't already applied.
+
+  >>> from zope import interface, schema
+  >>> from zope.formlib import form
+  >>> from plone.app.form import _patches
+  >>> from Products.Five import traversable
+
+  >>> patched = _patches.remove_formlib_request_locale_patch()
+
+  >>> class IFoo(interface.Interface):
+  ...     var1 = schema.TextLine(title=u'var1')
+  ...     var2 = schema.Bool(title=u'var2')
+  >>> class Foo(object):
+  ...     interface.implements(IFoo)
+  ...     var1 = u''
+  ...     var2 = False
+  >>> class BarForm(form.EditForm):
+  ...     form_fields = form.FormFields(IFoo)
+
+Now we go ahead and construct a request and call the bad action
+handler.
+
+  >>> request = traversable.FakeRequest()
+  >>> foo = Foo()
+  >>> bar = BarForm(foo, request)
+  >>> bar.adapters = {}
+  >>> action = bar.actions[u'form.actions.apply']
+  >>> action.success_handler(bar, None, {'var1': 'aaaa', 'var2': True})
+  Traceback (most recent call last):
+  ...
+  AttributeError: 'FakeRequest' object has no attribute 'locale'
+
+Formlib of course succeeded in changing the attributes anyhow.
+
+  >>> foo.var1
+  'aaaa'
+  >>> foo.var2
+  True
+
+For the time being, the only solution to this problem is to somehow
+convince formlib to not check for request.locale.  Previously Five
+accomplished this by providing its own base classes in 
+``Products.Five.formlib.formbase``.  This satisifed the problem fine
+but unfortunately meant that formlib code written for Zope 3 was
+inherently not code-compatible with what needed to run on Plone since
+Plone-based formlib views need to extend the Five base classes.
+
+So what we do instead is patch zope.formlib to use the usable code
+from Five.
+
+  >>> discard = _patches.apply_formlib_request_locale_patch()
+
+Now we see if we can use EditFormBase's apply action (we couldn't 
+before).
+
+  >>> bar = BarForm(foo, request)
+  >>> bar.adapters = {}
+  >>> action = bar.actions[u'form.actions.apply']
+  >>> action.success_handler(bar, None, {'var1': 'bbbb', 'var2': False})
+  >>> foo.var1
+  'bbbb'
+  >>> foo.var2
+  False
+
+Lets test the patch removal to make sure it works as advertised.
+
+  >>> discard = _patches.remove_formlib_request_locale_patch()
+  >>> bar = BarForm(foo, request)
+  >>> bar.adapters = {}
+  >>> action = bar.actions[u'form.actions.apply']
+  >>> action.success_handler(bar, None, {'var1': 'cccc', 'var2': True})
+  Traceback (most recent call last):
+  ...
+  AttributeError: 'FakeRequest' object has no attribute 'locale'
+
+Just in case some previous code had already patched before these
+tests ran, lets re-patch.
+
+  >>> if patched:
+  ...     patched = _patches.apply_formlib_request_locale_patch()

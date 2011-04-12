@@ -1,0 +1,93 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="plone">
+
+  <body>
+
+    <div metal:fill-slot="main"
+         tal:define="errors options/state/getErrors">
+
+      <h1 i18n:domain="eduCommons"
+          i18n:translate="heading_ExportContent">
+        Export Content
+      </h1>
+
+	  <form name="export_form"
+            action="."
+            method="post"
+            enctype="multipart/form-data"
+            tal:attributes="action string:export_form"
+			tal:define="paths request/paths|nothing">
+
+        <fieldset>
+          <p>
+			<span i18n:domain="eduCommons"
+			  i18n:translate="description_export_allContent"
+			  tal:condition="python:not paths">
+			  All files in the course will be exported in .zip file format.
+			</span>
+			<span i18n:domain="eduCommons"
+			  i18n:translate="description_export_followingFiles"
+			  tal:condition="python:paths">
+			  The following files will be exported in .zip file format.
+			</span>
+		  </p>
+          <div class="field"
+               tal:define="error errors/filename|nothing;
+                           filename request/export_filename | python: here.portal_zipfiletool.GenerateSafeFileName(here.Title() + '.zip');"
+			   tal:attributes="class python:test(error, 'field error', 'field')">
+	        <div class="field" tal:condition="paths">
+			  <div tal:repeat="path paths" tal:content="path"></div>
+			  <input tal:repeat="path paths"
+			         type="hidden"
+			         name="obj_paths:list"
+                     value="#"
+                     tal:attributes="value path" />
+	        </div>
+
+            <label for="title"
+                   i18n:domain="eduCommons"
+                   i18n:translate="label_exporttitle">Export Filename (zipfile)</label>
+
+            <span class="fieldRequired" title="Required"
+                  i18n:attributes="title"
+                  i18n:translate="label_required">(Required)</span>
+
+                  <div class="formHelp"
+                       i18n:domain="eduCommons"
+                       i18n:translate="help_exportfilename">
+                    The name of the file downloaded to your local machine.
+                  </div>
+
+                  <div tal:content="error"><tal:comment replace="nothing">Validation error output</tal:comment></div>
+
+                  <input type="text"
+                         id="export_filename"
+                         name="export_filename"
+                         size="40"
+                         tal:attributes="value filename;
+                                         tabindex tabindex/next;"
+                         />
+
+          </div>
+
+        <div class="formControls">
+
+            <input class="context"
+                   type="submit"
+                   name="form.button.Export"
+     		       value="Export"
+     		       i18n:domain="eduCommons"
+                   i18n:attributes="value"
+                   tal:attributes="tabindex tabindex/next"
+                   />
+
+          </div>
+
+          <input type="hidden" name="form.submitted" value="1" />
+        </fieldset>
+
+      </form>
+    </div>
+  </body>
+</html>

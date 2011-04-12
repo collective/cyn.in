@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<import-steps>
+  <import-step id="ubify.ffxmpp.various"
+               version="20090605-01"
+               handler="ubify.ffxmpp.setuphandlers.setupVarious"
+               title="ffxmppskin: miscellaneous import steps">
+    <dependency step="skins" />
+    Various import steps that are not handled by GS import/export
+    handlers.
+  </import-step>
+</import-steps>

@@ -1,0 +1,5188 @@
+/*
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see <http://www.gnu.org/licenses/>.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+*/
+
+/* <dtml-with base_properties> (do not remove this :) */
+/* <dtml-call "REQUEST.set('portal_url', portal_url())"> (not this either :) */
+body
+{
+    background: &dtml-cigray3; url("&dtml-portal_url;/bodybg.png") repeat-x left top;
+    padding: 0 1em;
+    line-height:1.6667em;
+}
+
+  /* (en) Centering layout in old IE-versions */
+  body { text-align: center; }
+  #page_margins { text-align:left; margin: 0 auto; }
+
+  /* (en) Layout: width, background, borders */
+  #page_margins
+  {
+  min-width: 780px;
+  }
+  #page{ padding: 0px; }
+
+  /* (en) Designing main layout elements */
+  #col3 { margin: 0 25%; }
+  /**
+   * (en) Repositioning content container
+   * (de) Neupositionierung der Content Container
+   *
+   * |-------------------------------|
+   * | #header                       |
+   * |-------------------------------|
+   * | #col3               | #col1   |
+   * | flexible            | 25%     |
+   * |-------------------------------|
+   * | #footer                       |
+   * |-------------------------------|
+   */
+
+  /* Move #col1 to the right | #col1 nach rechts verschieben */
+  #col1 { float:left; width: 210px; }
+  #col1_content { padding:0; position:static;}
+
+  /* Hide #col2 | #col2 abschalten */
+  #col2, #col2_content { display:none }
+
+  /* Adjust right margin | Rechten Randabstand anpassen */
+  #col3 { margin-left:210px; margin-right:0;}
+#col3_content
+{
+        position:static;
+        height:100%;
+}
+
+#main
+{
+	margin-top: .8333em;
+}
+  /**
+   * Fonts
+   * (en) font-family and font-size selection for headings and standard text elements
+   *
+   * @section content-fonts
+   */
+
+  /* (en) reset font size for all elements to standard (16 Pixel) */
+  html * { font-size: 100.01% }
+
+  /* (en) reset monospaced elements to font size 16px in Gecko browsers */
+  pre, tt, code {
+	font-family:"Courier New", Courier, monospace;
+  }
+
+  #txtCommentSubject
+  ,textarea
+  {
+    color: &dtml-cigray12;;
+  }
+  /* (en) base layout gets standard font size 12px */
+  body {
+    font-size: 75.00%;
+    color: &dtml-cigray9;;
+  }
+
+
+.defaultfamily
+,body
+,div.kupu-drawer
+,textarea
+,input.inputLabel
+{
+font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Tahoma, "DejaVu Sans", "Bitstream Vera Sans", Arial, Verdana, "Verdana Ref", sans-serif;
+}
+.smallfamily
+{
+font-family: Verdana, Geneva, "Verdana Ref", Arial, Helvetica, sans-serif;
+}
+.largefamily
+,h1,h3,h4,h5,h6
+,.addnewbuttontext
+,.addnewtypetitle
+,.contentheaderlabel
+,.portalMessage dt
+,#charleninfo
+,.sitehomenocontentheader
+,.popupdialogheading
+,.browsernotsupportedheadline
+,.avatartips .infotiptitle
+{
+font-family: "Century Gothic", "Avant Garde", "Lucida Grande", "Lucida Sans Unicode", "Helvetica Neue", Geneva, "Trebuchet MS", "Lucida Sans", Tahoma, "DejaVu Sans", "Bitstream Vera Sans", Helvetica, Verdana, "Verdana Ref", Arial, sans-serif;
+}
+
+h1,h2,h3,h4,h5,h6 {
+      font-weight:bold;
+      color: &dtml-cigray9;;
+}
+
+h1
+{
+	font-size: 2em; /* 24px */
+	line-height: 1.6667em; /* 40px */
+	margin:0;
+}
+h2
+{
+	font-size: 1.8333em; /* 22px */
+	line-height: 1.8182em; /* 40px */
+	margin:0;
+}
+h3
+{
+	font-size: 1.5em; /* 18px */
+	line-height: 1.1111em; /* 20px */
+	margin-top: 1.1111em;
+	margin-bottom: 0em;
+}
+h4
+{
+	font-size: 1.3333em; /* 16px */
+	line-height: 1.25em; /* 20px */
+	margin-top: 1.25em;
+	margin-bottom: 0em;
+	font-weight:bold;
+}
+h5
+{
+	font-size: 1.1667em; /* 14px */
+	line-height: 1.4286em; /* 20px */
+	margin-top: 1.4286em;
+	margin-bottom: 0em;
+	font-weight:bold;
+	font-style:italic;
+}
+h6
+{
+	font-size: 1em; /* 12px */
+	line-height: 1.6667em; /* 20px */
+	margin-top: 1.6667em;
+	margin-bottom: 0em;
+	font-weight:bold;
+}
+p
+{
+	font-size: 1em; /* 12px */
+	line-height: 1.6667em; /* 20px */
+	margin: 0 0 1.6667em 0;
+}
+
+  /* ### Lists | Listen  #### */
+
+ul, ol, dl
+{
+	line-height: 1.6667em;
+	margin: 0 0 1.6667em 1em
+}
+li
+{
+	margin-left: 1.5em;
+	line-height: 1.6667em
+}
+dt
+{
+	font-weight: bold
+}
+dd
+{
+	margin: 0 0 1.6667em 2em
+}
+
+  /* ### text formatting ### */
+
+cite, blockquote
+{
+	font-style:italic
+}
+blockquote
+{
+	margin: 0 0 1em 1.5em
+}
+strong,b
+{
+	font-weight: bold
+}
+em,i
+{
+	font-style:italic
+}
+pre, code
+{
+	font-family: monospace;
+	font-size: 1.1em;
+}
+
+acronym, abbr
+{
+    letter-spacing: .07em;
+    border-bottom: .1em dashed #c00;
+    cursor: help;
+}
+
+  a {color: &dtml-ci1co3;; text-decoration:none;outline-style:none;}
+  a:hover {color: &dtml-ci1co4;;}
+  input {outline-style:none}
+  table { border-collapse:collapse; margin-bottom: 0.5em; }
+  table.full { width: 100%; }
+  table.fixed { table-layout:fixed }
+
+  th,td { padding: 0.5em; }
+  th
+  {
+    background: &dtml-cigray5;;
+    color:&dtml-ciwhite;;
+  }
+
+  hr {
+    color: #fff;
+    background:transparent;
+    margin: 0 0 0.5em 0;
+    padding: 0 0 0.5em 0;
+    border:0;
+    border-bottom: 1px #eee solid;
+  }
+/************************************************ Fonts Styles Begin **************************************/
+.discreet
+,.listitemvoteholder .ratinglabel
+{
+ color:&dtml-cigray8;;
+ font-weight:normal;
+}
+.fontsize24
+,.blogavatarday
+,.statusavatarday
+,.browsernotsupportedheadline
+{
+font-size: 2em; /* 24px */
+line-height: 1.6667em; /* 40px */
+}
+.fontsize22
+{
+    font-size: 1.8333em; /* 22px */
+    line-height: 1.8182em; /* 40px */
+}
+.fontsize20
+{
+    font-size: 1.6667em; /* 20px */
+    line-height: 1em; /* 20px */
+}
+.fontsize18
+,.tagcloudsize5
+,#filetitleviewwidget a.filelink
+,#linkcontentholder a
+,#document-toc .portletHeader
+,#calendarmonthnavigator
+,.logouthelp
+,.addnewtypetitle
+,.eventdownarrow
+,.sitehomenocontentheader
+,.popupdialogheading
+{
+    font-size: 1.5em; /* 18px */
+    line-height: 1.1111em; /* 20px */
+}
+.fontsize16
+,#charleninfo
+,#myareafullname
+,#statusinputlabel
+,.tagcloudsize4
+,#archetypes-fieldname-title input[type=text]
+,.p4acalendar .week .day dl dt
+,#setnewdefaultwikipageholder label
+,.statuslogviewtitle
+,textarea
+,.statscount span
+,.searchresultitem h2
+,.searchpagetextbox
+,.whitebutton.loginbutton
+,.bookmarkletlinkcontainer
+,.contentheaderlabel legend
+,.portalMessage dt
+,.listitemvoteholder .displaytotalscorelabel
+,#statuslogdetailtitle h2
+{
+    font-size: 1.3333em; /* 16px */
+    line-height: 1.25em; /* 20px */
+}
+.fontsize14
+,th
+,.tagcloudsize3
+,.avatartips .infotiptitle
+,#PostNewCommentTitle
+,.filepreviewlabel
+,.eventstartdate
+,.eventenddate
+,.editformheaderlegend
+,.editcontentholder label
+,.p4acalendar .eventlist a
+,.profilestatuslog .recentupdateitem a
+,.formQuestion
+,#viewspace .field label
+,.usersearchresultslabel
+,.loginboxsitedescription
+,.listitemtitle h2
+,.portalMessage dd
+,.myareanotloggedin
+{
+    font-size: 1.1667em; /* 14px */
+    line-height: 1.4286em; /* 20px */
+}
+.fontsize12
+,.tagcloudsize1
+,.tagcloudsize2
+,textarea
+,.cluetip-jtip h3#cluetip-title
+,.contentheaderlabel.commentsheader a
+,.contentheaderlabel a#AddCommentButtonLS
+,#relatedItems label
+,label[for=image_nochange]
+,label[for=image_upload]
+,label[for=file_nochange]
+,label[for=file_upload]
+,.filterpanelstatustext
+,.userlisting th
+{
+    font-size: 1em; /* 12px */
+    line-height: 1.6667em; /* 20px */
+}
+.fontsize12line16
+,.btn-white-img
+,.menu-white-img
+,.mainsearchboxinputtext
+,a.whitebutton
+{
+    font-size: 1em; /* 12px */
+    line-height: 1.3333em; /* 16px */
+}
+.fontsize12line18
+,.viewnavigation-current
+,.paging_bar_currentpage
+{
+    font-size: 1em; /* 12px */
+    line-height: 1.5em; /* 18px */
+}
+.fontsize11
+,.listitemdetailrowholder label
+,.lastchangeblocktextitem
+,.listtypelabel
+,.avatarinfobox a.textlink
+,.cluetip-default label
+,.cluetip-default .cluetipmoreholder
+,.formHelp
+,.photoAlbumEntryTitle
+,.imagesizelinkscontainer
+,#lightbox-caption-title
+,.p4acalendar .week .day DD
+,.infotipeventlist dl dd
+,.p4acalendar .eventlist .event .event_details ABBR
+,.blogavatartime
+,.blogpostauthor
+,.statusavatartime
+,.buttonrowcreateddate
+,.statusheaderlabel
+,.usersearchcardrow.designation
+,.searchresultsauthorrow
+,.cancelbutton
+,label
+,.simplebutton
+,.simplefloatedlink
+,a.filterpaneltopheader
+,.topbarmybutton
+{
+    font-size: 0.9167em; /* 11px */
+    line-height: 1.8182em; /* 20px */
+}
+.fontsize10
+,.discreet
+,.workflowstatelabel
+,.commentByLine
+,.fieldTextFormat label
+,#lightbox-infoBox
+,#comcynapsecyninlisting .recentupdatesauthorbyline span
+,.blogavataryear
+,.blogavatarmonth
+,.statusavatarmonth
+,.statusavataryear
+,.recentupdateitemauthorrow
+,.footersmall
+,.loginlabel
+,.loginbottomlink
+,.listitemvoteholder .ratinglabel
+,.portletNavigationTree div.navaddnewbody
+,.arrowDownAlternative
+{
+    font-size: 0.8333em; /* 10px */
+    line-height: 2em; /* 20px */
+}
+/************************************************ Fonts Styles End **************************************/
+/************************************************ Kupu related begin **************************************/
+html.kupu-html
+{
+    font-size:100.01%;
+}
+.kupu-html body.kupu
+{
+    background:white;
+    font-size:75%;
+    text-align:left;
+}
+div.kupu-drawer
+{
+    background: &dtml-cigray2; url("&dtml-portal_url;/g-gray2-5-l.gif") repeat-x left bottom !important;
+    margin-left:-4px !important;
+    border:1px solid &dtml-cigray8; !important;
+}
+div div.kupu-panels
+{
+    background:transparent !important;
+}
+h1.kupu-drawer-title
+{
+    margin:0 !important;
+}
+td.panel
+{
+    border:1px solid &dtml-cigray6; !important;
+}
+iframe.kupu-linkdrawer-preview
+{
+    border:1px solid &dtml-cigray6; !important;
+}
+.kupu-embed-input
+{
+    height:10em !important;
+}
+ul.kupu-tabs
+{
+    border-color:&dtml-cigray6; !important;
+}
+ul.kupu-tabs li
+{
+    background-color:&dtml-cigray4; !important;
+    border:1px solid transparent !important;
+    padding:2px .5em !important;
+}
+ul.kupu-tabs li:hover
+{
+    background-color:&dtml-ci1co2; !important;
+}
+ul.kupu-tabs li.selected
+{
+    padding-bottom:4px !important;
+    background-color:&dtml-ciwhite; !important;
+    border-color:&dtml-cigray6; !important;
+}
+ul.kupu-tabs li a
+{
+    color:&dtml-cigray10; !important;
+}
+ul.kupu-tabs li a:hover
+{
+    background:transparent !important;
+    color:&dtml-ci1co4; !important;
+}
+ul.kupu-tabs li.selected a
+{
+    color:&dtml-cigray9; !important;
+}
+.kupu-tabledrawer
+{
+    left:auto !important;
+}
+td#kupu-resourcespanel
+,div.kupu-drawer
+{
+    overflow:hidden !important;
+}
+.kupu-panels table.kupu-tabbed
+{
+    border:1px solid &dtml-cigray6; !important;
+    border-style:none solid solid solid !important;
+}
+span.kupu-tb-buttons button
+{
+    border-color:transparent !important;
+}
+span.kupu-tb-buttons button:hover
+{
+    background-color:&dtml-ci1co1; !important;
+    border-color:&dtml-ci1co4; !important;
+}
+#kupu-editor-text button.kupu-save, #kupu-editor-text button.kupu-save-pressed, button.kupu-save, button.kupu-save-pressed
+{
+background-image: url("&dtml-portal_url;/icon-disk.png") !important;
+background-position:center center !important;
+}
+#kupu-editor-text button.kupu-bold, #kupu-editor-text button.kupu-bold-pressed, button.kupu-bold, button.kupu-bold-pressed
+{
+background-image: url("&dtml-portal_url;/icon-text_bold.png") !important;
+background-position:center center !important;
+}
+#kupu-editor-text button.kupu-italic, #kupu-editor-text button.kupu-italic-pressed, button.kupu-italic-pressed, button.kupu-italic
+{
+background-image: url("&dtml-portal_url;/icon-text_italic.png") !important;
+background-position:center center !important;
+}
+#kupu-editor-text button.kupu-outdent, #kupu-editor-text button.kupu-outdent-pressed, button.kupu-outdent, button.kupu-outdent-pressed
+{
+background-image: url("&dtml-portal_url;/icon-text_indent_remove.png") !important;
+background-position:center center !important;
+}
+#kupu-editor-text button.kupu-indent, #kupu-editor-text button.kupu-indent-pressed, button.kupu-indent-pressed, button.kupu-indent
+{
+background-image: url("&dtml-portal_url;/icon-text_indent.png") !important;
+background-position:center center !important;
+}
+#kupu-editor-text button.kupu-insertorderedlist, #kupu-editor-text button.kupu-insertorderedlist-pressed, button.kupu-insertorderedlist-pressed, button.kupu-insertorderedlist
+{
+background-image: url("&dtml-portal_url;/icon-text_list_numbers.png") !important;
+background-position:center center !important;
+}
+#kupu-editor-text button.kupu-insertunorderedlist, #kupu-editor-text button.kupu-insertunorderedlist-pressed, button.kupu-insertunorderedlist-pressed, button.kupu-insertunorderedlist
+{
+background-image: url("&dtml-portal_url;/icon-text_list_bullets.png") !important;
+background-position:center center !important;
+}
+#kupu-editor-text button.kupu-subscript, #kupu-editor-text button.kupu-subscript-pressed, button.kupu-subscript-pressed, button.kupu-subscript
+{
+background-image: url("&dtml-portal_url;/icon-text_subscript.png") !important;
+background-position:center center !important;
+}
+#kupu-editor-text button.kupu-superscript, #kupu-editor-text button.kupu-superscript-pressed, button.kupu-superscript-pressed, button.kupu-superscript
+{
+background-image: url("&dtml-portal_url;/icon-text_superscript.png") !important;
+background-position:center center !important;
+}
+#kupu-editor-text button.kupu-justifyleft, #kupu-editor-text button.kupu-justifyleft-pressed, button.kupu-justifyleft-pressed, button.kupu-justifyleft
+{
+background-image: url("&dtml-portal_url;/icon-text_align_left.png") !important;
+background-position:center center !important;
+}
+#kupu-editor-text button.kupu-justifycenter, #kupu-editor-text button.kupu-justifycenter-pressed, button.kupu-justifycenter-pressed, button.kupu-justifycenter
+{
+background-image: url("&dtml-portal_url;/icon-text_align_center.png") !important;
+background-position:center center !important;
+}
+#kupu-editor-text button.kupu-justifyright, #kupu-editor-text button.kupu-justifyright-pressed, button.kupu-justifyright-pressed, button.kupu-justifyright
+{
+background-image: url("&dtml-portal_url;/icon-text_align_right.png") !important;
+background-position:center center !important;
+}
+#kupu-editor-text button.kupu-image, #kupu-editor-text button.kupu-image-pressed, button.kupu-image-pressed, button.kupu-image
+{
+background-image: url("&dtml-portal_url;/icon-picture.png") !important;
+background-position:center center !important;
+}
+#kupu-editor-text button.kupu-inthyperlink, #kupu-editor-text button.kupu-inthyperlink-pressed, button.kupu-inthyperlink-pressed, button.kupu-inthyperlink
+{
+background-image: url("&dtml-portal_url;/icon-link.png") !important;
+background-position:center center !important;
+}
+#kupu-editor-text button.kupu-exthyperlink, #kupu-editor-text button.kupu-exthyperlink-pressed, button.kupu-exthyperlink-pressed, button.kupu-exthyperlink
+{
+background-image: url("&dtml-portal_url;/icon-world.png") !important;
+background-position:center center !important;
+}
+#kupu-editor-text button.kupu-anchors, #kupu-editor-text button.kupu-anchors-pressed, button.kupu-anchors-pressed, button.kupu-anchors
+{
+background-image: url("&dtml-portal_url;/icon-anchor.png") !important;
+background-position:center center !important;
+}
+#kupu-editor-text button.kupu-table, #kupu-editor-text button.kupu-table-pressed,  button.kupu-table-pressed, button.kupu-table
+{
+background-image: url("&dtml-portal_url;/icon-table.png") !important;
+background-position:center center !important;
+}
+#kupu-editor-text button.kupu-undo, #kupu-editor-text button.kupu-undo-pressed, button.kupu-undo-pressed, button.kupu-undo
+{
+background-image: url("&dtml-portal_url;/icon-arrow_undo.png") !important;
+background-position:center center !important;
+}
+#kupu-editor-text button.kupu-redo, #kupu-editor-text button.kupu-redo-pressed, button.kupu-redo-pressed, button.kupu-redo
+{
+background-image: url("&dtml-portal_url;/icon-arrow_redo.png") !important;
+background-position:center center !important;
+}
+#kupu-editor-text button.kupu-source, #kupu-editor-text button.kupu-source-pressed, button.kupu-source-pressed, button.kupu-source
+{
+background-image: url("&dtml-portal_url;/icon-html.png") !important;
+background-position:center center !important;
+}
+#kupu-editor-text button.kupu-zoom, #kupu-editor-text button.kupu-zoom-pressed, button.kupu-zoom, button.kupu-zoom-pressed
+{
+background-image: url("&dtml-portal_url;/icon-arrow_out.png") !important;
+background-position:center center !important;
+}
+#kupu-editor-text button.kupu-zoom-pressed, button.kupu-zoom-pressed
+{
+background-image: url("&dtml-portal_url;/icon-arrow_in.png") !important;
+background-position:center center !important;
+}
+#kupu-editor-text button.kupu-removelink,#kupu-editor-text button.kupu-removelink-pressed, button.kupu-removelink-pressed, button.kupu-removelink
+{
+background-image: url("&dtml-portal_url;/icon-link_delete.png") !important;
+background-position:center center !important;
+}
+#kupu-editor-text button.kupu-removeimage,#kupu-editor-text button.kupu-removeimage-pressed, button.kupu-removeimage-pressed, button.kupu-removeimage
+{
+background-image: url("&dtml-portal_url;/icon-picture_delete.png") !important;
+background-position:center center !important;
+}
+/************************************************ Kupu related end **************************************/
+/************************************************ Forms begin ******************************************/
+.formHelp
+{
+        text-align:left;
+}
+.editcontentholder
+{
+}
+.editformfieldsetholder
+{
+    margin:0 0 1.6667em 0;
+}
+.editformfieldset.closed
+{
+    display:none;
+}
+.editformheaderlegend
+{
+    background: &dtml-cigray2; url("&dtml-portal_url;/g-gray2-4-s.gif") repeat-x left bottom;
+    color:&dtml-cigray9;;
+    text-transform:uppercase;
+    padding:.25em 1em;
+    font-weight:bold;
+    letter-spacing:1px;
+}
+.fullwidthtextbox
+,#archetypes-fieldname-title input[type=text]
+,#archetypes-fieldname-description textarea
+,#archetypes-fieldname-subject input[type=text]
+,#archetypes-fieldname-rights textarea
+,#archetypes-fieldname-attendees textarea
+,#cmfeditions_version_comment
+,#archetypes-fieldname-remoteUrl #remoteUrl
+,textarea#feedbackmessage
+{
+    width:98%;
+    max-width:100%;
+}
+#change_password_form input[type=password]
+{
+        width:30em;
+        max-width:30em;
+}
+#archetypes-fieldname-title input[type=text]
+{
+    font-weight:bold;
+}
+.fieldTextFormat
+{
+    text-align:right;
+}
+.editcontentholder .field
+,.editprofileform .field
+,.field
+{
+    margin-bottom:1.6667em;
+}
+.subfield
+{
+    margin-bottom:.8333em;
+}
+.editcontentholder .field.error
+{
+    background-color:&dtml-ci3co2;;
+    padding:1em;
+}
+.fieldErrorBox
+{
+    font-weight:bold;
+    color:&dtml-ci3co1;;
+}
+.editcontentholder .field.error .formQuestion
+{
+    color:&dtml-cigray12;;
+}
+.fieldRequired
+{
+    color:&dtml-ci3co1;;
+}
+#relatedItems
+{
+    list-style-position:inside;
+    list-style-type:none;
+}
+#relatedItems label
+,label[for=image_nochange]
+,label[for=image_upload]
+,label[for=file_nochange]
+,label[for=file_upload]
+{
+    font-weight:normal;
+}
+#relatedItems label input
+{
+    margin-right:.5em;
+}
+#archetypes-fieldname-relatedItems div[style="clear: both;"]
+{
+    text-align:left;
+}
+.formControls
+{
+    text-align:left;
+}
+.mainformcontainer
+{
+    padding:1em;
+}
+.infoboxrow.mailform
+{
+        margin-top:1.6667em;
+}
+.infoboxavatar
+{
+        float:left;
+        margin: 0 .8333em 0 0;
+}
+/************************************************ Forms end ******************************************/
+/************************************************ Admin screens begin ******************************************/
+.configletsgroupcontainer
+{
+        overflow:hidden;
+}
+ul.configlets
+{
+        list-style: none;
+}
+.userlisting th
+{
+    vertical-align:top;
+}
+.userlisting td
+{
+    max-width:123px;
+    width:100%;
+    overflow:hidden;
+}
+/************************************************ Admin screens end ******************************************/
+
+/************************************************ Popups begin ******************************************/
+body.popup
+{
+    text-align:left;
+    background: &dtml-ciwhite;;
+}
+.popupBreadcrumbs
+{
+    margin:1.667em 0;
+    padding:0 1em;
+    background-color:&dtml-cigray1;;
+    border:1px solid &dtml-cigray6;;
+}
+tr.odd
+{
+    background-color:&dtml-cigray1;;
+}
+tr.even
+{
+    background-color:&dtml-cigray2;;
+}
+tr.odd:hover
+{
+    background-color:&dtml-ci1co1;;
+}
+tr.even:hover
+{
+    background-color:&dtml-ci1co2;;
+}
+/************************************************ Popups end ******************************************/
+/***************************************************************Top Bar Starts*************************/
+#discussiontextarea
+{
+    min-height:52px;
+    width:96%;
+}
+#comcynapsediscussiontag, #comcynapsediscussioninputtitle
+{
+    margin:.8333em 0;
+    width:96%;
+}
+#discussioninputholder
+{
+    margin-left:210px;
+    margin-right: 210px;
+}
+.disabledspaceselection{
+    color:&dtml-ci3co1;;
+}
+.adderbar
+{
+    border:1px solid &dtml-cigray9;;
+    border-style:none solid solid solid;
+    overflow:hidden;
+    background: &dtml-ciwhite; url("&dtml-portal_url;/g-white-s.gif") repeat-x left bottom;
+    margin-bottom: .8333em;
+    padding:.8333em 0;
+ box-shadow: 0 1px 5px #808080;
+ -webkit-box-shadow: 0 1px 5px #808080;
+ -moz-box-shadow: 0 1px 5px #808080;
+}
+#sidenavigationlogoholder
+{
+	 border:1px solid &dtml-cigray9;;    
+    text-align:center;
+    margin:0 0.8333em 0.8333em 0;
+    min-height:60px;
+    width:200px;
+    background: &dtml-ciwhite; url("&dtml-portal_url;/g-white-s.gif") repeat-x left bottom;
+    padding: 0.8333em 0;
+   box-shadow: 0 1px 5px #808080;
+   -webkit-box-shadow: 0 1px 5px #808080;
+   -moz-box-shadow: 0 1px 5px #808080;
+}
+#sidenavigationlogoholder a
+{
+    display:block;
+    overflow:hidden;
+    height:60px;
+    width:200px;
+    background: transparent url("&dtml-portal_url;/logo.jpg") no-repeat scroll center center;
+}
+#sidenavigationlogoholder .sitelogolink:hover .hometext
+{
+ display:block;
+ background-color:&dtml-cigray9;;
+ color:&dtml-ciwhite; ;
+ text-align:left;
+ padding:0 0 0 1em;
+ opacity:.8;
+}
+#sidenavigationlogoholder .logoicon
+{
+vertical-align:text-top;
+padding:0 1em 0 0;
+}
+.addnewbuttonholder
+{
+    float:left;
+    -moz-border-radius-topleft:21px;
+    -moz-border-radius-bottomleft:21px;
+    -webkit-border-top-left-radius:21px;
+    -webkit-border-bottom-left-radius:21px;
+    -moz-border-radius-topright:5px;
+    -moz-border-radius-bottomright:5px;
+    -webkit-border-top-right-radius:5px;
+    -webkit-border-bottom-right-radius:5px;
+    height:3.3333em;
+    background: &dtml-ciwhite; url("&dtml-portal_url;/g-white-s.gif") repeat-x left bottom;
+    border: 1px solid &dtml-cigray5;;
+    margin:0.75em 1em 0.75em 1.6667em;
+}
+.addnewbuttonholder:hover
+{
+    background: &dtml-ci1co2; url("&dtml-portal_url;/g-blue1-s.gif") repeat-x left top;
+    border: 1px solid &dtml-ci1co3;;
+}
+.addnewbuttonholder:hover a
+{
+    color:&dtml-ci1co4;;
+}
+.addnewbuttonholder a
+{
+    padding:.3333em .5em .3333em .3333em;
+    display:block;
+    text-transform:uppercase;
+    color:&dtml-cigray8;;
+    width:110px;
+    overflow:hidden;
+}
+.addnewbuttonholder img
+{
+    float:left
+}
+.addnewbuttonholder a:hover
+{
+    background:transparent !important;
+}
+.addnewbuttontext
+{
+    font-size:1.3333em;
+    line-height:2em;
+    font-weight:bold;
+    text-align:center;
+}
+.addnewor
+{
+    float:left;
+    margin:2em 0;
+}
+#comcynapsespacelocation
+,#comcynapsespaceselector
+{
+    width:16.6667em;
+}
+#discussionbuttontable
+{
+    margin-right:0.8333em;
+}
+#discussionbuttontable input
+{
+    float:right;
+}
+#topbarmybuttonholder
+{
+  float: right;
+  padding: 5px;
+  width: 190px;
+  margin-right: 10px;
+}
+.topbaravatar
+{
+  padding: 5px;
+  display: block;
+  overflow: hidden;
+  font-weight: bold;
+  background: #ffffff url("&dtml-portal_url;/arrow-down-gray.png") no-repeat 98% 75%;
+  color: &dtml-cigray8;;
+  height: 39px;
+}
+
+.topbaravatar:hover
+{
+  background: &dtml-ci1co1; url("&dtml-portal_url;/arrow-down-blue.png") no-repeat 98% 75%;
+  color: &dtml-ci1co3;;
+}
+.topbaravatar img
+{
+  float: left;
+  margin-right: 10px;
+}
+
+/***************************************************************Top Bar Ends*************************/
+/***************************************************************Add new box begin*************************/
+#addnewmenuholder
+,#addnewcollectionholder
+,#addnewspaceholder
+{
+    overflow:hidden;
+    text-align:left;
+}
+.addnewactionholder
+{
+    float:left;
+    width:33%;
+}
+.addnewactionholder a
+{
+    height:3.3333em;
+    overflow:hidden;
+    display:block;
+    padding:.5em;
+}
+.AddToSpaceHolder
+{
+    margin:.8333em 0;
+    text-align:left;
+}
+#comcynapseaddernotallowed
+,#comcynapsenotallowed
+{
+    color:&dtml-ciwhite;;
+    background-color:&dtml-ci3co1;;
+    padding:0 1em;
+}
+.addnewtypeicon
+{
+    float:left;
+    margin:1em .5em 0;
+}
+.addnewtypetitle
+{
+	font-weight:bold;
+}
+.addnewtypedescription
+{
+}
+/***************************************************************Add new box end*************************/
+/*********************************************** Images view begin *******************************************/
+.gallerymainholder
+{
+    padding:0 1em;
+}
+.photoAlbumEntry
+{
+    float:left;
+    overflow:hidden;
+    margin:1em;
+    text-align:center;
+    max-width:130px;
+    height:160px;
+    padding:10px;
+}
+.lightboxphotoentry
+{
+    display:block;
+    /*background-color:&dtml-cigray3;;*/
+    /*border:1px solid &dtml-cigray6;;*/
+    height:128px;
+    width:128px;
+}
+.lightboxphotoentry img
+{
+}
+.lightboxphotoentry:hover
+{
+    /*border:1px solid &dtml-ci1co7;;*/
+}
+.photoAlbumEntryTitle
+,.imagesizelinkscontainer
+{
+    white-space:nowrap;
+    overflow:hidden;
+}
+#lightbox, #lightbox-overlay {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	bottom:auto;
+	right:auto;
+
+	z-index:100;
+	width:100%;
+	height:auto;
+
+	text-align:center;
+
+	/* stop stupid conflicts */
+	margin:0px;
+	padding:0px;
+	border:none;
+	outline:none;
+	line-height:0;
+
+	/* general conflict stopper */
+	text-decoration:none;
+	background:none;
+	word-spacing:normal;
+	letter-spacing:normal;
+	float:none;
+	clear:none;
+	display:block;
+}
+
+#lightbox a, #lightbox a:link, #lightbox a:visited, #lightbox a:hover {
+}
+
+#lightbox-overlay {
+	z-index: 90;
+	background-color:#000000;
+	height: 100%;
+	position:fixed;
+}
+#lightbox-overlay-text {
+	text-align: right;
+	margin-right: 20px;
+	margin-top: 20px;
+	color: white;
+	font-size: 12px;
+	cursor: default;
+	line-height:normal;
+}
+#lightbox-overlay-text a, #lightbox-overlay-text a:hover, #lightbox-overlay-text a:visited, #lightbox-overlay-text a:link {
+	color:white;
+}
+#lightbox-overlay-text span {
+	padding-left:5px;
+	padding-right:5px;
+}
+
+#lightbox img, #lightbox a img, #lightbox a { border:none; outline:none; }
+
+#lightbox-imageBox {
+	position:relative;
+	background-color:white;
+	width:400px;
+	height:400px;
+	margin:0 auto;
+	padding:10px;
+}
+
+#lightbox-imageContainer {
+	padding:1px;
+}
+
+#lightbox-loading {
+	position:absolute;
+	top:40%;
+	left:0%;
+	height:25%;
+	width:100%;
+	text-align:center;
+	line-height:0;
+}
+
+#lightbox-nav {
+	position:absolute;
+	top:0;
+	left:0;
+	height:100%;
+	width:100%;
+	z-index:10;
+}
+/* #lightbox-imageBox > #lightbox-nav { left: 0; }
+#lightbox-nav a { outline: none; }*/
+
+
+#lightbox-nav-btnPrev, #lightbox-nav-btnNext {
+	display:block;
+	width:49%;
+	height: 100%;
+	background:transparent url("&dtml-portal_url;/blank.gif") no-repeat; /* Trick IE into showing hover */
+	zoom:1; /* who knows why? */
+
+	padding:0px;
+	margin:0px;
+}
+#lightbox-nav-btnPrev {
+	left:0;
+	right:auto;
+	float:left;
+}
+#lightbox-nav-btnNext {
+	left:auto;
+	right:0;
+	float:right;
+}
+#lightbox-infoBox {
+	background: &dtml-ciwhite; url("&dtml-portal_url;/g-white-s.gif") repeat-x left bottom;
+	margin:0 auto;
+	padding:5px 10px;
+}
+
+#lightbox-infoContainer {
+	padding-left:10px;
+	padding-right:10px;
+	padding-top:5px;
+	padding-bottom:5px;
+}
+#lightbox-infoHeader
+{
+    width:100%;
+    max-height:4em;
+    overflow:hidden;
+    text-align:justify;
+}
+#lightbox-caption {
+	text-align:justify;
+}
+#lightbox-caption-title {
+        font-weight:bold;
+}
+#lightbox-caption-description {
+}
+
+#lightbox-infoFooter {
+	margin-top:3px;
+}
+#lightbox-currentNumber {
+	display:block;
+	width:49%;
+	float:left;
+	text-align:left;
+}
+#lightbox-close {
+	display:block;
+	width:45%;
+	float:right;
+	text-align:right;
+}
+#lightbox-close-button{
+	padding-left:30%;
+}
+#lightbox-close-button:hover {
+}
+
+#lightbox-infoContainer-clear {
+	clear:both;
+	visibility:hidden;
+}
+/*********************************************** Images view end *******************************************/
+/*********************************************** Calendars view begin ***************************************/
+.p4acalendar
+{
+    padding:0 1em 2.5em;
+}
+.p4acalendar .filter {
+}
+.p4acalendar .month H1 {
+    font-size: 1em;
+    margin-bottom: 1em;
+}
+.p4acalendar .week .day DL {
+    margin: 0;
+    padding: 0.2em;
+}
+
+.p4acalendar .week .day DT A {
+    display: block;
+    color: #666;
+}
+
+.p4acalendar .week .day.outside-month DL,
+.p4acalendar .week .day.outside-month DL A {
+    color: #ccc;
+}
+
+/* for some reason IE doesn't like the separaters here */
+.p4acalendar .standard-week-days .visualClear,
+.p4acalendar .week .visualClear {
+    display: none;
+}
+.p4acalendar .standard-week-days .day {
+    text-align: center;
+}
+
+.p4acalendar .week .day DL DT,
+.p4acalendar .week .day DL DD {
+    padding: 0;
+    margin: 0;
+}
+
+.p4acalendar .week .day DL DD {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+.p4acalendar .week .day DD {
+    color: &dtml-cigray9;;
+}
+
+.p4acalendar .day {
+    float: left;
+    width: 14%;
+    overflow: hidden;
+    background: &dtml-cigray3; url("&dtml-portal_url;/g-gray1-3-xl.gif") repeat-x left top;
+}
+.p4acalendar .day.outside-month
+,.p4acalendar .weekdayname
+{
+    background:&dtml-ciwhite;
+}
+.p4acalendar .day.hover
+,.p4acalendar .day.today.hover
+{
+ background: &dtml-ci1co2; url("&dtml-portal_url;/g-blue1-l.gif") repeat-x left top;
+}
+.p4acalendar .week .day.hover dd
+,.p4acalendar .week .day.hover dt
+,.p4acalendar .week .day.today.hover dd
+,.p4acalendar .week .day.today.hover dt
+{
+ color:&dtml-ci1co4;;
+}
+.p4acalendar .day DD.extra-events
+{
+    text-align:right;
+}
+
+.p4acalendar .day DD.extra-events A {
+    display: block;
+    border: 0;
+}
+
+.p4acalendar .day.today {
+ background: &dtml-ci4co3; url("&dtml-portal_url;/g-color4-1-2-l.gif") repeat-x left top;
+}
+
+.p4acalendar .week .day dl dt
+{
+
+}
+.p4acalendar .standard-week-days .day {
+    font-size: 0.8em;
+}
+
+.p4acalendar .week .day {
+    height: 7em;
+}
+
+.p4acalendar .event-item {
+    height: 1.4em;
+}
+
+.p4acalendar .event-title {
+    font-size: 1em;
+}
+.day dl dd {
+    _margin-bottom: 20px;
+}
+.p4acalendar .week .day {
+    border-left: 1px #777 solid;
+    border-top: 1px #777 solid;
+}
+
+.p4acalendar .last-week .day {
+    border-bottom: 1px #777 solid;
+    border-left: 0;
+    border-right: 1px #777 solid;
+}
+
+.p4acalendar .last-week .day.first-week-day {
+    border-left: 1px #777 solid;
+}
+
+.p4acalendar .week .day.last-week-day {
+    border-right: 1px #777 solid;
+}
+
+.p4acalendar .first-week .day.outside-month {
+    border-left: 1px #ccc solid;
+    border-top: 1px #ccc solid;
+}
+
+.p4acalendar .last-week .day.outside-month,
+.p4acalendar .last-week .day.outside-month.last-week-day {
+    border-bottom: 1px #ccc solid;
+    border-right: 1px #ccc solid;
+}
+
+/* Event types */
+
+.p4acalendar .appointment {
+    background: #cde2a7;
+}
+
+.p4acalendar .convention {
+    background: #f4f4be;
+}
+
+.p4acalendar .meeting {
+    background: #ffaaaa;
+}
+
+.p4acalendar .socialevent {
+    background: #dee7ec;
+}
+
+.p4acalendar .work {
+    background: #CCC;
+}
+
+.p4acalendar .meetingcall {
+    background: #aaffaa;
+}
+
+.p4acalendar .pressevent {
+    background: #aaaaff;
+}
+
+.p4acalendar .legactivity {
+    background: #f0bbff;
+}
+
+.p4acalendar .fieldevent {
+    background: #ffce7b;
+}
+
+.p4acalendar .deadline {
+    background: #F77;
+}
+#calendarmonthnavigator
+,.calendartoplinks
+{
+    /*clear:both;*/
+    text-align:center;
+}
+/* end grid */
+
+/* eventlist */
+.p4acalendar .eventlist .eventlist_month {
+    padding: 5px 0 5px 0;
+}
+
+.p4acalendar .eventlist H1 {
+}
+
+.p4acalendar .eventlist H2 {
+	font-size: 1.25em;
+}
+
+.p4acalendar .eventlist .event {
+	float: left;
+	width: 100%;
+	padding-bottom: 5px;
+}
+
+.p4acalendar .eventlist .event .event_details {
+    float: left;
+    clear: right;
+    text-align: right;
+	font-weight: bold;
+    width: 15%;
+}
+
+.p4acalendar .eventlist .event .event_details ABBR {
+    color:&dtml-cigray8;;
+    border: none;
+}
+
+.p4acalendar .eventlist .event .event_details ABBR.dtend {
+	display: none;
+}
+
+.p4acalendar .event .location, .p4acalendar .day-event-popup .event .description {
+	font-size: 0.8em;
+}
+
+.p4acalendar .event .location {
+	color: #999;
+}
+
+.p4acalendar .eventlist .event .location {
+}
+
+.p4acalendar .eventlist .event .event_body {
+    float: right;
+    width: 83%;
+    padding-bottom: 5px;
+    border-bottom: 1px solid &dtml-cigray2;;
+}
+
+.p4acalendar .eventlist .event .event_title {
+	display: block;
+}
+
+.p4acalendar .eventlist .event .description {
+}
+
+.p4acalendar .eventlist A {
+    font-weight: bold;
+}
+#calendarmonthnavigator
+{
+    margin-top:.5556em;
+}
+.infotipeventlist
+{
+    padding:1em;
+    margin:0;
+}
+.infotipeventlist dl
+,.infotipeventlist dl dd
+{
+    margin:0;
+}
+.infotipeventlist dl dd.eventtimespan
+{
+    font-weight:bold;
+}
+/* end eventlist */
+
+/*********************************************** Calendar view end ***************************************/
+/*********************************************** Wikis View begin ***************************************/
+#setnewdefaultwikipageholder
+{
+    background:&dtml-ci4co1;;
+    margin:1em;
+    padding:1.6667em 1em;
+    border:1px solid &dtml-ci4co2;;
+
+}
+#defaultwikipagefullholder
+{
+    margin:0 1em 1.6667em;
+    padding-top:1em;
+}
+#setdefaultwikipageholder
+{
+    text-align:right;
+}
+.defaultwikipagelinksrow
+{
+    text-align:right;
+    margin:1em 1em 0;
+}
+.link-wiki-add
+{
+    color:red !important;
+}
+dl#comcynapsecyninlisting
+,dl#comcynapsecyninlisting dd
+{
+    margin:0;
+    text-align:left;
+    padding:1em;
+}
+#comcynapsecyninlisting .dialoglistingrowholder
+{
+    overflow:hidden;
+    margin-bottom:1.6667em;
+}
+#comcynapsecyninlisting .summary
+{
+    float:left;
+}
+#comcynapsecyninlisting .setwikipageholder
+{
+    float:right;
+}
+.documentByLine
+{
+    overflow:hidden;
+}
+#comcynapsecyninlisting .documentByLine
+{
+    max-height:20px;
+}
+#comcynapsecyninlisting .documentByLine.expanded
+{
+    max-height:none;
+}
+/*********************************************** Wikis View end ***************************************/
+/*********************************************** Files View begin ***************************************/
+.listingfiledescrow a img
+{
+    vertical-align:text-bottom;
+}
+.listingfiledescrow a
+{
+        white-space:nowrap;
+}
+/*********************************************** Files View end ***************************************/
+/*********************************************** Blog View begin ***************************************/
+.tileItem.contenttype-blog-entry
+{
+        overflow:hidden;
+}
+.blogavatarblock
+{
+}
+.blogavatarblock a
+{
+    border:1px solid &dtml-cigray6;;
+    float:left;
+    text-align:center;
+    margin:0 1em 1.6667em;
+    width:5.8333em;
+    background: &dtml-ciwhite; url("&dtml-portal_url;/g-white-s.gif") repeat-x left bottom;
+    display:block;
+}
+.blogavatarblock img
+{
+    margin:.75em .75em 0;
+    border:1px solid &dtml-cigray6;;
+}
+.blogfullpost
+{
+    margin:0 1em 0 7.8333em;
+}
+.blogavatarday
+{
+    float:left;
+    font-weight:bold;
+    padding:0 0 0 .2083em;
+    width:1.25em;
+}
+.blogavatarmonth
+,.blogavataryear
+{
+    font-weight:bold;
+    float:right;
+    margin:0 .5em 0 0;
+    width:3em;
+    text-align:right;
+    line-height:1em;
+}
+
+.blogavatarmonth
+{
+    border-bottom:1px solid &dtml-cigray6;;
+    text-transform:uppercase;
+    padding:.8em 0 .2em 0;
+}
+.blogavataryear
+{
+    clear:right;
+    padding:.2em 0 .8em 0;
+}
+.blogavatartime
+{
+    clear:both;
+    text-align:center;
+    text-transform:uppercase;
+}
+.blogposttitle
+{
+    border-bottom:1px solid &dtml-cigray4;;
+}
+.blogpostauthor
+{
+    text-align:right;
+}
+/*********************************************** Blog View end ***************************************/
+/*********************************************** Statuslog View begin ***************************************/
+.statusavatarblock
+{
+    float:right;
+    text-align:center;
+    margin:0 1em 0 0;
+    background: &dtml-ciwhite; url("&dtml-portal_url;/g-white-s.gif") repeat-x left bottom;
+}
+.liststatusavatar
+{
+    float:right;
+}
+.statusavatarblock a
+{
+    display:block;
+}
+.statusavatarblock img
+{
+    border:1px solid &dtml-cigray6;;
+}
+.statusavatarblock a:hover img
+{
+    border-color:&dtml-ci1co7;;
+}
+.buttonrowcreateddate
+{
+    font-weight:bold;
+    color:&dtml-cigray7;;
+    text-transform:uppercase;
+}
+.statuslogviewtitle
+{
+    font-weight:normal;
+    margin:0 0 0 0;
+}
+.statusitemdetailrow
+{
+    clear:both;
+}
+.statusviewcreator
+{
+    font-weight:bold;
+}
+.statusitembuttonrow
+{
+    margin-top:1em;
+}
+/*********************************************** Statuslog View end ***************************************/
+/*********************************************** Folder Contents View begin ***************************************/
+.hiddenStructure
+{
+	-moz-background-clip:border;
+	-moz-background-inline-policy:continuous;
+	-moz-background-origin:padding;
+	background:transparent none repeat scroll 0 0;
+	border:medium none;
+	display:block;
+	height:1px;
+	margin:-1px 0 0 -1px;
+	overflow:hidden;
+	padding:0;
+	width:1px;
+}
+#listing-table
+{
+    width:100%;
+}
+th
+{
+    background-color:&dtml-ciwhite;;
+    color:&dtml-cigray8;;
+    border:1px solid &dtml-cigray6;;
+    border-style:none none solid;
+}
+.paging_bar.foldercontents
+{
+    margin:0;
+}
+.foldercontentsbuttonsrow
+{
+    text-align:left;
+    margin-bottom:1.6667em;
+}
+/*********************************************** Folder Contents View end ***************************************/
+/************************************************ Float Related Begin **************************************/
+.cfloatleft
+,._tag_suggestion
+,#topmenuholder
+,#charlenholder
+,.mainsearchboxinputtext
+,#topbarmenuholder
+,#topbarnavigationholder
+,#topbarhomelinkholder
+,a.card
+,.filterpaneltypeselector
+,.listitemactionbutton
+,.listwidebuttonsrow a
+,.listitemshowdetaillink
+,.contentViews li
+,#livesearchLegend
+,.ratingslabel
+,span#breadcrumbs-you-are-here
+,.statusavatardateblock
+,#appmenulabel
+,.spacemembersavatars .card
+,.customcolumn3
+{
+ float:left;
+}
+.cfloatright
+,#typeindicator
+,.listitemlastchangeavatar
+,.searchresultitem .listtypelabel
+,.actionmenuholder
+{
+ float:right;
+}
+.valignmiddle
+,.btn-white-img a img
+,.clickmenuicon
+,ul.innerBox li a img
+,.LSRow img
+,.filterpaneltagcount
+,#kss-spinner img
+,.rating_display img
+{
+ vertical-align:middle;
+}
+.valigntop
+,#typeindicator img
+{
+ vertical-align:top;
+}
+.valigntextbottom
+,.apptabicon
+,#appmenulabel img
+{
+    vertical-align:text-bottom;
+}
+.topmenuvalign
+{
+ margin-top:10px;
+}
+.floatbox2
+,.tagMatches
+,.divrowseparator
+,#statusbuttontable
+,#portal-footer
+,.listwidebuttonsrow
+,.listitemrowcontainer
+,.listitembuttonrowholder
+,#typeselectionblock
+,#statsportlet-fragment-1
+,#statsportlet-fragment-2
+,#statsportlet-fragment-3
+,#titlebarnavigationholder
+,#topratedandmostvisitedportlet-fragment-1
+,#topratedandmostvisitedportlet-fragment-2
+,.ratingscontainer
+,.commenttopcontainer
+,.cluetipavatarrow
+,.cluetipbottompart
+,.portalMessage
+,.gallerymainholder
+,.photoAlbumEntry
+,.p4acalendar
+,#siteupdatesportlet-fragment-1
+,#siteupdatesportlet-fragment-2
+,#siteupdatesportlet-fragment-3
+,#siteupdatesportlet-fragment-4
+,#siteupdatesportlet-fragment-5
+,#siteupdatesportlet-fragment-6
+,#siteupdatesportlet-fragment-7
+,#siteupdatesportlet-fragment-8
+,#siteupdatesportlet-fragment-9
+,#siteupdatesportlet-fragment-10
+,#siteupdatesportlet-fragment-11
+,.statusloglistitem
+,.spacemembersavatars
+,.customdefaultappview
+,.customallowedappview
+{
+ overflow:hidden;
+}
+/************************************************ Float Related END **************************************/
+/************************************************ BUTTONS Begin **************************************/
+.smallgraybutton
+{
+    background: &dtml-cigray8; url("&dtml-portal_url;/g-gray5-8-s.gif") repeat-x left top;
+    border: 1px solid &dtml-cigray9;;
+    color:&dtml-ciwhite;;
+}
+.btn-white-img
+{
+    background: &dtml-ciwhite; url("&dtml-portal_url;/g-white-s.gif") repeat-x left bottom;
+    border: 1px solid &dtml-cigray6;;
+    margin: 7px 3px;
+    padding:4px 6px;
+    height:16px;
+}
+.btn-gray
+{
+    background: &dtml-cigray8; url("&dtml-portal_url;/g-gray5-8-s.gif") repeat-x left top;
+    border: 1px solid &dtml-cigray9;;
+    margin: 7px 3px;
+    padding:0px 5px 2px;
+    line-height:12px;
+    color:&dtml-ciwhite;;
+    height:26px;
+}
+.menu-white-img
+,.kupu-tb
+{
+    background: &dtml-ciwhite; url("&dtml-portal_url;/g-white-s.gif") repeat-x left bottom !important;
+    border: 1px solid &dtml-cigray6; !important;
+    color:&dtml-cigray8; !important;
+}
+.menu-white-img
+{
+    margin: 7px 3px;
+    padding:4px 6px;
+    height:16px;
+}
+.menu-gray-img
+,.contentViews li a
+{
+    background: &dtml-cigray8; url("&dtml-portal_url;/g-gray5-8-s.gif") repeat-x left top;
+    border: 1px solid &dtml-cigray10;;
+    color:&dtml-ciwhite;;
+}
+a.whitebutton
+{
+    background: &dtml-ciwhite; url("&dtml-portal_url;/g-white-s.gif") repeat-x left bottom;
+    border: 1px solid &dtml-cigray6;;
+    color:&dtml-ciwhite;;
+    margin: 7px 3px;
+    padding:4px 1em;
+    height:16px;
+    color:&dtml-cigray8;;
+}
+#comcynapsetagsareatoggle.context
+,a.navtipVertical.listcollapsealllink
+{
+        margin-right:0;
+}
+.paging_bar_currentpage
+,.viewnavigation-current
+{
+    background-color: &dtml-cigray8;;
+    border: 1px solid &dtml-cigray8;;
+    font-weight:bold;
+    color:&dtml-ciwhite;;
+    cursor:default;
+    padding:0.0833em 0.65em;
+}
+.inputboxes
+,.mainsearchboxinputtext
+,#statusinputtextarea
+{
+    background: &dtml-ciwhite; url("&dtml-portal_url;/g-white-s-rev.gif") repeat-x left top;
+}
+.commentbodytaholder
+{
+    margin-left:3.8333em;
+}
+.commentbodyta
+{
+    width:96%;
+    min-height:1em;
+}
+#discussiontextarea
+,#comcynapsediscussiontag
+,#comcynapsediscussioninputtitle
+,.commentbodyta
+,#statusinputtextarea
+,#searchGadget
+{
+    border-color:&dtml-cigray5;;
+    background:&dtml-ciwhite;;
+}
+#discussiontextarea:focus
+,#comcynapsediscussiontag:focus
+,#comcynapsediscussioninputtitle:focus
+,.commentbodyta:focus
+,#statusinputtextarea:focus
+,#searchGadget:focus
+{
+    border-color:&dtml-cigray6;;
+    background: &dtml-ciwhite; url("&dtml-portal_url;/g-white-s-rev.gif") repeat-x left top;
+}
+.inputboxes
+,.mainsearchboxinputtext
+,input[type=text]
+,input[type=password]
+,.editcontentholder textarea
+,textarea
+{
+    padding:.25em .5em;
+    border:1px solid &dtml-cigray6;;
+    color:&dtml-cigray12;;
+}
+.mainsearchboxinputtext
+{
+    border-width: 1px;
+    border-color: &dtml-cigray5;;
+    border-style: solid none solid solid;
+    margin: 7px 0 7px 10px;
+    padding:4px;
+    height:16px;
+    width:145px;
+}
+.mainsearchboxbutton
+{
+    background: &dtml-ciwhite; url("&dtml-portal_url;/g-white-s.gif") repeat-x left bottom;
+    border: 1px solid &dtml-cigray5;;
+    margin: 7px 0px;
+    padding:4px;
+}
+input.subject
+,input.message
+,textarea.message
+{
+        width:98%;
+        max-width:98%;
+}
+/************************************************ BUTTONS END **************************************/
+/************************************************ PORTLETS BEGIN **************************************/
+.portletWrapper
+,#comcynapsecyninmyareablock
+{
+ background:&dtml-cigray2;;
+ margin-bottom:.8333em;
+}
+dl.portlet
+{
+ margin:0;
+}
+dt.portletHeader
+{
+ background-color: &dtml-cigray6;;
+ text-align:center;
+ font-weight:normal;
+ line-height:1.6667em;
+ padding:0 5px;
+ color:&dtml-cigray4;;
+}
+dd.portletItem
+{
+ margin:0;
+}
+
+/* My area stuff - this is actually a viewlet, right now */
+#comcynapsecyninmyareablock
+{
+    clear:both;
+    margin-right:.8333em;
+}
+.myareaavatar
+{
+        float:left;
+        display:block;
+}
+#myareaavatarimg
+{
+ /*border: 1px solid &dtml-cigray6;;*/
+}
+#myareafullname
+{
+ margin: 5px 0 5px 5px;
+ text-align:center;
+}
+#myareablocktoolbar
+{
+}
+.myareabuttonrow
+{
+	overflow: hidden;
+	padding: 1em 1em 0;
+}
+.topbarmybutton
+{
+	display:block;
+	padding: 5px;
+	font-weight: bold;
+}
+
+.topbarmybutton:hover
+{
+    background: &dtml-ci1co2; url("&dtml-portal_url;/g-blue1-s.gif") repeat-x left top;
+}
+
+.topbarmybuttonholder
+{
+	float:left;
+	width:50%;	
+}
+
+.myareanotloggedin
+{
+	padding: 0 1em;
+	text-align: right;
+}
+.commentavatarlink
+{
+    float:left;
+    margin-right:.5em;
+}
+.commentavatarlink.statusavatarlink
+{
+    margin-right:1em;
+}
+.avatarlink img
+,#myareaavatarimg
+{
+    max-height:40px;
+    max-width:40px;
+}
+.divrowseparator
+{
+    padding:.8333em;
+}
+#currentmessagediv
+{
+ line-height:1.6667em;
+ overflow:auto;
+}
+a#comcynapsecynincurrentstatusmessage
+{
+ color:&dtml-cigray9;;
+}
+#currentstatusholder
+{
+ padding:0 .8333em;
+}
+#comcynapsecyninstatusmessageinputform
+{
+    text-align:center;
+}
+#statusinputholder
+{
+    padding:.8333em 0;
+}
+#statusinputtextarea
+{
+ width:180px;
+ max-width:180px;
+ padding:5px;
+ height:20px;
+}
+#statusbuttontable
+{
+ text-align:right;
+ padding:.8333em .8333em 0;
+}
+#charleninfo
+{
+}
+.statusheaderlabel img
+{
+    vertical-align:text-top;
+}
+.statusloglistitem
+{
+    padding:1em;
+    border-bottom:1px solid &dtml-cigray4;;
+}
+/* Home page overrides begin*/
+.homepagefullcontainer .portletWrapper
+,.homepagefullcontainer #footer
+{
+        background:&dtml-ciwhite;;
+        border:none;
+}
+.homepagefullcontainer .portletWrapper
+{
+        margin-bottom:0;
+}
+.homepagefullcontainer dl
+{
+        margin:0;
+}
+#homeacrossportletholder
+{
+        margin:1em;
+}
+.homeleftcolumn
+,.homerightcolumn
+{
+        padding:0 1em;
+        margin:1em 0;
+}
+.homeleftcolumn
+{
+        border-right:1px dotted &dtml-cigray4;;
+}
+#activityportlet
+,#siteupdatesportlet
+{
+        overflow:hidden;
+}
+.piechart.contenttypesdistribution
+,.bargraph.contributors
+,.bargraph.commenters
+{
+        height:400px;
+}
+#usersportlet .card
+{
+        margin:1px;
+}
+#usersportlet .card img
+,.spacemembersavatars img
+{
+        width:50px;
+        height:50px;
+}
+.spacemembersavatars img
+{
+        float:left;
+}
+.spacemembersavatars .card
+{
+        overflow:hidden;
+        width:50px;
+        height:70px;
+        margin:1px;
+        text-align:center;
+}
+#usersportlet
+{
+        overflow:hidden;
+}
+.sitehomenocontent
+{
+    background:&dtml-ci4co1;;
+    margin:1em;
+    padding:1em;
+    overflow:hidden;
+}
+
+.sitehomenocontent .addnewbuttonholder
+{
+    margin: 0 1em;
+    float:right;
+}
+/* Home page overrides end */
+/*Navigation portlet begin*/
+.portletNavigationTree
+,.navTreeHome
+{
+        margin:0;
+}
+.navTreeHome
+{
+        padding:0.4167em 0.8333em;
+}
+ul.navTree
+{
+        margin:0;
+}
+.portletNavigationTree div
+{
+        padding-right:.5em;
+        padding-left:5.5em;
+}
+.portletNavigationTree div.navaddnewbody
+{
+    padding:0;
+}
+.navaddnewheader
+{
+    font-weight:bold;
+}
+div.navTreeLevel0
+{
+}
+div.navTreeLevel1
+{
+	padding-left:.5em;
+}
+div.navTreeLevel2
+{
+	padding-left:1em;
+}
+div.navTreeLevel3
+{
+	padding-left:1.5em;
+}
+div.navTreeLevel4
+{
+	padding-left:2em;
+}
+div.navTreeLevel5
+{
+	padding-left:2.5em;
+}
+div.navTreeLevel6
+{
+	padding-left:3em;
+}
+div.navTreeLevel7
+{
+	padding-left:3.5em;
+}
+div.navTreeLevel8
+{
+	padding-left:4em;
+}
+div.navTreeLevel9
+{
+	padding-left:4.5em;
+}
+div.navTreeLevel10
+{
+	padding-left:5em;
+}
+.portletNavigationTree li
+{
+        margin-left:0;
+}
+.portletNavigationTree a
+,.navTreeHome a
+{
+        color:&dtml-cigray9;;
+}
+.portletNavigationTree img
+,#myareablocktoolbar img
+,.navTreeHome img
+,.smallwhitebutton img
+{
+        vertical-align:text-bottom;
+}
+.portletNavigationTree ul
+{
+        list-style:none;
+        list-style-position:inside;
+}
+li.navTreeCurrentNode ul
+{
+        margin-left:1em;
+        background-color:&dtml-cigray3;;
+        overflow:hidden;
+}
+.portletNavigationTree div
+{
+        padding-top:.4167em;
+        padding-bottom:.4167em;
+}
+div.navTreeCurrentNode
+,.portletNavigationTree div.navTreeCurrentNode.hover
+,.navTreeHome.navTreeCurrentNode
+,.navTreeHome.navTreeCurrentNode.hover
+{
+        background:&dtml-ciwhite; url("&dtml-portal_url;/arrow-gray.png") no-repeat right center;
+        margin-right:-.9167em;
+        padding-top:.75em;
+        padding-right:1em;
+        padding-bottom:.75em;
+        border-width:1px;
+        border-style:solid none solid solid;
+        border-color:&dtml-cigray9;;
+        margin-bottom:0;
+        margin-top:0;
+	zoom:100%;
+}
+div.navTreeCurrentNode.lsboxcurrentnode
+{
+        margin-right:-1px;
+}
+.portletNavigationTree div.navaddnewlinkholder
+{
+    background:&dtml-ci4co1;;
+}
+.navTreeMindmapHolder
+{
+  overflow:hidden;
+  padding:0 .8333em .4167em;
+}
+.navTreeMindmapHolder .smallwhitebutton
+{
+  float:left;
+}
+/*Navigation portlet end*/
+/*Recent items portlet begin */
+.recentupdateitemtitlerow img
+{
+        vertical-align:text-bottom;
+}
+.recentupdateitemauthorrow
+{
+        text-align:right;
+        line-height:1.9em;
+}
+.recentupdateitemauthorrow img
+{
+        vertical-align:text-bottom;
+}
+.recentupdateitemsblock
+{
+        overflow:hidden;
+}
+.recentupdateitem
+{
+        border-bottom:1px solid &dtml-cigray1;;
+}
+.morelinkrow
+{
+        margin:.4167em 0;
+}
+/*Recent items portlet end */
+#sitestats
+{
+        overflow:hidden;
+        background:&dtml-cigray1;;
+        padding:.8333em 0;
+}
+.statscount
+{
+        float:left;
+        margin:0 1.6667em;
+        font-weight:bold;
+}
+ul.help_menu
+{
+        margin:0;
+}
+ul.help_menu.clickMenu li.main
+{
+    height:19px;
+}
+.helpblockcontainer
+{
+        padding:0.8333em;
+        /*height:7.6667em;*/
+}
+.helpblockcontainer .cmDiv
+,.link-supportedbrowsers
+{
+        float:left;
+}
+.supportedbrowserscontainer
+{
+}
+.supportedbrowserscontainer ul
+{
+    margin:0;
+    padding:0;
+}
+.notsupportedfullcontainer
+{
+    width:750px;
+}
+.browsernotsupportedheadline
+{
+    color:&dtml-ci3co1;;
+}
+.browsernotsupportedtext
+{}
+.recommdedbrowserbuttonholder
+{
+    overflow:hidden;
+    margin-top:.8333em;
+}
+.recommdedbrowserbutton
+{
+    width:50%;
+    float:left;
+    text-align:center;
+}
+.supportedbrowserbuttonholder
+{
+    margin-top:.8333em;
+    overflow:hidden;
+}
+.supportedbrowserbutton
+{
+    width:33.33%;
+    float:left;
+    text-align:center;
+}
+.supportedbrowserbutton 
+{
+    white-space:nowrap;
+}
+.recommdedbrowserbutton a img
+,.supportedbrowserbutton a img
+{
+    border:none;    
+}
+.popupdialogheading
+{
+    margin-top:20px;
+}
+.helpblockcontainer .smallwhitebutton
+{
+        margin-bottom:.4167em;
+}
+.helpblockrow
+{
+        clear:both;
+        overflow:hidden;
+        margin-bottom:.4167em !important;
+}
+.integrationbutton a
+{
+        color:&dtml-cigray8;;
+        display:block;
+}
+.integrationbutton a img
+{
+        vertical-align:middle;
+}
+.helpblockrow.helpmenurow
+{
+        overflow:visible;
+        height:1.6667em;
+}
+/************************************************ PORTLETS END **************************************/
+/************************************************ CONTENT AREA BEGIN **************************************/
+#portal-titlebar
+{
+ background: &dtml-cigray9; url("&dtml-portal_url;/g-gray7-9-l.gif") repeat-x left top;
+ border-bottom-style:none;2
+ padding:.4167em 0 0 0;
+ min-height:5em;
+}
+#titlebar-row1
+{
+    min-height:30px;
+    padding-bottom:.3333em;
+}
+#titlebar-row2
+{
+    padding-left:.5em;
+}
+.contentnopadding
+{
+ background: &dtml-ciwhite; url("&dtml-portal_url;/g-white-l.gif") repeat-x left bottom;
+ border:1px solid &dtml-cigray9;;
+ margin-bottom:10px;
+ box-shadow: 0 1px 5px #808080;
+ -webkit-box-shadow: 0 1px 5px #808080;
+ -moz-box-shadow: 0 1px 5px #808080;
+}
+
+.homepagefullcontainer
+{
+	
+}
+
+#portal-content-block
+{
+        padding:1em;
+}
+h1#maintitle
+{
+ font-weight:normal;
+ color:&dtml-ciwhite;;
+ font-size:1.6667em;
+ line-height:1.5em;
+ margin:0 1em;
+ text-align:center;
+ text-shadow: 0 1px 2px #000000;
+}
+#currentperspective
+{
+    float:left;
+    max-height:3.33333em;
+    overflow:hidden;
+}
+.static_menu
+{
+    float:left;
+    margin:0;
+    padding:0;
+    list-style:none;
+}
+.static_menu li
+{
+    float:left;
+}
+.staticmenu_item.selected
+{
+}
+#typeindicator
+{
+ background: url("&dtml-portal_url;/t-30.png") repeat;
+ font-size:1.17em;
+ line-height:1.14em;
+ margin:5px;
+ padding:4px 5px;
+ color:&dtml-ciwhite;;
+}
+/************************************************ CONTENT AREA END **************************************/
+/************************************************ FILTER PANEL BEGIN **************************************/
+#filterpanelholder
+{
+        margin:0 .8333em .8333em .8333em ;
+        overflow:hidden;
+}
+.filterpanelboxinner
+{
+    background-color:&dtml-cigray2;;
+    margin:0;
+    padding:1em;
+}
+#filterpaneltoggleholder
+{
+    overflow:hidden;
+}
+#filterpaneltoggleholder a
+{
+        float:right;
+}
+.filtercontent
+{
+        text-align:left;
+}
+.filterpanelstatustext
+{
+	font-weight: bold;
+}
+#filterpanellabel
+{
+        clear:both;
+        padding:.8333em 0;
+}
+.filterpanelbox
+{
+}
+.filterpanelfloated
+{
+}
+.filterpanelacross
+{
+        clear:both;
+}
+.filterpanelheader
+{
+    padding:10px 0 0 0;
+}
+.filterpanelheaderlabel
+{
+    background-color:&dtml-cigray3;;
+    color:&dtml-cigray8;;
+    padding:0 0 0 10px;
+    margin:0 0 10px;
+    line-height:1.6667em;
+    text-align:center;
+}
+.filterpaneltagsholder
+{
+        text-align:justify;
+        /*max-height:10em;*/
+        overflow:auto;
+}
+#tagsportlet-tagcloud .filterpaneltagsholder
+{
+        max-height:100%;
+        overflow:hidden;
+}
+.filterpaneltag
+,.listtag
+,.portlettag
+{
+ color:&dtml-cigray7;;
+ padding: 1px 8px;
+ margin:0 2px;
+ line-height:1.4em;
+}
+.listtag
+{
+    color:&dtml-ci1co3;;
+}
+a.listtag:active,a.listtag:visited
+{
+    color:&dtml-cigray7;;
+}
+.filterpaneltag:hover
+,a.listtag:hover
+,.portlettag:hover
+{
+ color:&dtml-ci1co4;;
+ background-color:&dtml-ci1co1;;
+}
+.filterpaneltagselected,.filterpaneltagselected:hover
+{
+    background-color: &dtml-cigray8;;
+    color:white !important;
+}
+.filterpaneltagcount
+{
+color:&dtml-ci2co6;;
+font-size:9px;
+padding-left:2px;
+}
+.filterpaneltagselected .filterpaneltagcount
+{
+ color: &dtml-cigraye6;;
+}
+.filterpaneltag:hover .filterpaneltagcount
+,.portlettag:hover .filterpaneltagcount
+{
+ color: ci2co6;
+}
+.tagcloudsize0{
+    font-size: 1em;
+}
+.tagcloudsize1{
+    color:&dtml-cigray7;;
+}
+.tagcloudsize2{
+    color:&dtml-cigray8;;
+}
+.tagcloudsize3{
+    color:&dtml-cigray9;;
+}
+.tagcloudsize4{
+    color:&dtml-cigray10;;
+}
+.tagcloudsize5{
+    color:&dtml-cigray11;;
+}
+#typetoggleholder
+{
+    clear:both;
+    padding:7px 0;
+    text-align:right;
+}
+.filterpaneltypeselector
+{
+    padding:0 10px;
+    line-height:1.6667em;
+    height:20px;
+}
+.filterpanelapplybuttons
+{
+    text-align:right;
+    padding:10px 1em;
+    clear:both;
+}
+._tag_suggestion
+{
+    color:&dtml-ciwhite;;
+    background-color:&dtml-ci1co4;;
+    line-height:1.6667em;
+    padding:1px 5px;
+    margin:9px 5px;
+}
+#filterpanelModifiers
+{
+        width:270px;
+}
+#rangeDate
+{
+    width:25em;
+}
+/************************************************ FILTER PANEL END **************************************/
+.maincontentarea
+{
+    overflow:hidden;
+    width:100%;
+}
+.maincontentarea a:hover
+,.normallink:hover
+{
+    background:&dtml-ci1co1;;
+}
+/************************************************ ALL UPDATES BEGIN **************************************/
+.listitemspecificdetail
+{
+    text-align:center;
+}
+.listitemspecificdetail.weblink
+{
+    max-height:5em;
+    overflow:auto;
+}
+.listitemcommondetailrow
+{
+	border-bottom:1px solid &dtml-cigray1;;
+	padding:0.4167em 0 0.3333em;
+}
+.itemtypeicon
+{
+    float:left;
+    margin:2px 2px 2px 0;
+}
+.listitemtitlerow
+{
+}
+.listitemtitleareaholder
+{
+    padding-right:1em;
+    border-right:1px dotted &dtml-cigray4;;
+    overflow:hidden;
+}
+.listitemtitleareaholder h2 a
+,.searchresultitem h2 a
+{
+        color:&dtml-ci1co3;;
+}
+.listitemtitleareaholder h2 a:hover
+,.searchresultitem h2 a:hover
+{
+        color:&dtml-ci1co4;;
+}
+.lastchangeblockareaholder
+{
+    padding-left:1em;
+}
+.listitemdetailleftblockholder
+,.listitemdetailrightblockholder
+{
+    padding:0 1em;
+}
+.userprofile .profilebelow.listitemdetailleftblockholder
+{
+        padding-left:0;
+}
+.userprofile .listitemdetailrightblockholder
+{
+        padding-right:0;
+}
+.userprofile dl
+{
+        margin:0;
+}
+.listitemdetailrightblockholder
+{
+    border-left:1px dotted &dtml-cigray4;;
+}
+#singleviewdescriptionarea
+,.editformfieldset
+,.photoAlbumEntry
+,.infobox
+,.usersearchform
+{
+    background: &dtml-cigray1;; /* url("&dtml-portal_url;/g-gray1-3-s.gif") repeat-x left bottom; */
+    /*border-width: 1px;
+    border-style: solid;
+    border-color:&dtml-cigray6;; */
+}
+.usersearchform
+{
+        overflow:hidden;
+        padding:1em;
+        display:none;
+}
+
+.editformfieldset
+{
+    padding:.5em 1em;
+    border-style: none;
+    overflow: hidden;
+}
+.descriptiontoggleholder
+{
+        overflow:hidden;
+}
+.descriptiontoggle
+{
+        cursor:pointer;
+}
+.descriptiontoggle img
+{
+        vertical-align:middle;
+}
+#singleviewdescriptionarea
+,.infobox
+{
+    padding:10px 0;
+}
+.listitemdetailrow
+,.listitemdiscussrow
+{
+    clear: both;
+}
+.listitemdetailrowholder
+{
+    padding:.8333em 0 0 0;
+}
+label
+,.listitemdetailrowholder label
+,#singleviewdescriptionarea label
+,#relationscontainer label
+{
+    color:&dtml-cigray8;;
+    font-weight: bold;
+    padding-right:0.5em;
+}
+.listtag
+{
+    padding:0 0.5em;
+}
+.listtagselected
+,.listitemcommondetailrow .listtagselected:hover
+{
+    cursor:default;
+    background-color:&dtml-cigray6;;
+    color:&dtml-ciwhite;;
+}
+.listtagselected:hover
+{
+    color:&dtml-ciwhite;;
+}
+.listitemrowcontainer
+{
+    border-bottom: 1px solid &dtml-cigray2;;
+    padding:.8333em .8333em .75em .8333em;
+}
+.lastchangeblocktextitem
+{
+    padding-right:5px;
+    text-align:right;
+    overflow:hidden;
+}
+.listitemlastchangeavatar
+{
+}
+.listitemlastchangeavatar a
+{
+        display:block;
+}
+.listitemlastchangeperformer a,.listitemlastchangeperformer a:visited,.listitemlastchangeperformer a:active
+{
+    font-weight:bold;
+    color:&dtml-cigray9;;
+}
+.listitemlastchangeperformer a:hover
+{
+    color:&dtml-cigray11;;
+}
+.listitemtitleheader
+{
+    margin:0;
+    max-height:20px;
+    overflow:hidden;    
+}
+.listitemtitleheader.statuslogviewtitle
+{
+    max-height:40px;
+}
+.listitemtitleheader.expanded,.listitemtitleheader.statuslogviewtitle.expanded
+{
+    max-height:none;
+}
+.uppercase
+,.workflowstatelabel
+{
+    text-transform:uppercase;
+}
+.listtypelabel
+,.workflowstatelabel
+{
+    background-color:&dtml-cigray1;;
+    padding:0 0.5em;
+    color:&dtml-cigray9;;
+    font-weight:bold;
+}
+.listtypelabel img
+{
+    vertical-align:top;
+    padding:2px;
+}
+.workflowstatelabel
+{
+    color:&dtml-ciwhite;;
+}
+.workflowstatelabel.state-project-private
+{
+    color:&dtml-ci2co6;;
+	background-color:&dtml-ci2co7;;
+}
+.workflowstatelabel.state-published
+{
+    color:&dtml-ci1co3;;
+	background-color:&dtml-ci1co1;;
+}
+.workflowstatelabel.state-private
+{
+	color:&dtml-ci3co1;;
+    background-color:&dtml-ci3co2;;
+}
+.workflowstatelabel.state-published-anonymous
+{
+	color:&dtml-ci4co2;;
+   background-color:&dtml-ci4co1;;
+}
+
+.workflowstatelabel.state-pending
+{
+	color:&dtml-ci5co4;;
+   background-color:&dtml-ci5co1;;
+}
+.listitembuttonrowholder
+{
+    /*clear:both;*/
+    margin-top:1.6667em;
+}
+.blogiteminfopanel .listitembuttonrowholder
+{
+    margin:0;
+}
+.listitemnonajaxbuttons
+{
+    padding-top:.4167em;
+}
+.listitemnonajaxbuttons a
+{
+    float:left;
+}
+.listitemvoteholder
+{
+    background:&dtml-cigray1;;
+    float:left;
+    font-weight:bolder;
+    line-height:1.5em;
+    text-align:center;
+    padding:0 .5em;
+}
+.listitemvoteholder .ratinglabel
+{
+    text-transform:lowercase;
+}
+.blogiteminfopanel
+{
+    margin:0 1em 1.6667em 1em;
+}
+.listwidebuttonsrow
+{
+    margin:0 1em;
+    float:right;
+}
+.listwidebuttonsrow a
+{
+        font-weight:bold !important;
+        font-size: 18px !important; /* 18px */
+        line-height: 18px !important; /* 20px */
+        padding:0 5px !important;
+        margin:0 3px;
+        color:&dtml-cigray6; !important;
+}
+.listwidebuttonsrow a:hover
+{
+        color:&dtml-ciwhite; !important;
+}
+.cancelbutton
+{
+    border:none;
+    background:transparent;
+    cursor:pointer;
+    color:&dtml-ci3co1;;
+    height: 1.8182em; /* 20px */
+    margin:0 0.25em;
+    padding:0 0.75em;
+}
+.cancelbutton:hover
+,a.cancelbutton:hover
+{
+    background-color:&dtml-ci3co1;;
+	color:&dtml-ciwhite;;
+}    
+.linkbutton
+{
+    border:none;
+    background:transparent;
+    cursor:pointer;
+    color:&dtml-cigray9;;
+}
+.linkbutton:hover
+{
+    background: &dtml-ci1co2; url("&dtml-portal_url;/g-blue1-s.gif") repeat-x left top;
+    color:&dtml-ci1co4;;
+}
+.smallwhitebutton
+,.listitemactionbutton
+,.listwidebuttonsrow a
+,.paging_bar span a
+,.kupu-dialog-button
+,.viewnavigation-button
+,.defaultwikipagelinksrow a
+,.usersearchlink
+,.cyninsmallcolophon
+,.descriptiontoggle
+,.integrationbutton
+,a.context
+,input.context
+,#archetypes-fieldname-relatedItems .searchButton
+,.standalone
+,.destructive
+{
+    background: &dtml-ciwhite; url("&dtml-portal_url;/g-white-s.gif") repeat-x left bottom;
+    border: 1px solid &dtml-cigray5;;
+    padding:0 0.75em;
+    margin:0 0.25em;
+    font-size: 0.9167em;
+    line-height: 1.64em;
+    font-weight:normal;
+    color:&dtml-cigray8;;
+}
+.myareabuttonrow .smallwhitebutton
+{
+        padding-right:.3333em;
+        padding-left:.3333em;
+}
+.kupu-dialog-button
+{
+    background: &dtml-ciwhite; url("&dtml-portal_url;/g-white-s.gif") repeat-x left bottom !important;
+    border: 1px solid &dtml-cigray6;;
+    padding:0 0.75em !important;
+}
+input.smallwhitebutton
+,.kupu-dialog-button
+{
+    height:20px;
+}
+.listitemactionbutton,.listitemactionbutton:active,.listitemactionbutton:visited
+,.listwidebuttonsrow a,.listwidebuttonsrow a:active,.listwidebuttonsrow a:visited
+{
+    color:&dtml-cigray8;;
+}
+.listitemactionbutton:hover
+,.listwidebuttonsrow a:hover
+,.paging_bar span a:hover
+,.usersearchlink:hover
+,.descriptiontoggle:hover
+{
+    background-color:&dtml-ci1co2;;
+    color:&dtml-ci1co4;;
+}
+.comcynapseinlinediscusslink
+{
+    font-family:monospace;
+    font-size:20px;
+    float:left;
+    font-weight:bold;
+    line-height:1.55em; /* 31 px */
+    margin: 0 4px 0 0;
+    padding: 0 2px;
+}
+.smallwhitebutton
+,.paging_bar span a
+,.viewnavigation-button
+,.defaultwikipagelinksrow a
+,.cyninsmallcolophon a
+,.integrationbutton
+{
+    padding-bottom:0.1818em;
+    padding-top:0.1818em;
+}
+.listitemshowdetaillink
+{
+    margin-left:0;
+}
+.usersearchlink.opened
+,.descriptiontoggle.opened
+{
+    color:&dtml-cigray1;;
+    background: &dtml-cigray8; url("&dtml-portal_url;/g-gray5-8-s.gif") repeat-x left top;
+    border: 1px solid &dtml-cigray9;;
+    margin-bottom:0;
+    padding-bottom:.5em;
+    border-bottom-style:none;
+}
+.comcynapseinlinediscusslink
+{
+    visibility:hidden;
+}
+.comcynapseinlinediscusslink.hover
+{
+    visibility:visible;
+}
+.paging_bar
+{
+    text-align:center;
+    margin-top:1em;
+}
+/************************************************ ALL UPDATES END **************************************/
+/************************************************ SINGLE ITEM VIEW BEGIN **************************************/
+.linkblocklist
+{
+    margin:0;
+    list-style:none;
+}
+.linkblocklist li
+{
+    margin:0;
+}
+.relateditemlink img
+{
+    vertical-align:text-top;
+}
+#descriptionareaholder
+{
+    padding:1em 1em 0;
+}
+.infobox
+{
+        margin-right:0.8333em;
+}
+.avatarlist
+{
+    padding-right:.5em;
+}
+.maincontentholder
+{
+    margin:0 0 1.6667em 0;
+    padding:0 1px;
+    overflow:visible;
+}
+.maincontentholder img,.maincontentholder tbody
+{
+    overflow:auto; /*Any content inside our item holder which spreads more than it can should automatically get scrollbars. This is better than making the whole content holder scroll because usually the height is also a lot in this case.*/
+}
+.blog-entry.maincontentholder
+{
+    margin:0;
+}
+#filetitleviewwidget
+{
+    text-align:center;
+}
+#filetitleviewwidget a.filelink img
+{
+    vertical-align:middle;
+}
+.filepreviewholder
+{
+    background:&dtml-cigray1;;
+    padding:1em;
+    margin:1em;
+}
+.filepreview
+{
+        overflow:auto;
+        background:&dtml-ciwhite; none repeat scroll 0 0;
+        max-height:30em;
+        padding:1.6667em 1em;
+}
+.filepreviewlabel
+{
+    font-weight:bold;
+}
+#linkcontentholder
+{
+    text-align:center;
+}
+#imagepreviewcontainer a.previewimagelink img
+{
+    padding:1em;
+    background-color:&dtml-cigray1;;
+}
+#imagepreviewcontainer a.previewimagetextlink img
+{
+    vertical-align:text-top;
+}
+#document-toc
+{
+    display:block;
+    background-color:&dtml-cigray1;;
+    padding:1px 1em;
+    margin-bottom:1.6667em;
+}
+.contentheaderlabel
+{
+    margin:1.6667em 0;
+    border-top:1px solid &dtml-cigray4;;
+    padding-left:1em;
+    clear:both;
+}
+.contentheaderlabel.addnewscreenlabel
+{
+    margin:.8333em 0;
+}
+.contentheaderlabel legend
+{
+    text-transform:uppercase;
+    color:&dtml-cigray8;;
+    letter-spacing:1px;
+    font-weight:bold;
+}
+.contentheaderlabel.profilestatuslog
+{
+        margin-top:0;
+}
+.contentheaderlabel legend
+{
+    padding:0 .5em;
+}
+/*event single item begin*/
+.eventwhenblock div
+{
+    text-align:center;
+}
+.eventwhenblock span
+{
+    font-weight:bold;
+}
+.eventdownarrow
+{
+    font-weight:bold;
+}
+/*event single item end*/
+
+.documentFirstDescription
+{
+    margin:0 1em 1.6667em;
+    padding-top:1.6667em;
+}
+.versionhistory
+{
+    width:100%;
+}
+.VersionActions ul
+{
+    margin:0;
+    list-style-position:inside;
+    list-style-type:none;
+}
+.inline-diff
+{
+        background-color:&dtml-ciwhite; !important;
+}
+#divSharing
+{
+    padding: 0 1em 1em;
+}
+#user-group-sharing
+{
+    margin-top:1em;
+}
+.viewactionbuttonrow
+{
+    text-align:left;
+}
+#listvideocontentholder
+,#videocontentholder
+{
+    padding:10px;
+    background-color:&dtml-cigray1;;
+    margin:0 auto 1.6667em;
+}
+#videocontentholder
+{
+    width:640px;
+}
+#videocontentholder object
+{
+    display:block;
+}
+
+#listaudiocontentholder
+,#audiocontentholder
+{
+    padding:10px;
+    background-color:&dtml-cigray1;;
+    margin:0 0 1.6667em 0;
+    padding:10px 0;
+}
+#audiocontentholder object
+,#listaudiocontentholder object
+{
+    display:block;
+    outline:none;
+    margin:0 auto;
+}
+#audiocontentholder
+{
+    width:100%;
+}
+#videocontentholder object
+{
+    display:block;
+}
+
+#statuslogdetailholder
+{
+    overflow:hidden;
+}
+#statuslogdetailtitle h2
+,#statuslogdetaildate
+{
+    font-weight:normal;
+    margin:0;
+    border:none;
+}
+.truncate_more
+{
+    overflow:auto;
+}
+/*edit user profile begin*/
+.editprofileform .infobox
+{
+        margin:0 0 1.6667em;
+        padding:1.6667em 1em;
+}
+.editprofileavatarimg
+{
+        float:left;
+        margin:0 1.6667em .8333em 0;
+}
+.discussionitemavatar
+{
+}
+/*edit user profile end*/
+/************************************************ SINGLE ITEM SCREENS END **************************************/
+/************************************************ LOGIN SCREENS BEGIN **************************************/
+.whitebutton.loginbutton
+{
+        float:right;
+        font-weight:bold;
+        margin:19px 0 0 0;
+        padding:4px 10px;
+        border-color:&dtml-cigray9;;
+        height:1.25em;
+	width:74px;
+}
+.whitebutton.loginbutton:hover
+,.helpblockrow.cynindesktopbuttoncontainer.integrationbutton.hover
+{
+        background: &dtml-ci1co2; url("&dtml-portal_url;/g-blue1-l.gif") repeat-x left top;
+        border-color:&dtml-ci1co3;;
+        color:&dtml-ci1co4;;
+}
+.whitebutton.loginbutton img
+{
+        vertical-align:middle;
+}
+.mainloginformsizer
+{
+        margin:0 auto;
+}
+.loginbox
+{
+        background: &dtml-ciwhite; url("&dtml-portal_url;/g-white-l.gif") repeat-x left bottom;
+        border:1px solid &dtml-cigray9;;
+        margin:0 auto;
+        max-width:500px;
+        position:relative;
+}
+.loginfieldcontainer
+{
+padding-right:2em;
+}
+body.template-login_form
+,body.template-login_failed
+,body.template-mail_password_form
+,body.template-admin-contact-info
+,body.template-send_feedback_confirm_admin
+,body.template-mail_password_response
+,body.template-logged_out
+,body.template-pwreset_form
+,body.template-pwreset_invalid
+,body.template-pwreset_finish
+,body.template-join_form
+,body.template-getlicense
+{
+        background: &dtml-cigray2; url("&dtml-portal_url;/login-bg-team.gif") no-repeat right bottom;
+        padding:0;
+}
+.loginbannerarea
+{
+    overflow:hidden;
+    height:100px;
+    margin: 1em;
+}
+.loginbottompart
+{
+        margin:0 1em;
+}
+.loginboxlogo
+{
+        margin-right:1em;
+        float:left;
+        width:200px;
+        height:100px;
+}
+.loginboxsitetitle
+{
+        text-align:left;
+}
+.loginboxsitetitle a
+{
+        color:&dtml-cigray8;;
+}
+
+.loginboxsitedescription
+{
+        height:60px;
+        overflow:auto;
+        text-align:left;
+}
+.logininputtext
+,.passwordinputtext
+,.licensekeyinputtext
+{
+        background: &dtml-ci2co2;;
+        padding:4px;
+        font-size:16px;
+        border-color:&dtml-ci2co5; !important;
+        width:135px;
+}
+.licensekeyinputtext
+{
+ width:320px;
+}
+.logininputtext:focus
+,.passwordinputtext:focus
+{
+        background: &dtml-ci2co1;;
+}
+.loginboxmainforminner
+{
+        background: &dtml-ci2co4; url("&dtml-portal_url;/g-color2-3-4-m.gif") repeat-x left top;
+        color:&dtml-ciwhite;;
+        border-color:&dtml-ci2co5;;
+        border-width:1px;
+        border-style:solid none;
+        margin:0;
+        padding:.8333em 1em;
+        overflow:hidden;
+}
+.loginlabel
+{
+        color:&dtml-cigray1;;
+}
+.loginlabel
+{
+        letter-spacing:1px;
+        text-transform:uppercase;
+}
+.loginboxmainforminner .field
+{
+        margin-bottom:0;
+        text-align:left;
+        margin-right:1em;
+}
+.cyninsmallcolophon
+{
+        border-style:solid solid none solid;
+        width:70%;
+        margin:0 auto;
+        border-color:&dtml-cigray7;;
+}
+.cyninsmallcolophon a
+{
+        color:&dtml-cigray7;;
+}
+.loginbottomlinks
+{
+        padding:.4167em 0;
+        color:&dtml-cigray6;;
+}
+.loginbottomlink
+{
+        padding:.3333em 1em;
+        color:&dtml-cigray9;;
+        text-transform:uppercase;
+        letter-spacing:1px;
+}
+.loginbottomlink:hover
+{
+        color:&dtml-ciwhite;;
+}
+.loginbox .portalMessage
+{
+        margin:1em;
+}
+.loginbottompart .field
+{
+        margin-bottom:1em;
+        text-align:left;
+}
+.fielderror
+{
+        color:&dtml-ci3co1;;
+}
+.loginbottompart h4
+{
+        text-align:left;
+}
+/************************************************ LOGIN SCREENS END **************************************/
+/*********************************************** Popups begin ********************************************/
+/*syndication begin*/
+.syndicationfeedsmaincontainer
+{
+        margin-bottom:1em;
+}
+.syndicationfeedsmaincontainer tr
+{
+        border-bottom:1px solid &dtml-cigray2;;
+}
+.syndicationtitleholder
+{
+        text-align:left
+}
+.simplebutton
+{
+    border:none;
+    background:transparent;
+    cursor:pointer;
+    color:&dtml-ci1co3;;
+    height: 1.8182em; /* 20px */
+    margin:0 .25em;
+    padding:0 .75em;
+}
+
+.simplefloatedlink
+,a.filterpaneltopheader
+{
+    cursor:pointer;
+    color:&dtml-ci1co3;;
+    padding:0 1em;
+    float:left;
+    margin:0 .25em;
+}
+.simplefloatedlink img
+{
+    vertical-align:text-bottom;
+}
+.toplinkbar
+{
+    overflow:hidden;
+}
+.toplinkbar .simplefloatedlink
+{
+    float:right;
+}
+a.filterpaneltopheader
+{
+    cursor:pointer;
+}
+a.filterpaneltopheader.applied
+{
+    background-color:&dtml-cigray8;;
+    color:&dtml-ciwhite;;
+}
+a.filterpaneltopheader.expanded.opened
+{
+    background-color:&dtml-cigray2;;
+    color:&dtml-cigray9;;
+}
+#filterpaneltopstrip
+{
+    overflow:hidden;
+    margin:.8333em .8333em 0 .8333em;
+}
+#filterpaneltopstrip label
+{
+    float:left;
+}
+.simplefloatedlink.selected
+,.simplefloatedlink.selected:hover
+{
+    background-color:&dtml-cigray8;;
+    color:&dtml-ciwhite;;
+    cursor:default;
+}
+#togglecommentsview
+{
+    overflow:hidden;
+}
+.feedlink
+{
+    display:block;
+}
+.simplebutton img
+,.feedlink img
+{
+    vertical-align:bottom;
+}
+.simplehover
+,.simplebutton:hover
+,.feedlink:hover
+,.avatarinfobox a:hover
+,.simplefloatedlink:hover
+,a.filterpaneltopheader:hover
+{
+        background: &dtml-ci1co1;;
+        color:&dtml-ci1co4;;
+}
+label.important
+{
+        text-transform:uppercase;
+        letter-spacing:1px;
+}
+/*syndication end*/
+/*bookmarklet begin*/
+div.paragraph
+{
+        text-align:left;
+}
+.bookmarkletlinkcontainer
+{
+        margin:0.4167em 0;
+}
+/*bookmarklet end*/
+/*********************************************** Popups end ********************************************/
+
+/****************************************************** CLICK MENU BEGIN **********************************/
+div.cmDiv
+{
+}
+.clickMenu
+{
+  margin: 0;
+  padding: 0;
+}
+.clickMenu, .clickMenu ul
+{
+	list-style: none;
+}
+.clickMenu ul
+{
+	margin: 0;
+	min-width: 100px; /* ie doesnt know this :/ */
+	//float: left;/*ie again*/
+	//width: 100%;/*and again*/
+}
+.clickMenu div.outerbox
+{
+  display: none;
+  min-width: 106px; /* firefox produces animation-flickering when the box is bigger than this :/ */
+  padding-top: 10px;
+}
+.applications_menu div.outerbox
+{
+ padding-top:5px;
+}
+.clickMenu div.inner
+{
+   //top: 20px; /* for ie */
+   left: .5em;
+   margin: 0;
+}
+.clickMenu div.inner div.outerbox
+{
+   margin: 0;
+   left: 98px;
+   //left: 90px; /* for ie */
+   top: -11px;
+}
+.clickMenu li
+{
+  position: relative;
+}
+.menuborders
+,.innerBox li
+,.LSRow
+,.actionMenu .actionMenuContent li a
+{
+   border-width:0px;
+   border-style:solid;
+   border-color: &dtml-cigray1; &dtml-cigray1; &dtml-cigray3; &dtml-cigray1; ;
+   border-color: transparent transparent &dtml-cigray3; transparent;
+}
+.innerBox li
+,.LSRow a
+,.actionMenu .actionMenuContent li a
+{
+   padding: 5px 20px 5px 5px;
+}
+.clickMenu li.main
+{
+  float: left;
+  height: 16px; /* for ie */
+}
+.clickMenu li.main.menu-gray-img
+,.contentViews li
+{
+    height:1.6667em;
+}
+.clickMenu li.main li
+{
+	z-index: 2;
+	min-width: 78px;
+	zoom:1;
+	white-space:nowrap;
+}
+.clickMenu li.hover
+{
+ z-index: 1 !important; /* the hover z-index has to be below the normal one the hovering items may be drawn over a submenu */
+}
+.clickMenu img.liArrow
+{
+  position: absolute;
+  right: 5px;
+  top: 9px;
+}
+.clickMenu a
+{
+  color: inherit;
+}
+/* thats for the shadowbox */
+html>body div.outerbox
+{
+	padding: 0 5px 5px 0;
+}
+html>body .innerBox
+{
+	margin: 0;
+	display: inherit;
+}
+ul.innerBox
+,.livesearchContainer
+,.actionMenu .actionMenuContent ul
+,.ui-component-content
+{
+ background: &dtml-cigray1; url("&dtml-portal_url;/g-gray1-3-s.gif") repeat-x left bottom;
+ border: 1px solid &dtml-cigray9;;
+ padding: 5px;
+}
+ul.innerBox li
+,.LSRow
+,.actionMenu .actionMenuContent li
+{
+ margin:0;
+ color:&dtml-cigray9;;
+ line-height:14px;
+ font-size:12px;
+}
+li.topmenuseparator
+{
+ font-size:0.83em !important;
+ background: &dtml-cigray5; !important;
+ color:&dtml-ciwhite; !important;
+ border:none !important;
+ text-align:center;
+ padding:1px 5px !important;
+ margin:0 !important;
+ cursor:default !important;
+}
+#viewactionmenuholder
+{
+    clear:right;
+    float:right;
+    margin-top:1.1667em;
+}
+ul#contentActionMenus
+{
+ margin:0;
+}
+ul#contentActionMenus li
+{
+ list-style:none;
+ float:left;
+}
+.actionMenu {
+    /*  The spec says we can't put this on an element with a float (although
+        Opera is the only one that cares) and we need it in order to catch
+        the position:absolute bubbling up */
+
+    position: relative;
+    margin: 0;
+    padding: 0;
+}
+.actionMenu .actionMenuHeader {
+    margin: 0;
+    padding: 5px;
+    font-weight: normal;
+    line-height:1em;
+}
+.actionMenu.activated .actionMenuHeader {
+    position: relative;
+    z-index: 10;
+}
+.actionMenuHeader
+,.actionMenuHeader a
+{
+    display: block;
+    color:&dtml-cigray3;;
+}
+.actionMenuHeader a:hover
+{
+    color:&dtml-ciwhite;;
+}
+.nowhitespacewrap
+,.actionMenu .actionMenuContent li a
+,.actionMenu .actionMenuContent .selected
+,.contentActions span.subMenuTitle
+,.clickMenu a
+,.clickMenu li.topmenuseparator
+,.filterpaneltypeselector
+,.filterpaneltag
+,.lastchangeblocktextitem
+,.listtagselected
+,.listtag
+{
+   white-space:nowrap;
+}
+.arrowDownAlternative {
+}
+.actionMenu .actionMenuContent {
+    display: none;
+    z-index: 5;
+    position: absolute;
+    /*top: 1.6em;*/
+    /*right: -1px;*/
+    /*height: auto;*/
+    padding: 0;
+    margin: 0;
+}
+.actionMenu.activated .actionMenuContent {
+    display: block !important;
+}
+.actionMenu.activated .actionMenuContent {
+    /* this one will be ignored by IE, it is here to fix the cut-off error in
+       Firefox */
+    display: table !important;
+    border-collapse: collapse;
+    border-spacing: 0;
+    left:-30px;
+}
+.actionMenu.deactivated .actionMenuContent {
+    display: none !important;
+}
+.actionMenu .actionMenuContent ul {
+    /*overflow:hidden;*/
+}
+ul#contentActionMenus .actionMenuContent li {
+    float: none;
+    margin:5px 3px 0 0;
+}
+.actionMenu .actionMenuContent li a {
+    display: block;
+}
+.actionMenu .actionMenuContent .selected {
+    display: block;
+    padding: 0 0.5em;
+    margin: 0.2em 0;
+}
+.actionMenu .actionMenuContent .actionSeparator a {
+    padding-top: 0.2em;
+}
+#templateMenu li a {
+    padding-left: 16px;
+}
+#appmenulabel a,#appmenulabel a:visited,#appmenulabel a:active
+{
+ color:&dtml-cigray3;;
+}
+.contentViews
+{
+    margin:0;
+    /*overflow:hidden;*/
+}
+.contentViews li
+,.menu-gray-img
+{
+    list-style:none;
+}
+.contentViews li
+{
+    margin:0;
+    height:auto;
+}
+.contentViews li a
+{
+    display:block;
+}
+.contentViews li a
+,.menu-gray-img
+{
+    color:&dtml-ciwhite;;
+    padding:.25em .6667em .0833em;
+    margin:0.33em .25em 0;
+    border-bottom-style:none;
+}
+.contentViews li.selected a
+,.contentViews li.selected a:hover
+,.menu-gray-img.selected
+{
+    background: &dtml-ciwhite; url("&dtml-portal_url;/g-white-s-rev.gif") repeat-x left top;
+    margin:0.0833em .25em 0;
+    padding:0.5em 1em 0.1667em;
+}
+.contentViews li.selected a
+,.menu-gray-img.selected
+{
+    color:&dtml-cigray8;;
+}
+.contentViews li.selected a:hover
+,.menu-gray-img.selected.hover
+{
+    color:&dtml-ci1co3;;
+}
+#portal-titlebar .cmDiv
+{
+    float:left;
+}
+.titlebarmenurow
+{
+    min-height:2.5em;
+    padding-left:.5em;
+}
+/****************************************************** CLICK MENU END **********************************/
+/****************************************************** LIVE SEARCH BEGIN ******************************************/
+.LSResult
+{
+ position:relative;
+ z-index:3;
+ top:5px;
+}
+.livesearchContainer
+{
+position:absolute;
+/*margin-top:-7px;*/
+/*right:0;*/
+text-align:left;
+text-transform:none;
+visibility:visible;
+width:30em;
+}
+/* LiveSearch styles */
+.LSRes {
+    visibility: visible;
+    display:block;
+    list-style-image: none;
+    list-style-type: none;
+    text-align: left;
+    min-width: 16.5em;
+    margin-left: 0;
+}
+#LSHighlight,
+.LSHighlight {
+}
+.LSTable {
+    margin: 1em 0;
+}
+.LSRow
+{
+    list-style-image: none;
+    list-style-type: none;
+}
+.LSRow a
+{
+    font-weight:bold;
+    color:inherit;
+    display:block;
+}
+.LSRow .discreet
+{
+ white-space:normal;
+}
+.LSDescr {
+    color: &dtml-discreetColor;;
+    text-transform: &dtml-textTransform;;
+    padding-left:2.1em;
+    margin-top:-0.1em;
+}
+.LSShadow {
+    position: relative;
+    text-align: right;
+}
+#livesearchLegend {
+  padding: 4px;
+  margin-left: 270px;
+  margin-top: -32px;
+  border: 1px solid &dtml-cigray10;;
+  color:&dtml-cigray3;;
+  background: &dtml-cigray9; url("&dtml-portal_url;/g-gray6-9-s.gif") repeat-x left top;
+  position: relative;
+}
+.LSBox {
+  clear: left;
+  float: left;
+  text-align: right;
+  padding-right: 1px;
+  display:block;
+}
+#LSNothingFound {
+    text-align: center;
+    padding: 2px;
+}
+.LSBox label {
+    font-weight: normal;
+}
+div.LSIEFix
+{
+ clear:both;
+}
+/****************************************************** LIVE SEARCH END ******************************************/
+/****************************************************** BREADCRUMBS BEGIN ******************************************/
+.appviewbreadcrumb
+{
+}
+#portal-breadcrumbs
+{
+    background:&dtml-cigray2;;
+    padding:0.4167em 1em;
+    margin:.8333em 0;
+}
+#portal-breadcrumbs li.main
+{
+    margin:0;
+}
+#portal-breadcrumbs li.main .arrowDownAlternative
+{
+    color:&dtml-cigray2;;
+}
+.breadCrumbMenu.clickMenu div.inner
+{
+    left:0;
+}
+.breadCrumbMenu.clickMenu div.outerbox
+{
+    padding:0;
+}
+.breadCrumbMenu.clickMenu li.main.breadCrumbButton
+{
+    min-height:20px;
+    padding:0 .5em;
+}
+.breadCrumbMenu.clickMenu li.main.breadCrumbButton.hover
+{
+    background-color:&dtml-ci1co2;;
+    color:&dtml-ci1co4;;
+}
+#portal-breadcrumbs li.main.hover .arrowDownAlternative
+{
+    color:&dtml-ci1co4;;
+}
+.breadcrumbgoup
+{
+    float:right;
+}
+#breadcrumbs-you-are-here
+{
+ color:&dtml-cigray7;;
+}
+.breadcrumbSeparator
+{
+    font-size:1.08em;
+    color:&dtml-cigray5;;
+    float:left;
+}
+/****************************************************** BREADCRUMBS END ******************************************/
+/*footer begin*/
+.newversionavailable
+{
+        background:&dtml-ci4co1; none repeat scroll 0 0;
+        border:1px solid &dtml-ci4co3;;
+        color:&dtml-cigray11;;
+        padding:1.6667em 1em;
+        text-align:center;
+}
+#footer
+{
+        padding:1.6667em 0;
+}
+#portal-footer
+{
+        padding:.8333em;
+        background:&dtml-cigray2;;
+}
+#colophoncyninlogo
+{
+ float: left;
+}
+#colophoncyninlogo
+{
+}
+a.cynapselogo
+{
+        display:block;
+}
+#cynincolophoninfo
+{
+        padding:5px;
+        text-align:left;
+        margin-left:200px;
+}
+.cynapseinventionholder
+{
+        text-align:right;
+}
+/*footer end*/
+/*jqmodal begin*/
+.jqmWindow {
+    display: none;
+
+    position: fixed;
+    top: 17%;
+    left: 50%;
+
+    margin-left: -300px;
+    max-height:400px;
+    max-width:700px;
+    background-color: #EEE;
+    color: #333;
+    border: 1px solid black;
+    padding: 12px;
+}
+
+.jqmOverlay { background-color: #000; }
+
+/* Background iframe styling for IE6. Prevents ActiveX bleed-through (<select> form elements, etc.) */
+* iframe.jqm {position:absolute;top:0;left:0;z-index:-1;
+	width: expression(this.parentNode.offsetWidth+'px');
+	height: expression(this.parentNode.offsetHeight+'px');
+}
+
+/* Fixed posistioning emulation for IE6
+     Star selector used to hide definition from browsers other than IE6
+     For valid CSS, use a conditional include instead */
+* html .jqmWindow {
+     position: absolute;
+     top: expression((document.documentElement.scrollTop || document.body.scrollTop) + Math.round(17 * (document.documentElement.offsetHeight || document.body.clientHeight) / 100) + 'px');
+}
+/*jqmodal end*/
+/*nyromodal begin*/
+div#nyroModalFull {
+}
+div#nyroModalLoading {
+	border: 1px solid black;
+	width: 150px;
+	height: 150px;
+	text-indent: -9999em;
+	background: #fff url(&dtml-portal_url;/spinner-w-48.gif) no-repeat;
+	background-position: center;
+}
+div#nyroModalLoading.error {
+	border: 1px solid #f66;
+	line-height: 20px;
+	padding: 20px;
+	width: 300px;
+	height: 100px;
+	text-indent: 0;
+	background: #fff;
+}
+div#nyroModalWrapper {
+	background: #fff;
+	border: 1px solid black;
+ box-shadow: 0 0px 10px #000000;
+ -webkit-box-shadow: 0 0px 10px #000000;
+ -moz-box-shadow: 0 0px 10px #000000;
+}
+a#closeBut {
+	position: absolute;
+	display: block;
+	top: -19px;
+	right: 4px;
+	width: 16px;
+	height: 16px;
+	text-indent: -9999em;
+	background: url(&dtml-portal_url;/icon-close.png) no-repeat;
+	outline: 0;
+}
+h1#nyroModalTitle {
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	top: -22px;
+	left: 5px;
+	font-size: 14px;
+	text-transform:uppercase;
+	color: &dtml-ciwhite;;
+}
+div.wrapper div#nyroModalContent
+,div.wrapperImg div#nyroModalContent
+{
+	margin: 1em;
+}
+div.wrapperImg div#nyroModalContent {
+	position: relative;
+	overflow: visible !important;
+	text-align: center;
+	background:&dtml-ciwhite;;
+}
+div.wrapperImg img {
+	vertical-align: baseline;
+}
+div.wrapperImg div#nyroModalContent div {
+        display:none;
+}
+div.wrapperImg div#nyroModalContent div:hover {
+}
+div.wrapperImg a {
+	outline: none;
+	position: absolute;
+	top: 0;
+	height: 100%;
+	cursor: pointer;
+	text-indent: -9999em;
+	background-image: url(data:image/gif;base64,AAAA); /* Trick IE6 */
+}
+a.nyroModalPrev {
+	left: 0;
+	width: 40%;
+        margin-left:-1em;
+}
+a.nyroModalPrev:hover {
+	background: url(&dtml-portal_url;/gallery-arrow-l.png) left 20% no-repeat;
+}
+a.nyroModalNext {
+	right: 0;
+	width: 40%;
+        margin-right: -1em;
+}
+a.nyroModalNext:hover {
+	background: url(&dtml-portal_url;/gallery-arrow-r.png) right 20% no-repeat;
+}
+.logoutmodal
+{
+}
+.logouthelp
+{
+        margin:1.6667em 0;
+}
+
+/*nyromodal end*/
+/*cluetip begin*/
+/* global */
+.navtips
+,.cluetips
+{
+        color:&dtml-ciwhite;;
+}
+.avatartips
+{
+}
+.avatartips .bt-content
+{
+}
+a.btclose
+{
+        float:right;
+}
+.bterror
+{
+        color:&dtml-ciwhite;;
+}
+.btspinner
+{
+        background:&dtml-ciwhite;;
+        padding:1em;
+}
+.avatartips .infotipholder
+{
+        background:&dtml-ciwhite; url(&dtml-portal_url;/g-white-l.gif) repeat-x scroll left bottom;
+ box-shadow: 0 0px 10px #000000;
+ -webkit-box-shadow: 0 0px 10px #000000;
+ -moz-box-shadow: 0 0px 10px #000000;
+}
+.avatartips .infotiptitle
+{
+    background:&dtml-cigray3; url(&dtml-portal_url;/g-gray1-3-s.gif) repeat-x scroll left top;
+    border-bottom: 1px solid &dtml-cigray5;;
+    color:&dtml-cigray8;;
+    text-align:left;
+    padding:0.4167em;
+}
+
+.avatartips .infotipavatar
+{
+    float:left;
+    background:&dtml-cigray1;;
+    border:1px solid &dtml-cigray3;;
+    padding:.5em;
+    margin-right:.5em;
+}
+.avatartips .infotipavatar:hover
+{
+    border:1px solid &dtml-ci1co3;;
+    background:&dtml-ci1co1;;
+}
+.avatartips .infotipavatar img
+{
+}
+.avatartips div
+{
+    text-align:left;
+}
+.avatartips .cluetipbottompart
+{
+    padding:1em;
+}
+.avatartips .cluetiplinksrow a
+{
+    display:block;
+    float:right;
+}
+.avatartips .cluetiprowheader
+{
+    border-bottom:1px dotted &dtml-cigray4;;
+}
+.avatartips .cluetipmoreholder
+{
+    text-align:left;
+    font-weight:bold;
+}
+.avatartips .cluetiprecentitems a
+{
+    display:block;
+    height:20px;
+    overflow:hidden;
+}
+.avatartips .cluetiprecentitems a img
+{
+    vertical-align:text-top;
+    margin-right:.1875em;
+}
+/*cluetip end*/
+/*jqpurr begin*/
+/*rating begin*/
+.displaytotalscorelabel
+{
+    font-weight:bold;
+}
+input.comcynapseratingbutton
+{
+    background-color:transparent;
+    background-position: 5px 5px;
+    background-repeat:no-repeat;
+    border:none;
+    text-indent:-999em;
+    color:transparent;
+    width:50px;
+    height:50px;
+    outline: none;
+    font-size: 0;
+    display:block;
+    line-height: 0;
+    float:left;
+}
+.hiddenloginsubmit
+{
+    position:absolute;
+    left:-9999px;
+}
+input.comcynapsevotingbutton2
+{
+    background-image:url("&dtml-portal_url;/rating-dislike-out.png");
+}
+input.comcynapsevotingbutton2.selected
+,input.comcynapsevotingbutton2.hover
+{
+    background-image:url("&dtml-portal_url;/rating-dislike-over.png");
+}
+input.comcynapsevotingbutton2.selected
+{
+    background-color:&dtml-ci3co2;;
+}
+input.comcynapsevotingbutton4
+{
+    background-image:url("&dtml-portal_url;/rating-like-out.png");
+}
+input.comcynapsevotingbutton4.selected
+,input.comcynapsevotingbutton4.hover
+{
+    background-image:url("&dtml-portal_url;/rating-like-over.png");
+}
+input.comcynapsevotingbutton4.selected
+{
+    background-color:&dtml-ci2co7;;
+}
+.ratingscontainer
+{
+}
+.ratingslabel
+{
+}
+.ratingstarsrow
+{
+    overflow:hidden;
+}
+.comcynapseratinginputlabel
+{
+}
+/*rating end*/
+/*comments begin*/
+#commentscontainer
+{
+    margin:1.6667em 0;
+}
+.Discussion .commentsblock
+{
+	width:100%;
+}
+.Discussion .metadatablock
+{
+	width:100%;
+}
+.commenttopcontainer
+,.listitemspecificdetail
+{
+    padding:.8333em;
+    margin:1.6667em 0;
+    background:&dtml-cigray1;;
+}
+.avatarinfobox
+{
+    float:left;
+    overflow:hidden;
+    width:33%;
+    height:5em;
+}
+.avatarinfobox a
+{
+    overflow:hidden;
+    padding:.8333em;
+    display:block;
+}
+.avatarinfobox.hover a
+{
+        color:&dtml-ciwhite;;
+}
+.spacemembersavatars .avatarinfobox
+{
+}
+.usersearchlink
+,.descriptiontoggle
+{
+        float:left;
+        margin:0;
+}
+.usersearchresultslabel
+{
+        margin-bottom:1.4286em;
+}
+.usersearchcardrow
+{
+        margin-left:40px;
+        padding:0 .5em;
+        max-height:3.3333em;
+        overflow:hidden;
+}
+.usersearchcardrow.fullname
+{
+    white-space:nowrap;
+    font-weight:bold;
+}
+.usersearchcardrow.designation
+{
+    white-space:nowrap;
+    padding:0 .5455em;
+}
+.commentactionbuttonsrow
+{
+    text-align:right;
+    margin-top:0.5em;
+}
+/*comments end*/
+/*relations begin*/
+.relationsholder label
+{
+    display:block;
+    border-bottom:1px dotted &dtml-cigray4;;
+    margin-bottom:.833em;
+}
+/*relations end*/
+/*portal message start*/
+.portalMessage
+{
+    margin:.8333em 0;
+}
+.link_closeportalmessage
+{
+    cursor:pointer;
+    float:right;
+    padding:7px;
+}
+.recentupdateitem.latestmessage
+{
+    background:&dtml-ci2co7;;
+    color:&dtml-ci2co6;;
+}
+.greenbox
+,.portalMessage.info
+{
+    background:&dtml-ci2co7;;
+    color:&dtml-ci2co6;;
+}
+.portalMessage.info dt
+{
+}
+.portalMessage.warn dt
+{
+}
+.portalMessage.error dt
+{
+}
+.contentheaderlabel img
+{
+        vertical-align:text-bottom;
+}
+.profilestatuslog .recentupdateitem a
+{
+        color:&dtml-cigray9;;
+}
+.profilestatuslog .recentupdateitem a:hover
+{
+        color:&dtml-ci1co4;;
+}
+.profilestatuslog .recentupdateitem.latestmessage a
+{
+    color:&dtml-ci2co5;;
+}
+.profilestatuslog .recentupdateitem.latestmessage a:hover
+{
+    background-color:&dtml-ci2co5;;
+    color:&dtml-ciwhite;;
+}
+.recentupdateitem.latestmessage a:hover
+{
+    color:&dtml-ci2co4;;
+}
+.profilestatuslog .recentupdateitem
+{
+        padding:.8333em 0;
+}
+.profilestatuslog .recentupdateitem.latestmessage
+{
+    padding:.5em 1em;
+    margin:0 0 1.6667em 0;
+}
+.profilestatuslog .recentupdateitemtitlerow
+{
+        margin-bottom:1.6667em;
+}
+.portalMessage.warn
+{
+    background:&dtml-ci4co1;;
+    color:&dtml-ci4co2;;
+}
+.portalMessage.error
+{
+    background:&dtml-ci3co2;;
+    color:&dtml-ci3co1;;
+}
+.portalMessage dd 
+{
+    margin:0;
+}
+.portalMessage dt
+{
+    margin:0 1em 0 0;
+    padding:5px 10px;
+    float:left;
+    text-transform:uppercase;
+    font-weight:bold;
+}
+.portalMessage dd
+{
+        float:none;
+	padding:5px;
+}
+.inlineerror
+{
+ margin-top:0.8333em;
+}
+/*portal message end*/
+.filepreview .highlight
+{
+        background:white;
+}
+.highlightedSearchTerm
+{
+    background-color:&dtml-ci4co1;;
+}
+/*search results begin*/
+form.searchPage
+{
+        text-align:center;
+}
+.searchresultitem
+{
+        border-bottom:1px solid &dtml-cigray2;;
+        padding:.8333em 0;
+}
+dl.searchResults
+,dl.searchResults dd
+{
+        margin:0;
+}
+.link-feed.smallwhitebutton img
+{
+        vertical-align:text-bottom;
+        margin-bottom:-1px;
+}
+.searchresultsauthorrow
+{
+        color:&dtml-cigray8;;
+}
+/*search results end*/
+/****************************************************** FOOTER ACTIONS BLOCK BEGIN **************************************/
+.footeractions
+{
+    margin:.8333em 0em;
+    overflow:hidden;
+}
+.footeractions .smallwhitebutton
+{
+        margin-bottom:.25em;
+        float:left;
+}
+/****************************************************** FOOTER ACTIONS BLOCK END **************************************/
+/****************************************************** ROUNDED CORNERS BEGIN ******************************************/
+.roundnone
+,.homepagefullcontainer .portletWrapper
+{
+ -moz-border-radius:0px;
+ -webkit-border-radius:0px;
+}
+.roundfullbigger
+,.cluetip-default #cluetip-outer
+{
+ -moz-border-radius:6px;
+ -webkit-border-radius:6px;
+}
+.roundfull
+,#comcynapsehiddencomments
+,#comcynapserefreshlistcomments
+,.breadCrumbMenu.clickMenu li.main.breadCrumbButton
+,#portal-breadcrumbs
+,.sitehomenocontent
+,.LSRow a
+,#audiocontentholder
+,input.comcynapseratingbutton
+,.avatarinfobox a
+,.listitemspecificdetail
+,.commenttopcontainer
+,.listitemvoteholder
+,.innerBox
+,li.topmenuseparator
+,ul.innerBox li.hover
+,.livesearchContainer
+,#statusinputtextarea
+,#discussiontextarea
+,.btn-gray
+,.menu-white-img
+,.actionMenu .actionMenuContent li a:hover
+,.actionMenu .actionMenuContent ul
+,#typeindicator
+,.filterpaneltag
+,.portlettag
+,._tag_suggestion
+,.ui-component-content
+,.ui-daterangepicker li.ui-hover-state
+,.ui-daterangepicker li.ui-active-state
+,.ui-datepicker-div
+,.ui-datepicker-inline
+,#ui-datepicker-div
+,button.btnDone
+,#topbarhomelinkholder
+,.commentsubjectinput
+,#comcynapsefrmDiscussionAddNew
+,.cluetip-jtip #cluetip-outer
+,.portalMessage
+,.filepreviewholder
+,#document-toc
+,.editformheaderlegend
+,input[type=text]
+,input[type=password]
+,.editcontentholder textarea
+,.editcontentholder .field.error
+,#setnewdefaultwikipageholder
+,div#nyroModalWrapper
+,div#nyroModalLoading
+,#cluetip-waitimage
+,.contentnopadding
+,.portletNavigationTree div.hover
+,.portletNavigationTree div.navaddnewlinkholder
+,.navTreeHome
+,.infobox
+,textarea
+,.avatartips .infotipholder
+,.btspinner
+,#portal-footer
+,.newversionavailable
+,.filterpanelboxinner
+,a.whitebutton
+,#sitestats
+,.recentupdateitem.latestmessage
+,.usersearchform
+,.loginbox
+,.loginbottomlink
+,.feedlink
+,.destructive
+,.addnewactionholder a
+,#comcynapsecyninmyareablock
+,#sidenavigationlogoholder
+,.topbaravatar
+,.topbarmybutton
+{
+ -moz-border-radius:5px;
+ -webkit-border-radius:5px;
+}
+.roundallexcepttopleft
+,.listitemdetailrowholder
+{
+ -moz-border-radius-topleft:0px;
+ -moz-border-radius-topright:5px;
+ -webkit-border-top-left-radius:0px;
+ -webkit-border-top-right-radius:5px;
+ -moz-border-radius-bottomleft:5px;
+ -moz-border-radius-bottomright:5px;
+ -webkit-border-bottom-left-radius:5px;
+ -webkit-border-bottom-right-radius:5px;
+}
+.roundallexcepttopright
+,.usersearchform
+,#singleviewdescriptionarea
+{
+ -moz-border-radius-topleft:5px;
+ -moz-border-radius-topright:0px;
+ -webkit-border-top-left-radius:5px;
+ -webkit-border-top-right-radius:0px;
+ -moz-border-radius-bottomleft:5px;
+ -moz-border-radius-bottomright:5px;
+ -webkit-border-bottom-left-radius:5px;
+ -webkit-border-bottom-right-radius:5px;
+}
+.roundtop
+,#livesearchLegend
+,.contentViews li a
+,ul.kupu-tabs li
+,#appmenulabel
+,.avatartips .infotiptitle
+,.editformheaderlegend.opened
+,.ui-tabs-nav li.horizontaltab a
+,.cyninsmallcolophon
+,.menu-gray-img
+{
+ -moz-border-radius-topleft:5px;
+ -moz-border-radius-topright:5px;
+ -webkit-border-top-left-radius:5px;
+ -webkit-border-top-right-radius:5px;
+ -moz-border-radius-bottomleft:0px;
+ -moz-border-radius-bottomright:0px;
+ -webkit-border-bottom-left-radius:0px;
+ -webkit-border-bottom-right-radius:0px;
+}
+.roundright
+,.searchButton
+{
+ -moz-border-radius-topright:5px;
+ -moz-border-radius-bottomright:5px;
+ -webkit-border-top-right-radius:5px;
+ -webkit-border-bottom-right-radius:5px;
+}
+.roundbottom
+,li.navTreeCurrentNode ul
+,.editformfieldset
+,.adderbar
+{
+ -moz-border-radius-bottomleft:5px;
+ -moz-border-radius-bottomright:5px;
+ -webkit-border-bottom-left-radius:5px;
+ -webkit-border-bottom-right-radius:5px;
+}
+.roundleft
+,.mainsearchboxinputtext
+,.portletWrapper
+,div.navTreeCurrentNode
+,.portletNavigationTree div.navTreeCurrentNode.hover
+,.ui-accordion-header
+,.ui-tabs-nav li.verticaltab a
+,.portalMessage dt
+{
+ -moz-border-radius-topleft:5px;
+ -moz-border-radius-bottomleft:5px;
+ -webkit-border-top-left-radius:5px;
+ -webkit-border-bottom-left-radius:5px;
+ -moz-border-radius-topright:0;
+ -moz-border-radius-bottomright:0;
+ -webkit-border-top-right-radius:0;
+ -webkit-border-bottom-right-radius:0;
+}
+
+.roundtopleft
+,dt.portletHeader
+{
+ -moz-border-radius-topleft:5px;
+ -webkit-border-top-left-radius:5px;
+}
+.roundbottomleft
+,#kss-spinner
+,.kupu-save-message
+{
+ -moz-border-radius-topleft:0px;
+ -moz-border-radius-bottomleft:5px;
+ -webkit-border-top-left-radius:0px;
+ -webkit-border-bottom-left-radius:5px;
+}
+.roundbottomright
+,div.kupu-drawer
+{
+ -moz-border-radius-bottomright:5px;
+ -webkit-border-bottom-right-radius:5px;
+}
+.roundfull-bordered-small
+,.listitemactionbutton
+,.listwidebuttonsrow a
+,.paging_bar span a
+,.paging_bar_currentpage
+,.avatarinfobox
+,.smallwhitebutton
+,.context
+,.smallgraybutton
+,#archetypes-fieldname-relatedItems .searchButton
+,.cluetip-default .infotipavatar
+,span.kupu-tb-buttons button:hover
+,.kupu-dialog-button
+,.photoAlbumEntry
+,.viewnavigation-current
+,.viewnavigation-button
+,.defaultwikipagelinksrow a
+,.blogavatarblock a
+,.usersearchlink
+,.listtypelabel
+,.workflowstatelabel
+,.descriptiontoggle
+,.integrationbutton
+,.linkbutton
+,#comcynapseaddernotallowed
+,#comcynapsenotallowed
+,.cancelbutton
+,.simplebutton
+,.simplefloatedlink
+,a.filterpaneltopheader
+,.standalone
+{
+ -moz-border-radius:3px;
+ -webkit-border-radius:3px;
+}
+.roundtop-bordered-small
+,.usersearchlink.opened
+,.descriptiontoggle.opened
+,a.filterpaneltopheader.expanded
+{
+ -moz-border-radius-topleft:3px;
+ -moz-border-radius-topright:3px;
+ -webkit-border-top-left-radius:3px;
+ -webkit-border-top-right-radius:3px;
+ -moz-border-radius-bottomleft:0px;
+ -moz-border-radius-bottomright:0px;
+ -webkit-border-bottom-left-radius:0px;
+ -webkit-border-bottom-right-radius:0px;
+}
+.roundleft-bordered-small
+{
+ -moz-border-radius-topleft:3px;
+ -moz-border-radius-topright:0px;
+ -webkit-border-top-left-radius:3px;
+ -webkit-border-top-right-radius:0px;
+ -moz-border-radius-bottomleft:3px;
+ -moz-border-radius-bottomright:0px;
+ -webkit-border-bottom-left-radius:3px;
+ -webkit-border-bottom-right-radius:0px;
+}
+.rountop4px
+,#portal-titlebar
+{
+ -moz-border-radius-topleft:4px;
+ -moz-border-radius-topright:4px;
+ -webkit-border-top-left-radius:4px;
+ -webkit-border-top-right-radius:4px;
+}
+.roundfull-small
+,li.topmenuseparator
+,ul.innerBox li.topmenuseparator.hover
+,.filterpanelheaderlabel
+,.listtagselected
+,.listtag
+{
+ -moz-border-radius:2px;
+ -webkit-border-radius:2px;
+}
+/****************************************************** ROUNDED CORNERS END ******************************************/
+
+/****************************************************** HOVERS BEGIN******************************************/
+.cursorpointer
+,.biggerlink.hot
+,.forcelink.hot
+,.btn-gray
+,input.context
+,.filterpaneltypeselector label,.filterpaneltypeselector input
+,._tag_suggestion
+,.listitemlastchangeavatar a
+,.listitemlastchangeperformer a,.listitemlastchangeperformer a:visited,.listitemlastchangeperformer a:active
+,.listwidebuttonsrow a
+,input.comcynapseratingbutton
+,.smallwhitebutton
+,.smallgraybutton
+,.clickMenu li.main
+,.editformheaderlegend
+,#archetypes-fieldname-relatedItems .searchButton
+,.standalone
+,.destructive
+,span.kupu-tb-buttons button:hover
+,.kupu-dialog-button:hover
+,.viewnavigation-button:hover
+,a.jqModal
+,.defaultwikipagelinksrow a:hover
+,.ui-accordion-header
+,a.whitebutton
+,.avatarlink
+,#comcynapsehiddencomments
+,#comcynapserefreshlistcomments
+,.topbarmybuttontip
+{
+  cursor:pointer;
+}
+input.comcynapseratingbutton.selected
+{
+ cursor:default !important;
+}
+#comcynapserefreshlistcomments
+{
+    float:left;
+}
+#comcynapsehiddencomments
+,#comcynapserefreshlistcomments
+{
+    padding:2px 4px;
+}
+input.inputLabelActive
+,textarea.inputLabelActive
+,#statusinputtextarea.inputLabelActive
+{
+  color:&dtml-cigray6;;
+    font-style:italic
+}
+.menuitemhover
+,.btn-white-img.hover
+,.menu-white-img.hover
+,.menu-gray-img.hover
+,.mainsearchboxbutton:hover
+,ul.innerBox li.hover
+,.btn-gray.hover
+,.context:hover
+,.actionMenuContent li a:hover
+,#purr-container
+,.listitemactionbutton:hover
+,.paging_bar span a:hover
+,.listwidebuttonsrow a:hover
+,.contentViews li a:hover
+,.avatarinfobox.hover
+,.smallgraybutton:hover
+,.editformheaderlegend:hover
+,#archetypes-fieldname-relatedItems .searchButton:hover
+,.standalone:hover
+,.destructive:hover
+,.kupu-dialog-button:hover
+,.viewnavigation-button:hover
+,.setdefaultwikipageholder:hover
+,.defaultwikipagelinksrow a:hover
+,.ui-tabs-nav li a:hover
+,a.whitebutton:hover
+,.cyninsmallcolophon.hover
+,.descriptiontoggle:hover
+,.integrationbutton.hover
+,.LSRow a:hover
+,.LSHighlight a
+,.blogavatarblock a:hover
+{
+    background: &dtml-ci1co2; url("&dtml-portal_url;/g-blue1-s.gif") repeat-x left top;
+    border-color: &dtml-ci1co3;;
+    color:&dtml-ci1co4;;
+}
+.kupu-dialog-button:hover
+{
+    background: &dtml-ci1co2; url("&dtml-portal_url;/g-blue1-s.gif") repeat-x left top !important;
+}
+.smallwhitebutton:hover
+,.usersearchlink:hover
+{
+    background: &dtml-ci1co2; url("&dtml-portal_url;/g-blue1-s.gif") repeat-x left top !important;
+    border-color: &dtml-ci1co3;;
+    color:&dtml-ci1co4;;
+}
+.addnewactionholder a:hover
+{
+    background: &dtml-ci1co2; url("&dtml-portal_url;/g-blue1-s.gif") repeat-x left top;
+}
+
+.addnewactionholder a:hover .discreet
+,.LSRow a:hover .discreet
+,.LSHighlight a .discreet
+{
+    color:&dtml-ci1co4;;
+}
+.portletNavigationTree div.hover
+,.navTreeHome.hover
+,.loginbottomlink:hover
+{
+        background-color:&dtml-ci1co2;;
+}
+.portletNavigationTree div.hover a
+,.navTreeHome.hover a
+,.cyninsmallcolophon.hover a
+,.integrationbutton.hover a
+{
+	color:&dtml-ci1co4;;
+}
+.portletNavigationTree div.navTreeCurrentNode.hover a
+,.navTreeHome.navTreeCurrentNode.hover a
+{
+        color:&dtml-ci1co3;;
+}
+/****************************************************** HOVERS END******************************************/
+/*kss begin*/
+.hidden
+{
+    display:none;
+}
+#kss-spinner
+{
+    background:&dtml-ci3co1; none repeat scroll 0 0;
+    color:#FFFFFF;
+    display:none;
+    font-weight:bold;
+    height:20px;
+    left:auto;
+    margin-left:0;
+    margin-top:0;
+    padding:3px 10px;
+    position:fixed;
+    right:0;
+    top:0;
+    width:auto;
+    text-transform:uppercase;
+}
+.kupu-save-message
+{
+    background:&dtml-ci3co1; none repeat scroll 0 0;
+    color:#FFFFFF;
+    display:block;
+    font-weight:bold;
+    height:20px;
+    left:auto;
+    margin-left:0;
+    margin-top:0;
+    padding:3px 10px;
+    position:fixed;
+    right:0;
+    top:0;
+    width:auto;
+    text-transform:uppercase;
+    z-index:999;
+}
+
+/*kss end*/
+/***************************************************************autocomplete *************************/
+.ac_results {
+    padding: 0px;
+    border: 1px solid black;
+    background-color: white;
+    overflow: hidden;
+    z-index: 99999;
+}
+
+.ac_results ul {
+    width: 100%;
+    list-style-position: outside;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.ac_results li {
+    margin: 0px;
+    padding: 2px 5px;
+    cursor: pointer;
+    display: block;
+    text-align:left;
+    /* 
+    if width will be 100% horizontal scrollbar will apear 
+    when scroll mode will be used
+    */
+    /*width: 100%;*/
+    /*font: menu;*/
+    /*font-size: 12px;*/
+    /* 
+    it is very important, if line-height not setted or setted 
+    in relative units scroll will be broken in firefox
+    */
+    /*line-height: 16px;*/
+    overflow: hidden;
+}
+
+.ac_loading {
+    background: white url('&dtml-portal_url;/spinner-w-16.gif') right center no-repeat !important;
+}
+
+.ac_odd {
+    background-color: #eee;
+}
+
+.ac_over {
+    background-color: #0A246A;
+    color: white;
+}
+/***************************************************************autocomplete *************************/
+/***************************************************************Customize Page ***********************/
+.customcolumn3
+{
+    width:33%;
+}
+/***************************************************************Customize Page ***********************/
+.clearboth
+{
+    clear:both;
+}
+#portal-languageselector
+{
+list-style:none;
+text-align:left;
+margin-left:0;
+}
+#portal-languageselector li
+{
+margin-left:0;
+}
+.languageselection
+{
+padding-bottom:1.8333em;
+}
+#languageselectorcombo
+{
+width:98%;
+}
+/*-------------------------------------------------------------------------------*/
+/* </dtml-with> */

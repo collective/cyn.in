@@ -1,0 +1,15 @@
+[default]
+title=Import
+
+[security]
+View=0:Authenticated
+
+[validators]
+validators=validate_id, validate_file_edit
+
+[actions]
+action.failure=traverse_to:string:import_form
+action.success=traverse_to:string:import_form
+action.success..Import=traverse_to:string:bulkImport
+action.success..Cancel=traverse_to_action:string:folder_contents
+

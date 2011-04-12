@@ -1,0 +1,82 @@
+<tal:comment replace="nothing">
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see http://www.gnu.org/licenses/.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+</tal:comment>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="cynin">
+<head>
+    <metal:block metal:fill-slot="head_slot" tal:define="qpt string:portal_type=Video">
+	<tal:rssmacro metal:use-macro="here/rss_macro/macros/rss_list_macro" />        
+    </metal:block>
+</head>
+<body>
+
+<div metal:fill-slot="contentwithnopadding">
+    <tal:main-macro metal:define-macro="main"
+                    tal:define="kssClassesView context/@@kss_field_decorator_view;
+                                getKssClasses nocall:kssClassesView/getKssClassesInlineEditable;
+				templateId template/getId;
+                                sortorder python:'reverse';
+                                sorton python:'lastchangedate';
+                                limit_display python:20;
+                                limit_display request/limit_display|limit_display|nothing;
+                                is_c_root python:here.portal_type=='ContentRoot' or False;
+                                is_m_space python:here.portal_type=='MemberSpace' or False;
+                                mid python:is_m_space and context.getId() or None;
+                                portal python:context.portal_url.getPortalObject();
+                                portal_path python:(is_c_root or is_m_space) and '/'.join(portal.getPhysicalPath()) or None;
+                                folderContents python:not is_m_space and here.queryfolderbytype(currentpath= portal_path,types_to_search=('Video',),sorton=sorton, batch=True, b_size=limit_display);
+                                folderContents python:folderContents or is_m_space and here.queryfolderbytype(currentpath= portal_path,types_to_search=('Video',),sorton=sorton, batch=True, b_size=limit_display,sortorder = sortorder, modifiers = (mid,));
+                                param1 python:folderContents[0];
+                                tagslist python:folderContents[1];
+                                totalResults python:folderContents[2];
+                                folderContents param1;
+                                ">
+
+        <div metal:use-macro="context/tags_listing/macros/listing"/>
+        <div metal:use-macro="context/all_listing/macros/listing"/>
+
+    </tal:main-macro>
+</div>
+
+</body>
+</html>

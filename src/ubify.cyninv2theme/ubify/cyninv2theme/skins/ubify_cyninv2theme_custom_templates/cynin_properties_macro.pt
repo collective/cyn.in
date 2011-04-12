@@ -1,0 +1,62 @@
+<tal:comment replace="nothing">
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see http://www.gnu.org/licenses/.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India4
+</tal:comment>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n">
+    <body>
+        <tal:customheadermacro metal:define-macro="custom_header" i18n:domain="cynin" tal:define="isauthenticated python: modules['ubify.cyninv2theme'].checkHasPermission('Set own password', here)">
+            <tal:anonymous tal:define="portalproperties context/portal_properties;cyninprop python:hasattr(portal_properties,'cynin_properties') and portal_properties.cynin_properties or None;customheader python:cyninprop and hasattr(cyninprop,'web_custom_header_anonymous') and cyninprop.web_custom_header_anonymous or ''">
+                <div id="customheader" tal:condition="python: customheader and not isauthenticated"><tal:block tal:replace="structure customheader" /></div>
+            </tal:anonymous>
+            <tal:loggedin tal:define="portalproperties context/portal_properties;cyninprop python:hasattr(portal_properties,'cynin_properties') and portal_properties.cynin_properties or None;customheader python:cyninprop and cyninprop.web_custom_header or ''">
+                <div id="customheader" tal:condition="python: customheader and isauthenticated"><tal:block tal:replace="structure customheader" /></div>
+            </tal:loggedin>
+        </tal:customheadermacro>
+        <tal:customfootermacro metal:define-macro="custom_footer" i18n:domain="cynin" tal:define="isauthenticated python: modules['ubify.cyninv2theme'].checkHasPermission('Set own password', here)">
+            <tal:anonymous tal:define="portalproperties context/portal_properties;cyninprop python:hasattr(portal_properties,'cynin_properties') and portal_properties.cynin_properties or None;customfooter python:cyninprop and hasattr(cyninprop,'web_custom_footer_anonymous') and cyninprop.web_custom_footer_anonymous or ''">
+                <div id="customfooter" tal:condition="python: customfooter and not isauthenticated"><tal:block tal:content="structure customfooter" /></div>
+            </tal:anonymous>
+            <tal:loggedin tal:define="portalproperties context/portal_properties;cyninprop python:hasattr(portal_properties,'cynin_properties') and portal_properties.cynin_properties or None;customfooter python:cyninprop and cyninprop.web_custom_footer or ''">
+                <div id="customfooter" tal:condition="python: customfooter and isauthenticated"><tal:block tal:content="structure customfooter" /></div>
+            </tal:loggedin>
+        </tal:customfootermacro>
+    </body>    
+</html>
+

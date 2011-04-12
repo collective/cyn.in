@@ -1,0 +1,61 @@
+ATRatings is a tool for storing user ratings and hits on objects.
+
+ATRatings uses a pluggable storage mechanism for rating data.  So far I have
+written a ZODB-based storage that strives to be reasonably efficient with 
+memory.
+
+ATRatings makes use of references and hence requires Archetypes.  It indexes
+stored ratings using object UIDs, so until UIDs are backported into the CMF,
+you can only rate Archetypes-based objects.
+
+The most useful API methods:
+
+RATINGS
+-------
+
+addRating(rating, uid)
+    Add a rating for the currently authenticated user to the object with the
+    given UID.  If a user rates an object twice, the first rating is discarded.
+
+getEstimatedRating(uid)
+    Get an item's rating using a Bayesian estimator.  The Bayesian method
+    prevents object ratings from spiking based on a small number of initial
+    ratings.  This is the recommended way to get an object's rating.
+
+getUserRating(uid)
+    Get the currently authenticated user's rating for the object with the 
+    specified UID.  Returns None if the user has not rated the object.
+
+getRatingCount(uid)
+    Get the total number of ratings for the object with the specified UID.
+    
+getRatingMean(uid)
+    Get the average rating for the object with the specified UID.  Note that
+    getEstimatedRating is the recommended way to get an object's rating.
+    
+getRatingStdDev(uid)
+    Get the standard deviation of ratings for the object with the specified UID.
+
+getTotalRatingCount()
+    Get the total number of ratings for all content objects combined.
+
+
+HIT COUNTING
+------------
+
+addHit(uid)
+    Increment the hit counter for the object with the specified UID.
+
+getHitCount(uid)
+    Get the number of hits for the object with the specified UID.
+
+getTotalHitCount()
+    Get the total number of hits for all objects being tracked.
+
+getHitRate(uid)
+    Get the current number of hits per week for the current object.  The hit
+    rate is tracked using an exponential weighting, so the rate should be up
+    to date.  I.e., if your object gets 100 hits per week for a year, then this
+    week it suddenly gets 10,000 getHitRate will return something close to 10,000
+    hits/week during the week of the spike.
+

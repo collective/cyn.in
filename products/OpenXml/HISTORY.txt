@@ -1,0 +1,28 @@
+#######
+History
+#######
+
+1.0.0
+#####
+
+https://svn.plone.org/svn/collective/Products.OpenXml/tags/1.0.0
+
+* Added new mime types to the "mimetypes" standard module (should be
+  done by openxmllib in next release)
+  [glenfant]
+
+* Transform support when mime type is not provided but the filename is
+  available.
+  [glenfant]
+
+* Log the error message and traceback when the user provides a crappy
+  file.
+  [glenfant]
+
+1.0.0 beta 1
+############
+
+https://svn.plone.org/svn/collective/Products.OpenXml/tags/1.0.0-beta1/
+
+* First public release
+  [glenfant]

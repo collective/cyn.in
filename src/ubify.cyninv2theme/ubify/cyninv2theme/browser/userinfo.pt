@@ -1,0 +1,141 @@
+<tal:comment replace="nothing">
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see http://www.gnu.org/licenses/.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+</tal:comment>
+<html tal:condition="request/userid|nothing" i18n:domain="cynin">
+<body tal:define="userid request/userid;
+                roles request/rolelist|nothing;
+                portrait python: here.portal_membership.getPersonalPortrait(userid);
+                portal_url here/portal_url;
+                portal_state context/@@plone_portal_state;
+                portal portal_state/portal;
+                member python:portal_state.member();
+                logout_url python:portal_url + '/logout';
+                site_properties python:portal.portal_properties.site_properties;
+                logout_url python:hasattr(site_properties,'logout_url') and site_properties.logout_url != '' and site_properties.logout_url or logout_url;
+                profile string:${portal_url}/author/${userid};
+                home string:${portal_url}/Members/${userid}/public;
+                mtool python:context.portal_membership;
+                objUser python:mtool.getMemberInfo(userid);
+                pUser python:mtool.acl_users.getUserById(userid);
+                usrGroups python:view.getGroups(pUser);
+                fullname objUser/fullname | string:Name not set;
+                fullname python:(fullname is not None and fullname is '' and 'Name not set') or fullname;
+                allowed_types python:view.allowed_types;
+                qs_allowed_types python:view.getportaltypes();
+                types_to_searchfor_recent python:('Blog Entry','Document','Event','File','Image','Link','StatuslogItem','Video','Discussion','Audio');
+                results python:modules['ubify.cyninv2theme.portlets.statistics'].getRecentContributionForUser(context,userid,types_to_searchfor_recent,records=5);
+                recent python:len(results) > 0 and results[0] or [];
+                morecount python:len(results) > 1 and results[1] or 0;
+                recentitemsmorelink python:len(results) > 2 and (results[2] % ('/app_all',)) or '#';
+                userspaceexists python:view.isUserSpaceExists(mtool,userid);
+                status_messages python: context.portal_catalog.searchResults(Creator = userid,portal_type=('StatuslogItem',),sort_on = 'created',sort_order='reverse');
+                recent_message python:status_messages[:1];
+                is_status_set python:len(recent_message);
+                is_slog_exists python:view.isUserStatuslogExists(mtool,userid);
+                new_status_link string:${portal_url}/Members/${userid}/createObject?type_name=StatuslogItem;
+                authorEx python:modules['ubify.cyninv2theme'].getAuthorInfo(context, userid);
+                isauthenticated python: modules['ubify.cyninv2theme'].checkHasPermission('Set own password', here);
+                " >
+<tal:notanonymous tal:condition="isauthenticated">
+    <div class="infotipholder">
+        <div class="infotiptitle">
+            <a class="btclose" href="javascript:void(jq('.avatarlink').btOff());"><img tal:attributes="src string:${portal_url}/icon-close.png" /></a>
+            <tal:title tal:content="fullname" />
+        </div>
+        <div class="cluetipbottompart">
+            <div class="cluetipavatarrow">
+                <a tal:attributes="href profile" class="infotipavatar" title="See Full Profile" i18n:attributes="title">
+                    <img tal:attributes="src portrait/absolute_url" />
+                </a>
+                <label tal:condition="is_status_set" i18n:translate="label_current_status">Current Status: </label>
+                <div class="infotipstatusmessage" tal:condition="is_status_set"><a tal:define="message python:recent_message[0].getObject()" tal:attributes="href message/absolute_url" class="normallink"><tal:status tal:content="python:recent_message[0].Title" /></a></div>
+                <div tal:condition="python: not is_status_set" i18n:translate=""><tal:block tal:replace="userid" i18n:name="userid"/> has not set a status message yet.</div>
+                <tal:notanonymous tal:condition="isauthenticated"><div tal:condition="python:view.isCurrentUser(userid) and is_slog_exists"><a tal:attributes="href new_status_link;" i18n:translate="" class="normallink">Set your status here</a></div></tal:notanonymous>
+            </div>
+            <div class="cluetiprowheader" ><label i18n:translate="">Username: </label><span tal:content="string:${userid}" /></div>
+            <tal:ExtraInfo tal:condition="authorEx">
+                <div class="cluetiprowheader" tal:define="designation python:authorEx.getProperty('designation');" tal:condition="designation"><label i18n:translate="">Designation: </label><span tal:content="designation" /></div>
+                <div class="cluetiprowheader" tal:define="phone_mobile python:authorEx.getProperty('phone_mobile');" tal:condition="phone_mobile"><label i18n:translate="">Mobile: </label><span tal:content="phone_mobile"/></div>
+            </tal:ExtraInfo>
+            <div tal:condition="python: usrGroups and isauthenticated" class="cluetiprowheader">
+                <label i18n:translate="">In Groups:</label>
+                <tal:groups tal:repeat="grp usrGroups">
+                    <span tal:content="grp"/>
+                    <tal:separator condition="not: repeat/grp/end">, </tal:separator>
+                </tal:groups>
+            </div>
+            <div tal:condition="roles">
+                <div class="cluetiprowheader"><label i18n:translate="">Roles in this Space:</label></div>
+                <span tal:content="roles"/>
+            </div>
+            <div tal:condition="recent">
+                <div><label i18n:translate="">Recent Entries:</label></div>
+                <tal:recentitems>
+                    <div class="cluetiprecentitems" >
+                        <tal:recentitems tal:repeat="obj recent">
+                            <a
+                               tal:define="item obj/getObject;ptype item/portal_type;ptobj python:context.portal_types[ptype];itemurl item/absolute_url;displayTitle obj/Title;"
+                               tal:attributes="href string:${itemurl}/view;title displayTitle" class="normallink">
+                                <img tal:attributes="src ptobj/content_icon" /><tal:linktext tal:replace="displayTitle" />
+                            </a>
+                        </tal:recentitems>
+                    </div>
+                </tal:recentitems>
+            </div>
+            <div tal:condition="python:morecount > 0" class="cluetipmoreholder">
+                <a tal:attributes="href recentitemsmorelink;" i18n:translate="" class="normallink"><tal:block i18n:name="lbl_recententry" tal:content="string:${morecount}" /> More</a>
+            </div>
+            <div class="cluetiplinksrow">
+                <a tal:attributes="href profile" class="smallwhitebutton" i18n:translate="">Full User Profile</a>
+            </div>
+        </div>
+    </div>
+</tal:notanonymous>
+<tal:anonymous>
+    <div class="infotipholder" tal:condition="python: not isauthenticated">
+        <div class="infotiptitle">
+            <a class="btclose" href="javascript:void(jq('.avatarlink').btOff());"><img tal:attributes="src string:${portal_url}/icon-close.png" /></a>
+            <span i18n:translate="">Login required!</span>
+        </div>
+        <div class="cluetipbottompart" i18n:translate="">
+         You need to login or register to view user profile details.
+        </div>
+    </div>
+</tal:anonymous>
+</body>
+</html>

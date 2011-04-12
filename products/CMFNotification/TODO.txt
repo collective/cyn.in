@@ -1,0 +1,34 @@
+- rename 'tests/utils.py'  as 'tests/base.py' (after all commits in tests)
+
+- release
+
+- remove 'tests/framework.py' (and lines that uses it) since it is not
+  used anymore (or is it?)
+
+- write an handler for GenericSetup
+
+- implement additional notification:
+  - item copied and pasted
+  - item moved (cut and pasted)
+  - item removed
+  - item renamed
+  - discussion item added
+  - discussion item removed (?)
+  - new member registered
+  - member property modified
+
+- add the ability to disallow security check for each rule. Something
+  like:
+
+      * :: here/getReviewers :: python: True
+
+  The third component of the rule would be labeled "trusted". If the
+  second component of the rule is trusted, then no security chek is
+  done.
+
+- use KSS for the "Subscribe/unsubscribe" button in the portlet
+
+- add a "Manage my subscriptions page" (a variation of the site map),
+  which list the subscriptions of the logged-in user;
+
+- add a "Manage subscriptions" page for portal administrators.

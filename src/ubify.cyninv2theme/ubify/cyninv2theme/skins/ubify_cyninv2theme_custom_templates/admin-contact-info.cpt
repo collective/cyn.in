@@ -1,0 +1,191 @@
+<tal:comment replace="nothing">
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see http://www.gnu.org/licenses/.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+</tal:comment>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="cynin">
+
+<head>
+    <metal:noborder fill-slot="top_slot"
+                 tal:define="dummy python:request.set('disable_border',1)" />
+</head>
+
+<body>
+
+
+<div metal:fill-slot="auth_slot"
+     tal:define="email_from_address portal/email_from_address">
+    <tal:macro metal:use-macro="here/login_form/macros/loginboxcontainer">
+            <tal:overridemacro metal:fill-slot="loginmainarea">
+		<fieldset class="contentheaderlabel"><legend i18n:translate="heading_contact_form">Contact Administration Staff</legend></fieldset>
+                <div metal:use-macro="here/global_statusmessage/macros/portal_message" />
+                    <div tal:condition="not:email_from_address">
+
+                        <p class="documentDescription"
+                           i18n:translate="text_no_email_setup">
+                            This site doesn't have a valid email setup, so you cannot use
+                            any contact forms.
+                        </p>
+
+                    </div>
+                        <div class="loginbottompart" tal:condition="email_from_address">
+
+                            <form name="feedback_form"
+                                class="enableAutoFocus"
+                                action=""
+                                method="post"
+                                tal:define="errors options/state/getErrors"
+                                tal:attributes="action string:$here_url/$template_id">
+
+                            <fieldset>
+                            <tal:feedbackForm condition="isAnon">
+                              <div class="field"
+                              tal:define="error errors/sender_fullname|nothing"
+                              tal:attributes="class python:test(error, 'field error', 'field')">
+                              <label for="sender_fullname" i18n:translate="label_sender_fullname">
+                                Name
+                              </label>
+                              <div tal:content="error" class="fielderror"><tal:comment replace="nothing">Validation error output</tal:comment></div>
+                              <input type="text"
+                                     id="sender_fullname"
+                                     class="inputboxes"
+                                     name="sender_fullname"
+                                     size="40"
+                                     value=""
+                                     tal:attributes="value request/sender_fullname|nothing"
+                                     />
+                            </div>
+                            <div class="field"
+                              tal:define="error errors/sender_from_address|nothing"
+                              tal:attributes="class python:test(error, 'field error', 'field')">
+                              <label for="sender_from_address" i18n:translate="label_sender_from_address">
+                                E-Mail
+                              </label>
+                              <span class="fieldRequired" title="Required"
+                                      i18n:attributes="title title_required;"
+                                      i18n:translate="label_required">(Required)</span>
+
+                              <div tal:content="error" class="fielderror"><tal:comment replace="nothing">Validation error output</tal:comment></div>
+
+                              <input type="text"
+                                     id="sender_from_address"
+                                     name="sender_from_address"
+                                     size="40"
+                                     value=""
+                                     class="inputboxes"
+                                     tal:attributes="value request/sender_from_address|nothing"
+                                     />
+                            </div>
+                            </tal:feedbackForm>
+                            <tal:feedbackForm condition="not:isAnon"
+                                              tal:define="fullname python:request.get('fullname', member.getProperty('fullname', ''));
+                                                          email python:request.get('email', member.getProperty('email',''));">
+                                <input type="hidden" name="sender_fullname" value="fullname" tal:attributes="value fullname" />
+                                <input type="hidden" name="sender_from_address" value="email" tal:attributes="value email" />
+                            </tal:feedbackForm>
+                            <div class="field"
+                              tal:define="error errors/subject|nothing"
+                              tal:attributes="class python:test(error, 'field error', 'field')">
+                              <label for="subject" i18n:translate="label_subject">
+                                Subject
+                              </label>
+                              <span class="fieldRequired" title="Required"
+                                      i18n:attributes="title title_required;"
+                                      i18n:translate="label_required">(Required)</span>
+
+                              <div tal:content="error" class="fielderror"><tal:comment replace="nothing">Validation error output</tal:comment></div>
+
+                              <input type="text"
+                                     id="subject"
+                                     class="subject inputboxes"
+                                     name="subject"
+                                     size="25"
+                                     value=""
+                                     tal:attributes="value request/subject|nothing"
+                                     />
+                            </div>
+                            <div class="field"
+                              tal:define="error errors/message|nothing"
+                              tal:attributes="class python:test(error, 'field error', 'field')">
+                              <label for="message" i18n:translate="label_message">
+                                Message
+                              </label>
+                              <span class="fieldRequired" title="Required"
+                                      i18n:attributes="title title_required;"
+                                      i18n:translate="label_required">(Required)</span>
+                              <div tal:content="error" class="fielderror"><tal:comment replace="nothing">Validation error output</tal:comment></div>
+
+                              <textarea name="message"
+                                         class="message inputboxes"
+                                        id="message"
+                                        rows="5"
+                                        cols="25"
+                                        tal:content="request/message|nothing"
+                                        > </textarea>
+                            </div>
+
+                            <div class="formControls">
+
+                                <input class="context"
+                                       type="submit"
+                                       name="form.button.Send"
+                                       value="Send"
+                                       i18n:attributes="value label_send;"
+                                       />
+
+                            </div>
+
+                            </fieldset>
+
+                            <input type="hidden" name="form.submitted" value="1" />
+
+                            </form>
+                            </div>
+                    <tal:definitions tal:define="login_name python: ''; came_from python: ''">
+                        <tal:usemacro metal:use-macro="here/login_form/macros/cynin_small_colophon" />
+                    </tal:definitions>
+                </tal:overridemacro>
+        </tal:macro>
+</div>
+
+</body>
+</html>

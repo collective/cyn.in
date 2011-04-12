@@ -1,0 +1,54 @@
+<tal:language
+    tal:define="available view/available;
+                languages view/languages;
+                showFlags view/showFlags;"
+    i18n:domain="cynin"
+    tal:condition="python:available and len(languages)>=2">
+    <div class="helpblockcontainer portletWrapper languageselection">
+        <div class="helpblockrow helpmenurow">
+            <div><label i18n:translate="choose_language_label">Choose language:</label>
+                <ul id="portal-languageselector">
+            
+                    <li tal:condition="showFlags"
+                        tal:repeat="lang languages">
+                        <span tal:define="code lang/code;
+                                          selected lang/selected"
+                              tal:omit-tag="selected">
+            
+                            <a href=""
+                               tal:define="flag lang/flag|nothing;
+                                           name lang/native"
+                               tal:attributes="href string:${here/absolute_url}/switchLanguage?set_language=${code};
+                                               title name">
+                                <tal:flag condition="flag">
+                                    <img width="14"
+                                         height="11"
+                                         alt=""
+                                         tal:attributes="src string:${view/portal_url}${flag};
+                                                         title python: name;
+                                                         class python: selected and 'currentItem' or '';" />
+                                </tal:flag>
+                                <tal:nonflag condition="not: flag">
+                                    <span tal:replace="code">language code</span>
+                                </tal:nonflag>
+                            </a>
+            
+                        </span>
+                    </li>
+            
+                    <li tal:condition="not: showFlags">
+                        <select id="languageselectorcombo"
+                                onchange=""
+                                tal:attributes="onchange string:window.location='${context/absolute_url}/switchLanguage?set_language=' + this.options[this.selectedIndex].value">
+                            <option tal:repeat="lang languages"
+                                    tal:content="string: ${lang/name} - ${lang/native}"
+                                    tal:attributes="selected lang/selected;
+                                                    value lang/code"><tal:comment replace="nothing">Language</tal:comment></option>
+                        </select>
+                    </li>
+            
+                </ul>
+            </div>
+        </div>
+    </div>
+</tal:language>

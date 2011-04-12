@@ -1,0 +1,78 @@
+<div metal:define-macro="form">
+
+  <h1  i18n:translate=""
+       tal:condition="view/label"
+       tal:content="view/label"
+       metal:define-slot="heading"
+       >Do something</h1>
+
+  <metal:block define-macro="header">
+
+    <div class="form-status"
+       tal:define="status view/status"
+       tal:condition="status">
+
+      <div class="summary"
+           i18n:translate=""
+           tal:content="view/status">
+        Form status summary
+      </div>
+
+      <ul id="formlib-errors" class="errors" tal:condition="view/errors">
+         <li tal:repeat="error view/error_views">
+            <span tal:replace="structure error">Error Type</span>
+         </li>
+      </ul>
+    </div>
+
+  </metal:block>
+
+  <div metal:define-slot="extra_info" tal:replace="nothing">
+  </div>
+  <fieldset>
+  <tal:block tal:repeat="widget view/widgets">
+    <div class="field"
+         tal:define="description widget/hint;
+                     error widget/error"
+         tal:attributes="class python:'field'+(error and ' error' or '')">
+          <label tal:attributes="for widget/name">
+            <span i18n:translate=""
+                  tal:content="widget/label">label</span>
+          </label>
+          <span class="fieldRequired" title="Required" tal:condition="widget/required" i18n:attributes="title;" i18n:translate="">
+            (Required)
+          </span>
+          
+          <div class="formHelp"
+               i18n:translate=""
+               tal:content="description"
+               tal:condition="description"
+               >field description</div>
+          <div tal:condition="error" tal:content="error">
+            The Error
+          </div>
+          <div class="widget" tal:content="structure widget">
+          <input type="text" /></div>
+            <!-- TODO Put this back, the Zope3 way.
+            <img src="alert.gif" alt="Error"
+            tal:replace="structure context/alert.gif" />
+            -->
+    </div>
+  </tal:block>
+
+  <metal:block define-slot="above_buttons" />
+  <div id="actionsView">
+    <span class="actionButtons"
+          tal:condition="view/availableActions"
+          metal:define-slot="bottom_buttons">
+      <input tal:repeat="action view/actions"
+             tal:replace="structure action/render"
+             />
+    </span>
+  </div>
+  </fieldset>
+  <script type="text/javascript"
+          tal:define="extra_script view/extra_script | nothing"
+          tal:condition="extra_script"
+          tal:content="structure extra_script" />
+</div>

@@ -1,0 +1,181 @@
+<?xml version="1.0"?>
+<!--
+cyn.in is an open source Collaborative Knowledge Management Appliance that 
+enables teams to seamlessly work together on files, documents and content in 
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license 
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software 
+Foundation, either version 3 of the License, or any later version and observe 
+the Additional Terms applicable to this program and must display appropriate 
+legal notices. In accordance with Section 7(b) of the GNU General Public 
+License version 3, these Appropriate Legal Notices must retain the display of 
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have 
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program.  If not, see <http://www.gnu.org/licenses/>.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in. 
+For any queries regarding the licensing, please send your mails to 
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+-->
+<dc-workflow workflow_id="ubify_views_workflow"
+             title="Workflow for views"
+             description="Simple workflow that is intended for usage as default workflow for views in cyn.in site."
+             state_variable="review_state"
+             initial_state="published"
+             xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+             i18n:domain="cynin"
+             i18n:attributes="title; description">
+  <permission>Access contents information</permission>
+  <permission>Modify portal content</permission>
+  <permission>View</permission>  
+  <permission>Delete objects</permission>
+  <permission>Add portal content</permission>
+  <permission>Add portal topics</permission>
+
+  <state state_id="published" title="Published to Viewers" i18n:attributes="">
+    <description i18n:translate="">
+      All members with view privileges can access this content
+    </description>    
+    <permission-map name="Access contents information" acquired="False">
+      <permission-role>Editor</permission-role>
+      <permission-role>Manager</permission-role>
+      <permission-role>Owner</permission-role>
+      <permission-role>Reader</permission-role>      
+      <permission-role>Contributor</permission-role>
+      <permission-role>Reviewer</permission-role>
+      <permission-role>Member</permission-role>
+    </permission-map>
+    <permission-map name="Modify portal content" acquired="False">      
+      <permission-role>Manager</permission-role>
+      <permission-role>Owner</permission-role>
+      <permission-role>Contributor</permission-role>
+      <permission-role>Editor</permission-role>
+    </permission-map>
+    <permission-map name="View" acquired="False">
+      <permission-role>Editor</permission-role>
+      <permission-role>Manager</permission-role>
+      <permission-role>Owner</permission-role>
+      <permission-role>Reader</permission-role>      
+      <permission-role>Contributor</permission-role>
+      <permission-role>Reviewer</permission-role>
+      <permission-role>Member</permission-role>
+    </permission-map>    
+    <permission-map name="Delete objects" acquired="False">
+      <permission-role>Manager</permission-role>
+      <permission-role>Editor</permission-role>      
+      <permission-role>Owner</permission-role>
+    </permission-map>
+    <permission-map name="Add portal topics" acquired="False">
+      <permission-role>Manager</permission-role>    
+      <permission-role>Editor</permission-role>    
+      <permission-role>Owner</permission-role>
+      <permission-role>Member</permission-role>
+    </permission-map>
+  </state>
+
+  <transition transition_id="publish"
+              title="Publish to Viewers"
+              new_state="published" trigger="USER"
+              before_script="" after_script="" i18n:attributes="title">
+    <description i18n:translate="">
+      Make this content accessible to the members with viewing privileges
+    </description>
+    <action url="%(content_url)s/content_status_modify?workflow_action=publish"
+            category="workflow" i18n:translate="">Publish to Viewers</action>
+    <guard>
+      <guard-permission>Modify portal content</guard-permission>
+    </guard>
+  </transition>
+  <transition transition_id="retract"
+              title="Retract to Private"
+              new_state="private" trigger="USER"
+              before_script="" after_script="" i18n:attributes="title">
+    <description i18n:translate="">Retract this content to a private draft state</description>
+    <action url="%(content_url)s/content_status_modify?workflow_action=retract"
+            category="workflow" i18n:translate="">Retract to Private</action>
+    <guard>
+      <guard-permission>Modify portal content</guard-permission>
+    </guard>
+  </transition>
+  <worklist worklist_id="reviewer_queue" title="">
+    <description>Reviewer tasks</description>
+    <action url="%(portal_url)s/search?review_state=pending"
+            category="global">Pending (%(count)d)</action>
+    <guard>
+      <guard-permission>Review portal content</guard-permission>
+    </guard>
+    <match name="review_state" values="pending"/>
+  </worklist>
+  <variable variable_id="action" for_catalog="False"
+            for_status="True" update_always="True">
+    <description>Previous transition</description>
+    <default>
+
+      <expression>transition/getId|nothing</expression>
+    </default>
+    <guard>
+    </guard>
+  </variable>
+  <variable variable_id="actor" for_catalog="False"
+            for_status="True" update_always="True">
+    <description>The ID of the user who performed the previous transition</description>
+    <default>
+
+      <expression>user/getUserName</expression>
+    </default>
+    <guard>
+    </guard>
+  </variable>
+  <variable variable_id="comments" for_catalog="False"
+            for_status="True" update_always="True">
+    <description>Comment about the last transition</description>
+    <default>
+
+      <expression>python:state_change.kwargs.get('comment', '')</expression>
+    </default>
+    <guard>
+    </guard>
+  </variable>
+  <variable variable_id="review_history" for_catalog="False"
+            for_status="False" update_always="False">
+    <description>Provides access to workflow history</description>
+    <default>
+
+      <expression>state_change/getHistory</expression>
+    </default>
+    <guard>
+      <guard-permission>Request review</guard-permission>
+      <guard-permission>Review portal content</guard-permission>
+    </guard>
+  </variable>
+  <variable variable_id="time" for_catalog="False"
+            for_status="True" update_always="True">
+    <description>When the previous transition was performed</description>
+    <default>
+
+      <expression>state_change/getDateTime</expression>
+    </default>
+    <guard>
+    </guard>
+  </variable>
+</dc-workflow>

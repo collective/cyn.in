@@ -1,0 +1,249 @@
+<tal:comment replace="nothing">
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see http://www.gnu.org/licenses/.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+</tal:comment>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="cynin">
+<head>
+    <metal:block metal:fill-slot="head_slot">
+        <link rel="alternate" title="RSS 1.0" i18n:attributes="title;" type="application/rss+xml"
+              tal:condition="request/SearchableText|nothing"
+              tal:attributes="href string:$here_url/search_rss?${request/QUERY_STRING}" />
+    </metal:block>
+
+    <metal:block fill-slot="top_slot"
+                 tal:define="dummy python:request.set('disable_border',1)" />
+    <metal:block fill-slot="column_one_slot" />
+    <metal:block fill-slot="column_two_slot" />
+</head>
+
+<body>
+    <tal:titlebarslot metal:fill-slot="titlebar-row1">
+	    <tal:titlemacrooverride metal:define-macro="itemtitle">
+		<div id="typeindicator">
+		    <img tal:attributes="src string:${portal_url}/icon-magnifier.png"/>
+		    <tal:translate i18n:translate="">Search</tal:translate>
+		</div>
+		<div id="maintitleholder"
+		    tal:define="url_unquote_plus python:modules['Products.PythonScripts.standard'].url_unquote_plus;
+				author python:(len(request.traverse_subpath) > 0 and url_unquote_plus(request.traverse_subpath[0])) or request.get('author', None) or (member and member.getId());
+			    authorinfo python: mtool.getMemberInfo(author);">
+		    <h1 id="maintitle" tal:define="item_title context/Title">
+                        <tal:itemtitle tal:replace="item_title"/>
+		    </h1>
+		</div>
+	    </tal:titlemacrooverride>
+    </tal:titlebarslot>
+
+<div metal:fill-slot="content"
+     tal:define="use_types_blacklist request/use_types_blacklist | python:True;
+                 use_navigation_root request/use_navigation_root | python:True;
+                 results python:here.queryCatalog(REQUEST=request,use_types_blacklist=use_types_blacklist, use_navigation_root=use_navigation_root);
+                 Batch python:modules['Products.CMFPlone'].Batch;
+                 b_size python:30;b_start python:0;b_start request/b_start | b_start;
+                 desc_length site_properties/search_results_description_length;
+                 desc_ellipsis site_properties/ellipsis;
+                 searchterm request/SearchableText|nothing;
+                 use_view_action site_properties/typesUseViewActionInListings|python:();">
+<div id="outersearch">
+    <form name="searchform"
+          action="search"
+          class="searchPage">
+        <input class="searchPage searchpagetextbox"
+               name="SearchableText"
+               type="text"
+               size="50"
+               title="Search Site"
+               i18n:attributes="title title_search_title;"
+               tal:attributes="value request/SearchableText|nothing;"
+               />
+        <input class="searchPage searchButton context"
+               type="submit"
+               value="Search"
+               i18n:attributes="value label_search;"/>
+
+
+    <div>
+        <span i18n:translate="heading_search_results">
+            Search results
+        </span>
+        <span>
+        &mdash;
+        <span i18n:translate="batch_x_items_matching_your_criteria">
+        <span i18n:name="number"
+        tal:content="python:len(results)">234</span> items matching your search terms</span></span>
+    </div>
+
+    <div
+       tal:condition="syntool/isSiteSyndicationAllowed">
+        <a href=""
+           class="link-feed smallwhitebutton"
+           tal:attributes="href string:$here_url/search_rss?${request/QUERY_STRING}">
+            <img tal:attributes="src string:${portal_url}/icon-feed.png" />
+             <tal:block
+           i18n:translate="title_rss_feed">
+Subscribe to an always-updated feed of these search terms</tal:block></a>
+    </div>
+
+
+    <div tal:condition="not: results">
+        <p><strong i18n:translate="description_no_results_found">No results were found.</strong></p>
+    </div>
+
+
+
+
+
+        <div class="discreet">
+        <tal:translate i18n:translate="search_results_advanced_did_not_find_try_the">Did you not find what you were looking for? Try the</tal:translate>
+        <span>
+        <a i18n:translate="search_results_advanced_link"
+           tal:attributes="href string:$portal_url/search_form?SearchableText=${request/SearchableText|python:''}">Advanced Search</a>
+        </span>
+        <tal:translate i18n:translate="to_refine_your_search">to refine your search.</tal:translate>
+        </div>
+    </form>
+
+
+    <div tal:condition="results"
+          tal:define="batch python:Batch(results, b_size, int(b_start), orphan=1);">
+
+        <dl class="searchResults" id="content">
+        <tal:results repeat="result batch">
+        <tal:entry define="result_url result/getURL;
+                           result_type result/portal_type;
+                           object_typeobj python:context.portal_types[result_type];
+                           typeiconname python:object_typeobj.content_icon;
+                           item_icon python:plone_view.getIcon(result);
+                           url python:'%s?searchterm=%s'%(test(result_type in use_view_action, result_url+'/view', result_url+'/'), searchterm);
+                           url python:test(result_type != 'Discussion Item',url,'%s?searchterm=%s#%s' % (result_url.replace('/talkback/' + result.getId, '/view') , searchterm,result.getId) );">
+            <div class="searchresultitem">
+                <dt tal:define="item_wf_state_class string:state-${result/review_state};"
+                    tal:attributes="class python:'contenttype-' + normalizeString(result.portal_type)">
+
+                    <div class="listtypelabel">
+                        <img
+                            tal:attributes="src string:${portal_url}/${typeiconname}"
+                            tal:define="portal_url here/portal_url;"
+                            class="valignmiddle"
+                        />
+                        <tal:type tal:content="python:object_typeobj.title" />
+                    </div>
+                    <h2>
+			<a href="#" tal:attributes="href url;class string:$item_wf_state_class" tal:content="result/pretty_title_or_id"
+			   tal:condition="python:result_type not in ('Discussion Item',)"/>
+			<a href="#" tal:attributes="href url;class string:$item_wf_state_class" tal:condition="python:result_type in ('Discussion Item',)">
+			    <span tal:content="structure python:plone_view.cropText(result.getObject().text.decode('ascii','ignore'), desc_length, desc_ellipsis)" />
+			</a>
+		    </h2>
+                </dt>
+
+                <dd>
+                    <span tal:content="structure python:plone_view.cropText(result.Description.decode('ascii','ignore'), desc_length, desc_ellipsis)">
+                        <tal:comment replace="nothing">Cropped description</tal:comment>
+                    </span>
+
+                <div class="searchresultsauthorrow"
+                      tal:condition="python:not isAnon or site_properties.allowAnonymousViewAbout">
+                    <span>
+                    <tal:block i18n:translate="by">by</tal:block>
+                    <a
+                       tal:attributes="rel string:${portal_url}/userinfo?userid=${result/Creator}"
+                       tal:content="result/Creator"
+                       tal:omit-tag="not:result/Creator"
+                       class="itemauthor avatarlink">
+                    <tal:comment replace="nothing">Bob Dobalina</tal:comment>
+                    </a>
+
+                    </span>
+
+                    <span class="documentModified">
+                      &mdash;
+                        <span i18n:translate="box_last_modified">
+                        Last modified
+                        </span>
+                        <span tal:define="lstmdate python:toLocalizedTime(result.ModificationDate, long_format=1)" class="" tal:attributes="title string:${lstmdate}" tal:content="lstmdate">
+                        <tal:comment replace="nothing">August 16, 2001 at 23:35:59</tal:comment>
+                        </span>
+                    </span>
+
+
+                    <span id="category"
+                          tal:define="categories result/Subject|nothing"
+                          tal:condition="categories">
+                        &mdash;
+                        <tal:filedunder i18n:translate="label_filed_under">filed under:</tal:filedunder>
+                            <span tal:repeat="category categories">
+                                <a href=""
+                                   class="link-category"
+                                   rel="tag"
+                                   tal:content="category"
+                                   tal:attributes="href string:${portal_url}/search?Subject%3Alist=${category}">
+                                   <tal:comment replace="nothing">Category</tal:comment>
+                                </a><tal:separator condition="not: repeat/category/end">,</tal:separator>
+                            </span>
+                    </span>
+
+                    <span class="relevance"
+                          tal:condition="result/data_record_normalized_score_">
+                        &mdash;
+                        <tal:relevance i18n:translate="label_relevance_percentage">
+                        Relevance:
+                            <span tal:content="result/data_record_normalized_score_"
+                                   i18n:name="percentage">23</span>%
+                        </tal:relevance>
+                    </span>
+                </div>
+
+                </dd>
+            </div>
+        </tal:entry>
+        </tal:results>
+        </dl>
+
+        <div metal:use-macro="here/batch_macros/macros/navigation" />
+
+    </div>
+</div>
+</div>
+</body>
+</html>

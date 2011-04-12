@@ -1,0 +1,127 @@
+<tal:comment replace="nothing">
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see http://www.gnu.org/licenses/.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+</tal:comment>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
+      lang="en-US"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="cynin">
+<head>
+    <metal:block metal:fill-slot="head_slot" tal:define="qpt string:portal_type=Image">
+	<tal:rssmacro metal:use-macro="here/rss_macro/macros/rss_list_macro" />        
+    </metal:block>
+</head>
+<body>
+    <div metal:fill-slot="content" class="gallerymaincontainer">
+        <metal:main_macro define-macro="main"
+         tal:define="result result|nothing;
+                     result python:result or here.atctListAlbum(images=1, folders=1, subimages=0, others=0);
+                     images result/images;
+                     albums result/folders|nothing;
+                     otherContents result/others|nothing;
+                     Batch python:modules['Products.CMFPlone'].Batch;
+                     b_start python:request.get('b_start', 0);
+                     kssClassesView context/@@kss_field_decorator_view;
+                     getKssClasses nocall:kssClassesView/getKssClassesInlineEditable;
+                     templateId template/getId;
+                     limit_display limit_display|python:24;
+                     batch python:Batch(images, limit_display, int(b_start), orphan=1)">
+            <div tal:replace="structure provider:plone.abovecontenttitle" />
+            <div tal:replace="structure provider:plone.abovecontentbody" />
+            <div metal:define-macro="text-field-view"
+                 id="parent-fieldname-text" class="stx"
+                 tal:define="kss_class python:getKssClasses('text',
+                             templateId=templateId, macro='text-field-view');
+                             text here/getText|nothing"
+                 tal:condition="text"
+                 tal:attributes="class python:test(here.Format() in ('text/structured',
+                                                       'text/x-rst', ), 'stx' + kss_class, 'plain' + kss_class)">
+                <div metal:define-slot="inside" tal:replace="structure text">The body</div>
+            </div>
+            <div class="gallerymainholder" tal:condition="python:albums or images">
+                <tal:images tal:condition="batch" tal:repeat="image batch">
+                    <div class="photoAlbumEntry">
+                        <a class="lightboxphotoentry lightbox"
+                           tal:attributes="href string:${image/absolute_url}/image_preview;
+                                           title python:image.pretty_title_or_id();
+                                           targetURL string:${image/absolute_url}/view;
+                                           "
+                             rel="gal1">
+                            <img tal:replace="structure python:image.tag(scale='thumb', title=image.Description())" />
+                        </a>
+                        <div class="photoAlbumEntryTitle" tal:content="image/pretty_title_or_id">
+                          <tal:comment replace="nothing">Title</tal:comment>
+                        </div>
+                        <div class="imagesizelinkscontainer">
+                            <span>
+                                <a class="lightbox"
+                                    tal:attributes="href string:${image/absolute_url}/image_preview;
+                                                    title python:image.pretty_title_or_id();"
+                                     rel="gal2"
+                                     i18n:translate="link_image_zoom">
+                                Zoom</a>
+                            </span>
+                            <span class="imagesizelinkseparator">|</span>
+                            <span>
+                                <a tal:attributes="href string:${image/absolute_url}/view;" i18n:translate="link_image_view">View</a>
+                            </span>
+                            <span class="imagesizelinkseparator">|</span>
+                            <span>
+                                <a tal:attributes="href string:${image/absolute_url}/image_view_fullscreen;" i18n:translate="link_image_view_full_size">Full-size</a>
+                            </span>
+                        </div>
+                    </div>
+                </tal:images>
+            </div>
+            <p class="discreet"
+               i18n:translate="text_no_albums_uploaded"
+               tal:condition="python:not (albums or images)">
+                No albums or photos uploaded yet.
+            </p>
+            <div tal:condition="python:albums or images"
+                 metal:use-macro="here/batch_macros/macros/navigation" />
+            <tal:listing condition="otherContents" define="folderContents otherContents">
+                <metal:listing metal:use-macro="here/folder_listing/macros/listing">
+                    <metal:empty metal:fill-slot="no_items_in_listing"></metal:empty>
+                </metal:listing>
+            </tal:listing>
+            <metal:subtopics use-macro="here/atct_topic_view/macros/folderlisting_macro" />
+        </metal:main_macro>
+    </div>
+</body>
+
+</html>

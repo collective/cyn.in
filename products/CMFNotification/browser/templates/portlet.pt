@@ -1,0 +1,77 @@
+<tal:svn-id replace="nothing">$Id: portlet.pt 67788 2008-07-04 08:16:40Z dbaty $</tal:svn-id>
+
+<dl class="portlet portletSubscription"
+    tal:condition="view/available"
+    i18n:domain="cmfnotification">
+
+  <dt class="portletHeader">
+    <span class="portletTopLeft"></span>
+    <span i18n:translate="notification_portlet_header">Mail subscription</span>
+    <span class="portletTopRight"></span>
+  </dt>
+
+  <dd class="portletItem odd"
+      id="subscriptionPortletContent"
+      tal:define="context_url context/absolute_url">
+
+    <tal:subscribed tal:condition="view/is_subscribed">
+      <tal:subscribed-here tal:condition="view/is_subscribed_here">
+        <p i18n:translate="subscribed">You are subscribed to this item.</p>
+        <form name="unsubscribe_form"
+              method="post"
+              tal:attributes="action string:${context_url}/unsubscribe">
+          <input class="context"
+                 type="submit"
+                 name="unsubscribe"
+                 id="unsubscribe"
+                 value="Unsubscribe"
+                 i18n:attributes="value label_unsubscribe"/>
+        </form>
+      </tal:subscribed-here>
+
+      <tal:not-subscribed-here tal:condition="not: view/is_subscribed_here">
+        <tal:unsubscribeFromAbove metal:define-macro="unsubscribeFromAbove">
+          <p i18n:translate="subscribed_above">
+            You are indirectly subscribed to this item, because you are
+            subscribed to one of its parent folder above.
+          </p>
+          <form name="unsubscribe_above_form"
+                method="post"
+                tal:attributes="action string:${context_url}/unsubscribeFromAbove">
+            <input class="context"
+                   type="submit"
+                   name="unsubscribeFromAbove"
+                   id="unsubscribeFromAbove"
+                   value="Unsubscribe"
+                   i18n:attributes="value label_unsubscribe"/>
+          </form>
+        </tal:unsubscribeFromAbove>
+      </tal:not-subscribed-here>
+    </tal:subscribed>
+
+    <tal:not-subscribed tal:condition="not: view/is_subscribed">
+      <form name="subscribe_form"
+            method="post"
+            tal:attributes="action string:${context_url}/subscribe">
+        <div tal:condition="view/isSubscriptionToParentAllowed">
+          <input type="checkbox"
+                 name="subscribe_to_parent"
+                 id="subscribe_to_parent"
+                 value="true"/>
+          <label for="subscribe_to_parent"
+                 i18n:translate="label_subscribe_to_parent">
+            Subscribe to the folder above
+          </label>
+        </div>
+        <div>
+          <input class="context"
+                 type="submit"
+                 name="subscribe"
+                 id="subscribe"
+                 value="Subscribe"
+                 i18n:attributes="value label_subscribe"/>
+        </div>
+      </form>
+    </tal:not-subscribed>
+  </dd>
+</dl>

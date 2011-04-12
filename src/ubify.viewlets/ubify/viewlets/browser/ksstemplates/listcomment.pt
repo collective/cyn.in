@@ -1,0 +1,108 @@
+<tal:comment replace="nothing">
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see http://www.gnu.org/licenses/.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+</tal:comment>
+<tal:definitions tal:define="xmorecomments options/xmorecomments;
+                            showxmorelink options/showxmorelink;
+                            contobj python:options['contobj'];
+                            itemindex options/itemindex;
+                            item_uid options/uid;
+                            item_title_or_id options/title;
+                            comment_count python:options['commentcount'];
+                            ">
+<div class="listitemdetailrowholder" i18n:domain="cynin">
+    <div class="xmorecommentsholder">
+        <a id="comcynapserefreshlistcomments" class="link_refreshtrigger navtipVertical"
+           title="Load new comments by other users" i18n:attributes="title">
+            <img tal:attributes="src string:${here/portal_url}/icon-arrow_refresh.png" />
+        </a>        
+        <span class="xmorecommentstatement nocommentsyet" i18n:translate="nocommentsyet" tal:attributes="style python: comment_count == 0 and  'display:inline' or 'display:none'">
+            There are no comments yet. Be the first to comment!
+        </span>
+        <span class="xmorecommentstatement recentcomments" tal:attributes="id string:commentcountspan${itemindex};style python: showxmorelink and comment_count > 0 and  'display:inline' or 'display:none'">
+            <label i18n:translate="">Recent Comments:</label>
+            <a tal:attributes="href string:${contobj/absolute_url}/view"><span tal:attributes="id string:listdiscussioncount${itemindex}" tal:content="xmorecomments" /> <span i18n:translate="">more</span> &raquo;</a>
+        </span>
+    </div>
+    <div class="listitemcommentscontainer" tal:attributes="id string:comcynapsecyninitemcommentscontainer${itemindex}">
+        <div tal:attributes="id string:comcynapselistcommentscontainer${itemindex}">
+            <tal:getreplies repeat="reply_dict options/reply_dict"
+                tal:define="is_kss_template python:True;userHasReplyPermission options/usercanreply;isDiscussionAllowed options/allowdiscussion">                
+                <tal:commentrow metal:use-macro="here/commentrow_macro/macros/comment_kss_reply" />
+            </tal:getreplies>
+        </div>
+        <div class="inlinereplyform commenttopcontainer" tal:attributes="id string:comcynapsefrmDiscussionAddNew${itemindex}">
+            <form name="frmDiscussionAddNew" method="GET">
+                <a tal:attributes="rel string:${here/portal_url}/userinfo?userid=${userid};
+                                    id string:postcommentavatar${itemindex}"
+                   tal:define="pmt here/portal_membership;
+                   pst here/plone_portal_state;
+                   userid python:pst.member().getId();
+                   portraiturl python:pmt.getPersonalPortrait(userid,1);
+                   "
+                  class="avatarlink myareaavatar commentavatarlink"
+                  >
+                    <img tal:replace="structure portraiturl"/>
+                </a>
+                <div class="commentbodytaholder">
+                    <textarea class="inlinecommentformitem commentbodyta inputLabel"
+                          tal:attributes="id string:taAddNewComment${itemindex};rel itemindex"
+                          name="comcynapsecyninNewCommentBody"
+                          title="Post a comment..." i18n:attributes="title"
+                          rows="1" ></textarea>
+                </div>
+                <div class="commentactionbuttonsrow">
+                    <input type="hidden" name="comcynapsecynincontextUID" tal:attributes="value item_uid" />                    
+                    <input type="hidden" name="comcynapsecyninitemindex" tal:attributes="value itemindex" />
+                    <input type="hidden" name="comcynapsenewcommenttitle" tal:attributes="id string:comcynapsenewcommenttitle${itemindex}" />
+                    <input type="hidden" name="comcynapseviewtype" tal:attributes="id string:comcynapseviewtype${itemindex};value string:listview" />
+                    <input type="hidden" name="comcynapselasttimestamp" tal:attributes="id string:comcynapselasttimestamp${itemindex};value options/lasttimestamp;" />
+                    <input type="hidden" name="comcynapsecommentcount" tal:attributes="id string:comcynapsecommentcount${itemindex};value comment_count" />
+                    <input type="hidden" name="comcynapselastcommentid" tal:attributes="id string:comcynapselastcommentid${itemindex};value options/lastcommentid" />
+                    <input type="button" value="Cancel" class="comcynapsecyninlistcommentcancel cancelbutton" style="display:none" i18n:attributes="value" />
+                    <input type="submit" class="smallwhitebutton allowMultiSubmit comcynapsecyninlistcommentsubmit" style="display:none"
+                           tal:attributes="id string:comcynapsecyninnewcommentsubmit${itemindex}" name="comcynapsecyninnewcommentsubmit" value="Post" i18n:attributes="value button_post_comment"/>
+                </div>
+                <dl tal:attributes="id string:comcynapsecommenterror${itemindex}" class="portalMessage error inlineerror" style="display: none;">
+                    <dt i18n:translate="">Error</dt>
+                    <dd i18n:translate="">Please enter comment text.</dd>
+                </dl>
+            </form>
+        </div>
+    </div>
+</div>
+</tal:definitions>

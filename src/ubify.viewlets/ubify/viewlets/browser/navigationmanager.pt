@@ -1,0 +1,165 @@
+<tal:comment replace="nothing">
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see http://www.gnu.org/licenses/.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+</tal:comment>
+<tal:definitions tal:define="portal_url here/portal_url;portal_state context/@@plone_portal_state;portal portal_state/portal;" i18n:domain="cynin">
+    <div class="portletWrapper verticalnavigationholder" tal:define="currentselection python:modules['ubify.cyninv2theme'].getNavAccordianSelection(here);
+                                                  selectedaccordian currentselection/accordion | request/adminpanel/accordion | nothing;
+                                                  selectedlink currentselection/currentlink | request/adminpanel/currentlink | nothing;">
+        <div class="navTreeHomeholder">
+            <div class="hiddenStructure">
+				<a id="navigationtreehome">.</a>
+			</div>
+            <div tal:define="id string:vp_home;isselected python:selectedlink == id;
+                             item_class python:isselected and 'navTreeCurrentNode navTreeHome forcelink' or 'navTreeHome forcelink'"
+                 tal:attributes="class item_class">
+                <a tal:attributes="href portal_url">
+                    <img tal:attributes="src string:${portal_url}/icon-house.png" border="0" />
+                    <tal:translate i18n:translate="navheader_home">Home</tal:translate>
+                </a>
+            </div>
+        </div>
+        <div id="verticalnavigation">
+            <div class="accordiontab" tal:condition="python: view.showSpaces" >
+                <div class="accordionheader spaces" i18n:translate="navheader_spaces" tal:condition="python: modules['ubify.cyninv2theme'].checkHasPermission('Set own password', here)">Spaces</div>
+                <tal:spacesnav tal:replace="structure provider:ubify.navigationspacesportletmanager" />
+            </div>
+            <div class="accordiontab" tal:condition="view/showCollections">
+                <div class="accordionheader collections" i18n:translate="navheader_collections">Collections</div>
+                <tal:collnav tal:replace="structure provider:ubify.navigationcollectionportletmanager" />
+            </div>
+            <div class="accordiontab" tal:condition="python: modules['ubify.cyninv2theme'].checkHasPermission('Set own password', here)">
+                <div class="accordionheader users" i18n:translate="navheader_people">People</div>
+                <tal:membersnav tal:replace="structure provider:ubify.navigationmembersportletmanager" />
+            </div>
+            <div tal:condition="view/display_managemenu" class="accordiontab">
+                <div  class="accordionheader manage" i18n:translate="navheader_administration">Administration</div>
+                <dl class="portletNavigationTree">
+                    <ul class="navTreeLevel0 navTree">
+                        <li>
+                            <div tal:define="id string:vp_sitelogo;
+                                             item_class string:forcelink navTreeLevel1 navtip;
+                                             isselected python:selectedlink == id;
+                                             item_class python:isselected and item_class + ' navTreeCurrentNode' or item_class"
+                                 tal:attributes="class item_class" title="Change or reset your cyn.in site logo."
+                                  i18n:attributes="title navtip_site_logo">
+                                <a href="" tal:attributes="href string:$portal_url/sitelogo_settings">
+                                    <img tal:attributes="src string:${portal_url}/icon-image_edit.png" border="0" />&nbsp;<tal:translate i18n:translate="navitem_site_logo">Site Logo</tal:translate>
+                                </a>
+                            </div>
+                        </li>
+                        <li>
+                            <div tal:define="id string:vp_mailcontrolpanel;
+                                             item_class string:forcelink navTreeLevel1 navtip;
+                                             isselected python:selectedlink == id;
+                                             item_class python:isselected and item_class + ' navTreeCurrentNode' or item_class"
+                                 tal:attributes="class item_class" title="Email server configuration for outbound email."
+                                  i18n:attributes="title navtip_email_settings">
+                                <a href="" tal:attributes="href string:$portal_url/@@mail-controlpanel">
+                                    <img tal:attributes="src string:${portal_url}/icon-email_error.png" border="0" />&nbsp;<tal:translate i18n:translate="navitem_mail_setup">Mail Setup</tal:translate>
+                                </a>
+                            </div>
+                        </li>
+                        <li>
+                            <div tal:define="id string:vp_usermanagement;
+                                             item_class string:forcelink navTreeLevel1 navtip;
+                                             isselected python:selectedlink == id;
+                                             item_class python:isselected and item_class + ' navTreeCurrentNode' or item_class"
+                                 tal:attributes="class item_class" title="Add, configure and manage users and user related tasks."
+                                  i18n:attributes="title navtip_user_management">
+                                <a href="" tal:attributes="href string:$portal_url/prefs_users_overview">
+                                    <img tal:attributes="src string:${portal_url}/icon-user_add.png" border="0" />&nbsp;<tal:translate i18n:translate="navitem_user_management">User Management</tal:translate>
+                                </a>
+                            </div>
+                        </li>
+                        <li>
+                            <div tal:define="id string:vp_groupmanagement;
+                                             item_class string:forcelink navTreeLevel1 navtip;
+                                             isselected python:selectedlink == id;
+                                             item_class python:isselected and item_class + ' navTreeCurrentNode' or item_class"
+                                 tal:attributes="class item_class" title="Add and configure groups and assign users to them."
+                                  i18n:attributes="title navtip_group_management">
+                                <a href="" tal:attributes="href string:$portal_url/prefs_groups_overview">
+                                    <img tal:attributes="src string:${portal_url}/icon-group_add.png" border="0" />&nbsp;<tal:translate i18n:translate="navitem_group_management">Group Management</tal:translate>
+                                </a>
+                            </div>
+                        </li>
+                        <li>
+                            <div tal:define="id string:vp_sitesetting;
+                                             item_class string:forcelink navTreeLevel1 navtip;
+                                             isselected python:selectedlink == id;
+                                             item_class python:isselected and item_class + ' navTreeCurrentNode' or item_class"
+                                 tal:attributes="class item_class" title="Site wide settings and defaults."
+                                  i18n:attributes="title navtip_site_settings">
+                                <a href="" tal:attributes="href string:$portal_url/@@site-controlpanel">
+                                    <img tal:attributes="src string:${portal_url}/icon-layout_content.png" border="0" />&nbsp;<tal:translate i18n:translate="navitem_site_settings">Site Settings</tal:translate>
+                                </a>
+                            </div>
+                        </li>
+                        <li tal:condition="python:portal.hasObject('recyclebin')">
+                            <div tal:define="id string:vp_recyclebin;
+                                             item_class string:forcelink navTreeLevel1 navtip;
+                                             isselected python:selectedlink == id;
+                                             item_class python:isselected and item_class + ' navTreeCurrentNode' or item_class"
+                                 tal:attributes="class item_class" title="All deleted items end up here. Click on Contents to bulk manage / delete them."
+                                  i18n:attributes="title navtip_recyblebin">
+                                <a href="" tal:attributes="href python:portal.recyclebin.absolute_url() + '/folder_contents'">
+                                    <img tal:attributes="src string:${portal_url}/icon-bin.png" border="0" />&nbsp;<tal:translate i18n:translate="navitem_recycle_bin">Recycle Bin</tal:translate></a>
+                            </div>
+                        </li>
+                        <li>
+                            <div tal:define="id string:vp_controlpanel;
+                                             item_class string:forcelink navTreeLevel1 navtip;
+                                             isselected python:selectedlink == id;
+                                             item_class python:isselected and item_class + ' navTreeCurrentNode' or item_class"
+                                 tal:attributes="class item_class" title="All Configuration options and administration tools are here."
+                                  i18n:attributes="title navtip_control_panel">
+                                <a href="" tal:attributes="href string:$portal_url/plone_control_panel">
+                                    <img tal:attributes="src string:${portal_url}/cynin_icon.png" border="0" />&nbsp;<tal:translate i18n:translate="navitem_control_panel">Control Panel</tal:translate>
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </dl>
+            </div>
+            <tal:block tal:replace="structure string:<script type='text/javascript'>" />
+            <tal:block tal:replace="structure string:var currentaccordion= '${selectedaccordian}'" />
+            <tal:block tal:replace="structure string:</script>" />
+        </div>
+        <tal:macro metal:use-macro="here/navigation_macro/macros/navigation_buttons_block" />
+    </div>
+</tal:definitions>

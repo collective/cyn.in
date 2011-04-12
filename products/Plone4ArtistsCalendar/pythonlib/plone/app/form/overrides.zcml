@@ -1,0 +1,20 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser">
+
+  <view
+      type="zope.publisher.interfaces.browser.IBrowserRequest"
+      for="zope.app.form.interfaces.IWidgetInputError"
+      provides="zope.app.form.browser.interfaces.IWidgetInputErrorView"
+      factory=".exception.WidgetInputErrorView"
+      permission="zope.Public"
+      />
+  
+  <adapter
+      for="zope.formlib.interfaces.IAction"
+      factory="plone.app.form.render_submit_button"
+      name="render"
+      provides="zope.formlib.namedtemplate.INamedTemplate"
+      />
+
+</configure>

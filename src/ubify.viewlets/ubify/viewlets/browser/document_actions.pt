@@ -1,0 +1,22 @@
+<tal:actions i18n:domain="cynin">
+    <tal:docactions tal:condition="view/actions">
+
+    <tal:docactionslist tal:define="normalizeString nocall: context/@@plone/normalizeString">
+    <tal:actions repeat="daction view/actions">
+        <tal:item tal:attributes="id python:'document-action-' + normalizeString(daction['id'])">
+            <a class="simplefloatedlink navtipVertical" href=""
+               tal:attributes="href daction/url;
+                               title daction/description"
+                               i18n:attributes="title">
+                <img tal:define="theicon daction/icon|nothing" tal:attributes="src theicon" tal:condition="theicon"/>
+                <tal:linktext tal:content="daction/title" />
+            </a>
+        </tal:item>
+    </tal:actions>
+
+    </tal:docactionslist>
+    </tal:docactions>
+
+    <div tal:replace="structure provider:plone.documentactions" />
+
+</tal:actions>

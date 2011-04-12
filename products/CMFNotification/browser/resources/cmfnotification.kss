@@ -1,0 +1,18 @@
+dl.portletSubscription #subscribe:click {
+    evt-click-preventdefault: True;
+    action-server: kssSubscribe;
+    kssSubscribe-portlet_hash: kssAttr(portlethash, True);
+    kssSubscribe-subscribe_to_parent: currentFormVar("subscribe_to_parent");
+}
+
+dl.portletSubscription #unsubscribe:click {
+    evt-click-preventdefault: True;
+    action-server: kssUnsubscribe;
+    kssUnsubscribe-portlet_hash: kssAttr(portlethash, True);
+}
+
+dl.portletSubscription #unsubscribeFromAbove:click {
+    evt-click-preventdefault: True;
+    action-server: kssUnsubscribeFromAbove;
+    kssUnsubscribeFromAbove-portlet_hash: kssAttr(portlethash, True);
+}

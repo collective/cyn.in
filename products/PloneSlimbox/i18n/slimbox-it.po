@@ -1,0 +1,35 @@
+# Translation of Plone Slimbox
+# Giorgio, Borelli <giorgio.borelli@redomino.com>, 2007
+msgid ""
+msgstr ""
+"Project-Id-Version: Plone Slimbox\n"
+"POT-Creation-Date: 2007-09-01 12:34+0000\n"
+"PO-Revision-Date: 2007-07-16 20:58+0200\n"
+"Last-Translator: Giorgio Borelli <giorgio.borelli@redomino.com>\n"
+"Language-Team: Giorgio Borelli <giorgio.borelli@redomino.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: it\n"
+"Language-Name: Italiano\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: slimbox\n"
+"X-Is-Fallback-For: it-ch it-it\n"
+
+#. Default: "plone view"
+msgid "plone view"
+msgstr "vista normale"
+
+#. Default: "Click to plone image view..."
+msgid "Click to plone image view..."
+msgstr "clicca per la vista normale..."
+
+#. Default: "full-size"
+msgid "full-size"
+msgstr "dimensioni originali"
+
+#. Default: "Click to view full-size image..."
+msgid "Click to view full-size image..."
+msgstr "Clicca per vedere l'immagine nelle dimenisoni originali..."
+

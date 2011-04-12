@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!-- This file holds the setup configuration for the portal_javascripts tool.
+     -->
+
+<object name="portal_javascripts">
+
+ <!-- Javascript files that will be registered with the
+      portal_javascripts tool are defined here. You can also specify values
+      for existing resources if you need to modify some of their properties.
+      Javascript elements accept these parameters:
+      - 'id' (required): same rules as for stylesheets (see
+        'cssregistry.xml').
+      - 'expression' (optional - default: ''): a tal condition.
+      - 'inline' (optional - default: False)
+      - 'enabled' (optional - default: True): boolean
+      - 'cookable' (optional - default: True): boolean (aka 'merging allowed')
+      See registerScript() arguments in ResourceRegistries/tools/JSRegistry.py
+      for the latest list of all available keys and default values.
+      -->
+<!-- EXAMPLE (UNCOMMENT TO MAKE AVAILABLE):
+ <javascript title=""
+    id="++resource++ubify.ffxmpp.javascripts/something.js"
+    cacheable="False" compression="safe" cookable="False"
+    enabled="True" expression=""  inline="False"/>
+-->
+
+</object>

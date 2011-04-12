@@ -1,0 +1,199 @@
+/*
+cyn.in is an open source Collaborative Knowledge Management Appliance that
+enables teams to seamlessly work together on files, documents and content in
+a secure central environment.
+
+cyn.in v2 an open source appliance is distributed under the GPL v3 license
+along with commercial support options.
+
+cyn.in is a Cynapse Invention.
+
+Copyright (C) 2008 Cynapse India Pvt. Ltd.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or any later version and observe
+the Additional Terms applicable to this program and must display appropriate
+legal notices. In accordance with Section 7(b) of the GNU General Public
+License version 3, these Appropriate Legal Notices must retain the display of
+the "Powered by cyn.in" AND "A Cynapse Invention" logos. You should have
+received a copy of the detailed Additional Terms License with this program.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see <http://www.gnu.org/licenses/>.
+
+You can contact Cynapse at support@cynapse.com with any problems with cyn.in.
+For any queries regarding the licensing, please send your mails to
+ legal@cynapse.com
+
+You can also contact Cynapse at:
+802, Building No. 1,
+Dheeraj Sagar, Malad(W)
+Mumbai-400064, India
+*/
+/* <dtml-call "REQUEST.set('portal_url', portal_url())"> (not this either :) */
+.ui-daterangepicker li
+{
+	margin-bottom:0;
+}
+.ui-daterangepicker li a
+{
+	border-bottom-color:#292929;
+}
+/*styles for jquery ui daterangepicker plugin */
+
+.ui-daterangepickercontain {
+	position: absolute;
+	z-index: 999;
+}
+.ui-daterangepickercontain .ui-daterangepicker {
+	float: left;
+	padding: 5px !important;
+	width: auto;
+	display: inline;
+}
+.ui-daterangepicker ul, .ui-daterangepicker .ranges, .ui-daterangepicker .range-start, .ui-daterangepicker .range-end {
+	float: left;
+	padding: 0;
+	margin: 0;
+}
+.ui-daterangepicker .ranges {
+	width: auto;
+	position: relative;
+	padding-bottom: 40px;
+}
+.ui-daterangepicker .range-start, .ui-daterangepicker .range-end {
+	margin-left: 5px;
+}
+.ui-daterangepicker button.btnDone {
+	margin: 10px 0;
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	clear: both;
+	cursor: pointer;
+	font-size: 1.1em;
+}
+.ui-daterangepicker ul {
+	width: 12em;
+	background: none;
+	border: 0;
+}
+.ui-daterangepicker li {
+	list-style: none;
+	padding: 1px;
+	cursor: pointer;
+        margin-left:0;
+}
+.ui-daterangepicker li.ui-hover-state, .ui-daterangepicker li.ui-active-state {
+	padding: 0;
+}
+.ui-daterangepicker li.preset_0 {
+	margin-top: 1.5em !important;
+}
+.ui-daterangepicker li a {
+	background-position: 98% 50%;
+	display: block;
+	padding: .2em;
+}
+.ui-daterangepicker li a:hover
+,.ui-daterangepicker li a.ui-arrow-right-active
+,.ui-daterangepicker li a.ui-arrow-right-active.ui-arrow-right-hover
+{
+        color:white;
+}
+
+.ui-daterangepicker .ui-component-content a
+,table.ui-datepicker td a
+{
+	text-decoration: none !important;
+}
+.ui-daterangepicker .ui-component-content a:hover
+{
+	background:transparent;
+}
+.ui-daterangepicker li a {
+	margin: 1px;
+}
+
+.ui-daterangepicker .title {
+	display: block;
+	margin: 1em 0;
+	font-size: 1.1em;
+}
+.ui-daterangepicker .ui-datepicker-inline {
+	font-size: 1em;
+}
+.ui-daterangepicker-arrows {
+	padding: 0 16px;
+	position: relative;
+}
+.ui-daterangepicker-arrows a {
+	overflow: hidden;
+}
+.ui-daterangepicker-arrows .ui-datepicker-prev, .ui-daterangepicker-arrows .ui-datepicker-next {
+	top: 0;
+	left: 0;
+}
+.ui-daterangepicker-arrows .ui-datepicker-next {
+	left: auto;
+	right: 0;
+}
+.documentContent li a.ui-arrow-right-active:active,.documentContent li a.ui-arrow-right-active:visited
+,.documentContent li a.ui-arrow-right-content:active,.documentContent li a.ui-arrow-right-content:visited
+,.documentContent ul.ui-component-content li a:active,.documentContent ul.ui-component-content li a:visited
+{
+	color:white;
+}
+.ui-daterangepicker option
+{
+        color:#4d4d4d;
+}
+table.ui-datepicker
+{
+	border-collapse: collapse;
+}
+table.ui-datepicker td
+{
+	padding:1px;
+}
+table.ui-datepicker td a
+{
+	border:1px solid #1F1F1F;
+}
+table.ui-datepicker .ui-datepicker-title-row td a
+{
+	border:1px solid transparent;
+        background-color: #b3b3b3;
+	background-image: none;
+        color:#666666;
+}
+table.ui-datepicker .ui-datepicker-title-row td a:hover
+{
+	border:1px solid #1f1f1f;
+	background: #4d4d4d url(/0f6bba_40x100_textures_03_highlight_soft_70.png) 0 50% repeat-x;
+        color:white;
+}
+.ui-component
+{
+	font-size:14px;
+}
+.ui-datepicker-div, .ui-datepicker-inline, #ui-datepicker-div
+{
+        background:#d9d9d9;
+        border: 1px solid #999999;
+}
+.ui-datepicker-header select
+{
+        background-color:#cccccc;
+        color:#4d4d4d;
+}
+table.ui-datepicker td.ui-datepicker-current-day a
+{
+        background: #4d4d4d url(/0f6bba_40x100_textures_03_highlight_soft_70.png) 0 50% repeat-x;
+}

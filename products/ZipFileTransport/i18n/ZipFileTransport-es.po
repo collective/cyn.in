@@ -1,0 +1,137 @@
+# Arturo Formariz <arturo.formariz@upm.es>, 2007
+msgid ""
+msgstr ""
+"Project-Id-Version: ZipFile Transport Tool\n"
+"POT-Creation-Date: 2007-05-18 00:00 +0000\n"
+"PO-Revision-Date: 2011-03-08 23:02-0400\n"
+"Last-Translator: Leonardo J. Caballero G. <leonardocaballero@gmail.com>\n"
+"Language-Team: Spanish <plone-conosur@lists.plone.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: es\n"
+"Language-Name: Spanish\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: ZipFileTransport\n"
+"X-Is-Fallback-For: es-ar es-bo es-cl es-co es-cr es-do es-ec es-es es-sv es-gt es-hn es-mx es-ni es-pa es-py es-pe es-pr es-us es-uy es-ve\n"
+
+#: ../browser/zipfiletransportprefs.py:109
+msgid "Configure object type settings for imported objects.  These values should not be adjusted unless your site has overwritten the default object types."
+msgstr "Configurar los ajustes de tipo de objeto para los objetos importados. Estos valores no debe ser ajustado a menos que su sitio tiene tipos de objetos por defecto sobre-escribibles."
+
+#: ../browser/zipfiletransportprefs.py:48
+msgid "Document Type"
+msgstr "Tipo de documento"
+
+#: ../profiles/default/actions.xml
+msgid "Export"
+msgstr "Exportar"
+
+#: ../browser/zipfiletransportprefs.py:43
+msgid "File Type"
+msgstr "Tipo de archivo"
+
+#: ../browser/zipfiletransportprefs.py:53
+msgid "Folder Type"
+msgstr "Tipo de carpeta"
+
+#: ../browser/zipfiletransportprefs.py:38
+msgid "Image Type"
+msgstr "Tipo de imagen"
+
+#. Default: "Import"
+#: ../profiles/default/actions.xml
+#: ../skins/ZipFileTransport/import_form.cpt:140
+msgid "Import"
+msgstr "Importar"
+
+#: ../browser/zipfiletransportprefs.py:39
+msgid "Set the image type here. Images imported via ZipFile Transport will be instantiated as an object of this type."
+msgstr "Establezca su tipo de imagen aquí. Las imágenes importadas a través del producto 'ZipFile Transport' será instanciado como un objeto de este tipo."
+
+#: ../browser/zipfiletransportprefs.py:49
+msgid "Set your document type here. Documents imported via ZipFile Transport will be instantiated as an object of this type."
+msgstr "Establezca su tipo de documento aquí. Los documentos importadas a través del producto 'ZipFile Transport' será instanciado como un objeto de este tipo."
+
+#: ../browser/zipfiletransportprefs.py:44
+msgid "Set your file type here. Files imported via ZipFile Transport will be instantiated as an object of this type"
+msgstr "Establezca su tipo de archivo aquí. Los archivos importados a través del producto 'ZipFile Transport' será instanciado como un objeto de este tipo"
+
+#: ../browser/zipfiletransportprefs.py:54
+msgid "Set your folderish type here. Folders imported via ZipFile Transport will be instantiated as an object of this type"
+msgstr "Establezca su tipo de carpeta aquí. Las carpetas importadas a través del producto 'ZipFile Transport' será instanciado como un objeto de este tipo."
+
+#: ../browser/zipfiletransportprefs.py:111
+msgid "ZipFile Transport Settings"
+msgstr "Configuración de ZipFile Transport"
+
+#: ../browser/zipfiletransportprefs.py:108
+msgid "ZipFile Transport Settings Form"
+msgstr "Formulario de configuración de ZipFile Transport"
+
+#: ../profiles/default/actionicons.xml
+msgid "ZipFileTransport"
+msgstr "ZipFile Transport"
+
+#. Default: "%s is not a legal name. The following characters are invalid: %s."
+#: ../skins/ZipFileTransport/checkid.py:60
+msgid "characters"
+msgstr ""
+
+#. Default: "This form will import content from files contained in a .zip file, and will either create new objects, or overwrite objects that contain the same original filename and path. You must have editing rights for objects in order for them to be updated."
+#: ../skins/ZipFileTransport/import_form.cpt:14
+#, fuzzy
+msgid "description_import_file"
+msgstr "Este formulario importará contenidos desde un archivo Zip, y creará nuevos objetos, o sobrescribirá los objetos que tengan el mismo nombre y la misma ruta. Usted debe tener permisos de edición sobre estos objetos para poder actualizarlos."
+
+#. Default: "Add the relevant details of the file to be added in the form below, select the file with the 'Browse' button, and press 'Import'."
+#: ../skins/ZipFileTransport/import_form.cpt:22
+msgid "description_import_file1"
+msgstr "Especifique los detalles relevantes del archivo que va a añadir en el siguiente formulario, seleccione el archivo con el botón 'Examinar', y pulse 'Importar'."
+
+#. Default: "There is already an item named %s in this folder."
+#: ../skins/ZipFileTransport/checkid.py:103
+msgid "existing"
+msgstr ""
+
+#. Default: "Import Content"
+#: ../skins/ZipFileTransport/import_form.cpt:10
+msgid "heading_ImportContent"
+msgstr "Importar contenido"
+
+#. Default: "A description which will be given to each file in the ZIP Archive."
+#: ../skins/ZipFileTransport/import_form.cpt:43
+msgid "help__import_description"
+msgstr "Una descripción que se asignará a cada fichero dentro del archivo Zip."
+
+#. Default: "Select the ZIP archive file to be uploaded by clicking the 'Browse' button."
+#: ../skins/ZipFileTransport/import_form.cpt:111
+msgid "help__zip_file"
+msgstr "Seleccione el archivo Zip que desea subir pulsando el botón 'Examinar'."
+
+#. Default: "Check this box to overwrite existing files with the same name."
+#: ../skins/ZipFileTransport/import_form.cpt:85
+msgid "help_overwrite"
+msgstr "Marque esta casilla si quiere sobrescribir los archivos existentes con el mismo nombre."
+
+#. Default: "Zip File"
+#: ../skins/ZipFileTransport/import_form.cpt:103
+msgid "label__zip_file"
+msgstr "Archivo Zip"
+
+#. Default: "Import"
+#: ../browser/zipimport.py:96
+msgid "label_import"
+msgstr "Importar"
+
+#. Default: "Overwrite"
+#: ../skins/ZipFileTransport/import_form.cpt:79
+msgid "label_overwrite"
+msgstr "Sobrescribir"
+
+#. Default: "%s is reserved."
+#: ../skins/ZipFileTransport/checkid.py:67
+msgid "reserved"
+msgstr ""
+

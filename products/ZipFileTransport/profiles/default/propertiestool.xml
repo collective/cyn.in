@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<object name="portal_properties" meta_type="Plone Properties Tool">
+  <object name="zipfile_properties" meta_type="Plone Property Sheet">
+    <property name="title">Zip File Tool</property>
+    <property name="image_type" type="string">Image</property>
+    <property name="file_type" type="string">File</property>
+    <property name="doc_type" type="string">Document</property>
+    <property name="folder_type" type="string">ContentSpace</property>
+  </object>
+</object>

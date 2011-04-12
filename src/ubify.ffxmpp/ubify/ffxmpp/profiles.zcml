@@ -1,0 +1,14 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    i18n_domain="ubify.ffxmpp">
+
+  <genericsetup:registerProfile
+      name="default"
+      title="Ubify Firefox XMPP support"
+      directory="profiles/default"
+      description='Extension profile for the "ffxmppskin" Plone theme.'
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
+</configure>
