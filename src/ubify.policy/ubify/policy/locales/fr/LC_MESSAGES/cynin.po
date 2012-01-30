@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: cynin 3.0.6\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Yann Bizeul <yann@tynsoe.org>\n"
+"Last-Translator: JeanMichel FRANCOIS <jeanmichel.francois@makina-corpus.com>\n"
 "Language-Team: Cynapse <devel@cynapse.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -311,7 +311,7 @@ msgstr "Une zone pour collaborer"
 
 #. Default: "Anonymous"
 msgid "Anonymous"
-msgstr ""
+msgstr "Anonyme"
 
 #: ../../../../ubify.policy/ubify/policy/profiles/default/workflows/ubify_contentroot_workflow/definition.xml
 msgid "Anonymous Visitors can access this content"
@@ -367,7 +367,7 @@ msgstr "Août"
 
 #. Default: "Authenticated"
 msgid "Authenticated"
-msgstr ""
+msgstr "Authentifié"
 
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/author.cpt:152
 msgid "Bio:"
@@ -482,7 +482,7 @@ msgstr "Types de contenu"
 
 #. Default: "Contributor"
 msgid "Contributor"
-msgstr ""
+msgstr "Contributeur"
 
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/tags_listing.pt:96
 msgid "Contributors"
@@ -556,7 +556,7 @@ msgstr "Supprimé"
 
 #: ../../../../ubify.recyclebin/ubify/recyclebin/profiles/default/types/RecycleBin.xml
 msgid "Deleted contents land in here"
-msgstr ""
+msgstr "Les contenus supprimés se retrouvent ici"
 
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/tags_listing.pt:214
 msgid "Descending"
@@ -709,7 +709,7 @@ msgstr "Modifier cet élément avec une application native installée sur votre 
 
 #. Default: "Editor"
 msgid "Editor"
-msgstr ""
+msgstr "Rédacteur"
 
 #. Default: "Editors"
 msgid "Editors"
@@ -847,7 +847,7 @@ msgstr "Image"
 
 #. Default: "Image Gallery"
 msgid "Image Gallery"
-msgstr "Galerie d'images"
+msgstr "Galerie"
 
 #: ZipFileTransport/browser/zipfiletransportprefs.py:38
 msgid "Image Type"
@@ -966,7 +966,7 @@ msgstr "Rendre ce contenu accessible aux membres ayant les privilèges de visual
 
 #. Default: "Manager"
 msgid "Manager"
-msgstr ""
+msgstr "Gestionnaire"
 
 #. Default: "Mar"
 msgid "Mar"
@@ -982,7 +982,7 @@ msgstr "Mai"
 
 #. Default: "Member"
 msgid "Member"
-msgstr ""
+msgstr "Membre"
 
 #: ../../../../ubify.coretypes/ubify/coretypes/profiles/default/types/MemberSpace.xml
 msgid "Member Space"
@@ -1104,7 +1104,7 @@ msgstr "Autres navigateurs supportés"
 
 #. Default: "Owner"
 msgid "Owner"
-msgstr ""
+msgstr "Propriétaire"
 
 #: ../../../../ubify.policy/ubify/policy/profiles/default/actions.xml
 msgid "Paste"
@@ -1171,7 +1171,7 @@ msgstr "Imprimer cette"
 
 #: ../../../../ubify.policy/ubify/policy/profiles/default/actions.xml
 msgid "Print this page on a local or network printer that can be accessed from your computer. Click this button to select a printer and configure print settings - press OK to send the print job."
-msgstr ""
+msgstr "Imprimer cette page sur une imprimante accessible depuis votre ordinateur. Cliquer sur ce bouton pour sélectionner une imprimante et configurer l'impression - Cliquer ensuite sur OK pour envoyer l'impression"
 
 #: ../../../../ubify.spaces/ubify/spaces/profiles/default/workflows/ubify_spaces_content_workflow/definition.xml
 #: ../../../../ubify.spaces/ubify/spaces/profiles/default/workflows/ubify_spaces_review_workflow/definition.xml
@@ -1245,7 +1245,7 @@ msgstr "Evaluation"
 
 #. Default: "Reader"
 msgid "Reader"
-msgstr ""
+msgstr "Lecteur"
 
 #. Default: "Readers"
 msgid "Readers"
@@ -1364,7 +1364,7 @@ msgstr "Rétractent au privé"
 
 #. Default: "Reviewer"
 msgid "Reviewer"
-msgstr ""
+msgstr "Modérateur"
 
 #: ../../../../ubify.coretypes/ubify/coretypes/profiles/default/types/Document.xml
 msgid "Rich interlinked document"
@@ -1399,7 +1399,6 @@ msgid "Search"
 msgstr "Recherche"
 
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/tags_listing.pt:100
-#, fuzzy
 msgid "Search Phrase"
 msgstr "Rechercher"
 
@@ -1425,7 +1424,7 @@ msgstr "Send Email"
 
 #: ../../../../ubify.policy/ubify/policy/profiles/default/actions.xml
 msgid "Send the URL of this page to a colleague or friend by email. Note that the recipient must have a login account on this site to be able to see the content."
-msgstr ""
+msgstr "Envoyer l'adresse de cette page à un collegue ou un ami par email. Notez que le destinataire doit avoir un compte utilisateur sur ce site et avoir les droits de le consulter."
 
 #: ../../../../ubify.policy/ubify/policy/profiles/default/actions.xml
 msgid "Send this"
@@ -1880,7 +1879,7 @@ msgstr "Activité"
 #. Default: "Additional Settings"
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/__init__.py:1185
 msgid "additional_settings"
-msgstr ""
+msgstr "Configuration supplémentaire"
 
 #. Default: "New"
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/macro_sitehome_no_content.pt:17
@@ -1927,9 +1926,8 @@ msgstr "Atom"
 #. viewed in a Newsreader or syndicated to another site. Please visit"
 #. Default: "This is an Atom formatted XML site feed. It is intended to be viewed in a Newsreader or syndicated to another site. Please visit"
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/browser/atom.xml.pt:32
-#, fuzzy
 msgid "atom_description"
-msgstr "Ceci est un flux au format Atom. Il est destiné à être lu dans un lecteur de news ou à être syndiqué avec un autre site web. Visitez"
+msgstr "Ceci est un flux au format Atom. Il est destiné à être lu dans un lecteur de news ou à être syndiqué avec un autre site web. Merci de visiter"
 
 #. Default: "Atom Enabled"
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/browser/atom.xml.pt:36
@@ -2025,7 +2023,7 @@ msgstr "Modifier"
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/description_macro.pt:46
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/files_listing.pt:133
 msgid "button_info"
-msgstr ""
+msgstr "Info"
 
 #. Default: "Post"
 #: ../../../../ubify.viewlets/ubify/viewlets/browser/adddiscussion.pt:66
@@ -2088,7 +2086,7 @@ msgstr "Paramètres de l'agenda"
 #. Default: "Categorization"
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/__init__.py:1179
 msgid "categorization"
-msgstr ""
+msgstr "Caégorisation"
 
 #. Default: "You are not allowed to modify the title of this item."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/folder_rename_form.cpt:116
@@ -2114,16 +2112,14 @@ msgstr "Cliquez pour noter:"
 #. notifications for the parent space by clicking below."
 #. Default: "You are indirectly subscribed to this item, because you are subscribed to one of its parent spaces above. Unsubscribe from email notifications for the parent space by clicking below."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/belowcontent_macro.pt:221
-#, fuzzy
 msgid "cluetip_already_subscribed_parent"
-msgstr "Vous êtes inscrit à cet élément de manière indirecte, via l'inscription à un élément parent. Pour vous désinscrire, cliquez ci-dessous."
+msgstr "Vous êtes indirectement inscrit à cet élément, par l'inscription à un élément parent. Pour vous désinscrire des notifications par email du parent, cliquez ci-dessous."
 
 #. button to stop receiving email notifications."
 #. Default: "You are already subscribed to this item. Click the 'Unsubscribe' button to stop receiving email notifications."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/belowcontent_macro.pt:204
-#, fuzzy
 msgid "cluetip_already_subscribed_this"
-msgstr "Vous êtes déjà inscrit à cet élément. Cliquez sur le bouton 'Désinscrire' pour ne plus reçevoir d'email."
+msgstr "Vous êtes déjà inscrit à cet élément. Cliquez sur le bouton 'Désinscrire' pour ne plus reçevoir les emails de notifications."
 
 #. Default: "Collapse all rows to see <b>less</b> information"
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/files_listing.pt:81
@@ -2147,9 +2143,8 @@ msgstr "Changez votre mot de passe"
 #. easier for other people to recognize you."
 #. Default: "Edit your profile fields and set your avatar image to make it easier for other people to recognize you."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/browser/topbarmybutton.pt:92
-#, fuzzy
 msgid "cluetip_edit_profile"
-msgstr "Editez votre profil et envoyez une image permettant de mieux vous reconnaitre sur le site."
+msgstr "Remplissez votre profil et ajouter une photo pour permettre facilement aux autres personnes de vous reconnaître."
 
 #. Default: "Flat View"
 #: ../../../../ubify.viewlets/ubify/viewlets/browser/comments.pt:86
@@ -2159,33 +2154,29 @@ msgstr "Vue à plat"
 #. cyn.in supports."
 #. Default: "See a list of all the different types of RSS/Atom feeds that cyn.in supports."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/integrationblock_macro.pt:10
-#, fuzzy
 msgid "cluetip_link_all_feeds_popup"
-msgstr "Voir une liste de tous les types de flux RSS et Atom que cyn.in supporte"
+msgstr "Voir une liste de tous les types de flux RSS et Atom que cyn.in supporte."
 
 #. particular URL that you are currently at, in your browser, with a single
 #. click."
 #. Default: "The cyn.in 'bookmarklet' will let you quickly add a site or particular URL that you are currently at, in your browser, with a single click."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/integrationblock_macro.pt:3
-#, fuzzy
 msgid "cluetip_link_bookmarklet_popup"
-msgstr "Le 'bookmarklet' cyn.in permet d'ajouter rapidement une nouvelle URL dans le système cyn.in"
+msgstr "Le 'bookmarklet' de cyn.in vous permet d'ajouter rapidement un site ou une URL que vous visitez, avec votre navigateur, en un seul clique."
 
 #. Calendar using iCal calendar integration format."
 #. Default: "Synchronize your local desktop's calendar system with the cyn.in Calendar using iCal calendar integration format."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/integrationblock_macro.pt:16
-#, fuzzy
 msgid "cluetip_link_calendar_popup"
-msgstr "Synchroniser le calendrier de votre bureau avec cyn.in"
+msgstr "Synchroniser votre calendrier de votre ordinateur avec le calendrier de cyn.in en utilisaant le format d'intégration iCal."
 
 #. then Click 'Install Now' to step through the installation wizard. If you
 #. have <i>already</i> installed the cyn.in desktop on your computer, you will
 #. see a link to 'Launch' the cyn.in desktop instead."
 #. Default: "Click to see the cyn.in desktop Express Installation button and then Click 'Install Now' to step through the installation wizard. If you have <i>already</i> installed the cyn.in desktop on your computer, you will see a link to 'Launch' the cyn.in desktop instead."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/integrationblock_macro.pt:30
-#, fuzzy
 msgid "cluetip_link_desktop_popup"
-msgstr "Cliquez ici pour afficher l'installation de cyn.in Desktop, puis cliquez sur \"Install now\". Si vous avez <i>déjà</i> installé cyn.in Desktop, vous verez un lien pour lancer l'application."
+msgstr "Cliquez ici pour afficher l'installation de cyn.in Desktop, puis cliquez sur \"Install now\" pour aller sur l'interface d'installation. Si vous avez <i>déjà</i> installé cyn.in Desktop sur votre ordinateur, vous verrez un lien pour lancer l'application à la place de l'installation."
 
 #. Default: "Configure WebDAV for direct file upload/download"
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/integrationblock_macro.pt:23
@@ -2200,47 +2191,41 @@ msgstr "Se déconnecter de ce site"
 #. are case sensitive"
 #. Default: "<strong>Please enter your username</strong><br />cyn.in usernames are case sensitive"
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/login_form.cpt:135
-#, fuzzy
 msgid "cluetip_login_textbox"
-msgstr "<b>Entrez votre nom d'utilisateur</b>"
+msgstr "<strong>Merci de saisir votre nom d'utilisateur</strong><br />Les noms d'utilisateurs dans cyn.in sont sensible à la casse"
 
 #. or click on cyn.in"
 #. Default: "<strong>Please enter your password</strong><br /> and hit 'Enter' or click on cyn.in"
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/login_form.cpt:153
-#, fuzzy
 msgid "cluetip_password_textbox"
-msgstr "<b>Entrez votre mot de passe</b><br>et validez avec Entrée ou le bouton cyn.in à droite"
+msgstr "<strong>Merci de saisir votre mot de passe</strong><br />et validez avec la touche Entrée ou cliquez sur cyn.in"
 
 #. format. You will need to use an Atom feed reader that supports 'HTTP BASIC
 #. Authentication'."
 #. Default: "Subscribe to feed updates of the current filtered view in Atom format. You will need to use an Atom feed reader that supports 'HTTP BASIC Authentication'."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/belowcontent_macro.pt:267
-#, fuzzy
 msgid "cluetip_subscribe_atom_space"
-msgstr "Souscrire à ce filtre au format Atom. Vous devrez utiliser un lecteur de flux qui supporte l'authentification 'HTTP Basic'"
+msgstr "Souscrire à ce flux de mise à jours de la vue filtré au format Atom. Vous devrez utiliser un lecteur de flux qui supporte l'authentification 'HTTP Basic'."
 
 #. here and below."
 #. Default: "Click 'Subscribe' to get email notifications for any activity here and below."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/belowcontent_macro.pt:240
-#, fuzzy
 msgid "cluetip_subscribe_email"
-msgstr "Cliquez sur 'Souscrire' pour recevoir des notifications par email sur cet élément et ce qu'il contient"
+msgstr "Cliquez sur 'Souscrire' pour recevoir des notifications par email sur cet élément et ce qu'il contient."
 
 #. You will need to use a RSS feed reader that supports 'HTTP BASIC
 #. Authentication'."
 #. Default: "Subscribe to the Comments feed of the current item in RSS format. You will need to use a RSS feed reader that supports 'HTTP BASIC Authentication'."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/belowcontent_macro.pt:294
-#, fuzzy
 msgid "cluetip_subscribe_rss_item"
-msgstr "Souscrire aux commentaires au format RSS. Vous devrez utiliser un lecteur de flux qui supporte l'authentification 'HTTP Basic'"
+msgstr "Souscrire au flux des commentaires de l'élément courant au format RSS. Vous devrez utiliser un lecteur de flux qui supporte l'authentification 'HTTP Basic'."
 
 #. format. You will need to use a RSS feed reader that supports 'HTTP BASIC
 #. Authentication'."
 #. Default: "Subscribe to feed updates of the current filtered view in RSS format. You will need to use a RSS feed reader that supports 'HTTP BASIC Authentication'."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/belowcontent_macro.pt:258
-#, fuzzy
 msgid "cluetip_subscribe_rss_space"
-msgstr "Souscrire à ce filtre au format RSS. Vous devrez utiliser un lecteur de flux qui supporte l'authentification 'HTTP Basic'"
+msgstr "Souscrire au flux des mise à jours de la vue filtrée au format RSS. Vous devrez utiliser un lecteur de flux qui supporte l'authentification 'HTTP Basic'."
 
 #. Default: "Threaded View"
 #: ../../../../ubify.viewlets/ubify/viewlets/browser/comments.pt:82
@@ -2261,9 +2246,8 @@ msgstr "Cliquez pour visualiser votre profil et toutes vos mises à jour"
 #. Default: "Copy and paste this including the [[ ]] brackets inside a wiki page to link to this item"
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/belowcontent_macro.pt:133
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/description_macro.pt:114
-#, fuzzy
 msgid "cluetip_wiki_link"
-msgstr "Copier et coller ceci en incluant les crochets dans une page de wiki pour lier vers cet élément"
+msgstr "Copier et coller ceci en incluant les crochets [[ ]] dans une page de wiki pour créer un lien vers cet élément"
 
 #. Default: "Use parent folder setting"
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/folder_constraintypes_form.cpt:120
@@ -2293,7 +2277,7 @@ msgstr "Contact Phone:"
 #. Default: "Content"
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/__init__.py:1187
 msgid "content"
-msgstr ""
+msgstr "Contenu"
 
 #. logo are registered trademarks of Cynapse"
 #. Default: "Cynapse&trade;, cyn.in&trade;, the Cynapse logo and the cyn.in logo are registered trademarks of Cynapse"
@@ -2468,9 +2452,8 @@ msgstr "description_edit_groupproperties"
 #. is because you need to enable cookies in your browser."
 #. Default: "Note: If you do not remain logged in after leaving this page, it is because you need to enable cookies in your browser."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/login_success.pt:101
-#, fuzzy
 msgid "description_enable_cookies_to_stay_logged_in"
-msgstr "Note : Si vous n'êtes plus connecté en quittant cette page, c'est parceque vous devez activer les cookies dans les options de votre navigateur."
+msgstr "Note : Si vous n'êtes pas connecté en quittant cette page, c'est à cause des cookies. Vous deverez activer les cookies dans les options de votre navigateur."
 
 #. recently. You can configure how many exceptions should be kept and whether
 #. the exceptions should be copied to Zope's event log file(s)."
@@ -2484,56 +2467,49 @@ msgstr "description_error_log_setup"
 #. removed from this group."
 #. Default: "You can add or remove groups and users from this particular group here. Note that this doesn't actually delete the group or user, it is only removed from this group."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/prefs_group_members.cpt:139
-#, fuzzy
 msgid "description_group_members_of"
-msgstr "Vous pouvez ajouter ou supprimer des utilisateurs ou d'autres groupes de ce groupe. Ceci ne supprimera pas l'objet concerné."
+msgstr "Vous pouvez ajouter ou supprimer des utilisateurs ou d'autres groupes de ce groupe. Une suppression ne supprimera pas le groupe ou l'utilisateur concerné, il sera juste retiré du groupe."
 
 #. portlets."
 #. Default: "Note that group portlets are normally rendered below context portlets."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/browser/manage-group.pt:102
-#, fuzzy
 msgid "description_group_portlets_below"
-msgstr "description_group_portlets_below"
+msgstr "Il est à noter que les portlets de groupes sont affichées après les portlets contextuelles."
 
 #. business units. Groups are not directly related to permissions on a global
 #. level, you normally use Roles for that - and let certain Groups have a
 #. particular role."
 #. Default: "Groups are logical collections of users, such as departments and business units. Groups are not directly related to permissions on a global level, you normally use Roles for that - and let certain Groups have a particular role."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/prefs_groups_overview.cpt:100
-#, fuzzy
 msgid "description_groups_management"
 msgstr "Les groupes sont des entités regroupant des utilisateurs, comme des départements ou des filiales. Les groupes ne sont pas directement liés aux permissions de manière globale, il faut utiliser des rôles pour cela, et associer des groupes aux rôles."
 
 #. to modify the workflow of this Folder use 'Below this Folder'."
 #. Default: "Modify the workflows of this folder and below. If you don't want to modify the workflow of this Folder use 'Below this Folder'."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/placeful_workflow_configuration.pt:103
-#, fuzzy
 msgid "description_in_this_folder"
-msgstr "Modifier les workflows de ce dossier et son contenu. Si vous souhaitez exclure ce dossier, utilisez \"En dessous de ce dossier\""
+msgstr "Modifier les workflows de ce dossier et son contenu. Si vous souhaitez exclure ce dossier, utilisez 'En dessous de ce dossier'."
 
 #. several personalized items. Use these items to control your settings and
 #. your personal area. They will remain as long as you are logged in."
 #. Default: "Notice that the top right bar has changed. It now contains several personalized items. Use these items to control your settings and your personal area. They will remain as long as you are logged in."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/login_success.pt:69
-#, fuzzy
 msgid "description_logged_in_explain"
-msgstr "description_logged_in_explain"
+msgstr "Remarquez que le coin haut droit a changé. Il contient maintenant des éléments qui vous sont propres. Utilisez les pour accéder à vos préférences et votre tableau de bord. Ils resteront présent aussi longtemps que vous êtes authentifié."
 
 #. send you an email at the address in your profile to start the process of
 #. resetting your password."
 #. Default: "To reset your password, fill out the form below and cyn.in will send you an email at the address in your profile to start the process of resetting your password."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/mail_password_form.pt:61
-#, fuzzy
 msgid "description_lost_password"
-msgstr "description_lost_password"
+msgstr "Pour modifier votre mot de passe, remplissez le formulaire ci-dessous et cyn.in vous enverra un courriel vous permettant d'accéder au formulaire de saisie d'un nouveau mot de passe."
 
 #. portlets assigned to this group. Use the up, down, delete and edit links to
 #. manage user portlets. Use the drop-down list to add new portlets."
 #. Default: "The left and right portlet slots will now display only those portlets assigned to this group. Use the up, down, delete and edit links to manage user portlets. Use the drop-down list to add new portlets."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/browser/manage-group.pt:96
-#, fuzzy
 msgid "description_manage_group_portlets"
-msgstr "description_manage_group_portlets"
+msgstr "Les espaces de gauche et de droite vont maintenant afficher les portlets assignées à ce groupe d'utilisateurs. Utilisez les liens haut,bas,supprimer et modifier pour gérer les portlets. Utilisez le menu déroulant pour ajouter une nouvelle portlet."
 
 #. Default: "Lets you control how navigation is constructed in your site."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/prefs_navigation_form.cpt:25
@@ -2556,9 +2532,8 @@ msgstr "Entrez un ID pour la politique de nouveau workflow"
 #. them using the 'criteria' tab."
 #. Default: "There are currently no criteria on which to search. Please add them using the 'criteria' tab."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/all_listing.pt:187
-#, fuzzy
 msgid "description_no_criteria_in_topic"
-msgstr "description_no_criteria_in_topic"
+msgstr "Il n'y a aucun critères surlequel effectuer une recherche. Vous pouvez ajouter des critères en utilisant l'onglet 'critères'."
 
 #. Default: "There are currently no items in this folder."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/browser/selectdefaultwikipage.pt:200
@@ -2586,9 +2561,8 @@ msgstr "Aucun résultat n&#39;a été trouvé."
 #. button, or paste content from another location."
 #. Default: "This folder has no visible items. To add content, press the add button, or paste content from another location."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/browser/cynintable.pt:18
-#, fuzzy
 msgid "description_no_visible_items_add_paste"
-msgstr "description_no_visible_items_add_paste"
+msgstr "Ce dossier n'a aucun élément visible. Pour ajouter un contenu, utiliser le menu d'ajout ou coller un contenu venant d'ailleur."
 
 #. listing of groups, so you may not see the groups defined by those plugins
 #. unless doing a specific search."
@@ -2626,16 +2600,14 @@ msgstr "description_production_mode"
 #. directly via its URL."
 #. Default: "An item's status (also called its review state) determines who can see it. Another way to control the visibility of an item is with its <strong>Publishing Date</strong>. An item is not publicly searchable before its publishing date. This will prevent the item from showing up in portlets and folder listings, although the item will still be available if accessed directly via its URL."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/content_status_history.cpt:51
-#, fuzzy
 msgid "description_publishing_process_short"
-msgstr "description_publishing_process_short"
+msgstr "Le statut d'un élément détermine qui peut le voir. Une autre manière de controller l'accès d'un élément est l'utilisation de la <strong>Date de publication</strong>. Un élément n'est pas trouvable au travers d'une recherche avant sa date de publication. En revanche l'élément peut être accéder directement par son adresse."
 
 #. change by entering the new details below."
 #. Default: "All content in cyn.in has a Short Name and a Title, which you can change by entering the new details below."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/folder_rename_form.cpt:35
-#, fuzzy
 msgid "description_rename_item"
-msgstr "description_rename_item"
+msgstr "Tous les contenu dans cyn.in ont un nom court et un titre, que vous pouvez changer en ajoutant les informations nécessaires ci-dessous."
 
 #. Default: "Please fill out the form below to set your password."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/pwreset_form.cpt:51
@@ -2648,9 +2620,8 @@ msgstr "Merci de remplir le formulaire ci-dessous pour régler votre mot de pass
 #. the link below to set a new start page for <i>this</i> wiki."
 #. Default: "Wiki start pages are the first page that are shown to all visitors above all recent activity on the wiki. These pages are to be treated as <b><i>Home</i></b> pages for the wiki. Put central navigation links to the most important areas of the wiki on this page. You can click the link below to set a new start page for <i>this</i> wiki."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/app_wiki.pt:84
-#, fuzzy
 msgid "description_select_wiki_start_page"
-msgstr "description_select_wiki_start_page"
+msgstr "La page de démarrage d'un wiki est affichée à tous les visiteurs au dessus des activités récentes. Ces pages sont traitées comme des pages d'<b><i>Accueil</i></b> du wiki. Ajouter tous les liens principaux de cette section sur cette page. Vous pouvez cliquer sur le lien ci-dessous pour configurer une nouvelle page d'accueil de <i>ce</i> wiki."
 
 #. Default: "Select the workflow you want for each content type."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/prefs_workflow_advanced.pt:50
@@ -2661,14 +2632,12 @@ msgstr "Sélectionnez le workflow que vous souhaitez pour chaque type de contenu
 #. contains to reset your password."
 #. Default: "Your password reset request has been mailed. It should arrive in your mailbox momentarily. When you receive the message, visit the link it contains to reset your password."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/mail_password_response.pt:50
-#, fuzzy
 msgid "description_sent_password"
-msgstr "description_sent_password"
+msgstr "Votre demande de changement de mot de passe vous a été envoyée par courriel. Elle devrait arriver dans votre messagerie dans quelques instants. Quand vous receverez ce message, cliquez sur le lien qu'il contient pour saisir votre mot de passe."
 
 #. below."
 #. Default: "You can control who can view and edit your item using the list below."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/browser/sharing.pt:65
-#, fuzzy
 msgid "description_sharing_control"
 msgstr "Vous pouvez définir qui peut voir et éditer les contenus grâce au formulaire ci-dessous."
 
@@ -2676,9 +2645,8 @@ msgstr "Vous pouvez définir qui peut voir et éditer les contenus grâce au for
 #. the e-mail addresses, and add/remove users."
 #. Default: "Click the user's name to see and change the details of a specific user. Click the envelope icon to send a mail to the user. You can also edit the e-mail addresses, and add/remove users."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/prefs_users_overview.cpt:96
-#, fuzzy
 msgid "description_user_management"
-msgstr "description_user_management"
+msgstr "Cliquez sur le nom de l'utilisateur pour voir et modifier ses informations. Cliquez sur l'enveloppe pour envoyer un courriel à cet utilisateur. Vous pouvez aussi modifier l'adresse de courriel, et ajouter/retirer des utilisateurs."
 
 #. You will need to follow your operating system documentation to determine
 #. the procedure to use to have a WebDAV mapped network drive. Please consult
@@ -2686,7 +2654,6 @@ msgstr "description_user_management"
 #. own."
 #. Default: "Use the url below to map a WebDAV drive on your desktop computer. You will need to follow your operating system documentation to determine the procedure to use to have a WebDAV mapped network drive. Please consult your system administrator if you're not able to figure this out on your own."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/webdavsupport.pt:54
-#, fuzzy
 msgid "description_webdav"
 msgstr "Utilisez le lien suivant pour connecter un volume WebDAV à votre ordinateur. Reportez vous sur la documentation de votre système d'exploitation, ou vers votre administrateur système pour plus d'information."
 
@@ -2698,9 +2665,8 @@ msgstr "Cet élément a été verrouillé par ${author} il y a ${time}."
 #. ${unlock_button} the object. You will then be able to edit it."
 #. Default: "If you are certain that ${user} has abandoned the object, you may ${unlock_button} the object. You will then be able to edit it."
 #: ../../../../ubify.viewlets/ubify/viewlets/browser/lockinfo.pt:36
-#, fuzzy
 msgid "description_webdav_locked_steal"
-msgstr "Si vous êtes absolument certain que ${user} n'utilise plus cet élément, vous pouvez le ${unlock_button}. Vous serez alors en mesure de le modifier."
+msgstr "Si vous êtes certain que ${user} n'utilise plus cet élément, vous pouvez le ${unlock_button}. Vous serez alors en mesure de le modifier."
 
 #. Default: "Custom workflow policy which maps content types to workflows."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/prefs_workflow_policy_mapping.pt:56
@@ -2710,18 +2676,16 @@ msgstr "Custom workflow policy quels types de cartes contenu à des workflows."
 #. and below."
 #. Default: "Set your workflow policies' local configuration for this folder and below."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/placeful_workflow_configuration.pt:54
-#, fuzzy
 msgid "description_workflow_policies"
-msgstr "description_workflow_policies"
+msgstr "Configurez votre politique de workflow localement à ce dossier et ci-dessous."
 
 #. policy modifies workflows for any items in or below a specific folder. To
 #. apply a policy you have to add a local workflow policy configuration to the
 #. desired folder using the 'policy' item in the 'state' drop-down menu."
 #. Default: "Here you can create and configure your workflow policies. A policy modifies workflows for any items in or below a specific folder. To apply a policy you have to add a local workflow policy configuration to the desired folder using the 'policy' item in the 'state' drop-down menu."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/prefs_workflow_localpolicies_form.pt:66
-#, fuzzy
 msgid "description_workflow_policy_setup"
-msgstr "description_workflow_policy_setup"
+msgstr "Ici vous pouvez créer et configurer des politiques de workflow. Une politique modifie les workflows pour tous les éléments inclus (récursivement) à partir du dossier spécifié. Pour appliquer un workflow vous devez ajouter une politique de workllow locale à un dossier en utilisant le menu déroulant 'Gérer' et l'entrée de menu 'Politique de workflow'."
 
 #. Default: "click here"
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/desktopbadge.pt:76
@@ -2746,16 +2710,14 @@ msgstr "Nouvelle discussion ajouté. % Link Cliquez pour le voir."
 #. log in."
 #. Default: "Cookies are not enabled. You must enable cookies before you can log in."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/login_form.cpt:69
-#, fuzzy
 msgid "enable_cookies_message_before_login"
-msgstr "enable_cookies_message_before_login"
+msgstr "Les cookies ne sont pas activés. Vous devez les activer avant de pouvoir vous connecter."
 
 #. paste item(s)."
 #. Default: "Cannot paste Folders between different applications.Disallowed to paste item(s)."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/__init__.py:189
-#, fuzzy
 msgid "error_cannot_paste"
-msgstr "error_cannot_paste"
+msgstr "Vous ne pouvez pas coller des dossiers entre les applications. "
 
 #. Default: "Event list"
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/browser/app_cal_month.pt:102
@@ -3130,7 +3092,6 @@ msgstr "Bloquer / débloquer des portlets"
 #. Default: "Edit workflow policy"
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/prefs_workflow_advanced.pt:9
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/prefs_workflow_policy_mapping.pt:10
-#, fuzzy
 msgid "heading_workflow_global_type_mapping"
 msgstr "Modifier la politique de workflow"
 
@@ -3153,14 +3114,12 @@ msgstr "Sélectionnez la politique de restriction à cet endroit."
 #. chosen."
 #. Default: "Choose the views will be available for selection. <br /><strong>Note:</strong> The default application view will automatically be chosen."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/folder_constraintypes_form.cpt:278
-#, fuzzy
 msgid "help_allowed_application_views"
 msgstr "Choisissez les vues disponibles pour cet élément.<br/><strong>Attention : </strong>La vue par défaut de l'application sera automatiquement choisie."
 
 #. displayed on the your author page, linked from the items you create."
 #. Default: "A short overview of who you are and what you do. Will be displayed on the your author page, linked from the items you create."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/personalize_form.cpt:254
-#, fuzzy
 msgid "help_biography"
 msgstr "Une courte description de vous-même et ce que vous faites. Ceci sera visible sur votre profil visible à partir des éléments de vous créez."
 
@@ -3179,9 +3138,8 @@ msgstr "Ré-entrer le mot de passe. Assurez-vous que les mots de passe sont iden
 #. content editors often have specific browser requirements."
 #. Default: "Select the content editor that you would like to use. Note that content editors often have specific browser requirements."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/personalize_form.cpt:333
-#, fuzzy
 msgid "help_content_editor"
-msgstr "Choisissez l'éditeur que vous souhaitez utiliser. Notez que certains éditeurs peuvent nécessiter des fonctionnalité particulières sur votre navigateur."
+msgstr "Choisissez l'éditeur que vous souhaitez utiliser. Notez que certains éditeurs peuvent nécessiter des fonctionnalités particulières sur votre navigateur."
 
 #. allows you to edit content with your favorite editor instead of using
 #. browser-based editors. This requires an additional application called
@@ -3189,9 +3147,8 @@ msgstr "Choisissez l'éditeur que vous souhaitez utiliser. Notez que certains é
 #. information if needed."
 #. Default: "When checked, an icon will be made visible on each page which allows you to edit content with your favorite editor instead of using browser-based editors. This requires an additional application called ExternalEditor installed client-side. Ask your administrator for more information if needed."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/personalize_form.cpt:376
-#, fuzzy
 msgid "help_content_ext_editor"
-msgstr "Si vous cochez cette case, une option apparaitra sur chaque page comportant un éditeur de contenu, vous proposant d'utiliser cet éditeur au lieu de celui fourni par défaut dans la page web. Ceci nécessite l'utilisation d'une application tierce (ExternalEditor) sur votre ordinateur. Demandez plus d'informations à votre administrateur système si nécessaire."
+msgstr "Si vous cochez cette case, une option apparaîtra sur chaque page comportant un éditeur de contenu, vous proposant d'utiliser cet éditeur au lieu de celui fourni par défaut dans la page web. Ceci nécessite l'utilisation d'une application tierce (ExternalEditor) sur votre ordinateur. Demandez plus d'informations à votre administrateur système si nécessaire."
 
 #. Default: "Enter your current password."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/password_form.pt:31
@@ -3217,32 +3174,28 @@ msgstr "La politique de workflow par défaut."
 #. automatically."
 #. Default: "Determines if Short Names (also known as IDs) are changable when editing items. If Short Names are not displayed, they will be generated automatically."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/personalize_form.cpt:419
-#, fuzzy
 msgid "help_display_names"
-msgstr "Détermine si les identifiants courts (IDs) apparaissant dans l'adresse d'un contenu sont modifiable comme le contenu. Dans le cas contraire, ils sont générés automatiquement."
+msgstr "Affiche et autorise les utilisateurs à modifier l'« identifiant » des contenus, qui est utilisé pour générer l'URL. Une fois activée, les utilisateurs seront capables d'activer cette option dans leurs préférences personnelles."
 
 #. the item will be published immediately."
 #. Default: "The date when the item will be published. If no date is selected the item will be published immediately."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/content_status_history.cpt:99
-#, fuzzy
 msgid "help_effective_date"
-msgstr "Date de publication du contenu. Laissez vide pour une publication immédiate."
+msgstr "La date à laquelle cet élément sera publié. Si aucune date n'est indiquée, l'élément est visible immédiatement."
 
 #. lost. We respect your privacy, and will not give the address away to any
 #. third parties or expose it anywhere."
 #. Default: "Enter an email address. This is necessary in case the password is lost. We respect your privacy, and will not give the address away to any third parties or expose it anywhere."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/join_form.cpt:128
-#, fuzzy
 msgid "help_email_creation"
-msgstr "Entrez une adresse email. Ceci est nécessaire dans le cas ou vous perdriez votre mot de passe. Pour respectez votre vie privée, cette adresse ne sera pas utilisée ou distribuée à des fins commerciales."
+msgstr "Saisissez une adresse courriel. Cela vous permettra de recevoir un rappel de votre mot de passe en cas d'oubli. Nous respectons votre vie privée et ne communiquerons pas cette adresse à des tiers."
 
 #. item invisible for others at the given date. If no date is chosen, it will
 #. never expire."
 #. Default: "The date when the item expires. This will automatically make the item invisible for others at the given date. If no date is chosen, it will never expire."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/content_status_history.cpt:123
-#, fuzzy
 msgid "help_expiration_date"
-msgstr "Date d'expiration du contenu. Au delà de cette date, cet élément ne sera plus visible. Laissez vide pour qu'un contenu n'expire jamais."
+msgstr "La date à laquelle cet élément arrivera à expiration. À la date indiquée, l'élément sera invisible pour les autres utilisateurs. Si aucune date n'est indiquée, l'élément n'expirera jamais."
 
 #. Default: "Enter full name, eg. John Smith."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/join_form.cpt:68
@@ -3253,16 +3206,14 @@ msgstr "Saisissez votre nom complet, p. ex. John Smith."
 #. constructing this part of the navigation."
 #. Default: "By default, all items created at the root level will add to the global section navigation. You can turn this off if you prefer manually constructing this part of the navigation."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/prefs_navigation_form.cpt:62
-#, fuzzy
 msgid "help_generated_tabs"
-msgstr "Par défaut, tout contenu ajouté à la racine sera affiché dans la navigation globale. Vous pouvez désactiver cette option pour gérer manuellement la navigation."
+msgstr "Par défaut, tous les dossiers créés à la racine seront ajoutés dans la barre de navigation horizontale. Vous pouvez désactiver cette fonctionnalité si vous préférez construire manuellement cette partie de la navigation."
 
 #. creation."
 #. Default: "A unique identifier for the group. Can not be changed after creation."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/prefs_group_details.pt:131
-#, fuzzy
 msgid "help_groupname"
-msgstr "Un identifiant unique pour le groupe. Ne peut pas être modifiée."
+msgstr "Identifiant unique pour le groupe. Vous ne pourrez pas le changer par la suite."
 
 #. Default: "The URL for your external home page, if you have one."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/personalize_form.cpt:308
@@ -3277,9 +3228,8 @@ msgstr "Contrôle ce types sont addable à cet endroit."
 #. in any selected folders and their subfolders."
 #. Default: "If checked, this will attempt to modify the status of all content in any selected folders and their subfolders."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/content_status_history.cpt:89
-#, fuzzy
 msgid "help_include_contained_objects"
-msgstr "help_include_contained_objects"
+msgstr "Si l'option est activée, l'état de tout le contenu des dossiers sélectionnés et de leurs sous-dossiers est susceptible d'être modifié."
 
 #. inherited. If you disable this, only the explicitly defined sharing
 #. permissions will be valid. In the overview, the symbol
@@ -3288,14 +3238,12 @@ msgstr "help_include_contained_objects"
 #. administrator."
 #. Default: "By default, permissions from the container of this item are inherited. If you disable this, only the explicitly defined sharing permissions will be valid. In the overview, the symbol ${image_confirm_icon} indicates an inherited value. Similarly, the symbol ${image_link_icon} indicates a global role, which is managed by the site administrator."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/browser/sharing.pt:176
-#, fuzzy
 msgid "help_inherit_local_roles"
-msgstr "Par défaut, les permissions pour cet élément sont héritées du niveau supérieur. Si vous désactivez cette option, seuls les droits définis ci-dessus seront effectifs. Dans l'aperçu, le symbole ${image_confirm_icon} indique un rôle hérité, de la même manière, le symbole ${image_link_icon} indique un rôle global géré par l'administrateur du site."
+msgstr "Par défaut, les permissions pour cet élément sont héritées du niveau supérieur. Si vous désactivez cette option, seuls les droits définis dans l'écran de partage seront effectifs. Dans l'aperçu, le symbole ${image_confirm_icon} indique un rôle hérité, de la même manière, le symbole ${image_link_icon} indique un rôle global géré par l'administrateur du site."
 
 #. this site."
 #. Default: "Determines if your user name is listed in user searches done on this site."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/personalize_form.cpt:398
-#, fuzzy
 msgid "help_listed_search"
 msgstr "Détermine si votre nom d'utilisateur est affiché lors des recherches d'utilisateurs sur ce site."
 
@@ -3304,16 +3252,14 @@ msgstr "Détermine si votre nom d'utilisateur est affiché lors des recherches d
 #. really need them."
 #. Default: "Select which types should be available in the 'More…' submenu <em>instead</em> of in the main pulldown. This is useful to indicate that these are not the preferred types in this location, but are allowed if you really need them."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/folder_constraintypes_form.cpt:207
-#, fuzzy
 msgid "help_locally_allowed_types"
-msgstr "help_locally_allowed_types"
+msgstr "Choisissez les types de contenu qui pourront être ajoutés dans ce dossier en suivant le lien « Plus… ». Ceci est utile pour indiquer que ces types ne sont pas ceux attendus dans ce dossier, mais sont tout de même autorisés si vraiment nécessaire."
 
 #. setting, where your office is located."
 #. Default: "Your location - either city and country - or in a company setting, where your office is located."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/personalize_form.cpt:193
-#, fuzzy
 msgid "help_location"
-msgstr "Votre localisation (ville, pays, ...)"
+msgstr "Votre localisation - ville et pays - ou le siège de votre entreprise auquel votre bureau est rattaché."
 
 #. Default: "Appearance of the site."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/personalize_form.cpt:435
@@ -3323,9 +3269,8 @@ msgstr "Apparence du site."
 #. map."
 #. Default: "The content types that should be shown in the navigation and site map."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/prefs_navigation_form.cpt:109
-#, fuzzy
 msgid "help_navigationtypes"
-msgstr "help_navigationtypes"
+msgstr "Les types de contenu qui doivent être affichés dans la navigation et le plan du site."
 
 #. Default: "Enter your new password. Minimum 5 characters."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/password_form.pt:45
@@ -3338,9 +3283,8 @@ msgstr "Entrez votre nouveau mot de passe. Minimum 5 caractères."
 #. enabled."
 #. Default: "By default, any content item in the root of the portal will be shown as a global section. If you turn this option off, only folders will be shown. This only has an effect if \"Automatically generate tabs\" is enabled."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/prefs_navigation_form.cpt:87
-#, fuzzy
 msgid "help_nonfolderish_tabs"
-msgstr "help_nonfolderish_tabs"
+msgstr "Par défaut, tous les éléments de contenu présents à la racine du site sont affichés dans la barre de navigation horizontale. Si vous désactivez cette option, seuls les dossiers le seront. Ceci ne fonctionne que si l'option « Générer automatiquement les onglets » est activée."
 
 #. Default: "Minimum 5 characters."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/join_form.cpt:158
@@ -3352,9 +3296,8 @@ msgstr "Minimum 5 caractères."
 #. 40 pixels tall."
 #. Default: "To add or change the portrait: click the \"Browse\" button; select a picture of yourself. Recommended image size is 40 pixels wide by 40 pixels tall."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/personalize_form.cpt:221
-#, fuzzy
 msgid "help_portrait"
-msgstr "help_portrait"
+msgstr "Pour ajouter ou changer le portrait: Cliquer sur le bouton de sélection d'une photo. La taille recommandée est 40 pixels de large par 40 pixels de haut."
 
 #. Default: "Your preferred language."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/personalize_form.cpt:480
@@ -3364,16 +3307,14 @@ msgstr "Votre langue préférée."
 #. selected, this comment will be attached to all of them."
 #. Default: "Will be added to the publishing history. If multiple items are selected, this comment will be attached to all of them."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/content_status_history.cpt:150
-#, fuzzy
 msgid "help_publishing_comments"
-msgstr "help_publishing_comments"
+msgstr "Sera ajouté à l'historique de publication. Si plusieurs éléments sont sélectionnés, ce commentaire sera ajouté à tous ces éléments."
 
 #. you log in later."
 #. Default: "Check this to have your user name filled in automatically when you log in later."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/login_form.cpt:172
-#, fuzzy
 msgid "help_remember_my_name"
-msgstr "help_remember_my_name"
+msgstr "Cocher cette option pour avoir votre nom d'utilisateur automatiquement ajouté au formulaire d'authentification pour les prochaines authentifications."
 
 #. Default: "Select to make a version of the current content."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/cynin_edit_macros.pt:126
@@ -3408,9 +3349,8 @@ msgstr "rendez-vous ici"
 #. container. To adjust them for the entire container, ${go_here}."
 #. Default: "You are adjusting the sharing privileges for a default view in a container. To adjust them for the entire container, ${go_here}."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/browser/sharing.pt:58
-#, fuzzy
 msgid "help_sharing_page_default_page"
-msgstr "help_sharing_page_default_page"
+msgstr "Vous modifiez les paramètres de partages d'un élément utilisé comme vue par défaut d'un dossier. Pour modifier les paramètres de partage du dossier, ${go_here}."
 
 #. Default: "Short name is the part that shows up in the URL of the item."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/folder_rename_form.cpt:82
@@ -3422,9 +3362,8 @@ msgstr "Nom abrégé est la partie qui apparaît dans l&#39;URL de la question."
 #. scaled to fit this size."
 #. Default: "To add or change the site logo: click the \"Browse\" button; select an image for your logo. The uploaded image should be less than or equal to 200 pixels wide and 60 pixels height. Larger images will be auto-scaled to fit this size."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/sitelogo_settings.cpt:110
-#, fuzzy
 msgid "help_site_logo_description"
-msgstr "help_site_logo_description"
+msgstr "Pour ajouter ou changer le logo du site: cliquez sur le bouton de sélection d'une image. L'image envoyée doit être de taille inférieure ou égale à 200 pixels de large et 60 de hauteur. Les images plus grande seront automatiquement redimensionnées."
 
 #. authentication' capable feed client. An example of this type of client is
 #. ${synd_url1}. Alternatively, you could use URL based authentication, by
@@ -3433,17 +3372,15 @@ msgstr "help_site_logo_description"
 #. recommended, as your passwords are stored openly within your feed reader."
 #. Default: "Use of cyn.in secure feeds requires an 'HTTP BASIC authentication' capable feed client. An example of this type of client is ${synd_url1}. Alternatively, you could use URL based authentication, by changing the RSS URLs above to include your username and password, in this format — ${feedurl}. Note that using URL based authentication is not recommended, as your passwords are stored openly within your feed reader."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/syndicationinfo.pt:227
-#, fuzzy
 msgid "help_syndication"
-msgstr "help_syndication"
+msgstr "L'utilisation des flux sécurisés cyn.in requiert un client capable d'utiliser l'authentification 'HTTP BASIC'. Par exemple ${synd_url1}. Vous pouvez autrement modifier l'URL du flux RSS en ajoutant votre nom d'utilisateur et votre mot de passe, sous la forme — ${feedurl}. Il est à noter que ce mode de fonctionnement n'est pas recommandé, puisque votre mot de passe est stocké en clair dans votre lecteur de flux."
 
 #. special characters."
 #. Default: "Enter a user name, usually something like 'jsmith'. No spaces or special characters."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/join_form.cpt:96
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/signup_form.cpt:91
-#, fuzzy
 msgid "help_user_name_creation_casesensitive"
-msgstr "Entrez un nom d'utilisateur, sans espace ni caractères spéciaux."
+msgstr "Entrez un nom d'utilisateur, 'jsmith' par exemple. Sans espaces ni caractères spéciaux."
 
 #. Default: "Enter your user name for verification."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/pwreset_form.cpt:71
@@ -3454,16 +3391,14 @@ msgstr "Entrez votre nom d&#39;utilisateur pour vérification."
 #. as new revision\" button."
 #. Default: "At any moment you can save the content you just edited as a new revision. Enter below a comment to identify the version and hit the \"Save as new revision\" button."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/versions_history_form.pt:210
-#, fuzzy
 msgid "help_versioncomment"
-msgstr "Vous pouvez à tout moment enregistrer sous une nouvelle révision. Entrez un commentaire ci-dessous pour annoter cette révision et cliquez sur 'Enregistrer une révision'"
+msgstr "Vous pouvez à tout moment enregistrer l'élément tout juste modifié sous une nouvelle révision. Entrez un commentaire ci-dessous pour identifier cette révision et cliquez sur 'Enregistrer comme nouvelle révision'"
 
 #. and the site map."
 #. Default: "The workflow states that should be shown in the navigation tree and the site map."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/prefs_navigation_form.cpt:157
-#, fuzzy
 msgid "help_wf_states"
-msgstr "help_wf_states"
+msgstr "Les états de workflow des éléments qui doivent être affichés dans l'arborescence de navigation et dans le plan du site."
 
 #. Default: "You can assign a workflow for all content types."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/prefs_workflow_policy_mapping.pt:150
@@ -3480,9 +3415,8 @@ msgstr "Une brève description de la politique de workflow."
 #. in a node opens the web view for it."
 #. Default: "This mind map is generated from the content structure on this cyn.in site. If a node shows a half-circle on it's outer left/right edge, it can be expanded to show it's inner hierarchy. Clicking on the red arrow in a node opens the web view for it."
 #: ../../../../ubify.viewlets/ubify/viewlets/browser/fullviewmindmap.pt:55
-#, fuzzy
 msgid "helptext_site_mindmap"
-msgstr "Cette carte est générée à partir de la structure de ce site cyn.in. Si un élément contient un demi-cercle à gauche ou à droite, il peut être déployé pour afficher son contenu. Cliquez sur une flèche rouge pour visiter la page."
+msgstr "Cette carte est générée à partir de la structure de ce site cyn.in. Si un noeud affiche un demi-cercle à gauche ou à droite, il peut être déployé pour afficher son contenu. En cliquant sur la flèche rouge vous visiterez la page correspondante à ce noeud."
 
 #. Default: "Hits:"
 #: ATRatings/skins/at_ratings/rating_macros.pt:37
@@ -3502,9 +3436,8 @@ msgstr "Images"
 #. assign some personal portlets."
 #. Default: "Your dashboard is currently empty. Click the <em>edit</em> tab to assign some personal portlets."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/browser/dashboard.pt:133
-#, fuzzy
 msgid "info_empty_dashboard"
-msgstr "info_empty_dashboard"
+msgstr "Votre tableau de bord est actuellement vide. Cliquez sur l'onglet <em>modifier</em> pour assigner quelques portlets."
 
 #. Default: "Add"
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/prefs_workflow_localpolicies_form.pt:169
@@ -3607,9 +3540,8 @@ msgstr "Que faites-vous ?"
 #. Default: "Click on the button label below to install the cyn.in desktop client to your desktop. If you've already installed the cyn.in desktop, clicking on the button below will launch it."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/calendarsubscription.pt:50
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/desktopbadge.pt:65
-#, fuzzy
 msgid "label_caldav_url"
-msgstr "label_caldav_url"
+msgstr "Cliquez sur le bouton ci-dessous pour installer le client cyn.in desktop sur votre ordinateur. Si vous avez déjà installé cyn.in desktop, cliquer sur ce bouton lancera l'application."
 
 #. Default: "Cancel"
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/browser/sharing.pt:183
@@ -3730,7 +3662,6 @@ msgstr "Création:"
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/belowcontent_macro.pt:60
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/description_macro.pt:59
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/files_listing.pt:183
-#, fuzzy
 msgid "label_creator"
 msgstr "Créé par:"
 
@@ -3802,9 +3733,8 @@ msgstr "Modifier"
 #. edit the container itself, ${go_here}."
 #. Default: "You are editing the default view of a container. If you wanted to edit the container itself, ${go_here}."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/cynin_edit_macros.pt:23
-#, fuzzy
 msgid "label_edit_default_view_container"
-msgstr "label_edit_default_view_container"
+msgstr "Vous modifiez l'élément utilisé comme vue par défaut d'un dossier. Si vous souhaitez modifier le dossier, cliquez sur ${go_here}."
 
 #. Default: "go here"
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/cynin_edit_macros.pt:23
@@ -3831,9 +3761,8 @@ msgstr "E-mail"
 #. ${start} to ${end})</div>"
 #. Default: "<div class=\"recentupdateseventbyline\">(${location} from ${start} to ${end})</div>"
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/browser/selectdefaultwikipage.pt:181
-#, fuzzy
 msgid "label_event_byline"
-msgstr "label_event_byline"
+msgstr "<div class=\"recentupdateseventbyline\">(${location} du ${start} au ${end})</div>"
 
 #. Default: "Exception"
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/prefs_error_log_form.pt:69
@@ -4196,9 +4125,8 @@ msgstr "Mot de passe"
 #. Default: "A URL will be generated and e-mailed to you; follow the link to reach a page where you can change your password and complete the registration process."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/join_form.cpt:217
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/signup_form.cpt:203
-#, fuzzy
 msgid "label_password_change_mail"
-msgstr "Une adresse sera créée et sera expédiée en email. Suivez le lien indiqué pour valider la création du compte et changer votre mot de passe."
+msgstr "Une adresse (URL) sera générée et sera expédiée par courriel; cliquez sur le lien pour saisir votre mot de passe et terminer votre inscription."
 
 #. Default: "Content type portlets:"
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/browser/edit-manager-contextual.pt:112
@@ -4606,9 +4534,8 @@ msgstr "workflowed"
 #. like to add it to, and then click one of the content types below."
 #. Default: "To begin adding new content, select the Space in which you would like to add it to, and then click one of the content types below."
 #: ../../../../ubify.viewlets/ubify/viewlets/browser/addnew_menu.pt:41
-#, fuzzy
 msgid "lbl_addcontent_desc"
-msgstr "Pour ajouter du contenu, choisissez l'espace dans lequel vous souhaitez l'y ajouter, puis choisissez l'un des éléments ci-dessous."
+msgstr "Pour commencer à ajouter du contenu, choisissez l'espace dans lequel vous souhaitez en ajouter, puis choisissez l'un des types de contenu ci-dessous."
 
 #. Default: "Add new content"
 #: ../../../../ubify.viewlets/ubify/viewlets/browser/addnew_menu.pt:40
@@ -4762,9 +4689,8 @@ msgstr "... moins"
 #. ${cynapse_url}&trade;<br />"
 #. Default: "Distributed under the ${license_url} license. &copy; 2010 ${cynapse_url}&trade;<br />"
 #: ../../../../ubify.viewlets/ubify/viewlets/browser/ubifycolophon.pt:62
-#, fuzzy
 msgid "license_info"
-msgstr "Distribué sous licence <a href=\"http://www.cynapse.com/resources/cynin-gpl-v3-open-source-license\">GNU GPL 3</a>. © 2010 <a href=\"http://www.cynapse.com/\">Cynapse</a>™"
+msgstr "Distribué sous licence ${license_url}. &copy; 2010  ${cynapse_url}&trade;<br />"
 
 #. Default: "Like it (+1)"
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/__init__.py:727
@@ -4889,7 +4815,6 @@ msgstr "Déconnexion"
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/portlets/blogportlet.pt:88
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/portlets/commentsportlet.pt:90
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/portlets/eventsportlet.pt:89
-#, fuzzy
 msgid "link_more"
 msgstr "${morecount} autres"
 
@@ -5082,9 +5007,8 @@ msgstr "connexion"
 #. not available."
 #. Default: "While cookie authentication is disabled, cookie-based login is not available."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/login_form.cpt:74
-#, fuzzy
 msgid "login_form_disabled"
-msgstr "login_form_disabled"
+msgstr "Tant que l'authentification par cookie est désactivée, le login basé sur les cookies ne sera pas disponible."
 
 #. Default: "Please login to post comments."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/browser/itemdetails.pt:64
@@ -5179,16 +5103,14 @@ msgstr "Wiki"
 #. your user name correctly."
 #. Default: "Sorry, this appears to be an invalid request. Please make sure you copied the URL exactly as it appears in your email and that you entered your user name correctly."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/pwreset_invalid.pt:50
-#, fuzzy
 msgid "message_pwreset_invalid"
-msgstr "message_pwreset_invalid"
+msgstr "Désolé, il semble qu'il s'agit d'une demande invalide. Merci de vous assurer que vous avez copié l'adresse sans erreur et que vous avez saisi votre nom utilisateur correctement."
 
 #. your questions and/or comments."
 #. Default: "A mail has now been sent to the site administrators regarding your questions and/or comments."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/send_feedback_confirm_admin.cpt:62
-#, fuzzy
 msgid "message_send_feedback_confirm"
-msgstr "Un email a été envoyé à l'administrateur du site."
+msgstr "Un courriel a été envoyé à l'administrateur du site concernant vos questions et/ou commentaires."
 
 #. Default: "more ..."
 msgid "more_msg"
@@ -5286,16 +5208,14 @@ msgstr "Ajouter et configurer des groupes et assigner des utilisateurs à leur d
 #. to the item."
 #. Default: "View sitewide mindmap. Click on the red arrow links to navigate to the item."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/navigation_macro.pt:3
-#, fuzzy
 msgid "navtip_mindmap"
-msgstr "navtip_mindmap"
+msgstr "Voir la carte mentale du site. Cliquez sur la flèche rouge pour aller sur l'élément."
 
 #. delete them."
 #. Default: "All deleted items end up here. Click on Contents to bulk manage / delete them."
 #: ../../../../ubify.viewlets/ubify/viewlets/browser/navigationmanager.pt:134
-#, fuzzy
 msgid "navtip_recyblebin"
-msgstr "navtip_recyblebin"
+msgstr "Tous les éléments supprimés finissent ici. Cliquez sur \"Contenu\" pour les gérer."
 
 #. Default: "Change or reset your cyn.in site logo."
 #: ../../../../ubify.viewlets/ubify/viewlets/browser/navigationmanager.pt:74
@@ -5321,9 +5241,8 @@ msgstr "Détesté par ${negative_count}"
 #. Default: "This item does not have any body text, click the edit tab to change it."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/document_view.pt:23
 #: Scrawl/skins/scrawl_30/blogentry_view.pt:26
-#, fuzzy
 msgid "no_body_text"
-msgstr "Cet élément n'a pas de contenu, vous pouvez cliquer sur \"Modifier\""
+msgstr "Cet élément n'a pas de contenu texte, cliquez sur \"Modifier\" pour en ajouter."
 
 #. Default: "Please enter discussion text."
 msgid "no_discussion_message"
@@ -5342,9 +5261,8 @@ msgstr "(Aucune image a été chargée pour l&#39;instant)"
 #. Default: "This site has not configured its email settings. Until email has been configured it is not possible to create an account."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/join_form.cpt:32
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/signup_form.cpt:35
-#, fuzzy
 msgid "no_join_without_configured_mail"
-msgstr "no_join_without_configured_mail"
+msgstr "L'envoi de courriel n'a pas été configuré sur ce site. Tant que ceci n'est pas configuré il est impossible de créer un compte utilisateur."
 
 #. Default: "No rating"
 #: ATRatings/skins/at_ratings/rating_macros.pt:250
@@ -5374,7 +5292,7 @@ msgstr "ou"
 #. Default: "Ownership"
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/__init__.py:1183
 msgid "ownership"
-msgstr ""
+msgstr "Auteurs"
 
 #. Default: "Password:"
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/login_form.cpt:150
@@ -5384,9 +5302,8 @@ msgstr "Mot de passe:"
 #. your new password."
 #. Default: "Your password has been set successfully. You may now log in with your new password."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/pwreset_finish.pt:51
-#, fuzzy
 msgid "password_reset_successfully"
-msgstr "Votre mot de passe a été enregistré. Vous pouvez vous connecter.<br/>"
+msgstr "Votre mot de passe a été enregistré avec succès. Vous pouvez maintenant vous connecter avec votre nouveau mot de passe.<br/>"
 
 #. Default: "Past events list"
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/browser/app_cal_events.pt:76
@@ -5406,9 +5323,8 @@ msgstr "pm"
 #. Restart your web-browser to end this session."
 #. Default: "Cannot log out when logged in with browser authentication. Restart your web-browser to end this session."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/logged_out.cpt:89
-#, fuzzy
 msgid "portal_cannot_log_out_http_basic_auth"
-msgstr "portal_cannot_log_out_http_basic_auth"
+msgstr "Vous ne pouvez pas vous déconnecter avec l'authentification 'HTTP Basic'. Vous devez fermer votre navigateur pour terminer la session."
 
 #. Default: "You are now logged out."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/logged_out.cpt:73
@@ -5552,7 +5468,7 @@ msgstr "RSS"
 #. Default: "Schedule"
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/__init__.py:1181
 msgid "schedule"
-msgstr ""
+msgstr "Dates"
 
 #. Default: "Rating"
 #: ATRatings/skins/at_ratings/rating_macros.pt:141
@@ -5662,16 +5578,14 @@ msgstr "Flux des événements de calendrier."
 #. as enclosures in this feed, for use in podcast clients."
 #. Default: "Live feed for files across this cyn.in site. Files are included as enclosures in this feed, for use in podcast clients."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/syndicationinfo.pt:133
-#, fuzzy
 msgid "syndication_files"
-msgstr "Flux des contenus de type fichier. Les fichiers sont inclus sous forme d'attachements pour une utilisation en podcast"
+msgstr "Flux des fichiers du site. Les fichiers sont inclus en tant que pièces jointes pour une utilisation avec des clients podcast."
 
 #. as enclosures in this feed, for use in podcast clients."
 #. Default: "Live feed for images across this cyn.in site. Images are included as enclosures in this feed, for use in podcast clients."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/syndicationinfo.pt:149
-#, fuzzy
 msgid "syndication_images"
-msgstr "Flux des images. Les images sont incluses sous forme d'attachements pour une utilisation en podcast"
+msgstr "Flux des images de tout le site. Les images sont incluses en tant que pièces jointes dans le flux, pour une utilisation avec des clients podcast."
 
 #. Default: "Live feed for Status Logs across this cyn.in site."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/syndicationinfo.pt:213
@@ -5681,9 +5595,8 @@ msgstr "Flux des changement de statut."
 #. as enclosures in this feed, for use in podcast clients."
 #. Default: "Live feed for videos across this cyn.in site. Videos are included as enclosures in this feed, for use in podcast clients."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/syndicationinfo.pt:165
-#, fuzzy
 msgid "syndication_videos"
-msgstr "Flux des contenus vidéo. Les vidéos sont incluses sous forme d'attachements pour une utilisation en podcast"
+msgstr "Flux des vidéos de tous le site. Les vidéos sont incluses en tant que pièces jointes dans le flux, pour être utilisées avec des clients podcast."
 
 #. Default: "Live feed for Web Links across this cyn.in site."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/syndicationinfo.pt:181
@@ -5808,13 +5721,11 @@ msgstr "Filtrer: Vidéos"
 
 #. lost."
 #. Default: "Your form has not been saved. All changes you have made will be lost."
-#, fuzzy
 msgid "text_form_modified_message"
-msgstr "Votre formulaire n'a pas été enregistré. Les changements effectués seront perdus"
+msgstr "Votre formulaire n'a pas été validé. Les changements que vous avez effectué seront perdus"
 
 #. submit this form again?"
 #. Default: "You already clicked the submit button. Do you really want to submit this form again?"
-#, fuzzy
 msgid "text_form_resubmit_message"
 msgstr "Vou avez déjà validé ce formulaire. Souhaitez-vous réellement le soumettre à nouveau ?"
 
@@ -5847,9 +5758,8 @@ msgstr "Etes-vous sûr de vouloir vous déconnecter ?"
 #. | ${versiondownloadlink}<br />"
 #. Default: "New Version available! v${versionstring} — ${versionchangelog} | ${versiondownloadlink}<br />"
 #: ../../../../ubify.viewlets/ubify/viewlets/browser/ubifycolophon.pt:49
-#, fuzzy
 msgid "text_new_version_available"
-msgstr "Nouvelle version disponible ! v${versionstring} — ${versionchangelog}| ${versiondownloadlink}<br />"
+msgstr "Nouvelle version disponible ! v${versionstring} — ${versionchangelog} | ${versiondownloadlink}<br />"
 
 #. Default: "No albums or photos uploaded yet."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/atct_album_view.pt:111
@@ -5860,18 +5770,16 @@ msgstr "Il n'y a pas encore d'albums ou de photos."
 #. Default: "This site doesn't have a valid email setup, so you cannot use any contact forms."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/admin-contact-info.cpt:63
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/author.cpt:205
-#, fuzzy
 msgid "text_no_email_setup"
-msgstr "Ce site n'a pas d'email valide configuré, vous ne pouvez pas utiliser de formulaire de contact."
+msgstr "Ce site n'a pas de configuration d'envoi de courriels valide, vous ne pouvez donc pas utiliser les formulaires de contact."
 
 #. various features including contact forms, email notification and password
 #. reset will not work. Go to the ${label_mail_control_panel_link} to fix
 #. this."
 #. Default: "You have not configured a mail host or a site 'From' address, various features including contact forms, email notification and password reset will not work. Go to the ${label_mail_control_panel_link} to fix this."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/plone_control_panel.pt:80
-#, fuzzy
 msgid "text_no_mailhost_configured"
-msgstr "Vous n'avez pas configuré de serveur de messagerie et une adresse \"From\" pour ce site,certaines fonctionnalité comme les formulaires de contact , les notifications mail et la mise à zérode mot de passe ne marcheront pas. Rendez-vous dans ${label_mail_control_panel_link} pour résoudrece problème."
+msgstr "Vous n'avez pas configuré de serveur de messagerie ou d'adresse d'expéditeur pour ce site, certaines fonctionnalités comme les formulaires de contact, les notifications email et la mise à zéro de mot de passe ne pourront pas fonctionner. Allez dans ${label_mail_control_panel_link} pour régler ce problème."
 
 #. Default: "Mail control panel"
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/plone_control_panel.pt:81
@@ -5881,9 +5789,8 @@ msgstr "Réglages de messagerie"
 #. work."
 #. Default: "Warning: PIL is not installed properly, image scaling will not work."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/plone_control_panel.pt:95
-#, fuzzy
 msgid "text_no_pil_installed"
-msgstr "Attention : PIL n'est pas installé, le redimensionnement d'images ne peut pas fonctionner."
+msgstr "Attention : PIL n'est pas installé, le redimensionnement d'images ne pourra pas fonctionner."
 
 #. Default: "There are no recent updates."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/recentupdate_macro.pt:116
@@ -5967,9 +5874,8 @@ msgstr "Changer le statut de cet élément"
 #. no undo for this action!"
 #. Default: "Delete User permanently. <br /><strong>Warning:</strong> There is no undo for this action!"
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/prefs_users_overview.cpt:174
-#, fuzzy
 msgid "title_delete_user"
-msgstr "Supprimer définitivement l'utilisateur. <br/><strong>Attention : </strong> Il n'est pas possible d'annuler cette action"
+msgstr "Supprimer définitivement l'utilisateur. <br /><strong>Attention : </strong> Il n'est pas possible d'annuler cette action !"
 
 #. Default: "Edit your dashboard"
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/browser/manage-dashboard.pt:95
@@ -6002,9 +5908,8 @@ msgstr "Requis"
 #. login without setting their password again!"
 #. Default: "Force reset password and send email to user with link to reset their password. <br /><strong>Caution:</strong> User will not be able to login without setting their password again!"
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/prefs_users_overview.cpt:173
-#, fuzzy
 msgid "title_reset_password"
-msgstr "Initialiser le mot de passe et envoyer un email a l'utilisateur.<br/><strong>Attention :</strong> l'utilisateur ne pourra pas se connecter avant d'avoir réglé un nouveau mot de passe."
+msgstr "Réinitialiser le mot de passe et envoyer un email a l'utilisateur avec un lien pour lui permettre de resaisir un mot de passe. <br /><strong>Attention :</strong> l'utilisateur ne pourra plus se connecter avant d'avoir saisi un nouveau mot de passe."
 
 #. terms"
 #. Default: "Subscribe to an always-updated feed of these search terms"
@@ -6025,7 +5930,7 @@ msgstr "Rechercher"
 #. Default: "Secure Feeds from Space"
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/integrationblock_macro.pt:10
 msgid "title_secure_feeds_from_space"
-msgstr ""
+msgstr "Flux sécurisés de l'espace"
 
 #. Default: "Send a mail to this user"
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/prefs_group_members.cpt:212
@@ -6056,20 +5961,19 @@ msgstr "pour affiner votre recherche."
 #. Default: "URL:"
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/browser/icalendar_import.pt:69
 msgid "url_label"
-msgstr ""
+msgstr "URL"
 
 #. reflect additional roles users may have due to group memberships."
 #. Default: "Note that roles listed here apply directly to a user. They do not reflect additional roles users may have due to group memberships."
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/prefs_users_overview.cpt:102
-#, fuzzy
 msgid "user_role_note"
-msgstr "Les rôles affichés s'appliquent à un utilisateur. Ils ne reflètent pas les rôles additionnels donnés par les groupes de cet utilisateur"
+msgstr "Notez que les rôles affichés ici s'appliquent directement à un utilisateur. Ils ne reflètent pas les rôles additionnels pouvant être donnés à cet utilisateur par les groupes auquels il appartient."
 
 #. Default: "Videos"
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/__init__.py:711
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/syndicationinfo.pt:164
 msgid "videos"
-msgstr ""
+msgstr "Vidéos"
 
 #. Default: "(${total_count} votes)"
 #: ATRatings/skins/at_ratings/rating_macros.pt:60
@@ -6085,7 +5989,7 @@ msgstr "Liens Web"
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/__init__.py:697
 #: ../../../../ubify.cyninv2theme/ubify/cyninv2theme/skins/ubify_cyninv2theme_custom_templates/syndicationinfo.pt:196
 msgid "wiki"
-msgstr ""
+msgstr "Wiki"
 
 #. Default: "Workflow policy"
 #: ../../../../ubify.viewlets/ubify/viewlets/browser/ApplicationsMenuViewlet.pt:124
